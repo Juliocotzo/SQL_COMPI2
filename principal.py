@@ -4,6 +4,10 @@ from expresiones import *
 from instrucciones import *
 from graphviz import Digraph
 
+from storageManager import jsonMode as j
+
+salida = ""
+
 def procesar_createTable(instr,ts) :
     # print('Crear Tabla Normal')
     simbolo = TS.Simbolo(instr.nombre_tabla, TS.TIPO_DATO.CREATE_TABLE, 0)
@@ -23,24 +27,47 @@ def procesar_Definicion(instr,ts) :
     simbolo = TS.Simbolo(instr.id.id, TS.TIPO_DATO.CREATE_TABLE, 0)
     ts.agregar(simbolo)
 
+def procesar_createDatabase(instr,ts) :
+    print(instr.nombre.id,instr.usuario,instr.modo)
+    result = j.createDatabase(str(instr.nombre.id))
+    if instr.modo == 1:
+        if result == 0:
+            global salida
+            salida += "\nCREATE DATABASE"
+        # print("CREATE DATABASE")
+        elif result == 1 :
+            salida += "\nERROR:  internal_error \nSQL state: XX000 "
+            # print("ERROR:  internal_error \nSQL state: XX000 ")
+        elif result == 2 :
+            salida += "\nERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 "
+            # print("ERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 ")
+
 def procesar_instrucciones(instrucciones,ts) :
+    global salida
+    salida = ""
     ## lista de instrucciones recolectadas
     for instr in instrucciones :
         if isinstance(instr, CrearTable) : procesar_createTable(instr,ts)
         elif isinstance(instr, CrearTable_Herencia) : procesar_createTable_Herencia(instr,ts)
         elif isinstance(instr, Definicion) : procesar_Definicion(instr,ts)
-        
-        else : print('Error: instrucción no válida')
+        #CREATE DATABASE
+        elif isinstance(instr,CreateDatabase) : procesar_createDatabase(instr,ts)
+        else : print('Error: instrucción no válida ' + str(instr))
 
-#f = open("./entrada.txt", "r")
-#input = f.read()
-
-#print("")
+    return salida
 
 
+f = open("./entrada.txt", "r")
+input = f.read()
+instrucciones = g.parse(input)
+ts_global = TS.TablaDeSimbolos()
+procesar_instrucciones(instrucciones,ts_global)
 
-def ts_graph():
-    ts_global = TS.TablaDeSimbolos()
+
+print(j.showDatabases())
+
+
+def ts_graph(ts_global):
     dot3 = Digraph('TS', node_attr={'shape': 'plaintext','color': 'lightblue2'})
     cadena = "<\n"
     cadena = cadena + "<table border='1' cellborder='1'>\n"
@@ -53,3 +80,6 @@ def ts_graph():
     cadena = cadena + '>'
     dot3.node('tab', label=cadena)
     dot3.view('TS', cleanup=True)
+
+
+#ts_graph(ts_global)

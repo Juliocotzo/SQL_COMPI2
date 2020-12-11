@@ -10,7 +10,16 @@ reservadas = {
     'create' : 'CREATE',
     'table':'TABLE',
     'inherits': 'INHERITS',
-    'integer': 'INTEGER'
+    'integer': 'INTEGER',
+    # CREATE DATABASE
+    'database': 'DATABASE',
+    'if' : 'IF',
+    'replace' : 'REPLACE',
+    'exists' : 'EXISTS',    
+    'or': 'OR',
+    'owner': 'OWNER',
+    'not' : 'NOT',
+    'mode' : 'MODE'
 }
 
 tokens = [
@@ -18,6 +27,8 @@ tokens = [
     'PAR_A',
     'PAR_C',
     'ID',
+    'ENTERO',
+    'IGUAL',
     'COMA'
 ] + list(reservadas.values())
 
@@ -26,6 +37,7 @@ t_PTCOMA        = r';'
 t_PAR_A         = r'\('
 t_PAR_C         = r'\)'
 t_COMA          = r','
+t_IGUAL         = r'\='
 
 def t_FLOTANTE(t):
     r'\d+\.\d+'
@@ -101,7 +113,8 @@ def p_instrucciones_instruccion(t) :
     t[0] = [t[1]]
 
 def p_instruccion(t) :
-    '''instruccion      : create_Table'''
+    '''instruccion      : create_Table
+                        | createDB_insrt'''
     t[0] = t[1]
 
 def p_create_Table(t) :
@@ -128,6 +141,100 @@ def p_cuerpo_createTable_lista_(t):
 def p_herencia(t):
     ' opcion_herencia :  INHERITS PAR_A ID PAR_C '
     t[0] = ExpresionIdentificador(t[3])
+
+
+#----------------------------------------------------------------
+' -----------GRAMATICA PARA LA INSTRUCCION CREATE DB------------'
+#----------------------------------------------------------------
+
+#***********************************************
+'             CREATE DATABASE SIMPLE '
+#************************************************
+
+def p_createDB(t):
+    'createDB_insrt : CREATE DATABASE ID PTCOMA'
+    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), None, 1)
+
+def p_createDB_wRP(t):
+    'createDB_insrt : CREATE OR REPLACE DATABASE ID PTCOMA'
+    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), None, 1)
+
+def p_createDB_wIfNot(t):
+    'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID PTCOMA'
+    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), None, 1)
+
+def p_createDB_wRP_wIN(t):
+    'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA'
+    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), None, 1)
+
+
+#***********************************************
+'             CREATE DATABASE UN PARAMETRO '
+#************************************************
+def p_createDB_up(t):
+    'createDB_insrt : CREATE DATABASE ID createDB_unParam PTCOMA'
+
+def p_createDB_wRP_up(t):
+    'createDB_insrt : CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA'
+
+def p_createDB_wIfNot_up(t):
+    'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
+
+def p_createDB_wRP_wIN_up(t):
+    'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
+
+def p_createDB_unParam_Owner(t):
+    'createDB_unParam : OWNER ID'
+
+def p_createDB_un_Param_Mode(t):
+    'createDB_unParam : MODE ENTERO'
+
+def p_createDB_unParam_Owner_I(t):
+    'createDB_unParam : OWNER IGUAL ID'
+
+def p_createDB_un_Param_Mode_I(t):
+    'createDB_unParam : MODE IGUAL ENTERO'
+
+
+#***********************************************
+'             CREATE DATABASE DOS PARAMETROS '
+#************************************************
+
+def p_createDB_dp(t):
+    'createDB_insrt : CREATE DATABASE ID createDB_dosParam PTCOMA'
+
+def p_createDB_wRP_dp(t):
+    'createDB_insrt : CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA'
+
+def p_createDB_wIfNot_dp(t):
+    'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA'
+
+def p_createDB_wRP_wIN_dp(t):
+    'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA'
+
+def p_createDB_dosParam_Owner(t):
+    'createDB_dosParam : OWNER ID MODE ENTERO'
+
+def p_createDB_dosParam_Owner_b(t):
+    'createDB_dosParam : OWNER ID MODE IGUAL ENTERO'
+
+def p_createDB_dosParam_Mode(t):
+    'createDB_dosParam : MODE ENTERO OWNER ID'
+
+def p_createDB_dosParam_Mode_b(t):
+    'createDB_dosParam : MODE ENTERO OWNER IGUAL ID'
+
+def p_createDB_dosParam_Owner_I(t):
+    'createDB_dosParam : OWNER IGUAL ID MODE ENTERO'
+
+def p_createDB_dosParam_Owner_I_b(t):
+    'createDB_dosParam : OWNER IGUAL ID MODE IGUAL ENTERO'
+
+def p_createDB_dosParam_Mode_I(t):
+    'createDB_dosParam : MODE IGUAL ENTERO OWNER ID'
+
+def p_createDB_dosParam_Mode_I_b(t):
+    'createDB_dosParam : MODE IGUAL ENTERO OWNER IGUAL ID'
 
 def p_error(t):
     print("Error sintáctico en '%s'" % t.value)

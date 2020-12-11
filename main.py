@@ -23,12 +23,12 @@ def analizar(txt):
     instrucciones = g.parse(txt)
     ts_global = TS.TablaDeSimbolos()
     
-    procesar_instrucciones(instrucciones, ts_global)
+    salida = procesar_instrucciones(instrucciones, ts_global)
 
     print("analizando...")
     print(txt)
-    salida_table()
-    parse(txt)
+    salida_table(2,salida)
+    #parse(txt)
 
 def analizar_select(e):
     global selected
@@ -37,11 +37,13 @@ def analizar_select(e):
         print(selected)
         instrucciones = g.parse(selected)
         ts_global = TS.TablaDeSimbolos()
-        procesar_instrucciones(instrucciones, ts_global)
+        salida = procesar_instrucciones(instrucciones, ts_global)
+        salida_table(2,salida)
 
 
 def graficar_TS():
-    ts_graph()
+    ''' '''
+    #ts_graph()
 
 toolbar_frame = Frame(root)
 toolbar_frame.pack(fill = X)
@@ -95,70 +97,86 @@ photoCompila1 = PhotoImage(file="iconos/select.png")
 analizar_step_step.config(image=photoCompila1, width="50", height="50", activebackground="black",command = lambda: analizar_select(False))
 analizar_step_step.grid(row = 0, column = 1, sticky = W)
 
-def salida_table():
-    global salida_frame
-    try:
+def salida_table(salida,textoSalida):
+    if salida == 1:
         global salida_frame
-        salida_frame.destroy()
-    except:
-        pass
-    salida_frame = LabelFrame(root, text = "Salida")
-    salida_frame.pack(fill = X)
+        try:
+            global salida_frame
+            salida_frame.destroy()
+        except:
+            pass
+        salida_frame = LabelFrame(root, text = "Salida")
+        salida_frame.pack(fill = X)
 
-    for widget in salida_frame.winfo_children():
-        widget.destroy()
+        for widget in salida_frame.winfo_children():
+            widget.destroy()
 
-    global random_numero
-    random_numero = random.randint(5,10)
+        global random_numero
+        random_numero = random.randint(5,10)
 
-    prueba_columna = []
+        prueba_columna = []
 
-    i = 1
-    while i < random_numero:
-        prueba_columna.append(i)
-        i += 1
+        i = 1
+        while i < random_numero:
+            prueba_columna.append(i)
+            i += 1
 
-    print(prueba_columna)
-    
-    my_tree = ttk.Treeview(salida_frame, columns=prueba_columna)
-
-    my_tree.pack(side=LEFT)
-    my_tree.place(x=0,y=0)
-
-    for record in prueba_columna:
-        # print(record-1)
-        if record == 1:
-            my_tree.column("#"+str(record-1), stretch=False, width=40)
-            my_tree.heading("#"+str(record-1),text = " ")
-        else:
-            my_tree.column("#"+str(record-1), stretch=False, width=100)
-            my_tree.heading("#"+str(record-1),text = "Label"+str(record-1))
-
-    yscrollbar = ttk.Scrollbar(salida_frame, orient = "vertical", command=my_tree.yview)
-    yscrollbar.pack(side = RIGHT, fill = Y)
-
-    xscrollbar = ttk.Scrollbar(salida_frame, orient="horizontal", command = my_tree.xview)
-    xscrollbar.pack(side=BOTTOM, fill = X)
-
-    my_tree.configure(yscrollcommand=yscrollbar.set, xscrollcommand = xscrollbar.set)
-
-
-    data = []
-
-    j = 1
-    while j < 50:
-        data.append(["Usuario"+str(j),"Password"+str(j),j])
-        j += 1
-
-
-    count = 1
-    for record in data:
-        my_tree.insert(parent = '', index = 'end', iid=count, text = str(count), values = (record[0],record[1],record[2]))
-        count += 1
+        print(prueba_columna)
         
-    
+        my_tree = ttk.Treeview(salida_frame, columns=prueba_columna)
 
-    my_tree.pack(fill = X)
+        my_tree.pack(side=LEFT)
+        my_tree.place(x=0,y=0)
+
+        for record in prueba_columna:
+            # print(record-1)
+            if record == 1:
+                my_tree.column("#"+str(record-1), stretch=False, width=40)
+                my_tree.heading("#"+str(record-1),text = " ")
+            else:
+                my_tree.column("#"+str(record-1), stretch=False, width=100)
+                my_tree.heading("#"+str(record-1),text = "Label"+str(record-1))
+
+        yscrollbar = ttk.Scrollbar(salida_frame, orient = "vertical", command=my_tree.yview)
+        yscrollbar.pack(side = RIGHT, fill = Y)
+
+        xscrollbar = ttk.Scrollbar(salida_frame, orient="horizontal", command = my_tree.xview)
+        xscrollbar.pack(side=BOTTOM, fill = X)
+
+        my_tree.configure(yscrollcommand=yscrollbar.set, xscrollcommand = xscrollbar.set)
+
+
+        data = []
+
+        j = 1
+        while j < 50:
+            data.append(["Usuario"+str(j),"Password"+str(j),j])
+            j += 1
+
+
+        count = 1
+        for record in data:
+            my_tree.insert(parent = '', index = 'end', iid=count, text = str(count), values = (record[0],record[1],record[2]))
+            count += 1
+            
+        
+
+        my_tree.pack(fill = X)
+    else:
+        global salida_frame1
+        try:
+            global salida_frame1
+            salida_frame1.destroy()
+        except:
+            pass
+        salida_frame1 = LabelFrame(root, text = "Salida")
+        salida_frame1.pack(fill = X)
+        my_text1 = Text(salida_frame1)
+        my_text1.pack(fill=X)
+        my_text1.delete(1.0,"end")
+        my_text1.insert(1.0, textoSalida)
+        
+        
 
 
 root.mainloop() 

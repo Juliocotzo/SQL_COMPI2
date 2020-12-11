@@ -7,35 +7,73 @@ Rule 1     init -> instrucciones
 Rule 2     instrucciones -> instrucciones instruccion
 Rule 3     instrucciones -> instruccion
 Rule 4     instruccion -> create_Table
-Rule 5     create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
-Rule 6     create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
-Rule 7     cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable
-Rule 8     cuerpo_createTable_lista -> cuerpo_createTable
-Rule 9     cuerpo_createTable -> ID INTEGER
-Rule 10    opcion_herencia -> INHERITS PAR_A ID PAR_C
+Rule 5     instruccion -> createDB_insrt
+Rule 6     create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
+Rule 7     create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
+Rule 8     cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable
+Rule 9     cuerpo_createTable_lista -> cuerpo_createTable
+Rule 10    cuerpo_createTable -> ID INTEGER
+Rule 11    opcion_herencia -> INHERITS PAR_A ID PAR_C
+Rule 12    createDB_insrt -> CREATE DATABASE ID PTCOMA
+Rule 13    createDB_insrt -> CREATE OR REPLACE DATABASE ID PTCOMA
+Rule 14    createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID PTCOMA
+Rule 15    createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA
+Rule 16    createDB_insrt -> CREATE DATABASE ID createDB_unParam PTCOMA
+Rule 17    createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA
+Rule 18    createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+Rule 19    createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+Rule 20    createDB_unParam -> OWNER ID
+Rule 21    createDB_unParam -> MODE ENTERO
+Rule 22    createDB_unParam -> OWNER IGUAL ID
+Rule 23    createDB_unParam -> MODE IGUAL ENTERO
+Rule 24    createDB_insrt -> CREATE DATABASE ID createDB_dosParam PTCOMA
+Rule 25    createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA
+Rule 26    createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
+Rule 27    createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
+Rule 28    createDB_dosParam -> OWNER ID MODE ENTERO
+Rule 29    createDB_dosParam -> OWNER ID MODE IGUAL ENTERO
+Rule 30    createDB_dosParam -> MODE ENTERO OWNER ID
+Rule 31    createDB_dosParam -> MODE ENTERO OWNER IGUAL ID
+Rule 32    createDB_dosParam -> OWNER IGUAL ID MODE ENTERO
+Rule 33    createDB_dosParam -> OWNER IGUAL ID MODE IGUAL ENTERO
+Rule 34    createDB_dosParam -> MODE IGUAL ENTERO OWNER ID
+Rule 35    createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL ID
 
 Terminals, with rules where they appear
 
-COMA                 : 7
-CREATE               : 5 6
-ID                   : 5 6 9 10
-INHERITS             : 10
-INTEGER              : 9
-PAR_A                : 5 6 10
-PAR_C                : 5 6 10
-PTCOMA               : 5 6
-TABLE                : 5 6
+COMA                 : 8
+CREATE               : 6 7 12 13 14 15 16 17 18 19 24 25 26 27
+DATABASE             : 12 13 14 15 16 17 18 19 24 25 26 27
+ENTERO               : 21 23 28 29 30 31 32 33 34 35
+EXISTS               : 14 15 18 19 26 27
+ID                   : 6 7 10 11 12 13 14 15 16 17 18 19 20 22 24 25 26 27 28 29 30 31 32 33 34 35
+IF                   : 14 15 18 19 26 27
+IGUAL                : 22 23 29 31 32 33 33 34 35 35
+INHERITS             : 11
+INTEGER              : 10
+MODE                 : 21 23 28 29 30 31 32 33 34 35
+NOT                  : 14 15 18 19 26 27
+OR                   : 13 15 17 19 25 27
+OWNER                : 20 22 28 29 30 31 32 33 34 35
+PAR_A                : 6 7 11
+PAR_C                : 6 7 11
+PTCOMA               : 6 7 12 13 14 15 16 17 18 19 24 25 26 27
+REPLACE              : 13 15 17 19 25 27
+TABLE                : 6 7
 error                : 
 
 Nonterminals, with rules where they appear
 
+createDB_dosParam    : 24 25 26 27
+createDB_insrt       : 5
+createDB_unParam     : 16 17 18 19
 create_Table         : 4
-cuerpo_createTable   : 7 8
-cuerpo_createTable_lista : 5 6 7
+cuerpo_createTable   : 8 9
+cuerpo_createTable_lista : 6 7 8
 init                 : 0
 instruccion          : 2 3
 instrucciones        : 1 2
-opcion_herencia      : 6
+opcion_herencia      : 7
 
 Parsing method: LALR
 
@@ -46,15 +84,29 @@ state 0
     (2) instrucciones -> . instrucciones instruccion
     (3) instrucciones -> . instruccion
     (4) instruccion -> . create_Table
-    (5) create_Table -> . CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
-    (6) create_Table -> . CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
+    (5) instruccion -> . createDB_insrt
+    (6) create_Table -> . CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
+    (7) create_Table -> . CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
+    (12) createDB_insrt -> . CREATE DATABASE ID PTCOMA
+    (13) createDB_insrt -> . CREATE OR REPLACE DATABASE ID PTCOMA
+    (14) createDB_insrt -> . CREATE DATABASE IF NOT EXISTS ID PTCOMA
+    (15) createDB_insrt -> . CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA
+    (16) createDB_insrt -> . CREATE DATABASE ID createDB_unParam PTCOMA
+    (17) createDB_insrt -> . CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA
+    (18) createDB_insrt -> . CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+    (19) createDB_insrt -> . CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+    (24) createDB_insrt -> . CREATE DATABASE ID createDB_dosParam PTCOMA
+    (25) createDB_insrt -> . CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA
+    (26) createDB_insrt -> . CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
+    (27) createDB_insrt -> . CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
 
-    CREATE          shift and go to state 5
+    CREATE          shift and go to state 6
 
     init                           shift and go to state 1
     instrucciones                  shift and go to state 2
     instruccion                    shift and go to state 3
     create_Table                   shift and go to state 4
+    createDB_insrt                 shift and go to state 5
 
 state 1
 
@@ -67,14 +119,28 @@ state 2
     (1) init -> instrucciones .
     (2) instrucciones -> instrucciones . instruccion
     (4) instruccion -> . create_Table
-    (5) create_Table -> . CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
-    (6) create_Table -> . CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
+    (5) instruccion -> . createDB_insrt
+    (6) create_Table -> . CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
+    (7) create_Table -> . CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
+    (12) createDB_insrt -> . CREATE DATABASE ID PTCOMA
+    (13) createDB_insrt -> . CREATE OR REPLACE DATABASE ID PTCOMA
+    (14) createDB_insrt -> . CREATE DATABASE IF NOT EXISTS ID PTCOMA
+    (15) createDB_insrt -> . CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA
+    (16) createDB_insrt -> . CREATE DATABASE ID createDB_unParam PTCOMA
+    (17) createDB_insrt -> . CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA
+    (18) createDB_insrt -> . CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+    (19) createDB_insrt -> . CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+    (24) createDB_insrt -> . CREATE DATABASE ID createDB_dosParam PTCOMA
+    (25) createDB_insrt -> . CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA
+    (26) createDB_insrt -> . CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
+    (27) createDB_insrt -> . CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
 
     $end            reduce using rule 1 (init -> instrucciones .)
-    CREATE          shift and go to state 5
+    CREATE          shift and go to state 6
 
-    instruccion                    shift and go to state 6
+    instruccion                    shift and go to state 7
     create_Table                   shift and go to state 4
+    createDB_insrt                 shift and go to state 5
 
 state 3
 
@@ -94,13 +160,35 @@ state 4
 
 state 5
 
-    (5) create_Table -> CREATE . TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
-    (6) create_Table -> CREATE . TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
+    (5) instruccion -> createDB_insrt .
 
-    TABLE           shift and go to state 7
+    CREATE          reduce using rule 5 (instruccion -> createDB_insrt .)
+    $end            reduce using rule 5 (instruccion -> createDB_insrt .)
 
 
 state 6
+
+    (6) create_Table -> CREATE . TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
+    (7) create_Table -> CREATE . TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
+    (12) createDB_insrt -> CREATE . DATABASE ID PTCOMA
+    (13) createDB_insrt -> CREATE . OR REPLACE DATABASE ID PTCOMA
+    (14) createDB_insrt -> CREATE . DATABASE IF NOT EXISTS ID PTCOMA
+    (15) createDB_insrt -> CREATE . OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA
+    (16) createDB_insrt -> CREATE . DATABASE ID createDB_unParam PTCOMA
+    (17) createDB_insrt -> CREATE . OR REPLACE DATABASE ID createDB_unParam PTCOMA
+    (18) createDB_insrt -> CREATE . DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+    (19) createDB_insrt -> CREATE . OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+    (24) createDB_insrt -> CREATE . DATABASE ID createDB_dosParam PTCOMA
+    (25) createDB_insrt -> CREATE . OR REPLACE DATABASE ID createDB_dosParam PTCOMA
+    (26) createDB_insrt -> CREATE . DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
+    (27) createDB_insrt -> CREATE . OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
+
+    TABLE           shift and go to state 8
+    DATABASE        shift and go to state 9
+    OR              shift and go to state 10
+
+
+state 7
 
     (2) instrucciones -> instrucciones instruccion .
 
@@ -108,143 +196,703 @@ state 6
     $end            reduce using rule 2 (instrucciones -> instrucciones instruccion .)
 
 
-state 7
-
-    (5) create_Table -> CREATE TABLE . ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
-    (6) create_Table -> CREATE TABLE . ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
-
-    ID              shift and go to state 8
-
-
 state 8
 
-    (5) create_Table -> CREATE TABLE ID . PAR_A cuerpo_createTable_lista PAR_C PTCOMA
-    (6) create_Table -> CREATE TABLE ID . PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
+    (6) create_Table -> CREATE TABLE . ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
+    (7) create_Table -> CREATE TABLE . ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
 
-    PAR_A           shift and go to state 9
+    ID              shift and go to state 11
 
 
 state 9
 
-    (5) create_Table -> CREATE TABLE ID PAR_A . cuerpo_createTable_lista PAR_C PTCOMA
-    (6) create_Table -> CREATE TABLE ID PAR_A . cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
-    (7) cuerpo_createTable_lista -> . cuerpo_createTable_lista COMA cuerpo_createTable
-    (8) cuerpo_createTable_lista -> . cuerpo_createTable
-    (9) cuerpo_createTable -> . ID INTEGER
+    (12) createDB_insrt -> CREATE DATABASE . ID PTCOMA
+    (14) createDB_insrt -> CREATE DATABASE . IF NOT EXISTS ID PTCOMA
+    (16) createDB_insrt -> CREATE DATABASE . ID createDB_unParam PTCOMA
+    (18) createDB_insrt -> CREATE DATABASE . IF NOT EXISTS ID createDB_unParam PTCOMA
+    (24) createDB_insrt -> CREATE DATABASE . ID createDB_dosParam PTCOMA
+    (26) createDB_insrt -> CREATE DATABASE . IF NOT EXISTS ID createDB_dosParam PTCOMA
 
-    ID              shift and go to state 10
+    ID              shift and go to state 12
+    IF              shift and go to state 13
 
-    cuerpo_createTable_lista       shift and go to state 11
-    cuerpo_createTable             shift and go to state 12
 
 state 10
 
-    (9) cuerpo_createTable -> ID . INTEGER
+    (13) createDB_insrt -> CREATE OR . REPLACE DATABASE ID PTCOMA
+    (15) createDB_insrt -> CREATE OR . REPLACE DATABASE IF NOT EXISTS ID PTCOMA
+    (17) createDB_insrt -> CREATE OR . REPLACE DATABASE ID createDB_unParam PTCOMA
+    (19) createDB_insrt -> CREATE OR . REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+    (25) createDB_insrt -> CREATE OR . REPLACE DATABASE ID createDB_dosParam PTCOMA
+    (27) createDB_insrt -> CREATE OR . REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
 
-    INTEGER         shift and go to state 13
+    REPLACE         shift and go to state 14
 
 
 state 11
 
-    (5) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista . PAR_C PTCOMA
-    (6) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista . PAR_C opcion_herencia PTCOMA
-    (7) cuerpo_createTable_lista -> cuerpo_createTable_lista . COMA cuerpo_createTable
+    (6) create_Table -> CREATE TABLE ID . PAR_A cuerpo_createTable_lista PAR_C PTCOMA
+    (7) create_Table -> CREATE TABLE ID . PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
 
-    PAR_C           shift and go to state 14
-    COMA            shift and go to state 15
+    PAR_A           shift and go to state 15
 
 
 state 12
 
-    (8) cuerpo_createTable_lista -> cuerpo_createTable .
+    (12) createDB_insrt -> CREATE DATABASE ID . PTCOMA
+    (16) createDB_insrt -> CREATE DATABASE ID . createDB_unParam PTCOMA
+    (24) createDB_insrt -> CREATE DATABASE ID . createDB_dosParam PTCOMA
+    (20) createDB_unParam -> . OWNER ID
+    (21) createDB_unParam -> . MODE ENTERO
+    (22) createDB_unParam -> . OWNER IGUAL ID
+    (23) createDB_unParam -> . MODE IGUAL ENTERO
+    (28) createDB_dosParam -> . OWNER ID MODE ENTERO
+    (29) createDB_dosParam -> . OWNER ID MODE IGUAL ENTERO
+    (30) createDB_dosParam -> . MODE ENTERO OWNER ID
+    (31) createDB_dosParam -> . MODE ENTERO OWNER IGUAL ID
+    (32) createDB_dosParam -> . OWNER IGUAL ID MODE ENTERO
+    (33) createDB_dosParam -> . OWNER IGUAL ID MODE IGUAL ENTERO
+    (34) createDB_dosParam -> . MODE IGUAL ENTERO OWNER ID
+    (35) createDB_dosParam -> . MODE IGUAL ENTERO OWNER IGUAL ID
 
-    PAR_C           reduce using rule 8 (cuerpo_createTable_lista -> cuerpo_createTable .)
-    COMA            reduce using rule 8 (cuerpo_createTable_lista -> cuerpo_createTable .)
+    PTCOMA          shift and go to state 16
+    OWNER           shift and go to state 19
+    MODE            shift and go to state 20
 
+    createDB_unParam               shift and go to state 17
+    createDB_dosParam              shift and go to state 18
 
 state 13
 
-    (9) cuerpo_createTable -> ID INTEGER .
+    (14) createDB_insrt -> CREATE DATABASE IF . NOT EXISTS ID PTCOMA
+    (18) createDB_insrt -> CREATE DATABASE IF . NOT EXISTS ID createDB_unParam PTCOMA
+    (26) createDB_insrt -> CREATE DATABASE IF . NOT EXISTS ID createDB_dosParam PTCOMA
 
-    PAR_C           reduce using rule 9 (cuerpo_createTable -> ID INTEGER .)
-    COMA            reduce using rule 9 (cuerpo_createTable -> ID INTEGER .)
+    NOT             shift and go to state 21
 
 
 state 14
 
-    (5) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C . PTCOMA
-    (6) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C . opcion_herencia PTCOMA
-    (10) opcion_herencia -> . INHERITS PAR_A ID PAR_C
+    (13) createDB_insrt -> CREATE OR REPLACE . DATABASE ID PTCOMA
+    (15) createDB_insrt -> CREATE OR REPLACE . DATABASE IF NOT EXISTS ID PTCOMA
+    (17) createDB_insrt -> CREATE OR REPLACE . DATABASE ID createDB_unParam PTCOMA
+    (19) createDB_insrt -> CREATE OR REPLACE . DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
+    (25) createDB_insrt -> CREATE OR REPLACE . DATABASE ID createDB_dosParam PTCOMA
+    (27) createDB_insrt -> CREATE OR REPLACE . DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
 
-    PTCOMA          shift and go to state 16
-    INHERITS        shift and go to state 18
+    DATABASE        shift and go to state 22
 
-    opcion_herencia                shift and go to state 17
 
 state 15
 
-    (7) cuerpo_createTable_lista -> cuerpo_createTable_lista COMA . cuerpo_createTable
-    (9) cuerpo_createTable -> . ID INTEGER
+    (6) create_Table -> CREATE TABLE ID PAR_A . cuerpo_createTable_lista PAR_C PTCOMA
+    (7) create_Table -> CREATE TABLE ID PAR_A . cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA
+    (8) cuerpo_createTable_lista -> . cuerpo_createTable_lista COMA cuerpo_createTable
+    (9) cuerpo_createTable_lista -> . cuerpo_createTable
+    (10) cuerpo_createTable -> . ID INTEGER
 
-    ID              shift and go to state 10
+    ID              shift and go to state 23
 
-    cuerpo_createTable             shift and go to state 19
+    cuerpo_createTable_lista       shift and go to state 24
+    cuerpo_createTable             shift and go to state 25
 
 state 16
 
-    (5) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA .
+    (12) createDB_insrt -> CREATE DATABASE ID PTCOMA .
 
-    CREATE          reduce using rule 5 (create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA .)
-    $end            reduce using rule 5 (create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA .)
+    CREATE          reduce using rule 12 (createDB_insrt -> CREATE DATABASE ID PTCOMA .)
+    $end            reduce using rule 12 (createDB_insrt -> CREATE DATABASE ID PTCOMA .)
 
 
 state 17
 
-    (6) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia . PTCOMA
+    (16) createDB_insrt -> CREATE DATABASE ID createDB_unParam . PTCOMA
 
-    PTCOMA          shift and go to state 20
+    PTCOMA          shift and go to state 26
 
 
 state 18
 
-    (10) opcion_herencia -> INHERITS . PAR_A ID PAR_C
+    (24) createDB_insrt -> CREATE DATABASE ID createDB_dosParam . PTCOMA
 
-    PAR_A           shift and go to state 21
+    PTCOMA          shift and go to state 27
 
 
 state 19
 
-    (7) cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable .
+    (20) createDB_unParam -> OWNER . ID
+    (22) createDB_unParam -> OWNER . IGUAL ID
+    (28) createDB_dosParam -> OWNER . ID MODE ENTERO
+    (29) createDB_dosParam -> OWNER . ID MODE IGUAL ENTERO
+    (32) createDB_dosParam -> OWNER . IGUAL ID MODE ENTERO
+    (33) createDB_dosParam -> OWNER . IGUAL ID MODE IGUAL ENTERO
 
-    PAR_C           reduce using rule 7 (cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable .)
-    COMA            reduce using rule 7 (cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable .)
+    ID              shift and go to state 28
+    IGUAL           shift and go to state 29
 
 
 state 20
 
-    (6) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA .
+    (21) createDB_unParam -> MODE . ENTERO
+    (23) createDB_unParam -> MODE . IGUAL ENTERO
+    (30) createDB_dosParam -> MODE . ENTERO OWNER ID
+    (31) createDB_dosParam -> MODE . ENTERO OWNER IGUAL ID
+    (34) createDB_dosParam -> MODE . IGUAL ENTERO OWNER ID
+    (35) createDB_dosParam -> MODE . IGUAL ENTERO OWNER IGUAL ID
 
-    CREATE          reduce using rule 6 (create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA .)
-    $end            reduce using rule 6 (create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA .)
+    ENTERO          shift and go to state 30
+    IGUAL           shift and go to state 31
 
 
 state 21
 
-    (10) opcion_herencia -> INHERITS PAR_A . ID PAR_C
+    (14) createDB_insrt -> CREATE DATABASE IF NOT . EXISTS ID PTCOMA
+    (18) createDB_insrt -> CREATE DATABASE IF NOT . EXISTS ID createDB_unParam PTCOMA
+    (26) createDB_insrt -> CREATE DATABASE IF NOT . EXISTS ID createDB_dosParam PTCOMA
 
-    ID              shift and go to state 22
+    EXISTS          shift and go to state 32
 
 
 state 22
 
-    (10) opcion_herencia -> INHERITS PAR_A ID . PAR_C
+    (13) createDB_insrt -> CREATE OR REPLACE DATABASE . ID PTCOMA
+    (15) createDB_insrt -> CREATE OR REPLACE DATABASE . IF NOT EXISTS ID PTCOMA
+    (17) createDB_insrt -> CREATE OR REPLACE DATABASE . ID createDB_unParam PTCOMA
+    (19) createDB_insrt -> CREATE OR REPLACE DATABASE . IF NOT EXISTS ID createDB_unParam PTCOMA
+    (25) createDB_insrt -> CREATE OR REPLACE DATABASE . ID createDB_dosParam PTCOMA
+    (27) createDB_insrt -> CREATE OR REPLACE DATABASE . IF NOT EXISTS ID createDB_dosParam PTCOMA
 
-    PAR_C           shift and go to state 23
+    ID              shift and go to state 33
+    IF              shift and go to state 34
 
 
 state 23
 
-    (10) opcion_herencia -> INHERITS PAR_A ID PAR_C .
+    (10) cuerpo_createTable -> ID . INTEGER
 
-    PTCOMA          reduce using rule 10 (opcion_herencia -> INHERITS PAR_A ID PAR_C .)
+    INTEGER         shift and go to state 35
+
+
+state 24
+
+    (6) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista . PAR_C PTCOMA
+    (7) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista . PAR_C opcion_herencia PTCOMA
+    (8) cuerpo_createTable_lista -> cuerpo_createTable_lista . COMA cuerpo_createTable
+
+    PAR_C           shift and go to state 36
+    COMA            shift and go to state 37
+
+
+state 25
+
+    (9) cuerpo_createTable_lista -> cuerpo_createTable .
+
+    PAR_C           reduce using rule 9 (cuerpo_createTable_lista -> cuerpo_createTable .)
+    COMA            reduce using rule 9 (cuerpo_createTable_lista -> cuerpo_createTable .)
+
+
+state 26
+
+    (16) createDB_insrt -> CREATE DATABASE ID createDB_unParam PTCOMA .
+
+    CREATE          reduce using rule 16 (createDB_insrt -> CREATE DATABASE ID createDB_unParam PTCOMA .)
+    $end            reduce using rule 16 (createDB_insrt -> CREATE DATABASE ID createDB_unParam PTCOMA .)
+
+
+state 27
+
+    (24) createDB_insrt -> CREATE DATABASE ID createDB_dosParam PTCOMA .
+
+    CREATE          reduce using rule 24 (createDB_insrt -> CREATE DATABASE ID createDB_dosParam PTCOMA .)
+    $end            reduce using rule 24 (createDB_insrt -> CREATE DATABASE ID createDB_dosParam PTCOMA .)
+
+
+state 28
+
+    (20) createDB_unParam -> OWNER ID .
+    (28) createDB_dosParam -> OWNER ID . MODE ENTERO
+    (29) createDB_dosParam -> OWNER ID . MODE IGUAL ENTERO
+
+    PTCOMA          reduce using rule 20 (createDB_unParam -> OWNER ID .)
+    MODE            shift and go to state 38
+
+
+state 29
+
+    (22) createDB_unParam -> OWNER IGUAL . ID
+    (32) createDB_dosParam -> OWNER IGUAL . ID MODE ENTERO
+    (33) createDB_dosParam -> OWNER IGUAL . ID MODE IGUAL ENTERO
+
+    ID              shift and go to state 39
+
+
+state 30
+
+    (21) createDB_unParam -> MODE ENTERO .
+    (30) createDB_dosParam -> MODE ENTERO . OWNER ID
+    (31) createDB_dosParam -> MODE ENTERO . OWNER IGUAL ID
+
+    PTCOMA          reduce using rule 21 (createDB_unParam -> MODE ENTERO .)
+    OWNER           shift and go to state 40
+
+
+state 31
+
+    (23) createDB_unParam -> MODE IGUAL . ENTERO
+    (34) createDB_dosParam -> MODE IGUAL . ENTERO OWNER ID
+    (35) createDB_dosParam -> MODE IGUAL . ENTERO OWNER IGUAL ID
+
+    ENTERO          shift and go to state 41
+
+
+state 32
+
+    (14) createDB_insrt -> CREATE DATABASE IF NOT EXISTS . ID PTCOMA
+    (18) createDB_insrt -> CREATE DATABASE IF NOT EXISTS . ID createDB_unParam PTCOMA
+    (26) createDB_insrt -> CREATE DATABASE IF NOT EXISTS . ID createDB_dosParam PTCOMA
+
+    ID              shift and go to state 42
+
+
+state 33
+
+    (13) createDB_insrt -> CREATE OR REPLACE DATABASE ID . PTCOMA
+    (17) createDB_insrt -> CREATE OR REPLACE DATABASE ID . createDB_unParam PTCOMA
+    (25) createDB_insrt -> CREATE OR REPLACE DATABASE ID . createDB_dosParam PTCOMA
+    (20) createDB_unParam -> . OWNER ID
+    (21) createDB_unParam -> . MODE ENTERO
+    (22) createDB_unParam -> . OWNER IGUAL ID
+    (23) createDB_unParam -> . MODE IGUAL ENTERO
+    (28) createDB_dosParam -> . OWNER ID MODE ENTERO
+    (29) createDB_dosParam -> . OWNER ID MODE IGUAL ENTERO
+    (30) createDB_dosParam -> . MODE ENTERO OWNER ID
+    (31) createDB_dosParam -> . MODE ENTERO OWNER IGUAL ID
+    (32) createDB_dosParam -> . OWNER IGUAL ID MODE ENTERO
+    (33) createDB_dosParam -> . OWNER IGUAL ID MODE IGUAL ENTERO
+    (34) createDB_dosParam -> . MODE IGUAL ENTERO OWNER ID
+    (35) createDB_dosParam -> . MODE IGUAL ENTERO OWNER IGUAL ID
+
+    PTCOMA          shift and go to state 43
+    OWNER           shift and go to state 19
+    MODE            shift and go to state 20
+
+    createDB_unParam               shift and go to state 44
+    createDB_dosParam              shift and go to state 45
+
+state 34
+
+    (15) createDB_insrt -> CREATE OR REPLACE DATABASE IF . NOT EXISTS ID PTCOMA
+    (19) createDB_insrt -> CREATE OR REPLACE DATABASE IF . NOT EXISTS ID createDB_unParam PTCOMA
+    (27) createDB_insrt -> CREATE OR REPLACE DATABASE IF . NOT EXISTS ID createDB_dosParam PTCOMA
+
+    NOT             shift and go to state 46
+
+
+state 35
+
+    (10) cuerpo_createTable -> ID INTEGER .
+
+    PAR_C           reduce using rule 10 (cuerpo_createTable -> ID INTEGER .)
+    COMA            reduce using rule 10 (cuerpo_createTable -> ID INTEGER .)
+
+
+state 36
+
+    (6) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C . PTCOMA
+    (7) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C . opcion_herencia PTCOMA
+    (11) opcion_herencia -> . INHERITS PAR_A ID PAR_C
+
+    PTCOMA          shift and go to state 47
+    INHERITS        shift and go to state 49
+
+    opcion_herencia                shift and go to state 48
+
+state 37
+
+    (8) cuerpo_createTable_lista -> cuerpo_createTable_lista COMA . cuerpo_createTable
+    (10) cuerpo_createTable -> . ID INTEGER
+
+    ID              shift and go to state 23
+
+    cuerpo_createTable             shift and go to state 50
+
+state 38
+
+    (28) createDB_dosParam -> OWNER ID MODE . ENTERO
+    (29) createDB_dosParam -> OWNER ID MODE . IGUAL ENTERO
+
+    ENTERO          shift and go to state 51
+    IGUAL           shift and go to state 52
+
+
+state 39
+
+    (22) createDB_unParam -> OWNER IGUAL ID .
+    (32) createDB_dosParam -> OWNER IGUAL ID . MODE ENTERO
+    (33) createDB_dosParam -> OWNER IGUAL ID . MODE IGUAL ENTERO
+
+    PTCOMA          reduce using rule 22 (createDB_unParam -> OWNER IGUAL ID .)
+    MODE            shift and go to state 53
+
+
+state 40
+
+    (30) createDB_dosParam -> MODE ENTERO OWNER . ID
+    (31) createDB_dosParam -> MODE ENTERO OWNER . IGUAL ID
+
+    ID              shift and go to state 54
+    IGUAL           shift and go to state 55
+
+
+state 41
+
+    (23) createDB_unParam -> MODE IGUAL ENTERO .
+    (34) createDB_dosParam -> MODE IGUAL ENTERO . OWNER ID
+    (35) createDB_dosParam -> MODE IGUAL ENTERO . OWNER IGUAL ID
+
+    PTCOMA          reduce using rule 23 (createDB_unParam -> MODE IGUAL ENTERO .)
+    OWNER           shift and go to state 56
+
+
+state 42
+
+    (14) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID . PTCOMA
+    (18) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID . createDB_unParam PTCOMA
+    (26) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID . createDB_dosParam PTCOMA
+    (20) createDB_unParam -> . OWNER ID
+    (21) createDB_unParam -> . MODE ENTERO
+    (22) createDB_unParam -> . OWNER IGUAL ID
+    (23) createDB_unParam -> . MODE IGUAL ENTERO
+    (28) createDB_dosParam -> . OWNER ID MODE ENTERO
+    (29) createDB_dosParam -> . OWNER ID MODE IGUAL ENTERO
+    (30) createDB_dosParam -> . MODE ENTERO OWNER ID
+    (31) createDB_dosParam -> . MODE ENTERO OWNER IGUAL ID
+    (32) createDB_dosParam -> . OWNER IGUAL ID MODE ENTERO
+    (33) createDB_dosParam -> . OWNER IGUAL ID MODE IGUAL ENTERO
+    (34) createDB_dosParam -> . MODE IGUAL ENTERO OWNER ID
+    (35) createDB_dosParam -> . MODE IGUAL ENTERO OWNER IGUAL ID
+
+    PTCOMA          shift and go to state 57
+    OWNER           shift and go to state 19
+    MODE            shift and go to state 20
+
+    createDB_unParam               shift and go to state 58
+    createDB_dosParam              shift and go to state 59
+
+state 43
+
+    (13) createDB_insrt -> CREATE OR REPLACE DATABASE ID PTCOMA .
+
+    CREATE          reduce using rule 13 (createDB_insrt -> CREATE OR REPLACE DATABASE ID PTCOMA .)
+    $end            reduce using rule 13 (createDB_insrt -> CREATE OR REPLACE DATABASE ID PTCOMA .)
+
+
+state 44
+
+    (17) createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_unParam . PTCOMA
+
+    PTCOMA          shift and go to state 60
+
+
+state 45
+
+    (25) createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_dosParam . PTCOMA
+
+    PTCOMA          shift and go to state 61
+
+
+state 46
+
+    (15) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT . EXISTS ID PTCOMA
+    (19) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT . EXISTS ID createDB_unParam PTCOMA
+    (27) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT . EXISTS ID createDB_dosParam PTCOMA
+
+    EXISTS          shift and go to state 62
+
+
+state 47
+
+    (6) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA .
+
+    CREATE          reduce using rule 6 (create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA .)
+    $end            reduce using rule 6 (create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA .)
+
+
+state 48
+
+    (7) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia . PTCOMA
+
+    PTCOMA          shift and go to state 63
+
+
+state 49
+
+    (11) opcion_herencia -> INHERITS . PAR_A ID PAR_C
+
+    PAR_A           shift and go to state 64
+
+
+state 50
+
+    (8) cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable .
+
+    PAR_C           reduce using rule 8 (cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable .)
+    COMA            reduce using rule 8 (cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable .)
+
+
+state 51
+
+    (28) createDB_dosParam -> OWNER ID MODE ENTERO .
+
+    PTCOMA          reduce using rule 28 (createDB_dosParam -> OWNER ID MODE ENTERO .)
+
+
+state 52
+
+    (29) createDB_dosParam -> OWNER ID MODE IGUAL . ENTERO
+
+    ENTERO          shift and go to state 65
+
+
+state 53
+
+    (32) createDB_dosParam -> OWNER IGUAL ID MODE . ENTERO
+    (33) createDB_dosParam -> OWNER IGUAL ID MODE . IGUAL ENTERO
+
+    ENTERO          shift and go to state 67
+    IGUAL           shift and go to state 66
+
+
+state 54
+
+    (30) createDB_dosParam -> MODE ENTERO OWNER ID .
+
+    PTCOMA          reduce using rule 30 (createDB_dosParam -> MODE ENTERO OWNER ID .)
+
+
+state 55
+
+    (31) createDB_dosParam -> MODE ENTERO OWNER IGUAL . ID
+
+    ID              shift and go to state 68
+
+
+state 56
+
+    (34) createDB_dosParam -> MODE IGUAL ENTERO OWNER . ID
+    (35) createDB_dosParam -> MODE IGUAL ENTERO OWNER . IGUAL ID
+
+    ID              shift and go to state 70
+    IGUAL           shift and go to state 69
+
+
+state 57
+
+    (14) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID PTCOMA .
+
+    CREATE          reduce using rule 14 (createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID PTCOMA .)
+    $end            reduce using rule 14 (createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID PTCOMA .)
+
+
+state 58
+
+    (18) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_unParam . PTCOMA
+
+    PTCOMA          shift and go to state 71
+
+
+state 59
+
+    (26) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_dosParam . PTCOMA
+
+    PTCOMA          shift and go to state 72
+
+
+state 60
+
+    (17) createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA .
+
+    CREATE          reduce using rule 17 (createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA .)
+    $end            reduce using rule 17 (createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA .)
+
+
+state 61
+
+    (25) createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA .
+
+    CREATE          reduce using rule 25 (createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA .)
+    $end            reduce using rule 25 (createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA .)
+
+
+state 62
+
+    (15) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS . ID PTCOMA
+    (19) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS . ID createDB_unParam PTCOMA
+    (27) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS . ID createDB_dosParam PTCOMA
+
+    ID              shift and go to state 73
+
+
+state 63
+
+    (7) create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA .
+
+    CREATE          reduce using rule 7 (create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA .)
+    $end            reduce using rule 7 (create_Table -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA .)
+
+
+state 64
+
+    (11) opcion_herencia -> INHERITS PAR_A . ID PAR_C
+
+    ID              shift and go to state 74
+
+
+state 65
+
+    (29) createDB_dosParam -> OWNER ID MODE IGUAL ENTERO .
+
+    PTCOMA          reduce using rule 29 (createDB_dosParam -> OWNER ID MODE IGUAL ENTERO .)
+
+
+state 66
+
+    (33) createDB_dosParam -> OWNER IGUAL ID MODE IGUAL . ENTERO
+
+    ENTERO          shift and go to state 75
+
+
+state 67
+
+    (32) createDB_dosParam -> OWNER IGUAL ID MODE ENTERO .
+
+    PTCOMA          reduce using rule 32 (createDB_dosParam -> OWNER IGUAL ID MODE ENTERO .)
+
+
+state 68
+
+    (31) createDB_dosParam -> MODE ENTERO OWNER IGUAL ID .
+
+    PTCOMA          reduce using rule 31 (createDB_dosParam -> MODE ENTERO OWNER IGUAL ID .)
+
+
+state 69
+
+    (35) createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL . ID
+
+    ID              shift and go to state 76
+
+
+state 70
+
+    (34) createDB_dosParam -> MODE IGUAL ENTERO OWNER ID .
+
+    PTCOMA          reduce using rule 34 (createDB_dosParam -> MODE IGUAL ENTERO OWNER ID .)
+
+
+state 71
+
+    (18) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .
+
+    CREATE          reduce using rule 18 (createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .)
+    $end            reduce using rule 18 (createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .)
+
+
+state 72
+
+    (26) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .
+
+    CREATE          reduce using rule 26 (createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .)
+    $end            reduce using rule 26 (createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .)
+
+
+state 73
+
+    (15) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID . PTCOMA
+    (19) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID . createDB_unParam PTCOMA
+    (27) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID . createDB_dosParam PTCOMA
+    (20) createDB_unParam -> . OWNER ID
+    (21) createDB_unParam -> . MODE ENTERO
+    (22) createDB_unParam -> . OWNER IGUAL ID
+    (23) createDB_unParam -> . MODE IGUAL ENTERO
+    (28) createDB_dosParam -> . OWNER ID MODE ENTERO
+    (29) createDB_dosParam -> . OWNER ID MODE IGUAL ENTERO
+    (30) createDB_dosParam -> . MODE ENTERO OWNER ID
+    (31) createDB_dosParam -> . MODE ENTERO OWNER IGUAL ID
+    (32) createDB_dosParam -> . OWNER IGUAL ID MODE ENTERO
+    (33) createDB_dosParam -> . OWNER IGUAL ID MODE IGUAL ENTERO
+    (34) createDB_dosParam -> . MODE IGUAL ENTERO OWNER ID
+    (35) createDB_dosParam -> . MODE IGUAL ENTERO OWNER IGUAL ID
+
+    PTCOMA          shift and go to state 77
+    OWNER           shift and go to state 19
+    MODE            shift and go to state 20
+
+    createDB_unParam               shift and go to state 78
+    createDB_dosParam              shift and go to state 79
+
+state 74
+
+    (11) opcion_herencia -> INHERITS PAR_A ID . PAR_C
+
+    PAR_C           shift and go to state 80
+
+
+state 75
+
+    (33) createDB_dosParam -> OWNER IGUAL ID MODE IGUAL ENTERO .
+
+    PTCOMA          reduce using rule 33 (createDB_dosParam -> OWNER IGUAL ID MODE IGUAL ENTERO .)
+
+
+state 76
+
+    (35) createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL ID .
+
+    PTCOMA          reduce using rule 35 (createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL ID .)
+
+
+state 77
+
+    (15) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA .
+
+    CREATE          reduce using rule 15 (createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA .)
+    $end            reduce using rule 15 (createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA .)
+
+
+state 78
+
+    (19) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam . PTCOMA
+
+    PTCOMA          shift and go to state 81
+
+
+state 79
+
+    (27) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam . PTCOMA
+
+    PTCOMA          shift and go to state 82
+
+
+state 80
+
+    (11) opcion_herencia -> INHERITS PAR_A ID PAR_C .
+
+    PTCOMA          reduce using rule 11 (opcion_herencia -> INHERITS PAR_A ID PAR_C .)
+
+
+state 81
+
+    (19) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .
+
+    CREATE          reduce using rule 19 (createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .)
+    $end            reduce using rule 19 (createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .)
+
+
+state 82
+
+    (27) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .
+
+    CREATE          reduce using rule 27 (createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .)
+    $end            reduce using rule 27 (createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .)
 
