@@ -31,3 +31,6 @@ class TablaDeSimbolos() :
             print('Error: variable ', simbolo.id, ' no definida.')
         else :
             self.simbolos[simbolo.id] = simbolo
+
+    def clear(self):
+        self.simbolos = {}

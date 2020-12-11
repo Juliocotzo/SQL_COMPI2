@@ -32,25 +32,24 @@ def procesar_instrucciones(instrucciones,ts) :
         
         else : print('Error: instrucción no válida')
 
-f = open("./entrada.txt", "r")
-input = f.read()
+#f = open("./entrada.txt", "r")
+#input = f.read()
 
-instrucciones = g.parse(input)
-ts_global = TS.TablaDeSimbolos()
-procesar_instrucciones(instrucciones, ts_global)
-print("")
+#print("")
 
 
 
-dot3 = Digraph('TS', node_attr={'shape': 'plaintext','color': 'lightblue2'})
-cadena = "<\n"
-cadena = cadena + "<table border='1' cellborder='1'>\n"
-cadena = cadena + "<tr><td colspan='3'>Tabla de Simbolos</td></tr>"
-cadena = cadena + "<tr><td port='port_one'>Id</td><td port='port_two'>Tipo</td><td port='port_three'>Valor</td></tr>"
-for key in ts_global.simbolos:
-    cadena2 = "<tr><td port='port_one'>" + str(ts_global.simbolos[key].id) + "</td><td port='port_two'>" + str(ts_global.simbolos[key].tipo) + "</td><td port='port_three'>" + str(ts_global.simbolos[key].valor) + "</td></tr>\n"
-    cadena = cadena + cadena2
-cadena = cadena + "</table>"
-cadena = cadena + '>'
-dot3.node('tab', label=cadena)
-dot3.view('TS', cleanup=True)
+def ts_graph():
+    ts_global = TS.TablaDeSimbolos()
+    dot3 = Digraph('TS', node_attr={'shape': 'plaintext','color': 'lightblue2'})
+    cadena = "<\n"
+    cadena = cadena + "<table border='1' cellborder='1'>\n"
+    cadena = cadena + "<tr><td colspan='3'>Tabla de Simbolos</td></tr>"
+    cadena = cadena + "<tr><td port='port_one'>Id</td><td port='port_two'>Tipo</td><td port='port_three'>Valor</td></tr>"
+    for key in ts_global.simbolos:
+        cadena2 = "<tr><td port='port_one'>" + str(ts_global.simbolos[key].id) + "</td><td port='port_two'>" + str(ts_global.simbolos[key].tipo) + "</td><td port='port_three'>" + str(ts_global.simbolos[key].valor) + "</td></tr>\n"
+        cadena = cadena + cadena2
+    cadena = cadena + "</table>"
+    cadena = cadena + '>'
+    dot3.node('tab', label=cadena)
+    dot3.view('TS', cleanup=True)
