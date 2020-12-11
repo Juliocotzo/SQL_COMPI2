@@ -1,9 +1,10 @@
 # -----------------------------------------------------------------------------
 # Gramatica del Proyecto Fase 1 - Compiladores 2
 # -----------------------------------------------------------------------------
-
 from ply import lex
 import ply.yacc as yacc
+
+entradaa = ""
 
 reservadas = {
     'create' : 'CREATE',
@@ -25,8 +26,6 @@ t_PTCOMA        = r';'
 t_PAR_A         = r'\('
 t_PAR_C         = r'\)'
 t_COMA          = r','
-
-
 
 def t_FLOTANTE(t):
     r'\d+\.\d+'
@@ -75,19 +74,16 @@ def t_newline(t):
     
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
+    print('FILA: ' + str(t.lineno)+ ' COLUMNA: ' + str(find_column(entradaa,t)))
     t.lexer.skip(1)
-
-
 
 # Construyendo el analizador léxico
 import ply.lex as lex
 lexer = lex.lex()
-
 # Asociación de operadores y precedencia
 
 
 # Definición de la gramática
-
 from instrucciones import *
 from expresiones import *
 
@@ -100,7 +96,6 @@ def p_instrucciones_lista(t) :
     t[1].append(t[2])
     t[0] = t[1]
 
-
 def p_instrucciones_instruccion(t) :
     'instrucciones    : instruccion '
     t[0] = [t[1]]
@@ -112,7 +107,6 @@ def p_instruccion(t) :
 def p_create_Table(t) :
     '''create_Table :  CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
                        | CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA '''
-
     if t[7] == ';':
         t[0] = CrearTable(t[3],t[5])
     else:
@@ -131,27 +125,23 @@ def p_cuerpo_createTable_lista_(t):
     ' cuerpo_createTable : ID INTEGER'
     t[0] = Definicion(t[2],ExpresionIdentificador(t[1]))
 
-
-
 def p_herencia(t):
     ' opcion_herencia :  INHERITS PAR_A ID PAR_C '
     t[0] = ExpresionIdentificador(t[3])
 
 def p_error(t):
-    print("Error sintáctico en '%s'" % t.value, str(t.lineno),find_column(str(input), t))
+    print("Error sintáctico en '%s'" % t.value)
+    print('FILA: '+ str(t.lineno) + ' COLUMNA: ' + str(find_column(entradaa,t)) )
     
-
-
-
 def find_column(input, token):
     line_start = input.rfind('\n', 0, token.lexpos) + 1
-    print((token.lexpos - line_start) + 1)
     return (token.lexpos - line_start) + 1
-
 
 import ply.yacc as yacc
 parser = yacc.yacc()
 
 
 def parse(input) :
+    global entradaa
+    entradaa = input
     return parser.parse(input)

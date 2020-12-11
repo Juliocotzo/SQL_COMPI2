@@ -5,14 +5,14 @@ class Instruccion:
 
 class CrearTable(Instruccion):
 
-    def __init__(self, nombre_tabla  ,intrucc = []):
+    def __init__(self, nombre_tabla, intrucc = []):
         self.intrucc = intrucc
         self.nombre_tabla = nombre_tabla
 
 
 class CrearTable_Herencia(Instruccion):
 
-    def __init__(self,nombre_tabla, herencia  ,intrucc = []):
+    def __init__(self,nombre_tabla, herencia, intrucc = []):
         self.intrucc = intrucc
         self.nombre_tabla = nombre_tabla
         self.herencia = herencia
