@@ -1,0 +1,18 @@
+CREATE TABLE Estudiante(
+	carnet INTEGER,
+	carnet2 INTEGER,
+	carnet3 INTEGER,
+	carnet4 INTEGER
+);
+
+CREATE TABLE Materia(
+	codigo INTEGER
+);
+
+CREATE TABLE Maestro(
+	cod_trabajador INTEGER
+);
+
+CREATE TABLE asignacionCurso(
+	id_asignacion INTEGER
+)INHERITS (Estudiante);
