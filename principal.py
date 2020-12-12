@@ -3,13 +3,11 @@ import ts as TS
 from expresiones import *
 from instrucciones import *
 from graphviz import Digraph
+#from ast import *
 
 from storageManager import jsonMode as j
 
 salida = ""
-instrucciones_Global = None
-dot = Digraph('AST', node_attr={'shape': 'note','color': 'lightblue2', 'style': 'filled'})
-contadorNodos = 0
 
 def procesar_createTable(instr,ts) :
     # print('Crear Tabla Normal')
@@ -31,17 +29,6 @@ def procesar_Definicion(instr,ts) :
     ts.agregar(simbolo)
 
 def procesar_createDatabase(instr,ts) :
-    
-    '''if instr.usuario != None:
-        if type(instr.modo) == ExpresionNumero:
-            print(instr.nombre.id,instr.usuario.id,instr.modo.val)
-        else:
-            print(instr.nombre.id,instr.usuario.id,instr.modo)
-    else:
-        if type(instr.modo) == ExpresionNumero:
-            print(instr.nombre.id,instr.usuario,instr.modo.val)
-        else:
-            print(instr.nombre.id,instr.usuario,instr.modo)'''
 
     result = j.createDatabase(str(instr.nombre.id))
     
@@ -68,87 +55,15 @@ def procesar_instrucciones(instrucciones,ts) :
     return salida
 
 
+#f = open("./entrada.txt", "r")
+#input = f.read()
+#instrucciones = g.parse(input)
+#instrucciones_Global = instrucciones
+#ts_global = TS.TablaDeSimbolos()
+#procesar_instrucciones(instrucciones,ts_global)
 
-
-
-class Person:
-    def __init__(self):
-        print('HOLa')
-
-    def Ejecutar(self):
-        global instrucciones_Global, gram, tablaELexicos, tablaESintacticos
-        f = open("./entrada.txt", "r")
-        input = f.read()
-        instrucciones = g.parse(input)
-        instrucciones_Global = instrucciones
-        ts_global = TS.TablaDeSimbolos()
-        procesar_instrucciones(instrucciones,ts_global)
-
-    def generarAST(self):
-        global contadorNodos, dot, instrucciones_Global
-        dot = Digraph('AST')
-        contadorNodos = 2
-        dot.node('node1','INIT')
-        dot.node('node2','INSTRUCCIONES')
-        dot.edge('node1','node2')
-        indice = 0
-        while indice < len(instrucciones_Global) :
-            instruccion = instrucciones_Global[indice]
-            if isinstance(instruccion, CreateDatabase):
-                self.crearNodoCreateDatabase("node2", instruccion)
-            indice = indice +1
-        dot.view('Reportes/AST', cleanup=True)
-
-    def crearNodoCreateDatabase(self, padre, instruccion):
-        global  contadorNodos, dot
-        contadorNodos = contadorNodos + 1
-        dot.node("node" + str(contadorNodos), 'CREATE DATABASE')
-        dot.edge(padre, "node" + str(contadorNodos))
-        temp1 = "node" + str(contadorNodos)
-        self.crearNodoNombreDatabase(temp1,instruccion)
-        self.crearNodoUsuarioDatabase(temp1,instruccion)
-        self.crearNodoModoDatabase(temp1,instruccion)
-
-    def crearNodoNombreDatabase(self,padre,instruccion):
-        global  contadorNodos, dot
-        contadorNodos = contadorNodos + 1
-        dot.node("node" + str(contadorNodos), 'NOMBRE DATABASE')
-        dot.edge(padre, "node" + str(contadorNodos))
-        temp1 = "node" + str(contadorNodos)
-        self.crearNodoExpresion(temp1,instruccion.nombre)
-
-    def crearNodoUsuarioDatabase(self,padre,instruccion):
-        global  contadorNodos, dot
-        contadorNodos = contadorNodos + 1
-        dot.node("node" + str(contadorNodos), 'USUARIO DATABASE')
-        dot.edge(padre, "node" + str(contadorNodos))
-        temp1 = "node" + str(contadorNodos)
-        self.crearNodoExpresion(temp1,instruccion.usuario)
-
-    def crearNodoModoDatabase(self,padre,instruccion):
-        global  contadorNodos, dot
-        contadorNodos = contadorNodos + 1
-        dot.node("node" + str(contadorNodos), 'MODO DATABASE')
-        dot.edge(padre, "node" + str(contadorNodos))
-        temp1 = "node" + str(contadorNodos)
-        self.crearNodoExpresion(temp1,instruccion.modo)
-
-    def crearNodoExpresion(self, padre, expresion):
-        global contadorNodos, dot
-        if isinstance(expresion, ExpresionIdentificador):
-            contadorNodos = contadorNodos + 1
-            dot.node("node" + str(contadorNodos), str(expresion.id))
-            dot.edge(padre, "node" + str(contadorNodos))
-        elif isinstance(expresion, ExpresionNumero):
-            contadorNodos = contadorNodos + 1
-            dot.node("node" + str(contadorNodos), str(expresion.val))
-            dot.edge(padre, "node" + str(contadorNodos))
-
-p = Person()
-p.Ejecutar()
-p.generarAST()
-
-
+#astG = AST()
+#astG.generarAST(instrucciones)
 
 
 

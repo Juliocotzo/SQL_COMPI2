@@ -7,7 +7,9 @@ from principal import *
 import ts as TS
 from expresiones import *
 from instrucciones import *
+from ast import *
 
+instrucciones_Global = []
 
 root = Tk() 
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
@@ -19,8 +21,9 @@ selected = False
 
 # ACTIONS
 def analizar(txt):
-
+    global instrucciones_Global
     instrucciones = g.parse(txt)
+    instrucciones_Global = instrucciones
     ts_global = TS.TablaDeSimbolos()
     
     salida = procesar_instrucciones(instrucciones, ts_global)
@@ -33,12 +36,19 @@ def analizar(txt):
 def analizar_select(e):
     global selected
     if my_text.selection_get():
+        global instrucciones_Global
         selected = my_text.selection_get()
         print(selected)
         instrucciones = g.parse(selected)
+        instrucciones_Global = instrucciones
         ts_global = TS.TablaDeSimbolos()
         salida = procesar_instrucciones(instrucciones, ts_global)
         salida_table(2,salida)
+
+def generarReporteAST():
+    global instrucciones_Global
+    astGraph = AST()
+    astGraph.generarAST(instrucciones_Global)
 
 
 def graficar_TS():
@@ -84,7 +94,7 @@ file_menu.add_command(label = "Exit", command = root.quit)
 reportes_menu = Menu(my_menu, tearoff = False)
 my_menu.add_cascade(label = "Reportes", menu = reportes_menu)
 reportes_menu.add_command(label = "Tabla de Simbolos", command = lambda: graficar_TS())
-reportes_menu.add_command(label = "AST")
+reportes_menu.add_command(label = "AST", command = lambda: generarReporteAST())
 reportes_menu.add_command(label = "Errores")
 
 analizar_button = Button(toolbar_frame)
