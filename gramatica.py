@@ -113,35 +113,8 @@ def p_instrucciones_instruccion(t) :
     t[0] = [t[1]]
 
 def p_instruccion(t) :
-    '''instruccion      : create_Table
-                        | createDB_insrt'''
+    '''instruccion      : createDB_insrt'''
     t[0] = t[1]
-
-def p_create_Table(t) :
-    '''create_Table :  CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
-                       | CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C opcion_herencia PTCOMA '''
-    if t[7] == ';':
-        t[0] = CrearTable(t[3],t[5])
-    else:
-        t[0] = CrearTable_Herencia(t[3],t[7],t[5])     
-
-def p_cuerpo_createTable_lista(t):
-    ' cuerpo_createTable_lista : cuerpo_createTable_lista COMA cuerpo_createTable'
-    t[1].append(t[3])
-    t[0] = t[1]
-
-def p_cuerpo_createTable(t):
-    ' cuerpo_createTable_lista : cuerpo_createTable'
-    t[0] = [t[1]]
-
-def p_cuerpo_createTable_lista_(t):
-    ' cuerpo_createTable : ID INTEGER'
-    t[0] = Definicion(t[2],ExpresionIdentificador(t[1]))
-
-def p_herencia(t):
-    ' opcion_herencia :  INHERITS PAR_A ID PAR_C '
-    t[0] = ExpresionIdentificador(t[3])
-
 
 #----------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION CREATE DB------------'
@@ -173,68 +146,108 @@ def p_createDB_wRP_wIN(t):
 #************************************************
 def p_createDB_up(t):
     'createDB_insrt : CREATE DATABASE ID createDB_unParam PTCOMA'
+    if type(t[4]) == ExpresionIdentificador:
+        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4], 1)
+    else:
+        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), None, t[4])
+
 
 def p_createDB_wRP_up(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA'
+    if type(t[6]) == ExpresionIdentificador:
+        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6], 1)
+    else:
+        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), None, t[6])
 
 def p_createDB_wIfNot_up(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
+    if type(t[7]) == ExpresionIdentificador:
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], 1)
+    else:
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), None, t[7])
 
 def p_createDB_wRP_wIN_up(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
+    if type(t[7]) == ExpresionIdentificador:
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], 1)
+    else:
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), None, t[7])
 
 def p_createDB_unParam_Owner(t):
-    'createDB_unParam : OWNER ID'
-
-def p_createDB_un_Param_Mode(t):
-    'createDB_unParam : MODE ENTERO'
-
-def p_createDB_unParam_Owner_I(t):
-    'createDB_unParam : OWNER IGUAL ID'
-
-def p_createDB_un_Param_Mode_I(t):
-    'createDB_unParam : MODE IGUAL ENTERO'
-
-
+    '''createDB_unParam : OWNER ID
+                        | OWNER IGUAL ID
+                        | MODE ENTERO
+                        | MODE IGUAL ENTERO'''
+    if t[1] == 'OWNER':
+        if t[2] == '=':
+            t[0] = ExpresionIdentificador(t[3])
+        else:
+            t[0] = t[0] = ExpresionIdentificador(t[2])
+    elif  t[1] == 'MODE':
+        if t[2] == '=':
+            t[0] = ExpresionNumero(t[3])
+        else:
+            t[0] = t[0] = ExpresionNumero(t[2])
 #***********************************************
 '             CREATE DATABASE DOS PARAMETROS '
 #************************************************
 
 def p_createDB_dp(t):
     'createDB_insrt : CREATE DATABASE ID createDB_dosParam PTCOMA'
+    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4][0], t[4][1])
 
 def p_createDB_wRP_dp(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA'
+    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6][0], t[6][1])
 
 def p_createDB_wIfNot_dp(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA'
+    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7][0], t[7][1])
 
 def p_createDB_wRP_wIN_dp(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA'
+    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), t[9][0], t[9][1])
 
 def p_createDB_dosParam_Owner(t):
-    'createDB_dosParam : OWNER ID MODE ENTERO'
+    '''createDB_dosParam : OWNER ID MODE ENTERO
+                         | OWNER ID MODE IGUAL ENTERO
+                         | OWNER IGUAL ID MODE ENTERO
+                         | OWNER IGUAL ID MODE IGUAL ENTERO
+                         | MODE ENTERO OWNER ID
+                         | MODE ENTERO OWNER IGUAL ID
+                         | MODE IGUAL ENTERO OWNER ID
+                         | MODE IGUAL ENTERO OWNER IGUAL ID'''
 
-def p_createDB_dosParam_Owner_b(t):
-    'createDB_dosParam : OWNER ID MODE IGUAL ENTERO'
-
-def p_createDB_dosParam_Mode(t):
-    'createDB_dosParam : MODE ENTERO OWNER ID'
-
-def p_createDB_dosParam_Mode_b(t):
-    'createDB_dosParam : MODE ENTERO OWNER IGUAL ID'
-
-def p_createDB_dosParam_Owner_I(t):
-    'createDB_dosParam : OWNER IGUAL ID MODE ENTERO'
-
-def p_createDB_dosParam_Owner_I_b(t):
-    'createDB_dosParam : OWNER IGUAL ID MODE IGUAL ENTERO'
-
-def p_createDB_dosParam_Mode_I(t):
-    'createDB_dosParam : MODE IGUAL ENTERO OWNER ID'
-
-def p_createDB_dosParam_Mode_I_b(t):
-    'createDB_dosParam : MODE IGUAL ENTERO OWNER IGUAL ID'
+    temp = []     
+    if t[1] == 'OWNER' and t[3] == 'MODE':
+        if t[4] == '=':
+            temp.append(ExpresionIdentificador(t[2]))
+            temp.append(ExpresionNumero(t[5]))
+        else: 
+            temp.append(ExpresionIdentificador(t[2]))
+            temp.append(ExpresionNumero(t[4]))
+    elif t[1] == 'OWNER' and t[4] == 'MODE':
+        if t[5] == '=':
+            temp.append(ExpresionIdentificador(t[3]))
+            temp.append(ExpresionNumero(t[6]))
+        else: 
+            temp.append(ExpresionIdentificador(t[3]))
+            temp.append(ExpresionNumero(t[5]))
+    elif t[1] == 'MODE' and t[3] == 'OWNER':
+        if t[4] == '=':
+            temp.append(ExpresionIdentificador(t[5]))
+            temp.append(ExpresionNumero(t[2]))
+        else: 
+            temp.append(ExpresionIdentificador(t[4]))
+            temp.append(ExpresionNumero(t[2]))
+    elif t[1] == 'MODE' and t[4] == 'OWNER':
+        if t[5] == '=':
+            temp.append(ExpresionIdentificador(t[6]))
+            temp.append(ExpresionNumero(t[3]))
+        else: 
+            temp.append(ExpresionIdentificador(t[5]))
+            temp.append(ExpresionNumero(t[3]))
+    t[0] = temp
 
 def p_error(t):
     print("Error sintáctico en '%s'" % t.value)

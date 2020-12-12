@@ -28,30 +28,38 @@ def procesar_Definicion(instr,ts) :
     ts.agregar(simbolo)
 
 def procesar_createDatabase(instr,ts) :
-    print(instr.nombre.id,instr.usuario,instr.modo)
+    
+    if instr.usuario != None:
+        if type(instr.modo) == ExpresionNumero:
+            print(instr.nombre.id,instr.usuario.id,instr.modo.val)
+        else:
+            print(instr.nombre.id,instr.usuario.id,instr.modo)
+    else:
+        if type(instr.modo) == ExpresionNumero:
+            print(instr.nombre.id,instr.usuario,instr.modo.val)
+        else:
+            print(instr.nombre.id,instr.usuario,instr.modo)
+
     result = j.createDatabase(str(instr.nombre.id))
-    if instr.modo == 1:
-        if result == 0:
-            global salida
-            salida += "\nCREATE DATABASE"
-        # print("CREATE DATABASE")
-        elif result == 1 :
-            salida += "\nERROR:  internal_error \nSQL state: XX000 "
-            # print("ERROR:  internal_error \nSQL state: XX000 ")
-        elif result == 2 :
-            salida += "\nERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 "
-            # print("ERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 ")
+    
+    if result == 0:
+        global salida
+        salida = "\nCREATE DATABASE"
+        print("CREATE DATABASE")
+    elif result == 1 :
+        salida = "\nERROR:  internal_error \nSQL state: XX000 "
+        print("ERROR:  internal_error \nSQL state: XX000 ")
+    elif result == 2 :
+        salida = "\nERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 "
+        print("ERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 ")
 
 def procesar_instrucciones(instrucciones,ts) :
     global salida
     salida = ""
     ## lista de instrucciones recolectadas
     for instr in instrucciones :
-        if isinstance(instr, CrearTable) : procesar_createTable(instr,ts)
-        elif isinstance(instr, CrearTable_Herencia) : procesar_createTable_Herencia(instr,ts)
-        elif isinstance(instr, Definicion) : procesar_Definicion(instr,ts)
         #CREATE DATABASE
-        elif isinstance(instr,CreateDatabase) : procesar_createDatabase(instr,ts)
+        if isinstance(instr,CreateDatabase) : procesar_createDatabase(instr,ts)
         else : print('Error: instrucción no válida ' + str(instr))
 
     return salida
@@ -79,7 +87,7 @@ def ts_graph(ts_global):
     cadena = cadena + "</table>"
     cadena = cadena + '>'
     dot3.node('tab', label=cadena)
-    dot3.view('TS', cleanup=True)
+    dot3.view('Reportes/TS', cleanup=True)
 
 
 #ts_graph(ts_global)

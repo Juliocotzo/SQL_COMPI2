@@ -175,6 +175,7 @@ def salida_table(salida,textoSalida):
         my_text1.pack(fill=X)
         my_text1.delete(1.0,"end")
         my_text1.insert(1.0, textoSalida)
+        my_text1.config(state=DISABLED)
         
         
 
