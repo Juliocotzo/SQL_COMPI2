@@ -27,7 +27,7 @@ class AST:
             if isinstance(instruccion, CreateDatabase):
                 self.crearNodoCreateDatabase("node2", instruccion)
             indice = indice +1
-        dot.view('Reportes/AST', cleanup=True)
+        dot.view('reportes/AST', cleanup=True)
 
     def crearNodoCreateDatabase(self, padre, instruccion):
         global  contadorNodos, dot
