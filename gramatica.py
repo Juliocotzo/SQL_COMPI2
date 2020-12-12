@@ -178,12 +178,12 @@ def p_createDB_unParam_Owner(t):
                         | OWNER IGUAL ID
                         | MODE ENTERO
                         | MODE IGUAL ENTERO'''
-    if t[1] == 'OWNER':
+    if t[1].upper() == 'OWNER':
         if t[2] == '=':
             t[0] = ExpresionIdentificador(t[3])
         else:
             t[0] = t[0] = ExpresionIdentificador(t[2])
-    elif  t[1] == 'MODE':
+    elif  t[1].upper() == 'MODE':
         if t[2] == '=':
             t[0] = ExpresionNumero(t[3])
         else:
@@ -219,28 +219,28 @@ def p_createDB_dosParam_Owner(t):
                          | MODE IGUAL ENTERO OWNER IGUAL ID'''
 
     temp = []     
-    if t[1] == 'OWNER' and t[3] == 'MODE':
+    if t[1].upper() == 'OWNER' and t[3].upper() == 'MODE':
         if t[4] == '=':
             temp.append(ExpresionIdentificador(t[2]))
             temp.append(ExpresionNumero(t[5]))
         else: 
             temp.append(ExpresionIdentificador(t[2]))
             temp.append(ExpresionNumero(t[4]))
-    elif t[1] == 'OWNER' and t[4] == 'MODE':
+    elif t[1].upper() == 'OWNER' and t[4].upper() == 'MODE':
         if t[5] == '=':
             temp.append(ExpresionIdentificador(t[3]))
             temp.append(ExpresionNumero(t[6]))
         else: 
             temp.append(ExpresionIdentificador(t[3]))
             temp.append(ExpresionNumero(t[5]))
-    elif t[1] == 'MODE' and t[3] == 'OWNER':
+    elif t[1].upper() == 'MODE' and t[3].upper() == 'OWNER':
         if t[4] == '=':
             temp.append(ExpresionIdentificador(t[5]))
             temp.append(ExpresionNumero(t[2]))
         else: 
             temp.append(ExpresionIdentificador(t[4]))
             temp.append(ExpresionNumero(t[2]))
-    elif t[1] == 'MODE' and t[4] == 'OWNER':
+    elif t[1].upper() == 'MODE' and t[4].upper() == 'OWNER':
         if t[5] == '=':
             temp.append(ExpresionIdentificador(t[6]))
             temp.append(ExpresionNumero(t[3]))
