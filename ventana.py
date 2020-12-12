@@ -9,16 +9,7 @@ import tempfile
 
 instrucciones_Global = None
 dot = Digraph('AST', node_attr={'shape': 'note','color': 'lightblue2', 'style': 'filled'})
-dot2 = Digraph('Grammar', node_attr={'shape': 'plaintext','color': 'lightblue2'})
-dot3 = Digraph('TS', node_attr={'shape': 'plaintext','color': 'lightblue2'})
-dot4 = Digraph('Lexicos', node_attr={'shape': 'plaintext','color': 'lightblue2'})
-dot5 = Digraph('Lexicos', node_attr={'shape': 'plaintext','color': 'lightblue2'})
 contadorNodos = 0
-gram = []
-tablaSimbolos = []
-tablaELexicos = []
-tablaESintacticos = []
-tablaESemanticos = []
 
 
 class Person:

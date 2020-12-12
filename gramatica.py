@@ -126,19 +126,19 @@ def p_instruccion(t) :
 
 def p_createDB(t):
     'createDB_insrt : CREATE DATABASE ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), None, 1)
+    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), ExpresionIdentificador(""), ExpresionNumero(1))
 
 def p_createDB_wRP(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), None, 1)
+    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), ExpresionIdentificador(""), ExpresionNumero(1))
 
 def p_createDB_wIfNot(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), None, 1)
+    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), ExpresionNumero(1))
 
 def p_createDB_wRP_wIN(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), None, 1)
+    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), ExpresionIdentificador(""), ExpresionNumero(1))
 
 
 #***********************************************
@@ -147,31 +147,31 @@ def p_createDB_wRP_wIN(t):
 def p_createDB_up(t):
     'createDB_insrt : CREATE DATABASE ID createDB_unParam PTCOMA'
     if type(t[4]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4], 1)
+        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4], ExpresionNumero(1))
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), None, t[4])
+        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), ExpresionIdentificador(""), t[4])
 
 
 def p_createDB_wRP_up(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA'
     if type(t[6]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6], 1)
+        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6], ExpresionNumero(1))
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), None, t[6])
+        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), ExpresionIdentificador(""), t[6])
 
 def p_createDB_wIfNot_up(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
     if type(t[7]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], 1)
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], ExpresionNumero(1))
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), None, t[7])
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), t[7])
 
 def p_createDB_wRP_wIN_up(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
     if type(t[7]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], 1)
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], ExpresionNumero(1))
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), None, t[7])
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), t[7])
 
 def p_createDB_unParam_Owner(t):
     '''createDB_unParam : OWNER ID
@@ -233,14 +233,14 @@ def p_createDB_dosParam_Owner(t):
         else: 
             temp.append(ExpresionIdentificador(t[3]))
             temp.append(ExpresionNumero(t[5]))
-    elif t[1].upper() == 'MODE' and t[3].upper() == 'OWNER':
+    elif t[1].upper() == 'MODE' and type(t[3]) != int:
         if t[4] == '=':
             temp.append(ExpresionIdentificador(t[5]))
             temp.append(ExpresionNumero(t[2]))
         else: 
             temp.append(ExpresionIdentificador(t[4]))
             temp.append(ExpresionNumero(t[2]))
-    elif t[1].upper() == 'MODE' and t[4].upper() == 'OWNER':
+    elif t[1].upper() == 'MODE' and type(t[3]) == int:
         if t[5] == '=':
             temp.append(ExpresionIdentificador(t[6]))
             temp.append(ExpresionNumero(t[3]))
