@@ -1,36 +1,32 @@
-from enum import Enum
 
-class TIPO_DATO(Enum) :
-    CREATE_TABLE = 1
-
-class Simbolo() :
-    'Esta clase representa un simbolo dentro de nuestra tabla de simbolos'
+class Tipo() :
+    'Esta clase representa un tipo dentro de nuestra tabla de tipos'
 
     def __init__(self, id, tipo, valor) :
         self.id = id
         self.tipo = tipo
         self.valor = valor
 
-class TablaDeSimbolos() :
-    'Esta clase representa la tabla de simbolos'
+class TablaDeTipos() :
+    'Esta clase representa la tabla de tipos'
 
-    def __init__(self, simbolos = {}) :
-        self.simbolos = simbolos
+    def __init__(self, tipos = {}) :
+        self.tipos = tipos
 
-    def agregar(self, simbolo) :
-        self.simbolos[simbolo.id] = simbolo
+    def agregar(self, tipo) :
+        self.tipos[tipo.id] = tipo
     
     def obtener(self, id) :
-        if not id in self.simbolos :
+        if not id in self.tipos :
             print('Error: variable ', id, ' no definida.')
 
-        return self.simbolos[id]
+        return self.tipos[id]
 
-    def actualizar(self, simbolo) :
-        if not simbolo.id in self.simbolos :
-            print('Error: variable ', simbolo.id, ' no definida.')
+    def actualizar(self, tipo) :
+        if not tipo.id in self.tipos :
+            print('Error: variable ', tipo.id, ' no definida.')
         else :
-            self.simbolos[simbolo.id] = simbolo
+            self.tipos[tipo.id] = tipo
 
     def clear(self):
-        self.simbolos = {}
+        self.tipos = {}

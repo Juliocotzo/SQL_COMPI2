@@ -1,0 +1,11 @@
+CREATE TABLE asignacionCurso(
+	id_asignacion INTEGER NULL,
+	prueba INTEGER NULL,
+	Nombre Integer,
+	Apellido varchar(30),
+	PRIMARY KEY (id_asignacion),
+	FOREING KEY (prueba) REFERENCES CURSO(id_curso),
+	UNIQUE(Nombre)
+);
+
+
