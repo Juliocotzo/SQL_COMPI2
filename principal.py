@@ -100,6 +100,16 @@ def procesar_createDatabase(instr,ts,tc) :
         salida = "\nERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 "
         print("ERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 ")
 
+def procesar_showDatabases(instr,ts,tc):
+    global salida
+    data = []
+    dataTables = j.showDatabases()
+    data.append(['databases'])
+    for databases in dataTables:
+        data.append([databases])
+
+    salida = data
+
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
         global salida
@@ -112,10 +122,10 @@ def procesar_instrucciones(instrucciones,ts,tc) :
             elif isinstance(instr, ExpresionRelacional) : procesar_Expresion_Relacional(instr,ts,tc)
             elif isinstance(instr, ExpresionBinaria) : procesar_Expresion_Binaria(instr,ts,tc)
             elif isinstance(instr, ExpresionLogica) : procesar_Expresion_logica(instr,ts,tc)
+            elif isinstance(instr, showDatabases) : procesar_showDatabases(instr,ts,tc)
             
             else : print('Error: instrucción no válida ' + str(instr))
 
-        salida = []
         return salida 
     except:
         pass
@@ -129,8 +139,8 @@ ts_global = TS.TablaDeSimbolos()
 tc_global = TC.TablaDeTipos()
 procesar_instrucciones(instrucciones,ts_global,tc_global)
 erroressss = ErrorHTML()
-erroressss.crearReporte()'''
-'''astG = AST()
+erroressss.crearReporte()
+astG = AST()
 astG.generarAST(instrucciones)
 typeC = TipeChecker()
 typeC.crearReporte(tc_global)'''

@@ -61,3 +61,7 @@ class definicion_constraint(Instruccion):
         self.referencia = referencia
         self.columna = columna
         self.opciones_constraint = opciones_contraint
+
+class showDatabases(Instruccion):
+    def __init__(self):
+        ''' SHOW DATABASES'''

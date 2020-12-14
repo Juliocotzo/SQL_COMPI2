@@ -35,15 +35,7 @@ def analizar(txt):
     tc_global = TC.TablaDeTipos()
     tc_global1 = tc_global
     salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
-    salida = [
-        ['id_usuario','usuario','contrasenia'],
-        [11,'usuario1','password1'],
-        [22,'usuario2'],
-        [33,'usuario3','password3'],
-        ]
-    print(type(salida))
-    print("analizando...")
-    print(txt)
+
     if type(salida) == list:
         salida_table(1,salida)
     else:
@@ -194,15 +186,13 @@ def salida_table(salida,textoSalida):
         my_tree.pack(fill = X)
 
     else:
-        global salida_frame1
         try:
-            global salida_frame1
-            salida_frame1.destroy()
+            salida_frame.destroy()
         except:
             pass
-        salida_frame1 = LabelFrame(root, text = "Salida")
-        salida_frame1.pack(fill = X)
-        my_text1 = Text(salida_frame1)
+        salida_frame = LabelFrame(root, text = "Salida")
+        salida_frame.pack(fill = X)
+        my_text1 = Text(salida_frame)
         my_text1.pack(fill=X)
         my_text1.delete(1.0,"end")
         my_text1.insert(1.0, textoSalida)

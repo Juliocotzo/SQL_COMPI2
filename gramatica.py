@@ -17,6 +17,8 @@ reservadas = {
     'table':'TABLE',
     'inherits': 'INHERITS',
     'integer': 'INTEGER',
+    'show': 'SHOW',
+    'databases': 'DATABASES',
     # CREATE DATABASE
     'database': 'DATABASE',
     'if' : 'IF',
@@ -332,9 +334,6 @@ def t_newline(t):
     
 def t_error(t):
     print("Illegal character '%s'" % t.value[0], t.lineno, t.lexpos)
-    global reporte_lexico
-    reporte_lexico += "<tr> <td> Lexico </td> <td>" + t.value[0] + "</td>" + "<td>" + str(t.lineno) + "</td> <td> "+ str(t.lexpos)+"</td></th>"
-    
     errorLexico = Error(str(t.value[0]),int(t.lineno),int(t.lexpos), "Error Lexico")
     listaErrores.append(errorLexico)
     t.lexer.skip(1)
@@ -380,8 +379,19 @@ def p_instrucciones_instruccion(t) :
 
 def p_instruccion(t) :
     '''instruccion      : createDB_insrt
-                        | create_Table_isnrt'''
+                        | create_Table_isnrt
+                        | show_databases_instr'''
     t[0] = t[1]
+
+#---------------------------------------------------------------------
+' -----------GRAMATICA PARA LA INSTRUCCION SHOW DATABASES------------'
+#---------------------------------------------------------------------
+
+
+def p_instruccion_show_databases(t):
+    'show_databases_instr : SHOW DATABASES PTCOMA'
+    t[0] = showDatabases()
+
 
 #----------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION CREATE DB------------'
