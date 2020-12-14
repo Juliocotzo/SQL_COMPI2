@@ -145,12 +145,24 @@ def procesar_dropDatabase(instr,ts,tc):
 
 def procesar_useDatabase(instr,ts,tc):
     #print(instr.id.id)
+    global salida, useCurrentDatabase
+    encontrado = False
     dataTables = j.showDatabases()
-    print(dataTables)
+    for databases in dataTables:
+        if databases == instr.id.id:
+            encontrado = True
+    
+    if encontrado:
+        global salida, useCurrentDatabase
+        useCurrentDatabase = str(instr.id.id)
+        salida = "\nYou are now connected to database  \"" + str(instr.id.id) +"\""
+    else: 
+        salida = "\nERROR:  database \"" + str(instr.id.id) +"\" does not exist \nSQL state: 3D000"
+        
 
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
-        global salida
+        global salida,useCurrentDatabase
         salida = ""
         ## lista de instrucciones recolectadas
         for instr in instrucciones :
@@ -165,7 +177,6 @@ def procesar_instrucciones(instrucciones,ts,tc) :
             elif isinstance(instr, useDatabase) : procesar_useDatabase(instr,ts,tc)
             
             else : print('Error: instrucción no válida ' + str(instr))
-
         return salida 
     except:
         pass
