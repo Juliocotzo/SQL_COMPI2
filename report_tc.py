@@ -42,18 +42,19 @@ class TipeChecker:
         f.write("                    </tr>")
         f.write("                </thead>")
         f.write("                <tbody>")
-        i = 0
-        while i < len(tc_global.tipos):
-            f.write("                    <tr>")
-            f.write("                        <td class=\"text-left\">"+ str(i+1) +"</td>")
-            f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].tabla) +"</td>")
-            f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].id) +"</td>")
-            f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].tipo) +"</td>")
-            f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].restriccion) +"</td>")
-            f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].referencia) +"</td>")
-            f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].tablaRef) +"</td>")
-            f.write("                    </tr>")
-            i += 1
+        if len(tc_global.tipos) > 0:
+            i = 0
+            while i < len(tc_global.tipos):
+                f.write("                    <tr>")
+                f.write("                        <td class=\"text-left\">"+ str(i+1) +"</td>")
+                f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].tabla) +"</td>")
+                f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].id) +"</td>")
+                f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].tipo) +"</td>")
+                f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].restriccion) +"</td>")
+                f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].referencia) +"</td>")
+                f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].tablaRef) +"</td>")
+                f.write("                    </tr>")
+                i += 1
         f.write("                </tbody>")
         f.write("            </table>")
         f.write("        </div>")

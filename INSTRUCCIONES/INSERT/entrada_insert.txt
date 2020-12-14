@@ -1,0 +1,5 @@
+insert into Prueba(hola,carlos) values('hola','carro');
+
+
+insert into Prueba() values('hola','mario');
+

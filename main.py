@@ -34,10 +34,13 @@ def analizar(txt):
     tc_global = TC.TablaDeTipos()
     tc_global1 = tc_global
     salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
-
+    print(type(salida))
     print("analizando...")
     print(txt)
-    salida_table(2,salida)
+    if type(salida) == list:
+        salida_table(1,salida)
+    else:
+        salida_table(2,salida)
     #parse(txt)
 
 def analizar_select(e):

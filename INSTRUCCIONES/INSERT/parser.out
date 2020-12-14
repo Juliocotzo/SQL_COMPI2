@@ -1,0 +1,1050 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ABS
+    ACOS
+    ACOSD
+    ACOSH
+    ADD
+    ALL
+    ALTER
+    AND
+    ANY
+    AS
+    ASC
+    ASIN
+    ASIND
+    ASINH
+    ATAN
+    ATAN2
+    ATAN2D
+    ATAND
+    ATANH
+    AVG
+    BETWEEN
+    BIGINT
+    BY
+    CASE
+    CBRT
+    CEIL
+    CEILING
+    CEJILLA
+    CHAR
+    CHARACTER
+    CHECK
+    COLUMN
+    CONSTRAINT
+    CONVERT
+    COS
+    COSD
+    COSH
+    COT
+    COTD
+    COUNT
+    CREATE
+    CURRENT_DATE
+    CURRENT_TIME
+    CURRENT_USER
+    DATABASE
+    DATE
+    DATE_PART
+    DAY
+    DECIMAL
+    DECODE
+    DEGREES
+    DELETE
+    DESC
+    DISTINCT
+    DIV
+    DOUBLE
+    DROP
+    D_OR
+    ELSE
+    ENCODE
+    END
+    ENUM
+    EXCEPT
+    EXISTS
+    EXP
+    EXTRACT
+    FACTORIAL
+    FALSE
+    FLOAT
+    FLOOR
+    FOREIGN
+    FOREING
+    FROM
+    FULL
+    GCD
+    GET_BYTE
+    GROUP
+    HASHTAG
+    HAVING
+    HOUR
+    IN
+    INHERITS
+    INNER
+    INTEGER
+    INTERSECT
+    INTERVAL
+    IS
+    ISNULL
+    JOIN
+    KEY
+    LCM
+    LEFT
+    LENGTH
+    LIKE
+    LIMIT
+    LN
+    LOG
+    LOG10
+    MAX
+    MAYMAY
+    MD5
+    MENMEN
+    MIN
+    MINUTE
+    MIN_SCALE
+    MOD
+    MODULO
+    MONEY
+    MONTH
+    MULTI
+    NATURAL
+    NOT
+    NOTNULL
+    NOW
+    NULL
+    NUMERIC
+    OFFSET
+    ON
+    ONLY
+    OR
+    ORDER
+    OUTER
+    OWNER
+    PI
+    POWER
+    PRECISION
+    PRIMARY
+    RADIANS
+    RANDOM
+    REAL
+    REFERENCES
+    RENAME
+    RETURNING
+    RIGHT
+    ROUND
+    SCALE
+    SECOND
+    SELECT
+    SESSION_USER
+    SET
+    SETSEED
+    SET_BYTE
+    SHA256
+    SIGN
+    SIN
+    SIND
+    SINH
+    SMALLINT
+    SOME
+    SQRT
+    SUBSTR
+    SUBSTRING
+    SUM
+    SYMMETRIC
+    S_OR
+    TABLE
+    TAN
+    TAND
+    TANH
+    TEXT
+    THEN
+    TIME
+    TIMESTAMP
+    TO
+    TRIM
+    TRIM_SCALE
+    TRUC
+    TRUE
+    TYPE
+    UNION
+    UNIQUE
+    UNKNOWN
+    UPDATE
+    USE
+    USING
+    VARCHAR
+    VARYING
+    WHEN
+    WHERE
+    WIDTH_BUCKET
+    Y
+    YEAR
+
+Grammar
+
+Rule 0     S' -> init
+Rule 1     init -> instrucciones
+Rule 2     instrucciones -> instrucciones instruccion
+Rule 3     instrucciones -> instruccion
+Rule 4     instruccion -> insert_insrt
+Rule 5     insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+Rule 6     insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+Rule 7     insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA
+Rule 8     lista_parametros_lista -> lista_parametros_lista COMA ID
+Rule 9     lista_parametros_lista -> ID
+Rule 10    lista_datos -> lista_datos COMA expresion
+Rule 11    lista_datos -> expresion
+Rule 12    agrupacion_expresion -> PAR_A expresion PAR_C
+Rule 13    expresion -> CADENA
+Rule 14    expresion -> ENTERO
+Rule 15    expresion -> FLOTANTE
+Rule 16    expresion -> ID
+Rule 17    expresion -> ID PUNTO ID
+Rule 18    expresion -> expresion SUMA expresion
+Rule 19    expresion -> expresion RESTA expresion
+Rule 20    expresion -> expresion DIVISION expresion
+Rule 21    expresion -> expresion ASTERISCO expresion
+Rule 22    expresion_relacional -> expresion MAYQUE expresion
+Rule 23    expresion_relacional -> expresion MENQUE expresion
+Rule 24    expresion_relacional -> expresion MAYIGQUE expresion
+Rule 25    expresion_relacional -> expresion MENIGQUE expresion
+Rule 26    expresion_relacional -> expresion DOBLEIG expresion
+Rule 27    expresion_relacional -> expresion IGUAL expresion
+Rule 28    expresion_relacional -> expresion NOIG expresion
+Rule 29    expresion_relacional -> expresion NOIGUAL expresion
+
+Terminals, with rules where they appear
+
+ABS                  : 
+ACOS                 : 
+ACOSD                : 
+ACOSH                : 
+ADD                  : 
+ALL                  : 
+ALTER                : 
+AND                  : 
+ANY                  : 
+AS                   : 
+ASC                  : 
+ASIN                 : 
+ASIND                : 
+ASINH                : 
+ASTERISCO            : 21
+ATAN                 : 
+ATAN2                : 
+ATAN2D               : 
+ATAND                : 
+ATANH                : 
+AVG                  : 
+BETWEEN              : 
+BIGINT               : 
+BY                   : 
+CADENA               : 13
+CASE                 : 
+CBRT                 : 
+CEIL                 : 
+CEILING              : 
+CEJILLA              : 
+CHAR                 : 
+CHARACTER            : 
+CHECK                : 
+COLUMN               : 
+COMA                 : 8 10
+CONSTRAINT           : 
+CONVERT              : 
+COS                  : 
+COSD                 : 
+COSH                 : 
+COT                  : 
+COTD                 : 
+COUNT                : 
+CREATE               : 
+CURRENT_DATE         : 
+CURRENT_TIME         : 
+CURRENT_USER         : 
+DATABASE             : 
+DATE                 : 
+DATE_PART            : 
+DAY                  : 
+DECIMAL              : 
+DECODE               : 
+DEGREES              : 
+DELETE               : 
+DESC                 : 
+DISTINCT             : 
+DIV                  : 
+DIVISION             : 20
+DOBLEIG              : 26
+DOUBLE               : 
+DROP                 : 
+D_OR                 : 
+ELSE                 : 
+ENCODE               : 
+END                  : 
+ENTERO               : 14
+ENUM                 : 
+EXCEPT               : 
+EXISTS               : 
+EXP                  : 
+EXTRACT              : 
+FACTORIAL            : 
+FALSE                : 
+FLOAT                : 
+FLOOR                : 
+FLOTANTE             : 15
+FOREIGN              : 
+FOREING              : 
+FROM                 : 
+FULL                 : 
+GCD                  : 
+GET_BYTE             : 
+GROUP                : 
+HASHTAG              : 
+HAVING               : 
+HOUR                 : 
+ID                   : 5 6 7 8 9 16 17 17
+IGUAL                : 27
+IN                   : 
+INHERITS             : 
+INNER                : 
+INSERT               : 5 6 7
+INTEGER              : 
+INTERSECT            : 
+INTERVAL             : 
+INTO                 : 5 6 7
+IS                   : 
+ISNULL               : 
+JOIN                 : 
+KEY                  : 
+LCM                  : 
+LEFT                 : 
+LENGTH               : 
+LIKE                 : 
+LIMIT                : 
+LN                   : 
+LOG                  : 
+LOG10                : 
+MAX                  : 
+MAYIGQUE             : 24
+MAYMAY               : 
+MAYQUE               : 22
+MD5                  : 
+MENIGQUE             : 25
+MENMEN               : 
+MENQUE               : 23
+MIN                  : 
+MINUTE               : 
+MIN_SCALE            : 
+MOD                  : 
+MODULO               : 
+MONEY                : 
+MONTH                : 
+MULTI                : 
+NATURAL              : 
+NOIG                 : 28
+NOIGUAL              : 29
+NOT                  : 
+NOTNULL              : 
+NOW                  : 
+NULL                 : 
+NUMERIC              : 
+OFFSET               : 
+ON                   : 
+ONLY                 : 
+OR                   : 
+ORDER                : 
+OUTER                : 
+OWNER                : 
+PAR_A                : 5 5 6 6 7 12
+PAR_C                : 5 5 6 6 7 12
+PI                   : 
+POWER                : 
+PRECISION            : 
+PRIMARY              : 
+PTCOMA               : 5 6 7
+PUNTO                : 17
+RADIANS              : 
+RANDOM               : 
+REAL                 : 
+REFERENCES           : 
+RENAME               : 
+RESTA                : 19
+RETURNING            : 
+RIGHT                : 
+ROUND                : 
+SCALE                : 
+SECOND               : 
+SELECT               : 
+SESSION_USER         : 
+SET                  : 
+SETSEED              : 
+SET_BYTE             : 
+SHA256               : 
+SIGN                 : 
+SIN                  : 
+SIND                 : 
+SINH                 : 
+SMALLINT             : 
+SOME                 : 
+SQRT                 : 
+SUBSTR               : 
+SUBSTRING            : 
+SUM                  : 
+SUMA                 : 18
+SYMMETRIC            : 
+S_OR                 : 
+TABLE                : 
+TAN                  : 
+TAND                 : 
+TANH                 : 
+TEXT                 : 
+THEN                 : 
+TIME                 : 
+TIMESTAMP            : 
+TO                   : 
+TRIM                 : 
+TRIM_SCALE           : 
+TRUC                 : 
+TRUE                 : 
+TYPE                 : 
+UNION                : 
+UNIQUE               : 
+UNKNOWN              : 
+UPDATE               : 
+USE                  : 
+USING                : 
+VALUES               : 5 6 7
+VARCHAR              : 
+VARYING              : 
+WHEN                 : 
+WHERE                : 
+WIDTH_BUCKET         : 
+Y                    : 
+YEAR                 : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+agrupacion_expresion : 
+expresion            : 10 11 12 18 18 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 28 28 29 29
+expresion_relacional : 
+init                 : 0
+insert_insrt         : 4
+instruccion          : 2 3
+instrucciones        : 1 2
+lista_datos          : 5 6 7 10
+lista_parametros_lista : 5 8
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . init
+    (1) init -> . instrucciones
+    (2) instrucciones -> . instrucciones instruccion
+    (3) instrucciones -> . instruccion
+    (4) instruccion -> . insert_insrt
+    (5) insert_insrt -> . INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (6) insert_insrt -> . INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (7) insert_insrt -> . INSERT INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA
+
+    INSERT          shift and go to state 5
+
+    init                           shift and go to state 1
+    instrucciones                  shift and go to state 2
+    instruccion                    shift and go to state 3
+    insert_insrt                   shift and go to state 4
+
+state 1
+
+    (0) S' -> init .
+
+
+
+state 2
+
+    (1) init -> instrucciones .
+    (2) instrucciones -> instrucciones . instruccion
+    (4) instruccion -> . insert_insrt
+    (5) insert_insrt -> . INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (6) insert_insrt -> . INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (7) insert_insrt -> . INSERT INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA
+
+    $end            reduce using rule 1 (init -> instrucciones .)
+    INSERT          shift and go to state 5
+
+    instruccion                    shift and go to state 6
+    insert_insrt                   shift and go to state 4
+
+state 3
+
+    (3) instrucciones -> instruccion .
+
+    INSERT          reduce using rule 3 (instrucciones -> instruccion .)
+    $end            reduce using rule 3 (instrucciones -> instruccion .)
+
+
+state 4
+
+    (4) instruccion -> insert_insrt .
+
+    INSERT          reduce using rule 4 (instruccion -> insert_insrt .)
+    $end            reduce using rule 4 (instruccion -> insert_insrt .)
+
+
+state 5
+
+    (5) insert_insrt -> INSERT . INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (6) insert_insrt -> INSERT . INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (7) insert_insrt -> INSERT . INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA
+
+    INTO            shift and go to state 7
+
+
+state 6
+
+    (2) instrucciones -> instrucciones instruccion .
+
+    INSERT          reduce using rule 2 (instrucciones -> instrucciones instruccion .)
+    $end            reduce using rule 2 (instrucciones -> instrucciones instruccion .)
+
+
+state 7
+
+    (5) insert_insrt -> INSERT INTO . ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (6) insert_insrt -> INSERT INTO . ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (7) insert_insrt -> INSERT INTO . ID VALUES PAR_A lista_datos PAR_C PTCOMA
+
+    ID              shift and go to state 8
+
+
+state 8
+
+    (5) insert_insrt -> INSERT INTO ID . PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (6) insert_insrt -> INSERT INTO ID . PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (7) insert_insrt -> INSERT INTO ID . VALUES PAR_A lista_datos PAR_C PTCOMA
+
+    PAR_A           shift and go to state 9
+    VALUES          shift and go to state 10
+
+
+state 9
+
+    (5) insert_insrt -> INSERT INTO ID PAR_A . lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (6) insert_insrt -> INSERT INTO ID PAR_A . PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (8) lista_parametros_lista -> . lista_parametros_lista COMA ID
+    (9) lista_parametros_lista -> . ID
+
+    PAR_C           shift and go to state 13
+    ID              shift and go to state 11
+
+    lista_parametros_lista         shift and go to state 12
+
+state 10
+
+    (7) insert_insrt -> INSERT INTO ID VALUES . PAR_A lista_datos PAR_C PTCOMA
+
+    PAR_A           shift and go to state 14
+
+
+state 11
+
+    (9) lista_parametros_lista -> ID .
+
+    PAR_C           reduce using rule 9 (lista_parametros_lista -> ID .)
+    COMA            reduce using rule 9 (lista_parametros_lista -> ID .)
+
+
+state 12
+
+    (5) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista . PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
+    (8) lista_parametros_lista -> lista_parametros_lista . COMA ID
+
+    PAR_C           shift and go to state 15
+    COMA            shift and go to state 16
+
+
+state 13
+
+    (6) insert_insrt -> INSERT INTO ID PAR_A PAR_C . VALUES PAR_A lista_datos PAR_C PTCOMA
+
+    VALUES          shift and go to state 17
+
+
+state 14
+
+    (7) insert_insrt -> INSERT INTO ID VALUES PAR_A . lista_datos PAR_C PTCOMA
+    (10) lista_datos -> . lista_datos COMA expresion
+    (11) lista_datos -> . expresion
+    (13) expresion -> . CADENA
+    (14) expresion -> . ENTERO
+    (15) expresion -> . FLOTANTE
+    (16) expresion -> . ID
+    (17) expresion -> . ID PUNTO ID
+    (18) expresion -> . expresion SUMA expresion
+    (19) expresion -> . expresion RESTA expresion
+    (20) expresion -> . expresion DIVISION expresion
+    (21) expresion -> . expresion ASTERISCO expresion
+
+    CADENA          shift and go to state 21
+    ENTERO          shift and go to state 22
+    FLOTANTE        shift and go to state 23
+    ID              shift and go to state 18
+
+    lista_datos                    shift and go to state 19
+    expresion                      shift and go to state 20
+
+state 15
+
+    (5) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C . VALUES PAR_A lista_datos PAR_C PTCOMA
+
+    VALUES          shift and go to state 24
+
+
+state 16
+
+    (8) lista_parametros_lista -> lista_parametros_lista COMA . ID
+
+    ID              shift and go to state 25
+
+
+state 17
+
+    (6) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES . PAR_A lista_datos PAR_C PTCOMA
+
+    PAR_A           shift and go to state 26
+
+
+state 18
+
+    (16) expresion -> ID .
+    (17) expresion -> ID . PUNTO ID
+
+    SUMA            reduce using rule 16 (expresion -> ID .)
+    RESTA           reduce using rule 16 (expresion -> ID .)
+    DIVISION        reduce using rule 16 (expresion -> ID .)
+    ASTERISCO       reduce using rule 16 (expresion -> ID .)
+    PAR_C           reduce using rule 16 (expresion -> ID .)
+    COMA            reduce using rule 16 (expresion -> ID .)
+    PUNTO           shift and go to state 27
+
+
+state 19
+
+    (7) insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos . PAR_C PTCOMA
+    (10) lista_datos -> lista_datos . COMA expresion
+
+    PAR_C           shift and go to state 28
+    COMA            shift and go to state 29
+
+
+state 20
+
+    (11) lista_datos -> expresion .
+    (18) expresion -> expresion . SUMA expresion
+    (19) expresion -> expresion . RESTA expresion
+    (20) expresion -> expresion . DIVISION expresion
+    (21) expresion -> expresion . ASTERISCO expresion
+
+    PAR_C           reduce using rule 11 (lista_datos -> expresion .)
+    COMA            reduce using rule 11 (lista_datos -> expresion .)
+    SUMA            shift and go to state 30
+    RESTA           shift and go to state 31
+    DIVISION        shift and go to state 32
+    ASTERISCO       shift and go to state 33
+
+
+state 21
+
+    (13) expresion -> CADENA .
+
+    SUMA            reduce using rule 13 (expresion -> CADENA .)
+    RESTA           reduce using rule 13 (expresion -> CADENA .)
+    DIVISION        reduce using rule 13 (expresion -> CADENA .)
+    ASTERISCO       reduce using rule 13 (expresion -> CADENA .)
+    PAR_C           reduce using rule 13 (expresion -> CADENA .)
+    COMA            reduce using rule 13 (expresion -> CADENA .)
+
+
+state 22
+
+    (14) expresion -> ENTERO .
+
+    SUMA            reduce using rule 14 (expresion -> ENTERO .)
+    RESTA           reduce using rule 14 (expresion -> ENTERO .)
+    DIVISION        reduce using rule 14 (expresion -> ENTERO .)
+    ASTERISCO       reduce using rule 14 (expresion -> ENTERO .)
+    PAR_C           reduce using rule 14 (expresion -> ENTERO .)
+    COMA            reduce using rule 14 (expresion -> ENTERO .)
+
+
+state 23
+
+    (15) expresion -> FLOTANTE .
+
+    SUMA            reduce using rule 15 (expresion -> FLOTANTE .)
+    RESTA           reduce using rule 15 (expresion -> FLOTANTE .)
+    DIVISION        reduce using rule 15 (expresion -> FLOTANTE .)
+    ASTERISCO       reduce using rule 15 (expresion -> FLOTANTE .)
+    PAR_C           reduce using rule 15 (expresion -> FLOTANTE .)
+    COMA            reduce using rule 15 (expresion -> FLOTANTE .)
+
+
+state 24
+
+    (5) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES . PAR_A lista_datos PAR_C PTCOMA
+
+    PAR_A           shift and go to state 34
+
+
+state 25
+
+    (8) lista_parametros_lista -> lista_parametros_lista COMA ID .
+
+    PAR_C           reduce using rule 8 (lista_parametros_lista -> lista_parametros_lista COMA ID .)
+    COMA            reduce using rule 8 (lista_parametros_lista -> lista_parametros_lista COMA ID .)
+
+
+state 26
+
+    (6) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A . lista_datos PAR_C PTCOMA
+    (10) lista_datos -> . lista_datos COMA expresion
+    (11) lista_datos -> . expresion
+    (13) expresion -> . CADENA
+    (14) expresion -> . ENTERO
+    (15) expresion -> . FLOTANTE
+    (16) expresion -> . ID
+    (17) expresion -> . ID PUNTO ID
+    (18) expresion -> . expresion SUMA expresion
+    (19) expresion -> . expresion RESTA expresion
+    (20) expresion -> . expresion DIVISION expresion
+    (21) expresion -> . expresion ASTERISCO expresion
+
+    CADENA          shift and go to state 21
+    ENTERO          shift and go to state 22
+    FLOTANTE        shift and go to state 23
+    ID              shift and go to state 18
+
+    lista_datos                    shift and go to state 35
+    expresion                      shift and go to state 20
+
+state 27
+
+    (17) expresion -> ID PUNTO . ID
+
+    ID              shift and go to state 36
+
+
+state 28
+
+    (7) insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos PAR_C . PTCOMA
+
+    PTCOMA          shift and go to state 37
+
+
+state 29
+
+    (10) lista_datos -> lista_datos COMA . expresion
+    (13) expresion -> . CADENA
+    (14) expresion -> . ENTERO
+    (15) expresion -> . FLOTANTE
+    (16) expresion -> . ID
+    (17) expresion -> . ID PUNTO ID
+    (18) expresion -> . expresion SUMA expresion
+    (19) expresion -> . expresion RESTA expresion
+    (20) expresion -> . expresion DIVISION expresion
+    (21) expresion -> . expresion ASTERISCO expresion
+
+    CADENA          shift and go to state 21
+    ENTERO          shift and go to state 22
+    FLOTANTE        shift and go to state 23
+    ID              shift and go to state 18
+
+    expresion                      shift and go to state 38
+
+state 30
+
+    (18) expresion -> expresion SUMA . expresion
+    (13) expresion -> . CADENA
+    (14) expresion -> . ENTERO
+    (15) expresion -> . FLOTANTE
+    (16) expresion -> . ID
+    (17) expresion -> . ID PUNTO ID
+    (18) expresion -> . expresion SUMA expresion
+    (19) expresion -> . expresion RESTA expresion
+    (20) expresion -> . expresion DIVISION expresion
+    (21) expresion -> . expresion ASTERISCO expresion
+
+    CADENA          shift and go to state 21
+    ENTERO          shift and go to state 22
+    FLOTANTE        shift and go to state 23
+    ID              shift and go to state 18
+
+    expresion                      shift and go to state 39
+
+state 31
+
+    (19) expresion -> expresion RESTA . expresion
+    (13) expresion -> . CADENA
+    (14) expresion -> . ENTERO
+    (15) expresion -> . FLOTANTE
+    (16) expresion -> . ID
+    (17) expresion -> . ID PUNTO ID
+    (18) expresion -> . expresion SUMA expresion
+    (19) expresion -> . expresion RESTA expresion
+    (20) expresion -> . expresion DIVISION expresion
+    (21) expresion -> . expresion ASTERISCO expresion
+
+    CADENA          shift and go to state 21
+    ENTERO          shift and go to state 22
+    FLOTANTE        shift and go to state 23
+    ID              shift and go to state 18
+
+    expresion                      shift and go to state 40
+
+state 32
+
+    (20) expresion -> expresion DIVISION . expresion
+    (13) expresion -> . CADENA
+    (14) expresion -> . ENTERO
+    (15) expresion -> . FLOTANTE
+    (16) expresion -> . ID
+    (17) expresion -> . ID PUNTO ID
+    (18) expresion -> . expresion SUMA expresion
+    (19) expresion -> . expresion RESTA expresion
+    (20) expresion -> . expresion DIVISION expresion
+    (21) expresion -> . expresion ASTERISCO expresion
+
+    CADENA          shift and go to state 21
+    ENTERO          shift and go to state 22
+    FLOTANTE        shift and go to state 23
+    ID              shift and go to state 18
+
+    expresion                      shift and go to state 41
+
+state 33
+
+    (21) expresion -> expresion ASTERISCO . expresion
+    (13) expresion -> . CADENA
+    (14) expresion -> . ENTERO
+    (15) expresion -> . FLOTANTE
+    (16) expresion -> . ID
+    (17) expresion -> . ID PUNTO ID
+    (18) expresion -> . expresion SUMA expresion
+    (19) expresion -> . expresion RESTA expresion
+    (20) expresion -> . expresion DIVISION expresion
+    (21) expresion -> . expresion ASTERISCO expresion
+
+    CADENA          shift and go to state 21
+    ENTERO          shift and go to state 22
+    FLOTANTE        shift and go to state 23
+    ID              shift and go to state 18
+
+    expresion                      shift and go to state 42
+
+state 34
+
+    (5) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A . lista_datos PAR_C PTCOMA
+    (10) lista_datos -> . lista_datos COMA expresion
+    (11) lista_datos -> . expresion
+    (13) expresion -> . CADENA
+    (14) expresion -> . ENTERO
+    (15) expresion -> . FLOTANTE
+    (16) expresion -> . ID
+    (17) expresion -> . ID PUNTO ID
+    (18) expresion -> . expresion SUMA expresion
+    (19) expresion -> . expresion RESTA expresion
+    (20) expresion -> . expresion DIVISION expresion
+    (21) expresion -> . expresion ASTERISCO expresion
+
+    CADENA          shift and go to state 21
+    ENTERO          shift and go to state 22
+    FLOTANTE        shift and go to state 23
+    ID              shift and go to state 18
+
+    lista_datos                    shift and go to state 43
+    expresion                      shift and go to state 20
+
+state 35
+
+    (6) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos . PAR_C PTCOMA
+    (10) lista_datos -> lista_datos . COMA expresion
+
+    PAR_C           shift and go to state 44
+    COMA            shift and go to state 29
+
+
+state 36
+
+    (17) expresion -> ID PUNTO ID .
+
+    SUMA            reduce using rule 17 (expresion -> ID PUNTO ID .)
+    RESTA           reduce using rule 17 (expresion -> ID PUNTO ID .)
+    DIVISION        reduce using rule 17 (expresion -> ID PUNTO ID .)
+    ASTERISCO       reduce using rule 17 (expresion -> ID PUNTO ID .)
+    PAR_C           reduce using rule 17 (expresion -> ID PUNTO ID .)
+    COMA            reduce using rule 17 (expresion -> ID PUNTO ID .)
+
+
+state 37
+
+    (7) insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA .
+
+    INSERT          reduce using rule 7 (insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA .)
+    $end            reduce using rule 7 (insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA .)
+
+
+state 38
+
+    (10) lista_datos -> lista_datos COMA expresion .
+    (18) expresion -> expresion . SUMA expresion
+    (19) expresion -> expresion . RESTA expresion
+    (20) expresion -> expresion . DIVISION expresion
+    (21) expresion -> expresion . ASTERISCO expresion
+
+    PAR_C           reduce using rule 10 (lista_datos -> lista_datos COMA expresion .)
+    COMA            reduce using rule 10 (lista_datos -> lista_datos COMA expresion .)
+    SUMA            shift and go to state 30
+    RESTA           shift and go to state 31
+    DIVISION        shift and go to state 32
+    ASTERISCO       shift and go to state 33
+
+
+state 39
+
+    (18) expresion -> expresion SUMA expresion .
+    (18) expresion -> expresion . SUMA expresion
+    (19) expresion -> expresion . RESTA expresion
+    (20) expresion -> expresion . DIVISION expresion
+    (21) expresion -> expresion . ASTERISCO expresion
+
+    SUMA            reduce using rule 18 (expresion -> expresion SUMA expresion .)
+    RESTA           reduce using rule 18 (expresion -> expresion SUMA expresion .)
+    ASTERISCO       reduce using rule 18 (expresion -> expresion SUMA expresion .)
+    PAR_C           reduce using rule 18 (expresion -> expresion SUMA expresion .)
+    COMA            reduce using rule 18 (expresion -> expresion SUMA expresion .)
+    DIVISION        shift and go to state 32
+
+  ! DIVISION        [ reduce using rule 18 (expresion -> expresion SUMA expresion .) ]
+  ! SUMA            [ shift and go to state 30 ]
+  ! RESTA           [ shift and go to state 31 ]
+  ! ASTERISCO       [ shift and go to state 33 ]
+
+
+state 40
+
+    (19) expresion -> expresion RESTA expresion .
+    (18) expresion -> expresion . SUMA expresion
+    (19) expresion -> expresion . RESTA expresion
+    (20) expresion -> expresion . DIVISION expresion
+    (21) expresion -> expresion . ASTERISCO expresion
+
+    SUMA            reduce using rule 19 (expresion -> expresion RESTA expresion .)
+    RESTA           reduce using rule 19 (expresion -> expresion RESTA expresion .)
+    ASTERISCO       reduce using rule 19 (expresion -> expresion RESTA expresion .)
+    PAR_C           reduce using rule 19 (expresion -> expresion RESTA expresion .)
+    COMA            reduce using rule 19 (expresion -> expresion RESTA expresion .)
+    DIVISION        shift and go to state 32
+
+  ! DIVISION        [ reduce using rule 19 (expresion -> expresion RESTA expresion .) ]
+  ! SUMA            [ shift and go to state 30 ]
+  ! RESTA           [ shift and go to state 31 ]
+  ! ASTERISCO       [ shift and go to state 33 ]
+
+
+state 41
+
+    (20) expresion -> expresion DIVISION expresion .
+    (18) expresion -> expresion . SUMA expresion
+    (19) expresion -> expresion . RESTA expresion
+    (20) expresion -> expresion . DIVISION expresion
+    (21) expresion -> expresion . ASTERISCO expresion
+
+    SUMA            reduce using rule 20 (expresion -> expresion DIVISION expresion .)
+    RESTA           reduce using rule 20 (expresion -> expresion DIVISION expresion .)
+    DIVISION        reduce using rule 20 (expresion -> expresion DIVISION expresion .)
+    ASTERISCO       reduce using rule 20 (expresion -> expresion DIVISION expresion .)
+    PAR_C           reduce using rule 20 (expresion -> expresion DIVISION expresion .)
+    COMA            reduce using rule 20 (expresion -> expresion DIVISION expresion .)
+
+  ! SUMA            [ shift and go to state 30 ]
+  ! RESTA           [ shift and go to state 31 ]
+  ! DIVISION        [ shift and go to state 32 ]
+  ! ASTERISCO       [ shift and go to state 33 ]
+
+
+state 42
+
+    (21) expresion -> expresion ASTERISCO expresion .
+    (18) expresion -> expresion . SUMA expresion
+    (19) expresion -> expresion . RESTA expresion
+    (20) expresion -> expresion . DIVISION expresion
+    (21) expresion -> expresion . ASTERISCO expresion
+
+  ! shift/reduce conflict for SUMA resolved as shift
+  ! shift/reduce conflict for RESTA resolved as shift
+  ! shift/reduce conflict for DIVISION resolved as shift
+  ! shift/reduce conflict for ASTERISCO resolved as shift
+    PAR_C           reduce using rule 21 (expresion -> expresion ASTERISCO expresion .)
+    COMA            reduce using rule 21 (expresion -> expresion ASTERISCO expresion .)
+    SUMA            shift and go to state 30
+    RESTA           shift and go to state 31
+    DIVISION        shift and go to state 32
+    ASTERISCO       shift and go to state 33
+
+  ! SUMA            [ reduce using rule 21 (expresion -> expresion ASTERISCO expresion .) ]
+  ! RESTA           [ reduce using rule 21 (expresion -> expresion ASTERISCO expresion .) ]
+  ! DIVISION        [ reduce using rule 21 (expresion -> expresion ASTERISCO expresion .) ]
+  ! ASTERISCO       [ reduce using rule 21 (expresion -> expresion ASTERISCO expresion .) ]
+
+
+state 43
+
+    (5) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos . PAR_C PTCOMA
+    (10) lista_datos -> lista_datos . COMA expresion
+
+    PAR_C           shift and go to state 45
+    COMA            shift and go to state 29
+
+
+state 44
+
+    (6) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C . PTCOMA
+
+    PTCOMA          shift and go to state 46
+
+
+state 45
+
+    (5) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C . PTCOMA
+
+    PTCOMA          shift and go to state 47
+
+
+state 46
+
+    (6) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .
+
+    INSERT          reduce using rule 6 (insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .)
+    $end            reduce using rule 6 (insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .)
+
+
+state 47
+
+    (5) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .
+
+    INSERT          reduce using rule 5 (insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .)
+    $end            reduce using rule 5 (insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for SUMA in state 42 resolved as shift
+WARNING: shift/reduce conflict for RESTA in state 42 resolved as shift
+WARNING: shift/reduce conflict for DIVISION in state 42 resolved as shift
+WARNING: shift/reduce conflict for ASTERISCO in state 42 resolved as shift

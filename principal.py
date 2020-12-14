@@ -115,7 +115,8 @@ def procesar_instrucciones(instrucciones,ts,tc) :
             
             else : print('Error: instrucción no válida ' + str(instr))
 
-        return salida
+        salida = []
+        return salida 
     except:
         pass
 
