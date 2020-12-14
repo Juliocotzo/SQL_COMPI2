@@ -35,6 +35,12 @@ def analizar(txt):
     tc_global = TC.TablaDeTipos()
     tc_global1 = tc_global
     salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
+    salida = [
+        ['id_usuario','usuario','contrasenia'],
+        [1,'usuario1','password2'],
+        [2,'usuario2','password2'],
+        [3,'usuario3','password3'],
+        ]
     print(type(salida))
     print("analizando...")
     print(txt)
@@ -151,7 +157,7 @@ def salida_table(salida,textoSalida):
         prueba_columna = []
 
         i = 1
-        while i < len(textoSalida):
+        while i <= int(len(textoSalida[0])+1):
             prueba_columna.append(i)
             i += 1
 
@@ -162,14 +168,15 @@ def salida_table(salida,textoSalida):
         my_tree.pack(side=LEFT)
         my_tree.place(x=0,y=0)
 
-        for record in prueba_columna:
-            # print(record-1)
-            if record == 1:
-                my_tree.column("#"+str(record-1), stretch=False, width=40)
-                my_tree.heading("#"+str(record-1),text = " ")
-            else:
-                my_tree.column("#"+str(record-1), stretch=False, width=100)
-                my_tree.heading("#"+str(record-1),text = "Label"+str(record))
+        my_tree.column("#"+str(0), stretch=False, width=40)
+        my_tree.heading("#"+str(0),text = " ")
+
+        j = 1
+        while j <= len(textoSalida[0]):
+            my_tree.column("#"+str(j), stretch=False, width=100)
+            my_tree.heading("#"+str(j),text = textoSalida[0][j-1])
+            j+=1
+        
 
         yscrollbar = ttk.Scrollbar(salida_frame, orient = "vertical", command=my_tree.yview)
         yscrollbar.pack(side = RIGHT, fill = Y)
@@ -182,16 +189,20 @@ def salida_table(salida,textoSalida):
 
         data = []
 
-        j = 1
-        while j < 50:
-            data.append(["Usuario"+str(j),"Password"+str(j),j])
-            j += 1
+
+        jj = 1
+        while jj < 10:
+            data.append([str(jj+jj),"Usuario"+str(jj),"Password"+str(jj)])
+            jj += 1
+
 
 
         count = 1
         for record in data:
-            my_tree.insert(parent = '', index = 'end', iid=count, text = str(count), values = (record[0],record[1],record[2]))
+            print(record)
+            my_tree.insert(parent = '', index = 'end', iid=count, text = str(count), values = tuple(record))
             count += 1
+
             
         
 
