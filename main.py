@@ -37,9 +37,9 @@ def analizar(txt):
     salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
     salida = [
         ['id_usuario','usuario','contrasenia'],
-        [1,'usuario1','password2'],
-        [2,'usuario2','password2'],
-        [3,'usuario3','password3'],
+        [11,'usuario1','password1'],
+        [22,'usuario2'],
+        [33,'usuario3','password3'],
         ]
     print(type(salida))
     print("analizando...")
@@ -164,13 +164,11 @@ def salida_table(salida,textoSalida):
         print(prueba_columna)
         
         my_tree = ttk.Treeview(salida_frame, columns=prueba_columna)
-
         my_tree.pack(side=LEFT)
         my_tree.place(x=0,y=0)
 
         my_tree.column("#"+str(0), stretch=False, width=40)
         my_tree.heading("#"+str(0),text = " ")
-
         j = 1
         while j <= len(textoSalida[0]):
             my_tree.column("#"+str(j), stretch=False, width=100)
@@ -186,27 +184,15 @@ def salida_table(salida,textoSalida):
 
         my_tree.configure(yscrollcommand=yscrollbar.set, xscrollcommand = xscrollbar.set)
 
-
-        data = []
-
-
-        jj = 1
-        while jj < 10:
-            data.append([str(jj+jj),"Usuario"+str(jj),"Password"+str(jj)])
-            jj += 1
-
-
-
-        count = 1
-        for record in data:
-            print(record)
-            my_tree.insert(parent = '', index = 'end', iid=count, text = str(count), values = tuple(record))
-            count += 1
-
-            
-        
+     
+        countt = 1
+        while countt < len(textoSalida):
+            #print(textoSalida[countt])
+            my_tree.insert(parent = '', index = 'end', iid=countt, text = str(countt), values = tuple(textoSalida[countt]))
+            countt +=1       
 
         my_tree.pack(fill = X)
+
     else:
         global salida_frame1
         try:
