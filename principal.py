@@ -4,7 +4,7 @@ import tc as TC
 from expresiones import *
 from instrucciones import *
 from graphviz import Digraph
-from ast import *
+from report_ast import *
 from report_tc import *
 from report_errores import *
 

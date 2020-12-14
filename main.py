@@ -7,7 +7,7 @@ from principal import *
 import ts as TS
 from expresiones import *
 from instrucciones import *
-from ast import *
+from report_ast import *
 from report_tc import *
 from report_errores import *
 
@@ -19,6 +19,7 @@ root = Tk()
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
 root.geometry("%dx%d+0+0" % (w, h))
 root.title("TytusDB - Query Tools") 
+root.state("zoomed")
 
 global selected
 selected = False
@@ -145,12 +146,12 @@ def salida_table(salida,textoSalida):
             widget.destroy()
 
         global random_numero
-        random_numero = random.randint(5,10)
+        random_numero = len(textoSalida)
 
         prueba_columna = []
 
         i = 1
-        while i < random_numero:
+        while i < len(textoSalida):
             prueba_columna.append(i)
             i += 1
 
@@ -168,7 +169,7 @@ def salida_table(salida,textoSalida):
                 my_tree.heading("#"+str(record-1),text = " ")
             else:
                 my_tree.column("#"+str(record-1), stretch=False, width=100)
-                my_tree.heading("#"+str(record-1),text = "Label"+str(record-1))
+                my_tree.heading("#"+str(record-1),text = "Label"+str(record))
 
         yscrollbar = ttk.Scrollbar(salida_frame, orient = "vertical", command=my_tree.yview)
         yscrollbar.pack(side = RIGHT, fill = Y)
