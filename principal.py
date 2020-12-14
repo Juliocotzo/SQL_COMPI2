@@ -11,6 +11,7 @@ from report_errores import *
 from storageManager import jsonMode as j
 
 salida = ""
+useCurrentDatabase = ""
 
 def procesar_createTable(instr,ts,tc) :
     # print(instr.id)
@@ -86,19 +87,29 @@ def procesar_Expresion_Numerica(instr,ts,tc):
     print('Entero')
 
 def procesar_createDatabase(instr,ts,tc) :
-
-    result = j.createDatabase(str(instr.nombre.id))
-    
-    if result == 0:
+    if instr.replace == 1:
+        
+        result = j.dropDatabase(str(instr.nombre.id))
         global salida
-        salida = "\nCREATE DATABASE"
-        print("CREATE DATABASE")
-    elif result == 1 :
-        salida = "\nERROR:  internal_error \nSQL state: XX000 "
-        print("ERROR:  internal_error \nSQL state: XX000 ")
-    elif result == 2 :
-        salida = "\nERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 "
-        print("ERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 ")
+        if result == 1 :
+            salida = "\nERROR:  internal_error \nSQL state: XX000 "
+
+        result1 = j.createDatabase(str(instr.nombre.id))
+        if result1 == 0:
+            salida = "\nCREATE DATABASE"
+        elif result1 == 1 :
+            salida = "\nERROR:  internal_error \nSQL state: XX000 "
+    else:
+        result = j.createDatabase(str(instr.nombre.id))
+        if result == 0:
+            salida = "\nCREATE DATABASE"
+            print("CREATE DATABASE")
+        elif result == 1 :
+            salida = "\nERROR:  internal_error \nSQL state: XX000 "
+            print("ERROR:  internal_error \nSQL state: XX000 ")
+        elif result == 2 :
+            salida = "\nERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 "
+            print("ERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 ")
 
 def procesar_showDatabases(instr,ts,tc):
     global salida
@@ -107,8 +118,35 @@ def procesar_showDatabases(instr,ts,tc):
     data.append(['databases'])
     for databases in dataTables:
         data.append([databases])
-
     salida = data
+
+def procesar_dropDatabase(instr,ts,tc):
+    global salida
+
+    result = j.dropDatabase(str(instr.id.id))
+
+    if instr.exists == 0:
+        global salida
+        if result == 0:
+            global salida
+            salida = "\nDROP DATABASE"
+        elif result == 1 :
+            salida = "\nERROR:  internal_error \nSQL state: XX000 "
+            print("ERROR:  internal_error \nSQL state: XX000 ")
+        elif result == 2 :
+            salida = "\nERROR:  database \"" + str(instr.id.id) +"\" does not exist \nSQL state: 3D000"
+    else:
+        if result == 0:
+            salida = "\nDROP DATABASE"
+        elif result == 1 :
+            salida = "\nERROR:  internal_error \nSQL state: XX000 "
+        elif result == 2 :
+            salida = "\nERROR:  database \"" + str(instr.id.id) +"\" does not exist, skipping DROP DATABASE"
+
+def procesar_useDatabase(instr,ts,tc):
+    #print(instr.id.id)
+    dataTables = j.showDatabases()
+    print(dataTables)
 
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
@@ -123,6 +161,8 @@ def procesar_instrucciones(instrucciones,ts,tc) :
             elif isinstance(instr, ExpresionBinaria) : procesar_Expresion_Binaria(instr,ts,tc)
             elif isinstance(instr, ExpresionLogica) : procesar_Expresion_logica(instr,ts,tc)
             elif isinstance(instr, showDatabases) : procesar_showDatabases(instr,ts,tc)
+            elif isinstance(instr, dropDatabase) : procesar_dropDatabase(instr,ts,tc)
+            elif isinstance(instr, useDatabase) : procesar_useDatabase(instr,ts,tc)
             
             else : print('Error: instrucción no válida ' + str(instr))
 

@@ -7,10 +7,11 @@ class Definicion(Instruccion):
         self.id = id
 
 class CreateDatabase(Instruccion):
-    def __init__(self, nombre, usuario, modo = 1):
+    def __init__(self, nombre, usuario, modo = 1, replace = 0):
         self.nombre = nombre
         self.usuario = usuario
         self.modo = modo
+        self.replace = replace
 
 class LLave_Primaria(Instruccion):
     def __init__(self, id):
@@ -65,3 +66,12 @@ class definicion_constraint(Instruccion):
 class showDatabases(Instruccion):
     def __init__(self):
         ''' SHOW DATABASES'''
+
+class dropDatabase(Instruccion):
+    def __init__(self,id, exists = 0):
+        self.id = id
+        self.exists = exists
+
+class useDatabase(Instruccion):
+    def __init__(self,id):
+        self.id = id

@@ -15,6 +15,7 @@ instrucciones_Global = []
 
 tc_global1 = []
 
+
 root = Tk() 
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
 root.geometry("%dx%d+0+0" % (w, h))
@@ -56,7 +57,10 @@ def analizar_select(e):
         tc_global = TC.TablaDeTipos()
         tc_global1 = tc_global
         salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
-        salida_table(2,salida)
+        if type(salida) == list:
+            salida_table(1,salida)
+        else:
+            salida_table(2,salida)
 
 def generarReporteAST():
     global instrucciones_Global

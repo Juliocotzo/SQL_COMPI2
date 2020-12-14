@@ -380,8 +380,32 @@ def p_instrucciones_instruccion(t) :
 def p_instruccion(t) :
     '''instruccion      : createDB_insrt
                         | create_Table_isnrt
-                        | show_databases_instr'''
+                        | show_databases_instr
+                        | drop_database_instr
+                        | use_database_instr'''
     t[0] = t[1]
+
+#---------------------------------------------------------------------
+' -----------GRAMATICA PARA LA INSTRUCCION DROP DATABASES------------'
+#---------------------------------------------------------------------
+
+
+def p_instruccion_use_database(t):
+    'use_database_instr : USE ID PTCOMA'
+    t[0] = useDatabase(ExpresionIdentificador(t[2]))
+
+#---------------------------------------------------------------------
+' -----------GRAMATICA PARA LA INSTRUCCION DROP DATABASES------------'
+#---------------------------------------------------------------------
+
+
+def p_instruccion_drop_database(t):
+    '''drop_database_instr : DROP DATABASE ID PTCOMA
+                        | DROP DATABASE IF EXISTS ID PTCOMA'''
+    if t[4] == ';':
+        t[0] = dropDatabase(ExpresionIdentificador(t[3]), 0)
+    else:
+        t[0] = dropDatabase(ExpresionIdentificador(t[5]), 1)
 
 #---------------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION SHOW DATABASES------------'
@@ -403,19 +427,19 @@ def p_instruccion_show_databases(t):
 
 def p_createDB(t):
     'createDB_insrt : CREATE DATABASE ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), ExpresionIdentificador(""), ExpresionNumeroSimple(1))
+    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), ExpresionIdentificador(""), ExpresionNumeroSimple(1), 0)
 
 def p_createDB_wRP(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), ExpresionIdentificador(""), ExpresionNumeroSimple(1))
+    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), ExpresionIdentificador(""), ExpresionNumeroSimple(1), 1)
 
 def p_createDB_wIfNot(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), ExpresionNumeroSimple(1))
+    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), ExpresionNumeroSimple(1), 0)
 
 def p_createDB_wRP_wIN(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), ExpresionIdentificador(""), ExpresionNumeroSimple(1))
+    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), ExpresionIdentificador(""), ExpresionNumeroSimple(1), 1)
 
 
 #***********************************************
@@ -424,31 +448,31 @@ def p_createDB_wRP_wIN(t):
 def p_createDB_up(t):
     'createDB_insrt : CREATE DATABASE ID createDB_unParam PTCOMA'
     if type(t[4]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4], ExpresionNumeroSimple(1))
+        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4], ExpresionNumeroSimple(1),0)
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), ExpresionIdentificador(""), t[4])
+        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), ExpresionIdentificador(""), t[4],0)
 
 
 def p_createDB_wRP_up(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA'
     if type(t[6]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6], ExpresionNumeroSimple(1))
+        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6], ExpresionNumeroSimple(1),1)
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), ExpresionIdentificador(""), t[6])
+        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), ExpresionIdentificador(""), t[6],1)
 
 def p_createDB_wIfNot_up(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
     if type(t[7]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], ExpresionNumeroSimple(1))
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], ExpresionNumeroSimple(1),0)
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), t[7])
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), t[7],0)
 
 def p_createDB_wRP_wIN_up(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
     if type(t[7]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], ExpresionNumeroSimple(1))
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], ExpresionNumeroSimple(1),1)
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), t[7])
+        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), t[7],1)
 
 def p_createDB_unParam_Owner(t):
     '''createDB_unParam : OWNER ID
@@ -471,19 +495,19 @@ def p_createDB_unParam_Owner(t):
 
 def p_createDB_dp(t):
     'createDB_insrt : CREATE DATABASE ID createDB_dosParam PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4][0], t[4][1])
+    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4][0], t[4][1],0)
 
 def p_createDB_wRP_dp(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6][0], t[6][1])
+    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6][0], t[6][1],1)
 
 def p_createDB_wIfNot_dp(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7][0], t[7][1])
+    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7][0], t[7][1],0)
 
 def p_createDB_wRP_wIN_dp(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), t[9][0], t[9][1])
+    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), t[9][0], t[9][1],1)
 
 def p_createDB_dosParam_Owner(t):
     '''createDB_dosParam : OWNER ID MODE ENTERO
