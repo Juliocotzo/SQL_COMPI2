@@ -118,7 +118,10 @@ def procesar_showDatabases(instr,ts,tc):
     data.append(['databases'])
     for databases in dataTables:
         data.append([databases])
-    salida = data
+    if dataTables == []:
+        salida = "\nERROR:  databases does not exist \nSQL state: 3D000"
+    else:
+        salida = data
 
 def procesar_dropDatabase(instr,ts,tc):
     global salida
