@@ -361,7 +361,7 @@ def p_instruccion_f_create_table(t):
 
 def p_instruccion_f_select(t):
     'instruccion : select_insrt'
-    t[0] = t[1]
+
 
 def p_instruccion_f_insert(t):
     'instruccion : insert_insrt'
@@ -606,7 +606,7 @@ def p_alerTable_alter_1(t):
 
 def p_Table_alter2(t):
     'Table_alter : ALTER COLUMN ID SET NOT NULL'
-    t[0] = Create_sub_altersimple(t[3],"NULL")
+    t[0] = Create_sub_altersimple(t[3],"NULL",None,None)
                  
 def p_cons_campos(t):
     'campos_c : campos_c COMA ID'
@@ -872,20 +872,16 @@ def p_as_id(t):
 #--------------------------------------------------------------
 def p_instruccion_select_insrt(t):
     ' select_insrt : SELECT DISTINCT campos_c FROM ID PTCOMA'
-    t[0] = Create_simple(t[5],t[3])
-
+   
 def p_instruccion_select_insrt_union(t):
     ' select_insrt : select_insrt UNION select_insrt'
-    t[0] = Create_uniones_select(t[1],t[2],OPCIONES_UNIONES.union)
-
+    
 def p_instruccion_select_insrt_intersect(t):
     ' select_insrt : select_insrt INTERSECT select_insrt'
-    t[0] = Create_uniones_select(t[1],t[2],OPCIONES_UNIONES.intersect)
-
+    
 def p_instruccion_select_insrt_except(t):
     ' select_insrt : select_insrt EXCEPT select_insrt'
-    t[0] = Create_uniones_select(t[1],t[2],OPCIONES_UNIONES.excepts)
-
+    
 def p_opcion_select_tm(t):
     'opcion_select_tm :  opcion_select_lista  FROM opcion_from'
 

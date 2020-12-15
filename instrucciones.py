@@ -75,3 +75,8 @@ class dropDatabase(Instruccion):
 class useDatabase(Instruccion):
     def __init__(self,id):
         self.id = id
+
+class Create_Alterdatabase(Instruccion):
+    def __init__(self,id_tabla, tipo_id):
+        self.id_tabla = id_tabla
+        self.tipo_id = tipo_id

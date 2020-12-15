@@ -382,8 +382,31 @@ def p_instruccion(t) :
                         | create_Table_isnrt
                         | show_databases_instr
                         | drop_database_instr
-                        | use_database_instr'''
+                        | use_database_instr
+                        | alterDB_insrt'''
     t[0] = t[1]
+
+#--------------------------------------------------------------
+'----------- GRAMATICA PARA LA INSTRUCCION ALTER DATABASE ---------'
+#--------------------------------------------------------------
+def p_AlterDB_opc1(t):
+    ' alterDB_insrt : ALTER DATABASE ID RENAME TO ID PTCOMA'
+    t[0] = Create_Alterdatabase(t[3],t[6])
+def p_AlterDB_opc2(t):
+    ' alterDB_insrt : ALTER DATABASE ID OWNER TO usuariosDB PTCOMA'
+    t[0] = Create_Alterdatabase(t[3],t[6]) 
+def p_usuarioDB(t):
+    ' usuariosDB :  ID '
+    t[0] = ExpresionIdentificador(t[1])
+def p_usuarioDB2(t):
+    ' usuariosDB : CURRENT_USER '
+    t[0] = ExpresionIdentificador(t[1])
+def p_usuarioDB3(t):
+    ' usuariosDB : SESSION_USER '
+    t[0] = ExpresionIdentificador(t[1])
+def p_usuarioDB4(t):
+    ' usuariosDB : CADENA '
+    t[0] = ExpresionComillaSimple(t[1])
 
 #---------------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION DROP DATABASES------------'

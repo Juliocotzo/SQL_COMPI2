@@ -162,6 +162,14 @@ def procesar_useDatabase(instr,ts,tc):
     else: 
         salida = "\nERROR:  database \"" + str(instr.id.id) +"\" does not exist \nSQL state: 3D000"
         
+def procesar_alterdatabase(instr,ts,tc):
+    global salida
+    if isinstance(instr.tipo_id,ExpresionIdentificador) : 
+        print(instr.tipo_id.id)
+    elif isinstance(instr.tipo_id, ExpresionComillaSimple) : 
+        print(instr.tipo_id.val)
+    else:
+        print(instr.tipo_id)
 
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
@@ -178,13 +186,14 @@ def procesar_instrucciones(instrucciones,ts,tc) :
             elif isinstance(instr, showDatabases) : procesar_showDatabases(instr,ts,tc)
             elif isinstance(instr, dropDatabase) : procesar_dropDatabase(instr,ts,tc)
             elif isinstance(instr, useDatabase) : procesar_useDatabase(instr,ts,tc)
+            elif isinstance(instr, Create_Alterdatabase) : procesar_alterdatabase(instr,ts,tc)
             
             else : print('Error: instrucción no válida ' + str(instr))
         return salida 
     except:
         pass
 
-'''f = open("./entrada.txt", "r")
+f = open("./entrada.txt", "r")
 input = f.read()
 listaErrores = []
 instrucciones = g.parse(input)
@@ -197,7 +206,7 @@ erroressss.crearReporte()
 astG = AST()
 astG.generarAST(instrucciones)
 typeC = TipeChecker()
-typeC.crearReporte(tc_global)'''
+typeC.crearReporte(tc_global)
 
 
 def ts_graph(ts_global):

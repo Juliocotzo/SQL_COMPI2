@@ -48,7 +48,7 @@ def analizar_select(e):
     if my_text.selection_get():
 
         listaErrores = []
-        global instrucciones_Global
+        global instrucciones_Global,tc_global1
         selected = my_text.selection_get()
         print(selected)
         instrucciones = g.parse(selected)

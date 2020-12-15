@@ -124,6 +124,7 @@ class TIPO_DE_DATOS(Enum):
     now = 22
     date_part = 23
     extract = 24
+    varing = 25
 
 class ExpresionNumerica:
     '''

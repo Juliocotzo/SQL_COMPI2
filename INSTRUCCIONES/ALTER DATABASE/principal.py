@@ -69,7 +69,12 @@ def procesar_creartype(instr):
             print("     "+cadenas.val)
 
 def procesar_alterdatabase(instr):
-    print('AlterBase: '+ instr.id_tabla + " to " + instr.tipo_id)
+    global salida
+    #print(instr.tipo_id)
+    if isinstance(instr.tipo_id, ExpresionComillaSimple):
+        print(instr.tipo_id.val)
+    salida = "hola"
+    # print('AlterBase: '+ instr.id_tabla + " to " + str(instr.tipo_id))
 
 def procesar_update(instr):
     print('update ' + instr.identificador + " tabla2: "+ instr.idtabla + " expresion: " + str(instr.expresion.exp1))

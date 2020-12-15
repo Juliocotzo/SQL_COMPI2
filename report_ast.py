@@ -34,7 +34,8 @@ class AST:
                 self.crearNododropDatabase("node2", instruccion)
             elif isinstance(instruccion, useDatabase) : 
                 self.crearNodo_useDatabase("node2", instruccion)
-                
+            elif isinstance(instruccion, Create_Alterdatabase) : 
+                self.crearNodo_alterDatabase("node2", instruccion)
             indice = indice +1
         dot.view('reportes/AST', cleanup=True)
 
@@ -81,6 +82,10 @@ class AST:
                 dot.node("node" + str(contadorNodos), str(expresion.id))
                 dot.edge(padre, "node" + str(contadorNodos))
         elif isinstance(expresion, ExpresionNumeroSimple):
+            contadorNodos = contadorNodos + 1
+            dot.node("node" + str(contadorNodos), str(expresion.val))
+            dot.edge(padre, "node" + str(contadorNodos))
+        elif isinstance(expresion, ExpresionComillaSimple):
             contadorNodos = contadorNodos + 1
             dot.node("node" + str(contadorNodos), str(expresion.val))
             dot.edge(padre, "node" + str(contadorNodos))
@@ -424,3 +429,28 @@ class AST:
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)
         self.crearNodoExpresion(temp1,instruccion.id)
+
+    def crearNodo_alterDatabase(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'ALTER DATABASE')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodo_alterDatabaseDatabase(temp1,instruccion)
+        self.crearNodo_alterDatabaseID(temp1,instruccion)
+        
+    def crearNodo_alterDatabaseDatabase(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'DATABASE')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1,instruccion.id_tabla)
+
+    def crearNodo_alterDatabaseID(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'ID')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1,instruccion.tipo_id)

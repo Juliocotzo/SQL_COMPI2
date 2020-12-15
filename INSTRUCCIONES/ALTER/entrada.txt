@@ -1,9 +1,0 @@
-select timestamp '1-2/2';
-
-select current_time;
-
-select a,f,c from azul;
-
-select case when 3>4 then 5 when 4>3 then 6 else 10 end from autos;
-
-select (select current_time;), 3+5 from lista2;
