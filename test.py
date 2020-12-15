@@ -4,16 +4,6 @@
 
 from storageManager import jsonMode as j
 
-# drop all databases if exists
-j.dropAll()
-
-# create database
-j.createDatabase('world')
-
-# create tables
-j.createTable('world', 'countries', 4)
-j.createTable('world', 'cities',    4)
-j.createTable('world', 'languages', 4)
-
-# show all data
-j.showCollection()
+j.createTable('compiladores2','materia',3)
+print(j.showDatabases())
+print(j.showTables('compiladores2'))

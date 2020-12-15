@@ -15,7 +15,7 @@ useCurrentDatabase = ""
 
 def procesar_createTable(instr,ts,tc) :
     columns = []
-    i = 0;
+    i = 0
     if instr.instrucciones != []:
         global salida
         for ins in instr.instrucciones:
@@ -137,6 +137,19 @@ def procesar_showDatabases(instr,ts,tc):
     else:
         salida = data
 
+def procesar_showTables(instr,ts,tc):
+    print("SHOW TABLES")
+    global salida
+    dataT = []
+    dataTables = j.showTables(useCurrentDatabase)
+    dataT.append(['tables'])
+    for tables in dataTables:
+        dataT.append([tables])
+    if dataTables == []:
+        salida = "\nERROR:  Tables does not exist \nSQL state: 3D000"
+    else:
+        salida = dataT
+
 def procesar_dropDatabase(instr,ts,tc):
     global salida
 
@@ -175,6 +188,7 @@ def procesar_useDatabase(instr,ts,tc):
         salida = "\nYou are now connected to database  \"" + str(instr.id.id) +"\""
     else: 
         salida = "\nERROR:  database \"" + str(instr.id.id) +"\" does not exist \nSQL state: 3D000"
+        useCurrentDatabase = ""
         
 def procesar_alterdatabase(instr,ts,tc):
     global salida
@@ -225,7 +239,13 @@ def procesar_instrucciones(instrucciones,ts,tc) :
                 procesar_dropDatabase(instr,ts,tc)
             elif isinstance(instr, useDatabase) : 
                 procesar_useDatabase(instr,ts,tc)
-            elif isinstance(instr, Create_Alterdatabase) : procesar_alterdatabase(instr,ts,tc)
+            elif isinstance(instr, Create_Alterdatabase) :
+                procesar_alterdatabase(instr,ts,tc)
+            elif isinstance(instr, showTables) : 
+                if useCurrentDatabase != "":
+                    procesar_showTables(instr,ts,tc)
+                else:
+                    salida = "\nSELECT DATABASE"
             
             else : print('Error: instrucción no válida ' + str(instr))
         return salida 

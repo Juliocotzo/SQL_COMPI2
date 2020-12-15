@@ -50,7 +50,7 @@ def analizar_select(e):
         listaErrores = []
         global instrucciones_Global,tc_global1
         selected = my_text.selection_get()
-        print(selected)
+        #print(selected)
         instrucciones = g.parse(selected)
         instrucciones_Global = instrucciones
         ts_global = TS.TablaDeSimbolos()
@@ -157,7 +157,7 @@ def salida_table(salida,textoSalida):
             prueba_columna.append(i)
             i += 1
 
-        print(prueba_columna)
+        #print(prueba_columna)
         
         my_tree = ttk.Treeview(salida_frame, columns=prueba_columna)
         my_tree.pack(side=LEFT)

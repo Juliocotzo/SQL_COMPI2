@@ -382,6 +382,7 @@ def p_instruccion(t) :
     '''instruccion      : createDB_insrt
                         | create_Table_isnrt
                         | show_databases_instr
+                        | show_tables_instr
                         | drop_database_instr
                         | use_database_instr
                         | alterDB_insrt'''
@@ -440,6 +441,15 @@ def p_instruccion_show_databases(t):
     'show_databases_instr : SHOW DATABASES PTCOMA'
     t[0] = showDatabases()
 
+
+#---------------------------------------------------------------------
+' -----------GRAMATICA PARA LA INSTRUCCION SHOW TABLES------------'
+#---------------------------------------------------------------------
+
+
+def p_instruccion_showTables(t):
+    'show_tables_instr : SHOW TABLES PTCOMA'
+    t[0] = showTables()
 
 #----------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION CREATE DB------------'

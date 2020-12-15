@@ -36,6 +36,8 @@ class AST:
                 self.crearNodo_useDatabase("node2", instruccion)
             elif isinstance(instruccion, Create_Alterdatabase) : 
                 self.crearNodo_alterDatabase("node2", instruccion)
+            elif isinstance(instruccion, showTables):
+                self.crearNodoshowTables("node2", instruccion)
             indice = indice +1
         dot.view('reportes/AST', cleanup=True)
 
@@ -395,6 +397,13 @@ class AST:
         global  contadorNodos, dot
         contadorNodos = contadorNodos + 1
         dot.node("node" + str(contadorNodos), 'SHOW DATABASES')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+
+    def crearNodoshowTables(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'SHOW TABLES')
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)
 
