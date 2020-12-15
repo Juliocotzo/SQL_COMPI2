@@ -6,6 +6,7 @@ from instrucciones import *
 from graphviz import Digraph
 from report_ast import *
 from report_tc import *
+from report_ts import *
 from report_errores import *
 
 from storageManager import jsonMode as j
@@ -35,6 +36,8 @@ def procesar_createTable(instr,ts,tc) :
         result = j.createTable(str(useCurrentDatabase),str(instr.id),int(len(columns)))
         if result == 0:
             salida = "\nCREATE TABLE"
+            temp1 = TS.Simbolo(str(instr.id),'Table',int(len(columns)),str(useCurrentDatabase))
+            ts.agregar(temp1)
         elif result == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
         elif result == 2 :
@@ -110,20 +113,22 @@ def procesar_createDatabase(instr,ts,tc) :
 
         result1 = j.createDatabase(str(instr.nombre.id))
         if result1 == 0:
+            temp1 = TS.Simbolo(instr.nombre.id,'Database',0,"")
+            ts.agregar(temp1)
             salida = "\nCREATE DATABASE"
+            
         elif result1 == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
     else:
         result = j.createDatabase(str(instr.nombre.id))
         if result == 0:
             salida = "\nCREATE DATABASE"
-            print("CREATE DATABASE")
+            temp1 = TS.Simbolo(instr.nombre.id,'Database',0,"")
+            ts.agregar(temp1)
         elif result == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
-            print("ERROR:  internal_error \nSQL state: XX000 ")
         elif result == 2 :
             salida = "\nERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 "
-            print("ERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 ")
 
 def procesar_showDatabases(instr,ts,tc):
     global salida
@@ -252,7 +257,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
     except:
         pass
 
-'''f = open("./entrada.txt", "r")
+f = open("./entrada.txt", "r")
 input = f.read()
 listaErrores = []
 instrucciones = g.parse(input)
@@ -262,25 +267,10 @@ tc_global = TC.TablaDeTipos()
 procesar_instrucciones(instrucciones,ts_global,tc_global)
 erroressss = ErrorHTML()
 erroressss.crearReporte()
+typeC = TipeChecker()
+typeC.crearReporte(tc_global)
+typeS = RTablaDeSimbolos()
+typeS.crearReporte(ts_global)
+
 astG = AST()
 astG.generarAST(instrucciones)
-typeC = TipeChecker()
-typeC.crearReporte(tc_global)'''
-
-
-def ts_graph(ts_global):
-    dot3 = Digraph('TS', node_attr={'shape': 'plaintext','color': 'lightblue2'})
-    cadena = "<\n"
-    cadena = cadena + "<table border='1' cellborder='1'>\n"
-    cadena = cadena + "<tr><td colspan='3'>Tabla de Simbolos</td></tr>"
-    cadena = cadena + "<tr><td port='port_one'>Id</td><td port='port_two'>Tipo</td><td port='port_three'>Valor</td></tr>"
-    for key in ts_global.simbolos:
-        cadena2 = "<tr><td port='port_one'>" + str(ts_global.simbolos[key].id) + "</td><td port='port_two'>" + str(ts_global.simbolos[key].tipo) + "</td><td port='port_three'>" + str(ts_global.simbolos[key].valor) + "</td></tr>\n"
-        cadena = cadena + cadena2
-    cadena = cadena + "</table>"
-    cadena = cadena + '>'
-    dot3.node('tab', label=cadena)
-    dot3.view('Reportes/TS', cleanup=True)
-
-
-#ts_graph(ts_global)

@@ -9,11 +9,13 @@ from expresiones import *
 from instrucciones import *
 from report_ast import *
 from report_tc import *
+from report_ts import *
 from report_errores import *
 
 instrucciones_Global = []
 
 tc_global1 = []
+ts_global1 = []
 
 
 root = Tk() 
@@ -29,12 +31,13 @@ selected = False
 def analizar(txt):
 
     listaErrores = []
-    global instrucciones_Global,tc_global1
+    global instrucciones_Global,tc_global1,ts_global1
     instrucciones = g.parse(txt)
     instrucciones_Global = instrucciones
     ts_global = TS.TablaDeSimbolos()
     tc_global = TC.TablaDeTipos()
     tc_global1 = tc_global
+    ts_global1 = ts_global
     salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
 
     if type(salida) == list:
@@ -48,7 +51,7 @@ def analizar_select(e):
     if my_text.selection_get():
 
         listaErrores = []
-        global instrucciones_Global,tc_global1
+        global instrucciones_Global,tc_global1,ts_global1
         selected = my_text.selection_get()
         #print(selected)
         instrucciones = g.parse(selected)
@@ -56,6 +59,7 @@ def analizar_select(e):
         ts_global = TS.TablaDeSimbolos()
         tc_global = TC.TablaDeTipos()
         tc_global1 = tc_global
+        ts_global1 = ts_global
         salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
         if type(salida) == list:
             salida_table(1,salida)
@@ -76,9 +80,10 @@ def generarReporteErrores():
     erroressss = ErrorHTML()
     erroressss.crearReporte()
 
-def graficar_TS():
-    ''' '''
-    #ts_graph()
+def generarReporteTS():
+    global ts_global1
+    RTablaS = RTablaDeSimbolos()
+    RTablaS.crearReporte(ts_global1)
 
 toolbar_frame = Frame(root)
 toolbar_frame.pack(fill = X)
@@ -112,13 +117,12 @@ file_menu = Menu(my_menu, tearoff = False)
 my_menu.add_cascade(label = "Archivo", menu = file_menu)
 file_menu.add_command(label = "Analizar", command = lambda: analizar(my_text.get("1.0",'end-1c')))
 file_menu.add_command(label = "Analizar Query" , command = lambda: analizar_select(False))
-file_menu.add_command(label = "Save")
 file_menu.add_separator()
 file_menu.add_command(label = "Exit", command = root.quit)
 
 reportes_menu = Menu(my_menu, tearoff = False)
 my_menu.add_cascade(label = "Reportes", menu = reportes_menu)
-reportes_menu.add_command(label = "Tabla de Simbolos", command = lambda: graficar_TS())
+reportes_menu.add_command(label = "Tabla de Simbolos", command = lambda: generarReporteTS())
 reportes_menu.add_command(label = "Tabla de Tipos", command = lambda: generarReporteTC())
 reportes_menu.add_command(label = "AST", command = lambda: generarReporteAST())
 reportes_menu.add_command(label = "Errores", command = lambda: generarReporteErrores())
