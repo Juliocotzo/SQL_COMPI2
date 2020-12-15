@@ -1,3 +1,6 @@
+SHOW DATABASES;
+
+USE compiladores2;
 
 CREATE TABLE usuario(
     id_usuario INTEGER,
