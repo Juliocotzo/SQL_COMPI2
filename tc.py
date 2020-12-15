@@ -2,7 +2,8 @@
 class Tipo() :
     'Esta clase representa un tipo dentro de nuestra tabla de tipos'
 
-    def __init__(self, tabla, id, tipo, restriccion, referencia, tablaRef) :
+    def __init__(self, database, tabla, id, tipo, restriccion, referencia, tablaRef) :
+        self.database = database
         self.tabla = tabla
         self.id = id
         self.tipo = tipo
@@ -25,27 +26,34 @@ class TablaDeTipos() :
 
         return self.tipos[id]
 
-    def actualizar(self,tipo, tabla, column) :
+    def actualizar(self,tipo,database, tabla, column) :
         i = 0
         while i < len(self.tipos):
-            if self.tipos[i].tabla == tabla and self.tipos[i].id == column:
+            if self.tipos[i].database == database and self.tipos[i].tabla == tabla and self.tipos[i].id == column:
                 self.tipos[i] = tipo
             i += 1
 
-    def actualizarRestriccion(self,tipo, tabla, column, restriccion) :
+    def actualizarRestriccion(self,tipo, database, tabla, column, restriccion) :
         i = 0
         while i < len(self.tipos):
-            if self.tipos[i].tabla == tabla and self.tipos[i].id == column:
+            if self.tipos[i].database == database and self.tipos[i].tabla == tabla and self.tipos[i].id == column:
                 self.tipos[i].restriccion = restriccion
             i += 1
 
-    def actualizarLlaveForanea(self,tipo, tabla, column, restriccion,tablaRef, referencia) :
+    def actualizarLlaveForanea(self,tipo,database, tabla, column, restriccion,tablaRef, referencia) :
         i = 0
         while i < len(self.tipos):
-            if self.tipos[i].tabla == tabla and self.tipos[i].id == column:
+            if self.tipos[i].database == database and self.tipos[i].tabla == tabla and self.tipos[i].id == column:
                 self.tipos[i].restriccion = restriccion
                 self.tipos[i].referencia = referencia
                 self.tipos[i].tablaRef = tablaRef
+            i += 1
+
+    def actualizarDatabase(self,tipo,database, newDatabase) :
+        i = 0
+        while i < len(self.tipos):
+            if self.tipos[i].database == database:
+                self.tipos[i].database = newDatabase
             i += 1
 
     def clear(self):

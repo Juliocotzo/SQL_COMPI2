@@ -29,44 +29,44 @@ def procesar_createTable(instr,ts,tc) :
                 procesar_constraint(ins,ts,tc,instr.id)
             
 def procesar_Definicion(instr,ts,tc,tabla) :
-    tipo = TC.Tipo(tabla,instr.id,instr.tipo_datos.etiqueta,instr.etiqueta,instr.id_referencia,None)
+    tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,instr.etiqueta,instr.id_referencia,None)
     tc.agregar(tipo)
     
 def procesar_listaId(instr,ts,tc,tabla):
     if instr.identificadores != []:
         for ids in instr.identificadores:
-            tipo = TC.Tipo(tabla,ids.id,None,OPCIONESCREATE_TABLE.UNIQUE,None,None)
-            tc.actualizarRestriccion(tipo,tabla,ids.id,OPCIONESCREATE_TABLE.UNIQUE)
+            tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,None,OPCIONESCREATE_TABLE.UNIQUE,None,None)
+            tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.id,OPCIONESCREATE_TABLE.UNIQUE)
 
 def procesar_primaria(instr,ts,tc,tabla):
-    tipo = TC.Tipo(tabla,instr.id,None,OPCIONESCREATE_TABLE.PRIMARIA,None,None)
-    tc.actualizarRestriccion(tipo,tabla,instr.id,OPCIONESCREATE_TABLE.PRIMARIA)
+    tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,None,OPCIONESCREATE_TABLE.PRIMARIA,None,None)
+    tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,instr.id,OPCIONESCREATE_TABLE.PRIMARIA)
 
 def procesar_Foranea(instr,ts,tc,tabla):
     # print(instr.nombre_tabla,instr.referencia_tabla,instr.campo_referencia)
-    tipo = TC.Tipo(tabla,instr.nombre_tabla,None,OPCIONESCREATE_TABLE.PRIMARIA,instr.campo_referencia,instr.referencia_tabla)
-    tc.actualizarLlaveForanea(tipo,tabla,instr.nombre_tabla,OPCIONESCREATE_TABLE.FORANEA,instr.referencia_tabla,instr.campo_referencia)
+    tipo = TC.Tipo(useCurrentDatabase,tabla,instr.nombre_tabla,None,OPCIONESCREATE_TABLE.PRIMARIA,instr.campo_referencia,instr.referencia_tabla)
+    tc.actualizarLlaveForanea(tipo,useCurrentDatabase,tabla,instr.nombre_tabla,OPCIONESCREATE_TABLE.FORANEA,instr.referencia_tabla,instr.campo_referencia)
     
 def procesar_constraint(instr,ts,tc,tabla):
     if instr.tipo == 'UNIQUE':
         if instr.opciones_constraint != []:
             for ids in instr.opciones_constraint:
-                tipo = TC.Tipo(tabla,ids.id,None,OPCIONESCREATE_TABLE.UNIQUE,None,None)
-                tc.actualizarRestriccion(tipo,tabla,ids.id,OPCIONESCREATE_TABLE.UNIQUE)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,None,OPCIONESCREATE_TABLE.UNIQUE,None,None)
+                tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.id,OPCIONESCREATE_TABLE.UNIQUE)
     elif instr.tipo == 'FOREING':
         if instr.opciones_constraint != []:
             for ids in instr.opciones_constraint:
-                tipo = TC.Tipo(tabla,instr.columna,None,OPCIONESCREATE_TABLE.FORANEA,ids,instr.referencia)
-                tc.actualizarLlaveForanea(tipo,tabla,instr.columna,OPCIONESCREATE_TABLE.FORANEA,instr.referencia,ids)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,instr.columna,None,OPCIONESCREATE_TABLE.FORANEA,ids,instr.referencia)
+                tc.actualizarLlaveForanea(tipo,useCurrentDatabase,tabla,instr.columna,OPCIONESCREATE_TABLE.FORANEA,instr.referencia,ids)
     elif instr.tipo == 'CHECK':
         if instr.opciones_constraint != []:
             for ids in instr.opciones_constraint:
                 if type(ids.exp1) == ExpresionIdentificador:
-                    tipo = TC.Tipo(tabla,ids.exp1.id,None,OPCIONES_CONSTRAINT.CHECK,None,None)
-                    tc.actualizarRestriccion(tipo,tabla,ids.exp1.id,OPCIONES_CONSTRAINT.CHECK)
+                    tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp1.id,None,OPCIONES_CONSTRAINT.CHECK,None,None)
+                    tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.exp1.id,OPCIONES_CONSTRAINT.CHECK)
                 else: 
-                    tipo = TC.Tipo(tabla,ids.exp2.id,None,OPCIONES_CONSTRAINT.CHECK,None,None)
-                    tc.actualizarRestriccion(tipo,tabla,ids.exp2.id,OPCIONES_CONSTRAINT.CHECK)
+                    tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp2.id,None,OPCIONES_CONSTRAINT.CHECK,None,None)
+                    tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.exp2.id,OPCIONES_CONSTRAINT.CHECK)
     
 def procesar_check(instr,ts,tc):
     print('Check')
@@ -164,12 +164,26 @@ def procesar_useDatabase(instr,ts,tc):
         
 def procesar_alterdatabase(instr,ts,tc):
     global salida
+    
     if isinstance(instr.tipo_id,ExpresionIdentificador) : 
-        print(instr.tipo_id.id)
+        global salida
+        print('OWNER ' + str(instr.tipo_id.id))
+
     elif isinstance(instr.tipo_id, ExpresionComillaSimple) : 
-        print(instr.tipo_id.val)
+        print('OWNER ' + str(instr.tipo_id.val))
+        
     else:
-        print(instr.tipo_id)
+        result = j.alterDatabase(str(instr.id_tabla),str(instr.tipo_id))
+        if result == 0:
+            tipo = TC.Tipo(useCurrentDatabase,instr.id_tabla,instr.id_tabla,None,OPCIONES_CONSTRAINT.CHECK,None,None)
+            tc.actualizarDatabase(tipo,instr.id_tabla,instr.tipo_id)
+            salida = "\nALTER DATABASE"
+        elif result == 1 :
+            salida = "\nERROR:  internal_error \nSQL state: XX000 "
+        elif result == 2 :
+            salida = "\nERROR:  database \"" + str(instr.id_tabla) +"\" does not exist \nSQL state: 3D000"
+        elif result == 3 :
+            salida = "\nERROR:  database \"" + str(instr.tipo_id) +"\" alredy exists\nSQL state: 42P04"
 
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
@@ -178,14 +192,25 @@ def procesar_instrucciones(instrucciones,ts,tc) :
         ## lista de instrucciones recolectadas
         for instr in instrucciones :
             #CREATE DATABASE
-            if isinstance(instr,CreateDatabase) : procesar_createDatabase(instr,ts,tc)
-            elif isinstance(instr, Create_Table) : procesar_createTable(instr,ts,tc)
-            elif isinstance(instr, ExpresionRelacional) : procesar_Expresion_Relacional(instr,ts,tc)
-            elif isinstance(instr, ExpresionBinaria) : procesar_Expresion_Binaria(instr,ts,tc)
-            elif isinstance(instr, ExpresionLogica) : procesar_Expresion_logica(instr,ts,tc)
-            elif isinstance(instr, showDatabases) : procesar_showDatabases(instr,ts,tc)
-            elif isinstance(instr, dropDatabase) : procesar_dropDatabase(instr,ts,tc)
-            elif isinstance(instr, useDatabase) : procesar_useDatabase(instr,ts,tc)
+            if isinstance(instr,CreateDatabase) : 
+                procesar_createDatabase(instr,ts,tc)
+            elif isinstance(instr, Create_Table) : 
+                if useCurrentDatabase != "":
+                    procesar_createTable(instr,ts,tc)
+                else:
+                    salida = "\nSELECT DATABASE"
+            elif isinstance(instr, ExpresionRelacional) : 
+                procesar_Expresion_Relacional(instr,ts,tc)
+            elif isinstance(instr, ExpresionBinaria) : 
+                procesar_Expresion_Binaria(instr,ts,tc)
+            elif isinstance(instr, ExpresionLogica) : 
+                procesar_Expresion_logica(instr,ts,tc)
+            elif isinstance(instr, showDatabases) : 
+                procesar_showDatabases(instr,ts,tc)
+            elif isinstance(instr, dropDatabase) : 
+                procesar_dropDatabase(instr,ts,tc)
+            elif isinstance(instr, useDatabase) : 
+                procesar_useDatabase(instr,ts,tc)
             elif isinstance(instr, Create_Alterdatabase) : procesar_alterdatabase(instr,ts,tc)
             
             else : print('Error: instrucción no válida ' + str(instr))
@@ -193,7 +218,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
     except:
         pass
 
-f = open("./entrada.txt", "r")
+'''f = open("./entrada.txt", "r")
 input = f.read()
 listaErrores = []
 instrucciones = g.parse(input)
@@ -206,7 +231,7 @@ erroressss.crearReporte()
 astG = AST()
 astG.generarAST(instrucciones)
 typeC = TipeChecker()
-typeC.crearReporte(tc_global)
+typeC.crearReporte(tc_global)'''
 
 
 def ts_graph(ts_global):

@@ -33,6 +33,7 @@ class TipeChecker:
         f.write("                <thead>")
         f.write("                    <tr>")
         f.write("                        <th>No.</th>")
+        f.write("                        <th>DATABASE</th>")
         f.write("                        <th>TABLA</th>")
         f.write("                        <th>ID</th>")
         f.write("                        <th>TIPO</th>")
@@ -47,6 +48,7 @@ class TipeChecker:
             while i < len(tc_global.tipos):
                 f.write("                    <tr>")
                 f.write("                        <td class=\"text-left\">"+ str(i+1) +"</td>")
+                f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].database) +"</td>")
                 f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].tabla) +"</td>")
                 f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].id) +"</td>")
                 f.write("                        <td class=\"text-left\">"+ str(tc_global.tipos[i].tipo) +"</td>")

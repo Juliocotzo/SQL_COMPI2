@@ -1,6 +1,7 @@
-alter database azul rename to abrazo;
 
-alter database azul owner to session_user;
-
-alter database azul owner to 'cadena';
-
+CREATE TABLE usuario(
+    id_usuario INTEGER,
+    usuario VARCHAR(50),
+    unique(id_usuario),
+    constraint llaveforanea FOREING KEY (usuario) REFERENCES ESTUDIANTE(carnet)
+);

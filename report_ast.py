@@ -450,7 +450,12 @@ class AST:
     def crearNodo_alterDatabaseID(self, padre, instruccion):
         global  contadorNodos, dot
         contadorNodos = contadorNodos + 1
-        dot.node("node" + str(contadorNodos), 'ID')
+        if isinstance(instruccion.tipo_id,ExpresionIdentificador) : 
+            dot.node("node" + str(contadorNodos), 'OWNER ID')
+        elif isinstance(instruccion.tipo_id, ExpresionComillaSimple) : 
+            dot.node("node" + str(contadorNodos), 'OWNER ID')            
+        else:
+            dot.node("node" + str(contadorNodos), 'NEW ID')
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)
         self.crearNodoExpresion(temp1,instruccion.tipo_id)
