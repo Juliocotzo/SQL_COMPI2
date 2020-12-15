@@ -14,10 +14,14 @@ salida = ""
 useCurrentDatabase = ""
 
 def procesar_createTable(instr,ts,tc) :
-    # print(instr.id)
+    columns = []
+    i = 0;
     if instr.instrucciones != []:
+        global salida
         for ins in instr.instrucciones:
             if isinstance(ins, Definicion_Columnas): 
+                i+=1
+                columns.append(i)
                 procesar_Definicion(ins,ts,tc,instr.id)
             elif isinstance(ins, LLave_Primaria): 
                 procesar_primaria(ins,ts,tc,instr.id)
@@ -27,6 +31,16 @@ def procesar_createTable(instr,ts,tc) :
                 procesar_listaId(ins,ts,tc,instr.id)
             elif isinstance(ins, definicion_constraint): 
                 procesar_constraint(ins,ts,tc,instr.id)
+        
+        result = j.createTable(str(useCurrentDatabase),str(instr.id),int(len(columns)))
+        if result == 0:
+            salida = "\nCREATE TABLE"
+        elif result == 1 :
+            salida = "\nERROR:  internal_error \nSQL state: XX000 "
+        elif result == 2 :
+            salida = "\nERROR:  database \"" + useCurrentDatabase +"\" does not exist \nSQL state: 3D000"
+        elif result == 3 :
+            salida = "\nERROR:  relation \"" + str(instr.id) +"\" alredy exists\nSQL state: 42P07"
             
 def procesar_Definicion(instr,ts,tc,tabla) :
     tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,instr.etiqueta,instr.id_referencia,None)

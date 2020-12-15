@@ -15,6 +15,7 @@ entradaa = ""
 reservadas = {
     'create' : 'CREATE',
     'table':'TABLE',
+    'tables':'TABLES',
     'inherits': 'INHERITS',
     'integer': 'INTEGER',
     'show': 'SHOW',
