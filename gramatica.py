@@ -334,7 +334,7 @@ def t_newline(t):
     t.lexer.lineno += t.value.count("\n")
     
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0], t.lineno, t.lexpos)
+    #print("Illegal character '%s'" % t.value[0], t.lineno, t.lexpos)
     errorLexico = Error(str(t.value[0]),int(t.lineno),int(t.lexpos), "Error Lexico")
     listaErrores.append(errorLexico)
     t.lexer.skip(1)
@@ -693,15 +693,15 @@ def p_createDB_wRP_wIN_up(t):
         t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[6]), ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,""), t[7],1)
 
 def p_createDB_unParam_Owner(t):
-    '''createDB_unParam : OWNER ID
-                        | OWNER IGUAL ID
+    '''createDB_unParam : OWNER string_type
+                        | OWNER IGUAL string_type
                         | MODE ENTERO
                         | MODE IGUAL ENTERO'''
     if t[1].upper() == 'OWNER':
         if t[2] == '=':
-            t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3])
+            t[0] = t[3]
         else:
-            t[0] = t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2])
+            t[0] = t[0] = t[2]
     elif  t[1].upper() == 'MODE':
         if t[2] == '=':
             t[0] = ExpresionNumeroSimple(t[3])
@@ -728,43 +728,43 @@ def p_createDB_wRP_wIN_dp(t):
     t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[8]), t[9][0], t[9][1],1)
 
 def p_createDB_dosParam_Owner(t):
-    '''createDB_dosParam : OWNER ID MODE ENTERO
-                         | OWNER ID MODE IGUAL ENTERO
-                         | OWNER IGUAL ID MODE ENTERO
-                         | OWNER IGUAL ID MODE IGUAL ENTERO
-                         | MODE ENTERO OWNER ID
-                         | MODE ENTERO OWNER IGUAL ID
+    '''createDB_dosParam : OWNER string_type MODE ENTERO
+                         | OWNER string_type MODE IGUAL ENTERO
+                         | OWNER IGUAL string_type MODE ENTERO
+                         | OWNER IGUAL string_type MODE IGUAL ENTERO
+                         | MODE ENTERO OWNER string_type
+                         | MODE ENTERO OWNER IGUAL string_type
                          | MODE IGUAL ENTERO OWNER ID
                          | MODE IGUAL ENTERO OWNER IGUAL ID'''
 
     temp = []     
     if t[1].upper() == 'OWNER' and t[3].upper() == 'MODE':
         if t[4] == '=':
-            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2]))
+            temp.append(t[2])
             temp.append(ExpresionNumeroSimple(t[5]))
         else: 
-            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2]))
+            temp.append([2])
             temp.append(ExpresionNumeroSimple(t[4]))
     elif t[1].upper() == 'OWNER' and t[4].upper() == 'MODE':
         if t[5] == '=':
-            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]))
+            temp.append(t[3])
             temp.append(ExpresionNumeroSimple(t[6]))
         else: 
-            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]))
+            temp.append(t[3])
             temp.append(ExpresionNumeroSimple(t[5]))
     elif t[1].upper() == 'MODE' and type(t[3]) != int:
         if t[4] == '=':
-            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5]))
+            temp.append(t[5])
             temp.append(ExpresionNumeroSimple(t[2]))
         else: 
-            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[4]))
+            temp.append(t[4])
             temp.append(ExpresionNumeroSimple(t[2]))
     elif t[1].upper() == 'MODE' and type(t[3]) == int:
         if t[5] == '=':
-            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[6]))
+            temp.append(t[6])
             temp.append(ExpresionNumeroSimple(t[3]))
         else: 
-            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5]))
+            temp.append(t[5])
             temp.append(ExpresionNumeroSimple(t[3]))
     t[0] = temp
 
@@ -1213,7 +1213,7 @@ def p_expresion_logica_rel(t):
 
 
 def p_error(t):
-    print("Error sintáctico en '%s'" % t.value, str(t.lineno),find_column(str(entradaa), t))
+    #print("Error sintáctico en '%s'" % t.value, str(t.lineno),find_column(str(entradaa), t))
     global reporte_sintactico
     reporte_sintactico += "<tr> <td> Sintactico </td> <td>" + t.value + "</td>" + "<td>" + str(t.lineno) + "</td> <td> "+ str(find_column(str(input),t))+"</td></th>"
     errorSintactico = Error(str(t.value),int(t.lineno),int(find_column(str(entradaa),t)), "Error Sintactico")

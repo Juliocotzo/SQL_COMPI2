@@ -193,20 +193,20 @@ Rule 60    createDB_insrt -> CREATE DATABASE ID createDB_unParam PTCOMA
 Rule 61    createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA
 Rule 62    createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
 Rule 63    createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA
-Rule 64    createDB_unParam -> OWNER ID
-Rule 65    createDB_unParam -> OWNER IGUAL ID
+Rule 64    createDB_unParam -> OWNER string_type
+Rule 65    createDB_unParam -> OWNER IGUAL string_type
 Rule 66    createDB_unParam -> MODE ENTERO
 Rule 67    createDB_unParam -> MODE IGUAL ENTERO
 Rule 68    createDB_insrt -> CREATE DATABASE ID createDB_dosParam PTCOMA
 Rule 69    createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA
 Rule 70    createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
 Rule 71    createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA
-Rule 72    createDB_dosParam -> OWNER ID MODE ENTERO
-Rule 73    createDB_dosParam -> OWNER ID MODE IGUAL ENTERO
-Rule 74    createDB_dosParam -> OWNER IGUAL ID MODE ENTERO
-Rule 75    createDB_dosParam -> OWNER IGUAL ID MODE IGUAL ENTERO
-Rule 76    createDB_dosParam -> MODE ENTERO OWNER ID
-Rule 77    createDB_dosParam -> MODE ENTERO OWNER IGUAL ID
+Rule 72    createDB_dosParam -> OWNER string_type MODE ENTERO
+Rule 73    createDB_dosParam -> OWNER string_type MODE IGUAL ENTERO
+Rule 74    createDB_dosParam -> OWNER IGUAL string_type MODE ENTERO
+Rule 75    createDB_dosParam -> OWNER IGUAL string_type MODE IGUAL ENTERO
+Rule 76    createDB_dosParam -> MODE ENTERO OWNER string_type
+Rule 77    createDB_dosParam -> MODE ENTERO OWNER IGUAL string_type
 Rule 78    createDB_dosParam -> MODE IGUAL ENTERO OWNER ID
 Rule 79    createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL ID
 Rule 80    constraint_esp -> CHECK PAR_A expresion_logica PAR_C
@@ -393,7 +393,7 @@ GROUP                :
 HASHTAG              : 
 HAVING               : 
 HOUR                 : 122
-ID                   : 15 16 17 18 19 22 23 24 24 24 25 28 29 30 31 31 32 32 33 33 34 37 39 40 41 44 45 45 46 47 51 52 53 56 57 58 59 60 61 62 63 64 65 68 69 70 71 72 73 74 75 76 77 78 79 82 82 82 83 84 85 86 86 89 90 91 91 92 93 94 95 95 95 97 150 151 151 159
+ID                   : 15 16 17 18 19 22 23 24 24 24 25 28 29 30 31 31 32 32 33 33 34 37 39 40 41 44 45 45 46 47 51 52 53 56 57 58 59 60 61 62 63 68 69 70 71 78 79 82 82 82 83 84 85 86 86 89 90 91 91 92 93 94 95 95 95 97 150 151 151 159
 IF                   : 53 58 59 62 63 70 71
 IGUAL                : 44 65 67 73 74 75 75 77 78 79 79 165
 IN                   : 
@@ -554,7 +554,7 @@ lista_update         : 41 42
 parametro_update     : 42 43
 show_databases_instr : 6
 show_tables_instr    : 7
-string_type          : 
+string_type          : 64 65 72 73 74 75 76 77
 tipos_datos_columnas : 26 27
 update_insrt         : 11
 use_database_instr   : 9
@@ -1098,16 +1098,16 @@ state 35
     (56) createDB_insrt -> CREATE DATABASE ID . PTCOMA
     (60) createDB_insrt -> CREATE DATABASE ID . createDB_unParam PTCOMA
     (68) createDB_insrt -> CREATE DATABASE ID . createDB_dosParam PTCOMA
-    (64) createDB_unParam -> . OWNER ID
-    (65) createDB_unParam -> . OWNER IGUAL ID
+    (64) createDB_unParam -> . OWNER string_type
+    (65) createDB_unParam -> . OWNER IGUAL string_type
     (66) createDB_unParam -> . MODE ENTERO
     (67) createDB_unParam -> . MODE IGUAL ENTERO
-    (72) createDB_dosParam -> . OWNER ID MODE ENTERO
-    (73) createDB_dosParam -> . OWNER ID MODE IGUAL ENTERO
-    (74) createDB_dosParam -> . OWNER IGUAL ID MODE ENTERO
-    (75) createDB_dosParam -> . OWNER IGUAL ID MODE IGUAL ENTERO
-    (76) createDB_dosParam -> . MODE ENTERO OWNER ID
-    (77) createDB_dosParam -> . MODE ENTERO OWNER IGUAL ID
+    (72) createDB_dosParam -> . OWNER string_type MODE ENTERO
+    (73) createDB_dosParam -> . OWNER string_type MODE IGUAL ENTERO
+    (74) createDB_dosParam -> . OWNER IGUAL string_type MODE ENTERO
+    (75) createDB_dosParam -> . OWNER IGUAL string_type MODE IGUAL ENTERO
+    (76) createDB_dosParam -> . MODE ENTERO OWNER string_type
+    (77) createDB_dosParam -> . MODE ENTERO OWNER IGUAL string_type
     (78) createDB_dosParam -> . MODE IGUAL ENTERO OWNER ID
     (79) createDB_dosParam -> . MODE IGUAL ENTERO OWNER IGUAL ID
 
@@ -1305,28 +1305,32 @@ state 52
 
 state 53
 
-    (64) createDB_unParam -> OWNER . ID
-    (65) createDB_unParam -> OWNER . IGUAL ID
-    (72) createDB_dosParam -> OWNER . ID MODE ENTERO
-    (73) createDB_dosParam -> OWNER . ID MODE IGUAL ENTERO
-    (74) createDB_dosParam -> OWNER . IGUAL ID MODE ENTERO
-    (75) createDB_dosParam -> OWNER . IGUAL ID MODE IGUAL ENTERO
+    (64) createDB_unParam -> OWNER . string_type
+    (65) createDB_unParam -> OWNER . IGUAL string_type
+    (72) createDB_dosParam -> OWNER . string_type MODE ENTERO
+    (73) createDB_dosParam -> OWNER . string_type MODE IGUAL ENTERO
+    (74) createDB_dosParam -> OWNER . IGUAL string_type MODE ENTERO
+    (75) createDB_dosParam -> OWNER . IGUAL string_type MODE IGUAL ENTERO
+    (158) string_type -> . CADENA
+    (159) string_type -> . ID
 
-    ID              shift and go to state 77
     IGUAL           shift and go to state 78
+    CADENA          shift and go to state 79
+    ID              shift and go to state 80
 
+    string_type                    shift and go to state 77
 
 state 54
 
     (66) createDB_unParam -> MODE . ENTERO
     (67) createDB_unParam -> MODE . IGUAL ENTERO
-    (76) createDB_dosParam -> MODE . ENTERO OWNER ID
-    (77) createDB_dosParam -> MODE . ENTERO OWNER IGUAL ID
+    (76) createDB_dosParam -> MODE . ENTERO OWNER string_type
+    (77) createDB_dosParam -> MODE . ENTERO OWNER IGUAL string_type
     (78) createDB_dosParam -> MODE . IGUAL ENTERO OWNER ID
     (79) createDB_dosParam -> MODE . IGUAL ENTERO OWNER IGUAL ID
 
-    ENTERO          shift and go to state 79
-    IGUAL           shift and go to state 80
+    ENTERO          shift and go to state 81
+    IGUAL           shift and go to state 82
 
 
 state 55
@@ -1335,7 +1339,7 @@ state 55
     (62) createDB_insrt -> CREATE DATABASE IF NOT . EXISTS ID createDB_unParam PTCOMA
     (70) createDB_insrt -> CREATE DATABASE IF NOT . EXISTS ID createDB_dosParam PTCOMA
 
-    EXISTS          shift and go to state 81
+    EXISTS          shift and go to state 83
 
 
 state 56
@@ -1347,8 +1351,8 @@ state 56
     (69) createDB_insrt -> CREATE OR REPLACE DATABASE . ID createDB_dosParam PTCOMA
     (71) createDB_insrt -> CREATE OR REPLACE DATABASE . IF NOT EXISTS ID createDB_dosParam PTCOMA
 
-    ID              shift and go to state 82
-    IF              shift and go to state 83
+    ID              shift and go to state 84
+    IF              shift and go to state 85
 
 
 state 57
@@ -1367,14 +1371,14 @@ state 57
     (96) cuerpo_createTable -> . UNIQUE PAR_A campos_c PAR_C
     (97) cuerpo_createTable -> . CONSTRAINT ID constraint_esp
 
-    ID              shift and go to state 84
-    PRIMARY         shift and go to state 87
-    FOREING         shift and go to state 88
-    UNIQUE          shift and go to state 89
-    CONSTRAINT      shift and go to state 90
+    ID              shift and go to state 86
+    PRIMARY         shift and go to state 89
+    FOREING         shift and go to state 90
+    UNIQUE          shift and go to state 91
+    CONSTRAINT      shift and go to state 92
 
-    cuerpo_createTable_lista       shift and go to state 85
-    cuerpo_createTable             shift and go to state 86
+    cuerpo_createTable_lista       shift and go to state 87
+    cuerpo_createTable             shift and go to state 88
 
 state 58
 
@@ -1394,7 +1398,7 @@ state 59
 
     (53) drop_database_instr -> DROP DATABASE IF EXISTS . ID PTCOMA
 
-    ID              shift and go to state 91
+    ID              shift and go to state 93
 
 
 state 60
@@ -1415,21 +1419,21 @@ state 61
 
     (39) lista_drop_id -> lista_drop_id COMA . ID
 
-    ID              shift and go to state 92
+    ID              shift and go to state 94
 
 
 state 62
 
     (45) alterDB_insrt -> ALTER DATABASE ID RENAME . TO ID PTCOMA
 
-    TO              shift and go to state 93
+    TO              shift and go to state 95
 
 
 state 63
 
     (46) alterDB_insrt -> ALTER DATABASE ID OWNER . TO usuariosDB PTCOMA
 
-    TO              shift and go to state 94
+    TO              shift and go to state 96
 
 
 state 64
@@ -1437,21 +1441,21 @@ state 64
     (22) Table_alter -> ALTER . COLUMN ID TYPE TIPO_DATO
     (37) Table_alter -> ALTER . COLUMN ID SET NOT NULL
 
-    COLUMN          shift and go to state 95
+    COLUMN          shift and go to state 97
 
 
 state 65
 
     (23) alterTable_insrt -> ALTER TABLE ID DROP . CONSTRAINT campos_c PTCOMA
 
-    CONSTRAINT      shift and go to state 96
+    CONSTRAINT      shift and go to state 98
 
 
 state 66
 
     (24) alterTable_insrt -> ALTER TABLE ID RENAME . COLUMN ID TO ID PTCOMA
 
-    COLUMN          shift and go to state 97
+    COLUMN          shift and go to state 99
 
 
 state 67
@@ -1463,10 +1467,10 @@ state 67
     (32) alterTable_insrt -> ALTER TABLE ID ADD . CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C PTCOMA
     (33) alterTable_insrt -> ALTER TABLE ID ADD . CONSTRAINT ID FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA
 
-    COLUMN          shift and go to state 98
-    CHECK           shift and go to state 99
-    FOREIGN         shift and go to state 100
-    CONSTRAINT      shift and go to state 101
+    COLUMN          shift and go to state 100
+    CHECK           shift and go to state 101
+    FOREIGN         shift and go to state 102
+    CONSTRAINT      shift and go to state 103
 
 
 state 68
@@ -1474,8 +1478,8 @@ state 68
     (34) alterTable_insrt -> ALTER TABLE ID alterTable_alter . PTCOMA
     (35) alterTable_alter -> alterTable_alter . COMA Table_alter
 
-    PTCOMA          shift and go to state 102
-    COMA            shift and go to state 103
+    PTCOMA          shift and go to state 104
+    COMA            shift and go to state 105
 
 
 state 69
@@ -1490,7 +1494,7 @@ state 70
 
     (44) parametro_update -> ID . IGUAL expresion
 
-    IGUAL           shift and go to state 104
+    IGUAL           shift and go to state 106
 
 
 state 71
@@ -1498,8 +1502,8 @@ state 71
     (41) update_insrt -> UPDATE ID SET lista_update . WHERE expresion_relacional PTCOMA
     (42) lista_update -> lista_update . COMA parametro_update
 
-    WHERE           shift and go to state 105
-    COMA            shift and go to state 106
+    WHERE           shift and go to state 107
+    COMA            shift and go to state 108
 
 
 state 72
@@ -1517,16 +1521,16 @@ state 73
     (18) lista_parametros_lista -> . lista_parametros_lista COMA ID
     (19) lista_parametros_lista -> . ID
 
-    PAR_C           shift and go to state 109
-    ID              shift and go to state 107
+    PAR_C           shift and go to state 111
+    ID              shift and go to state 109
 
-    lista_parametros_lista         shift and go to state 108
+    lista_parametros_lista         shift and go to state 110
 
 state 74
 
     (17) insert_insrt -> INSERT INTO ID VALUES . PAR_A lista_datos PAR_C PTCOMA
 
-    PAR_A           shift and go to state 110
+    PAR_A           shift and go to state 112
 
 
 state 75
@@ -1559,86 +1563,106 @@ state 76
 
 state 77
 
-    (64) createDB_unParam -> OWNER ID .
-    (72) createDB_dosParam -> OWNER ID . MODE ENTERO
-    (73) createDB_dosParam -> OWNER ID . MODE IGUAL ENTERO
+    (64) createDB_unParam -> OWNER string_type .
+    (72) createDB_dosParam -> OWNER string_type . MODE ENTERO
+    (73) createDB_dosParam -> OWNER string_type . MODE IGUAL ENTERO
 
-    PTCOMA          reduce using rule 64 (createDB_unParam -> OWNER ID .)
-    MODE            shift and go to state 111
+    PTCOMA          reduce using rule 64 (createDB_unParam -> OWNER string_type .)
+    MODE            shift and go to state 113
 
 
 state 78
 
-    (65) createDB_unParam -> OWNER IGUAL . ID
-    (74) createDB_dosParam -> OWNER IGUAL . ID MODE ENTERO
-    (75) createDB_dosParam -> OWNER IGUAL . ID MODE IGUAL ENTERO
+    (65) createDB_unParam -> OWNER IGUAL . string_type
+    (74) createDB_dosParam -> OWNER IGUAL . string_type MODE ENTERO
+    (75) createDB_dosParam -> OWNER IGUAL . string_type MODE IGUAL ENTERO
+    (158) string_type -> . CADENA
+    (159) string_type -> . ID
 
-    ID              shift and go to state 112
+    CADENA          shift and go to state 79
+    ID              shift and go to state 80
 
+    string_type                    shift and go to state 114
 
 state 79
 
-    (66) createDB_unParam -> MODE ENTERO .
-    (76) createDB_dosParam -> MODE ENTERO . OWNER ID
-    (77) createDB_dosParam -> MODE ENTERO . OWNER IGUAL ID
+    (158) string_type -> CADENA .
 
-    PTCOMA          reduce using rule 66 (createDB_unParam -> MODE ENTERO .)
-    OWNER           shift and go to state 113
+    MODE            reduce using rule 158 (string_type -> CADENA .)
+    PTCOMA          reduce using rule 158 (string_type -> CADENA .)
 
 
 state 80
+
+    (159) string_type -> ID .
+
+    MODE            reduce using rule 159 (string_type -> ID .)
+    PTCOMA          reduce using rule 159 (string_type -> ID .)
+
+
+state 81
+
+    (66) createDB_unParam -> MODE ENTERO .
+    (76) createDB_dosParam -> MODE ENTERO . OWNER string_type
+    (77) createDB_dosParam -> MODE ENTERO . OWNER IGUAL string_type
+
+    PTCOMA          reduce using rule 66 (createDB_unParam -> MODE ENTERO .)
+    OWNER           shift and go to state 115
+
+
+state 82
 
     (67) createDB_unParam -> MODE IGUAL . ENTERO
     (78) createDB_dosParam -> MODE IGUAL . ENTERO OWNER ID
     (79) createDB_dosParam -> MODE IGUAL . ENTERO OWNER IGUAL ID
 
-    ENTERO          shift and go to state 114
+    ENTERO          shift and go to state 116
 
 
-state 81
+state 83
 
     (58) createDB_insrt -> CREATE DATABASE IF NOT EXISTS . ID PTCOMA
     (62) createDB_insrt -> CREATE DATABASE IF NOT EXISTS . ID createDB_unParam PTCOMA
     (70) createDB_insrt -> CREATE DATABASE IF NOT EXISTS . ID createDB_dosParam PTCOMA
 
-    ID              shift and go to state 115
+    ID              shift and go to state 117
 
 
-state 82
+state 84
 
     (57) createDB_insrt -> CREATE OR REPLACE DATABASE ID . PTCOMA
     (61) createDB_insrt -> CREATE OR REPLACE DATABASE ID . createDB_unParam PTCOMA
     (69) createDB_insrt -> CREATE OR REPLACE DATABASE ID . createDB_dosParam PTCOMA
-    (64) createDB_unParam -> . OWNER ID
-    (65) createDB_unParam -> . OWNER IGUAL ID
+    (64) createDB_unParam -> . OWNER string_type
+    (65) createDB_unParam -> . OWNER IGUAL string_type
     (66) createDB_unParam -> . MODE ENTERO
     (67) createDB_unParam -> . MODE IGUAL ENTERO
-    (72) createDB_dosParam -> . OWNER ID MODE ENTERO
-    (73) createDB_dosParam -> . OWNER ID MODE IGUAL ENTERO
-    (74) createDB_dosParam -> . OWNER IGUAL ID MODE ENTERO
-    (75) createDB_dosParam -> . OWNER IGUAL ID MODE IGUAL ENTERO
-    (76) createDB_dosParam -> . MODE ENTERO OWNER ID
-    (77) createDB_dosParam -> . MODE ENTERO OWNER IGUAL ID
+    (72) createDB_dosParam -> . OWNER string_type MODE ENTERO
+    (73) createDB_dosParam -> . OWNER string_type MODE IGUAL ENTERO
+    (74) createDB_dosParam -> . OWNER IGUAL string_type MODE ENTERO
+    (75) createDB_dosParam -> . OWNER IGUAL string_type MODE IGUAL ENTERO
+    (76) createDB_dosParam -> . MODE ENTERO OWNER string_type
+    (77) createDB_dosParam -> . MODE ENTERO OWNER IGUAL string_type
     (78) createDB_dosParam -> . MODE IGUAL ENTERO OWNER ID
     (79) createDB_dosParam -> . MODE IGUAL ENTERO OWNER IGUAL ID
 
-    PTCOMA          shift and go to state 116
+    PTCOMA          shift and go to state 118
     OWNER           shift and go to state 53
     MODE            shift and go to state 54
 
-    createDB_unParam               shift and go to state 117
-    createDB_dosParam              shift and go to state 118
+    createDB_unParam               shift and go to state 119
+    createDB_dosParam              shift and go to state 120
 
-state 83
+state 85
 
     (59) createDB_insrt -> CREATE OR REPLACE DATABASE IF . NOT EXISTS ID PTCOMA
     (63) createDB_insrt -> CREATE OR REPLACE DATABASE IF . NOT EXISTS ID createDB_unParam PTCOMA
     (71) createDB_insrt -> CREATE OR REPLACE DATABASE IF . NOT EXISTS ID createDB_dosParam PTCOMA
 
-    NOT             shift and go to state 119
+    NOT             shift and go to state 121
 
 
-state 84
+state 86
 
     (89) cuerpo_createTable -> ID . TIPO_DATO_DEF
     (90) cuerpo_createTable -> ID . TIPO_DATO_DEF PRIMARY KEY
@@ -1667,37 +1691,37 @@ state 84
     (144) TIPO_DATO_DEF -> . CHAR PAR_A PAR_C
     (145) TIPO_DATO_DEF -> . CHARACTER PAR_A PAR_C
 
-    TEXT            shift and go to state 121
-    FLOAT           shift and go to state 122
-    INTEGER         shift and go to state 123
-    SMALLINT        shift and go to state 124
-    MONEY           shift and go to state 125
-    DECIMAL         shift and go to state 126
-    NUMERIC         shift and go to state 127
-    BIGINT          shift and go to state 128
-    REAL            shift and go to state 129
-    DOUBLE          shift and go to state 130
-    INTERVAL        shift and go to state 131
-    TIME            shift and go to state 132
-    TIMESTAMP       shift and go to state 133
-    DATE            shift and go to state 134
-    CHARACTER       shift and go to state 135
-    VARCHAR         shift and go to state 136
-    CHAR            shift and go to state 137
+    TEXT            shift and go to state 123
+    FLOAT           shift and go to state 124
+    INTEGER         shift and go to state 125
+    SMALLINT        shift and go to state 126
+    MONEY           shift and go to state 127
+    DECIMAL         shift and go to state 128
+    NUMERIC         shift and go to state 129
+    BIGINT          shift and go to state 130
+    REAL            shift and go to state 131
+    DOUBLE          shift and go to state 132
+    INTERVAL        shift and go to state 133
+    TIME            shift and go to state 134
+    TIMESTAMP       shift and go to state 135
+    DATE            shift and go to state 136
+    CHARACTER       shift and go to state 137
+    VARCHAR         shift and go to state 138
+    CHAR            shift and go to state 139
 
-    TIPO_DATO_DEF                  shift and go to state 120
+    TIPO_DATO_DEF                  shift and go to state 122
 
-state 85
+state 87
 
     (85) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista . PAR_C PTCOMA
     (86) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista . PAR_C INHERITS PAR_A ID PAR_C PTCOMA
     (87) cuerpo_createTable_lista -> cuerpo_createTable_lista . COMA cuerpo_createTable
 
-    PAR_C           shift and go to state 138
-    COMA            shift and go to state 139
+    PAR_C           shift and go to state 140
+    COMA            shift and go to state 141
 
 
-state 86
+state 88
 
     (88) cuerpo_createTable_lista -> cuerpo_createTable .
 
@@ -1705,42 +1729,42 @@ state 86
     COMA            reduce using rule 88 (cuerpo_createTable_lista -> cuerpo_createTable .)
 
 
-state 87
+state 89
 
     (94) cuerpo_createTable -> PRIMARY . KEY PAR_A ID PAR_C
 
-    KEY             shift and go to state 140
-
-
-state 88
-
-    (95) cuerpo_createTable -> FOREING . KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
-
-    KEY             shift and go to state 141
-
-
-state 89
-
-    (96) cuerpo_createTable -> UNIQUE . PAR_A campos_c PAR_C
-
-    PAR_A           shift and go to state 142
+    KEY             shift and go to state 142
 
 
 state 90
 
-    (97) cuerpo_createTable -> CONSTRAINT . ID constraint_esp
+    (95) cuerpo_createTable -> FOREING . KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
-    ID              shift and go to state 143
+    KEY             shift and go to state 143
 
 
 state 91
 
-    (53) drop_database_instr -> DROP DATABASE IF EXISTS ID . PTCOMA
+    (96) cuerpo_createTable -> UNIQUE . PAR_A campos_c PAR_C
 
-    PTCOMA          shift and go to state 144
+    PAR_A           shift and go to state 144
 
 
 state 92
+
+    (97) cuerpo_createTable -> CONSTRAINT . ID constraint_esp
+
+    ID              shift and go to state 145
+
+
+state 93
+
+    (53) drop_database_instr -> DROP DATABASE IF EXISTS ID . PTCOMA
+
+    PTCOMA          shift and go to state 146
+
+
+state 94
 
     (39) lista_drop_id -> lista_drop_id COMA ID .
 
@@ -1748,14 +1772,14 @@ state 92
     COMA            reduce using rule 39 (lista_drop_id -> lista_drop_id COMA ID .)
 
 
-state 93
+state 95
 
     (45) alterDB_insrt -> ALTER DATABASE ID RENAME TO . ID PTCOMA
 
-    ID              shift and go to state 145
+    ID              shift and go to state 147
 
 
-state 94
+state 96
 
     (46) alterDB_insrt -> ALTER DATABASE ID OWNER TO . usuariosDB PTCOMA
     (47) usuariosDB -> . ID
@@ -1763,74 +1787,74 @@ state 94
     (49) usuariosDB -> . SESSION_USER
     (50) usuariosDB -> . CADENA
 
-    ID              shift and go to state 146
-    CURRENT_USER    shift and go to state 148
-    SESSION_USER    shift and go to state 149
-    CADENA          shift and go to state 150
+    ID              shift and go to state 148
+    CURRENT_USER    shift and go to state 150
+    SESSION_USER    shift and go to state 151
+    CADENA          shift and go to state 152
 
-    usuariosDB                     shift and go to state 147
+    usuariosDB                     shift and go to state 149
 
-state 95
+state 97
 
     (22) Table_alter -> ALTER COLUMN . ID TYPE TIPO_DATO
     (37) Table_alter -> ALTER COLUMN . ID SET NOT NULL
 
-    ID              shift and go to state 151
+    ID              shift and go to state 153
 
 
-state 96
+state 98
 
     (23) alterTable_insrt -> ALTER TABLE ID DROP CONSTRAINT . campos_c PTCOMA
     (83) campos_c -> . campos_c COMA ID
     (84) campos_c -> . ID
 
-    ID              shift and go to state 152
+    ID              shift and go to state 154
 
-    campos_c                       shift and go to state 153
+    campos_c                       shift and go to state 155
 
-state 97
+state 99
 
     (24) alterTable_insrt -> ALTER TABLE ID RENAME COLUMN . ID TO ID PTCOMA
 
-    ID              shift and go to state 154
+    ID              shift and go to state 156
 
 
-state 98
+state 100
 
     (25) alterTable_insrt -> ALTER TABLE ID ADD COLUMN . campos_add_Column PTCOMA
     (26) campos_add_Column -> . campos_add_Column COMA tipos_datos_columnas
     (27) campos_add_Column -> . tipos_datos_columnas
     (28) tipos_datos_columnas -> . ID TIPO_DATO
 
-    ID              shift and go to state 155
+    ID              shift and go to state 157
 
-    campos_add_Column              shift and go to state 156
-    tipos_datos_columnas           shift and go to state 157
+    campos_add_Column              shift and go to state 158
+    tipos_datos_columnas           shift and go to state 159
 
-state 99
+state 101
 
     (29) alterTable_insrt -> ALTER TABLE ID ADD CHECK . PAR_A expresion_logica PAR_C PTCOMA
 
-    PAR_A           shift and go to state 158
+    PAR_A           shift and go to state 160
 
 
-state 100
+state 102
 
     (30) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN . KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA
 
-    KEY             shift and go to state 159
+    KEY             shift and go to state 161
 
 
-state 101
+state 103
 
     (31) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT . ID CHECK PAR_A expresion_logica PAR_C PTCOMA
     (32) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT . ID UNIQUE PAR_A campos_c PAR_C PTCOMA
     (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT . ID FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA
 
-    ID              shift and go to state 160
+    ID              shift and go to state 162
 
 
-state 102
+state 104
 
     (34) alterTable_insrt -> ALTER TABLE ID alterTable_alter PTCOMA .
 
@@ -1844,7 +1868,7 @@ state 102
     $end            reduce using rule 34 (alterTable_insrt -> ALTER TABLE ID alterTable_alter PTCOMA .)
 
 
-state 103
+state 105
 
     (35) alterTable_alter -> alterTable_alter COMA . Table_alter
     (22) Table_alter -> . ALTER COLUMN ID TYPE TIPO_DATO
@@ -1852,9 +1876,9 @@ state 103
 
     ALTER           shift and go to state 64
 
-    Table_alter                    shift and go to state 161
+    Table_alter                    shift and go to state 163
 
-state 104
+state 106
 
     (44) parametro_update -> ID IGUAL . expresion
     (147) expresion -> . CADENA
@@ -1869,16 +1893,16 @@ state 104
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 163
+    expresion                      shift and go to state 165
 
-state 105
+state 107
 
     (41) update_insrt -> UPDATE ID SET lista_update WHERE . expresion_relacional PTCOMA
     (160) expresion_relacional -> . expresion MAYQUE expresion
@@ -1902,26 +1926,26 @@ state 105
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion_relacional           shift and go to state 169
-    expresion                      shift and go to state 170
+    expresion_relacional           shift and go to state 171
+    expresion                      shift and go to state 172
 
-state 106
+state 108
 
     (42) lista_update -> lista_update COMA . parametro_update
     (44) parametro_update -> . ID IGUAL expresion
 
     ID              shift and go to state 70
 
-    parametro_update               shift and go to state 171
+    parametro_update               shift and go to state 173
 
-state 107
+state 109
 
     (19) lista_parametros_lista -> ID .
 
@@ -1929,23 +1953,23 @@ state 107
     COMA            reduce using rule 19 (lista_parametros_lista -> ID .)
 
 
-state 108
+state 110
 
     (15) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista . PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA
     (18) lista_parametros_lista -> lista_parametros_lista . COMA ID
 
-    PAR_C           shift and go to state 172
-    COMA            shift and go to state 173
+    PAR_C           shift and go to state 174
+    COMA            shift and go to state 175
 
 
-state 109
+state 111
 
     (16) insert_insrt -> INSERT INTO ID PAR_A PAR_C . VALUES PAR_A lista_datos PAR_C PTCOMA
 
-    VALUES          shift and go to state 174
+    VALUES          shift and go to state 176
 
 
-state 110
+state 112
 
     (17) insert_insrt -> INSERT INTO ID VALUES PAR_A . lista_datos PAR_C PTCOMA
     (20) lista_datos -> . lista_datos COMA expresion
@@ -1962,80 +1986,84 @@ state 110
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    lista_datos                    shift and go to state 175
-    expresion                      shift and go to state 176
-
-state 111
-
-    (72) createDB_dosParam -> OWNER ID MODE . ENTERO
-    (73) createDB_dosParam -> OWNER ID MODE . IGUAL ENTERO
-
-    ENTERO          shift and go to state 177
-    IGUAL           shift and go to state 178
-
-
-state 112
-
-    (65) createDB_unParam -> OWNER IGUAL ID .
-    (74) createDB_dosParam -> OWNER IGUAL ID . MODE ENTERO
-    (75) createDB_dosParam -> OWNER IGUAL ID . MODE IGUAL ENTERO
-
-    PTCOMA          reduce using rule 65 (createDB_unParam -> OWNER IGUAL ID .)
-    MODE            shift and go to state 179
-
+    lista_datos                    shift and go to state 177
+    expresion                      shift and go to state 178
 
 state 113
 
-    (76) createDB_dosParam -> MODE ENTERO OWNER . ID
-    (77) createDB_dosParam -> MODE ENTERO OWNER . IGUAL ID
+    (72) createDB_dosParam -> OWNER string_type MODE . ENTERO
+    (73) createDB_dosParam -> OWNER string_type MODE . IGUAL ENTERO
 
-    ID              shift and go to state 180
-    IGUAL           shift and go to state 181
+    ENTERO          shift and go to state 179
+    IGUAL           shift and go to state 180
 
 
 state 114
+
+    (65) createDB_unParam -> OWNER IGUAL string_type .
+    (74) createDB_dosParam -> OWNER IGUAL string_type . MODE ENTERO
+    (75) createDB_dosParam -> OWNER IGUAL string_type . MODE IGUAL ENTERO
+
+    PTCOMA          reduce using rule 65 (createDB_unParam -> OWNER IGUAL string_type .)
+    MODE            shift and go to state 181
+
+
+state 115
+
+    (76) createDB_dosParam -> MODE ENTERO OWNER . string_type
+    (77) createDB_dosParam -> MODE ENTERO OWNER . IGUAL string_type
+    (158) string_type -> . CADENA
+    (159) string_type -> . ID
+
+    IGUAL           shift and go to state 183
+    CADENA          shift and go to state 79
+    ID              shift and go to state 80
+
+    string_type                    shift and go to state 182
+
+state 116
 
     (67) createDB_unParam -> MODE IGUAL ENTERO .
     (78) createDB_dosParam -> MODE IGUAL ENTERO . OWNER ID
     (79) createDB_dosParam -> MODE IGUAL ENTERO . OWNER IGUAL ID
 
     PTCOMA          reduce using rule 67 (createDB_unParam -> MODE IGUAL ENTERO .)
-    OWNER           shift and go to state 182
+    OWNER           shift and go to state 184
 
 
-state 115
+state 117
 
     (58) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID . PTCOMA
     (62) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID . createDB_unParam PTCOMA
     (70) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID . createDB_dosParam PTCOMA
-    (64) createDB_unParam -> . OWNER ID
-    (65) createDB_unParam -> . OWNER IGUAL ID
+    (64) createDB_unParam -> . OWNER string_type
+    (65) createDB_unParam -> . OWNER IGUAL string_type
     (66) createDB_unParam -> . MODE ENTERO
     (67) createDB_unParam -> . MODE IGUAL ENTERO
-    (72) createDB_dosParam -> . OWNER ID MODE ENTERO
-    (73) createDB_dosParam -> . OWNER ID MODE IGUAL ENTERO
-    (74) createDB_dosParam -> . OWNER IGUAL ID MODE ENTERO
-    (75) createDB_dosParam -> . OWNER IGUAL ID MODE IGUAL ENTERO
-    (76) createDB_dosParam -> . MODE ENTERO OWNER ID
-    (77) createDB_dosParam -> . MODE ENTERO OWNER IGUAL ID
+    (72) createDB_dosParam -> . OWNER string_type MODE ENTERO
+    (73) createDB_dosParam -> . OWNER string_type MODE IGUAL ENTERO
+    (74) createDB_dosParam -> . OWNER IGUAL string_type MODE ENTERO
+    (75) createDB_dosParam -> . OWNER IGUAL string_type MODE IGUAL ENTERO
+    (76) createDB_dosParam -> . MODE ENTERO OWNER string_type
+    (77) createDB_dosParam -> . MODE ENTERO OWNER IGUAL string_type
     (78) createDB_dosParam -> . MODE IGUAL ENTERO OWNER ID
     (79) createDB_dosParam -> . MODE IGUAL ENTERO OWNER IGUAL ID
 
-    PTCOMA          shift and go to state 183
+    PTCOMA          shift and go to state 185
     OWNER           shift and go to state 53
     MODE            shift and go to state 54
 
-    createDB_unParam               shift and go to state 184
-    createDB_dosParam              shift and go to state 185
+    createDB_unParam               shift and go to state 186
+    createDB_dosParam              shift and go to state 187
 
-state 116
+state 118
 
     (57) createDB_insrt -> CREATE OR REPLACE DATABASE ID PTCOMA .
 
@@ -2049,30 +2077,30 @@ state 116
     $end            reduce using rule 57 (createDB_insrt -> CREATE OR REPLACE DATABASE ID PTCOMA .)
 
 
-state 117
+state 119
 
     (61) createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_unParam . PTCOMA
 
-    PTCOMA          shift and go to state 186
+    PTCOMA          shift and go to state 188
 
 
-state 118
+state 120
 
     (69) createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_dosParam . PTCOMA
 
-    PTCOMA          shift and go to state 187
+    PTCOMA          shift and go to state 189
 
 
-state 119
+state 121
 
     (59) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT . EXISTS ID PTCOMA
     (63) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT . EXISTS ID createDB_unParam PTCOMA
     (71) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT . EXISTS ID createDB_dosParam PTCOMA
 
-    EXISTS          shift and go to state 188
+    EXISTS          shift and go to state 190
 
 
-state 120
+state 122
 
     (89) cuerpo_createTable -> ID TIPO_DATO_DEF .
     (90) cuerpo_createTable -> ID TIPO_DATO_DEF . PRIMARY KEY
@@ -2082,13 +2110,13 @@ state 120
 
     PAR_C           reduce using rule 89 (cuerpo_createTable -> ID TIPO_DATO_DEF .)
     COMA            reduce using rule 89 (cuerpo_createTable -> ID TIPO_DATO_DEF .)
-    PRIMARY         shift and go to state 189
-    REFERENCES      shift and go to state 190
-    NOT             shift and go to state 191
-    NULL            shift and go to state 192
+    PRIMARY         shift and go to state 191
+    REFERENCES      shift and go to state 192
+    NOT             shift and go to state 193
+    NULL            shift and go to state 194
 
 
-state 121
+state 123
 
     (125) TIPO_DATO_DEF -> TEXT .
 
@@ -2100,7 +2128,7 @@ state 121
     COMA            reduce using rule 125 (TIPO_DATO_DEF -> TEXT .)
 
 
-state 122
+state 124
 
     (126) TIPO_DATO_DEF -> FLOAT .
 
@@ -2112,7 +2140,7 @@ state 122
     COMA            reduce using rule 126 (TIPO_DATO_DEF -> FLOAT .)
 
 
-state 123
+state 125
 
     (127) TIPO_DATO_DEF -> INTEGER .
 
@@ -2124,7 +2152,7 @@ state 123
     COMA            reduce using rule 127 (TIPO_DATO_DEF -> INTEGER .)
 
 
-state 124
+state 126
 
     (128) TIPO_DATO_DEF -> SMALLINT .
 
@@ -2136,7 +2164,7 @@ state 124
     COMA            reduce using rule 128 (TIPO_DATO_DEF -> SMALLINT .)
 
 
-state 125
+state 127
 
     (129) TIPO_DATO_DEF -> MONEY .
 
@@ -2148,21 +2176,21 @@ state 125
     COMA            reduce using rule 129 (TIPO_DATO_DEF -> MONEY .)
 
 
-state 126
+state 128
 
     (130) TIPO_DATO_DEF -> DECIMAL . PAR_A ENTERO COMA ENTERO PAR_C
 
-    PAR_A           shift and go to state 193
+    PAR_A           shift and go to state 195
 
 
-state 127
+state 129
 
     (131) TIPO_DATO_DEF -> NUMERIC . PAR_A ENTERO COMA ENTERO PAR_C
 
-    PAR_A           shift and go to state 194
+    PAR_A           shift and go to state 196
 
 
-state 128
+state 130
 
     (132) TIPO_DATO_DEF -> BIGINT .
 
@@ -2174,7 +2202,7 @@ state 128
     COMA            reduce using rule 132 (TIPO_DATO_DEF -> BIGINT .)
 
 
-state 129
+state 131
 
     (133) TIPO_DATO_DEF -> REAL .
 
@@ -2186,14 +2214,14 @@ state 129
     COMA            reduce using rule 133 (TIPO_DATO_DEF -> REAL .)
 
 
-state 130
+state 132
 
     (134) TIPO_DATO_DEF -> DOUBLE . PRECISION
 
-    PRECISION       shift and go to state 195
+    PRECISION       shift and go to state 197
 
 
-state 131
+state 133
 
     (135) TIPO_DATO_DEF -> INTERVAL . extract_time TO extract_time
     (136) TIPO_DATO_DEF -> INTERVAL .
@@ -2210,16 +2238,16 @@ state 131
     NULL            reduce using rule 136 (TIPO_DATO_DEF -> INTERVAL .)
     PAR_C           reduce using rule 136 (TIPO_DATO_DEF -> INTERVAL .)
     COMA            reduce using rule 136 (TIPO_DATO_DEF -> INTERVAL .)
-    YEAR            shift and go to state 197
-    DAY             shift and go to state 198
-    MONTH           shift and go to state 199
-    HOUR            shift and go to state 200
-    MINUTE          shift and go to state 201
-    SECOND          shift and go to state 202
+    YEAR            shift and go to state 199
+    DAY             shift and go to state 200
+    MONTH           shift and go to state 201
+    HOUR            shift and go to state 202
+    MINUTE          shift and go to state 203
+    SECOND          shift and go to state 204
 
-    extract_time                   shift and go to state 196
+    extract_time                   shift and go to state 198
 
-state 132
+state 134
 
     (137) TIPO_DATO_DEF -> TIME .
 
@@ -2231,7 +2259,7 @@ state 132
     COMA            reduce using rule 137 (TIPO_DATO_DEF -> TIME .)
 
 
-state 133
+state 135
 
     (138) TIPO_DATO_DEF -> TIMESTAMP .
 
@@ -2243,7 +2271,7 @@ state 133
     COMA            reduce using rule 138 (TIPO_DATO_DEF -> TIMESTAMP .)
 
 
-state 134
+state 136
 
     (139) TIPO_DATO_DEF -> DATE .
 
@@ -2255,41 +2283,41 @@ state 134
     COMA            reduce using rule 139 (TIPO_DATO_DEF -> DATE .)
 
 
-state 135
+state 137
 
     (140) TIPO_DATO_DEF -> CHARACTER . VARYING PAR_A ENTERO PAR_C
     (143) TIPO_DATO_DEF -> CHARACTER . PAR_A ENTERO PAR_C
     (145) TIPO_DATO_DEF -> CHARACTER . PAR_A PAR_C
 
-    VARYING         shift and go to state 203
-    PAR_A           shift and go to state 204
-
-
-state 136
-
-    (141) TIPO_DATO_DEF -> VARCHAR . PAR_A ENTERO PAR_C
-
-    PAR_A           shift and go to state 205
-
-
-state 137
-
-    (142) TIPO_DATO_DEF -> CHAR . PAR_A ENTERO PAR_C
-    (144) TIPO_DATO_DEF -> CHAR . PAR_A PAR_C
-
+    VARYING         shift and go to state 205
     PAR_A           shift and go to state 206
 
 
 state 138
 
-    (85) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C . PTCOMA
-    (86) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C . INHERITS PAR_A ID PAR_C PTCOMA
+    (141) TIPO_DATO_DEF -> VARCHAR . PAR_A ENTERO PAR_C
 
-    PTCOMA          shift and go to state 207
-    INHERITS        shift and go to state 208
+    PAR_A           shift and go to state 207
 
 
 state 139
+
+    (142) TIPO_DATO_DEF -> CHAR . PAR_A ENTERO PAR_C
+    (144) TIPO_DATO_DEF -> CHAR . PAR_A PAR_C
+
+    PAR_A           shift and go to state 208
+
+
+state 140
+
+    (85) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C . PTCOMA
+    (86) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C . INHERITS PAR_A ID PAR_C PTCOMA
+
+    PTCOMA          shift and go to state 209
+    INHERITS        shift and go to state 210
+
+
+state 141
 
     (87) cuerpo_createTable_lista -> cuerpo_createTable_lista COMA . cuerpo_createTable
     (89) cuerpo_createTable -> . ID TIPO_DATO_DEF
@@ -2302,52 +2330,52 @@ state 139
     (96) cuerpo_createTable -> . UNIQUE PAR_A campos_c PAR_C
     (97) cuerpo_createTable -> . CONSTRAINT ID constraint_esp
 
-    ID              shift and go to state 84
-    PRIMARY         shift and go to state 87
-    FOREING         shift and go to state 88
-    UNIQUE          shift and go to state 89
-    CONSTRAINT      shift and go to state 90
+    ID              shift and go to state 86
+    PRIMARY         shift and go to state 89
+    FOREING         shift and go to state 90
+    UNIQUE          shift and go to state 91
+    CONSTRAINT      shift and go to state 92
 
-    cuerpo_createTable             shift and go to state 209
+    cuerpo_createTable             shift and go to state 211
 
-state 140
+state 142
 
     (94) cuerpo_createTable -> PRIMARY KEY . PAR_A ID PAR_C
 
-    PAR_A           shift and go to state 210
+    PAR_A           shift and go to state 212
 
 
-state 141
+state 143
 
     (95) cuerpo_createTable -> FOREING KEY . PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
-    PAR_A           shift and go to state 211
+    PAR_A           shift and go to state 213
 
 
-state 142
+state 144
 
     (96) cuerpo_createTable -> UNIQUE PAR_A . campos_c PAR_C
     (83) campos_c -> . campos_c COMA ID
     (84) campos_c -> . ID
 
-    ID              shift and go to state 152
+    ID              shift and go to state 154
 
-    campos_c                       shift and go to state 212
+    campos_c                       shift and go to state 214
 
-state 143
+state 145
 
     (97) cuerpo_createTable -> CONSTRAINT ID . constraint_esp
     (80) constraint_esp -> . CHECK PAR_A expresion_logica PAR_C
     (81) constraint_esp -> . UNIQUE PAR_A campos_c PAR_C
     (82) constraint_esp -> . FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
-    CHECK           shift and go to state 214
-    UNIQUE          shift and go to state 215
-    FOREING         shift and go to state 216
+    CHECK           shift and go to state 216
+    UNIQUE          shift and go to state 217
+    FOREING         shift and go to state 218
 
-    constraint_esp                 shift and go to state 213
+    constraint_esp                 shift and go to state 215
 
-state 144
+state 146
 
     (53) drop_database_instr -> DROP DATABASE IF EXISTS ID PTCOMA .
 
@@ -2361,58 +2389,58 @@ state 144
     $end            reduce using rule 53 (drop_database_instr -> DROP DATABASE IF EXISTS ID PTCOMA .)
 
 
-state 145
+state 147
 
     (45) alterDB_insrt -> ALTER DATABASE ID RENAME TO ID . PTCOMA
 
-    PTCOMA          shift and go to state 217
+    PTCOMA          shift and go to state 219
 
 
-state 146
+state 148
 
     (47) usuariosDB -> ID .
 
     PTCOMA          reduce using rule 47 (usuariosDB -> ID .)
 
 
-state 147
+state 149
 
     (46) alterDB_insrt -> ALTER DATABASE ID OWNER TO usuariosDB . PTCOMA
 
-    PTCOMA          shift and go to state 218
+    PTCOMA          shift and go to state 220
 
 
-state 148
+state 150
 
     (48) usuariosDB -> CURRENT_USER .
 
     PTCOMA          reduce using rule 48 (usuariosDB -> CURRENT_USER .)
 
 
-state 149
+state 151
 
     (49) usuariosDB -> SESSION_USER .
 
     PTCOMA          reduce using rule 49 (usuariosDB -> SESSION_USER .)
 
 
-state 150
+state 152
 
     (50) usuariosDB -> CADENA .
 
     PTCOMA          reduce using rule 50 (usuariosDB -> CADENA .)
 
 
-state 151
+state 153
 
     (22) Table_alter -> ALTER COLUMN ID . TYPE TIPO_DATO
     (37) Table_alter -> ALTER COLUMN ID . SET NOT NULL
 
-    TYPE            shift and go to state 219
-    SET             shift and go to state 220
+    TYPE            shift and go to state 221
+    SET             shift and go to state 222
 
 
-state 152
+state 154
 
     (84) campos_c -> ID .
 
@@ -2421,23 +2449,23 @@ state 152
     PAR_C           reduce using rule 84 (campos_c -> ID .)
 
 
-state 153
+state 155
 
     (23) alterTable_insrt -> ALTER TABLE ID DROP CONSTRAINT campos_c . PTCOMA
     (83) campos_c -> campos_c . COMA ID
 
-    PTCOMA          shift and go to state 221
-    COMA            shift and go to state 222
+    PTCOMA          shift and go to state 223
+    COMA            shift and go to state 224
 
 
-state 154
+state 156
 
     (24) alterTable_insrt -> ALTER TABLE ID RENAME COLUMN ID . TO ID PTCOMA
 
-    TO              shift and go to state 223
+    TO              shift and go to state 225
 
 
-state 155
+state 157
 
     (28) tipos_datos_columnas -> ID . TIPO_DATO
     (98) TIPO_DATO -> . TEXT
@@ -2462,36 +2490,36 @@ state 155
     (117) TIPO_DATO -> . CHAR PAR_A PAR_C
     (118) TIPO_DATO -> . CHARACTER PAR_A PAR_C
 
-    TEXT            shift and go to state 225
-    FLOAT           shift and go to state 226
-    INTEGER         shift and go to state 227
-    SMALLINT        shift and go to state 228
-    MONEY           shift and go to state 229
-    DECIMAL         shift and go to state 230
-    NUMERIC         shift and go to state 231
-    BIGINT          shift and go to state 232
-    REAL            shift and go to state 233
-    DOUBLE          shift and go to state 234
-    INTERVAL        shift and go to state 235
-    TIME            shift and go to state 236
-    TIMESTAMP       shift and go to state 237
-    DATE            shift and go to state 238
-    CHARACTER       shift and go to state 239
-    VARCHAR         shift and go to state 240
-    CHAR            shift and go to state 241
+    TEXT            shift and go to state 227
+    FLOAT           shift and go to state 228
+    INTEGER         shift and go to state 229
+    SMALLINT        shift and go to state 230
+    MONEY           shift and go to state 231
+    DECIMAL         shift and go to state 232
+    NUMERIC         shift and go to state 233
+    BIGINT          shift and go to state 234
+    REAL            shift and go to state 235
+    DOUBLE          shift and go to state 236
+    INTERVAL        shift and go to state 237
+    TIME            shift and go to state 238
+    TIMESTAMP       shift and go to state 239
+    DATE            shift and go to state 240
+    CHARACTER       shift and go to state 241
+    VARCHAR         shift and go to state 242
+    CHAR            shift and go to state 243
 
-    TIPO_DATO                      shift and go to state 224
+    TIPO_DATO                      shift and go to state 226
 
-state 156
+state 158
 
     (25) alterTable_insrt -> ALTER TABLE ID ADD COLUMN campos_add_Column . PTCOMA
     (26) campos_add_Column -> campos_add_Column . COMA tipos_datos_columnas
 
-    PTCOMA          shift and go to state 242
-    COMA            shift and go to state 243
+    PTCOMA          shift and go to state 244
+    COMA            shift and go to state 245
 
 
-state 157
+state 159
 
     (27) campos_add_Column -> tipos_datos_columnas .
 
@@ -2499,7 +2527,7 @@ state 157
     COMA            reduce using rule 27 (campos_add_Column -> tipos_datos_columnas .)
 
 
-state 158
+state 160
 
     (29) alterTable_insrt -> ALTER TABLE ID ADD CHECK PAR_A . expresion_logica PAR_C PTCOMA
     (169) expresion_logica -> . expresion_relacional AND expresion_relacional
@@ -2527,37 +2555,37 @@ state 158
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    NOT             shift and go to state 246
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    NOT             shift and go to state 248
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion_logica               shift and go to state 244
-    expresion_relacional           shift and go to state 245
-    expresion                      shift and go to state 170
+    expresion_logica               shift and go to state 246
+    expresion_relacional           shift and go to state 247
+    expresion                      shift and go to state 172
 
-state 159
+state 161
 
     (30) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY . PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA
 
-    PAR_A           shift and go to state 247
+    PAR_A           shift and go to state 249
 
 
-state 160
+state 162
 
     (31) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID . CHECK PAR_A expresion_logica PAR_C PTCOMA
     (32) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID . UNIQUE PAR_A campos_c PAR_C PTCOMA
     (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID . FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA
 
-    CHECK           shift and go to state 248
-    UNIQUE          shift and go to state 249
-    FOREIGN         shift and go to state 250
+    CHECK           shift and go to state 250
+    UNIQUE          shift and go to state 251
+    FOREIGN         shift and go to state 252
 
 
-state 161
+state 163
 
     (35) alterTable_alter -> alterTable_alter COMA Table_alter .
 
@@ -2565,7 +2593,7 @@ state 161
     COMA            reduce using rule 35 (alterTable_alter -> alterTable_alter COMA Table_alter .)
 
 
-state 162
+state 164
 
     (150) expresion -> ID .
     (151) expresion -> ID . PUNTO ID
@@ -2588,10 +2616,10 @@ state 162
     PAR_C           reduce using rule 150 (expresion -> ID .)
     AND             reduce using rule 150 (expresion -> ID .)
     OR              reduce using rule 150 (expresion -> ID .)
-    PUNTO           shift and go to state 251
+    PUNTO           shift and go to state 253
 
 
-state 163
+state 165
 
     (44) parametro_update -> ID IGUAL expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -2601,13 +2629,13 @@ state 163
 
     WHERE           reduce using rule 44 (parametro_update -> ID IGUAL expresion .)
     COMA            reduce using rule 44 (parametro_update -> ID IGUAL expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 164
+state 166
 
     (147) expresion -> CADENA .
 
@@ -2631,7 +2659,7 @@ state 164
     OR              reduce using rule 147 (expresion -> CADENA .)
 
 
-state 165
+state 167
 
     (148) expresion -> ENTERO .
 
@@ -2655,7 +2683,7 @@ state 165
     OR              reduce using rule 148 (expresion -> ENTERO .)
 
 
-state 166
+state 168
 
     (149) expresion -> FLOTANTE .
 
@@ -2679,7 +2707,7 @@ state 166
     OR              reduce using rule 149 (expresion -> FLOTANTE .)
 
 
-state 167
+state 169
 
     (156) expresion -> TRUE .
 
@@ -2703,7 +2731,7 @@ state 167
     OR              reduce using rule 156 (expresion -> TRUE .)
 
 
-state 168
+state 170
 
     (157) expresion -> FALSE .
 
@@ -2727,14 +2755,14 @@ state 168
     OR              reduce using rule 157 (expresion -> FALSE .)
 
 
-state 169
+state 171
 
     (41) update_insrt -> UPDATE ID SET lista_update WHERE expresion_relacional . PTCOMA
 
-    PTCOMA          shift and go to state 256
+    PTCOMA          shift and go to state 258
 
 
-state 170
+state 172
 
     (160) expresion_relacional -> expresion . MAYQUE expresion
     (161) expresion_relacional -> expresion . MENQUE expresion
@@ -2750,25 +2778,25 @@ state 170
     (154) expresion -> expresion . DIVISION expresion
     (155) expresion -> expresion . ASTERISCO expresion
 
-    MAYQUE          shift and go to state 257
-    MENQUE          shift and go to state 258
-    MAYIGQUE        shift and go to state 259
-    MENIGQUE        shift and go to state 260
-    DOBLEIG         shift and go to state 261
-    IGUAL           shift and go to state 262
-    NOIG            shift and go to state 263
-    NOIGUAL         shift and go to state 264
+    MAYQUE          shift and go to state 259
+    MENQUE          shift and go to state 260
+    MAYIGQUE        shift and go to state 261
+    MENIGQUE        shift and go to state 262
+    DOBLEIG         shift and go to state 263
+    IGUAL           shift and go to state 264
+    NOIG            shift and go to state 265
+    NOIGUAL         shift and go to state 266
     PTCOMA          reduce using rule 168 (expresion_relacional -> expresion .)
     AND             reduce using rule 168 (expresion_relacional -> expresion .)
     OR              reduce using rule 168 (expresion_relacional -> expresion .)
     PAR_C           reduce using rule 168 (expresion_relacional -> expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 171
+state 173
 
     (42) lista_update -> lista_update COMA parametro_update .
 
@@ -2776,37 +2804,37 @@ state 171
     COMA            reduce using rule 42 (lista_update -> lista_update COMA parametro_update .)
 
 
-state 172
+state 174
 
     (15) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C . VALUES PAR_A lista_datos PAR_C PTCOMA
 
-    VALUES          shift and go to state 265
-
-
-state 173
-
-    (18) lista_parametros_lista -> lista_parametros_lista COMA . ID
-
-    ID              shift and go to state 266
-
-
-state 174
-
-    (16) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES . PAR_A lista_datos PAR_C PTCOMA
-
-    PAR_A           shift and go to state 267
+    VALUES          shift and go to state 267
 
 
 state 175
 
-    (17) insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos . PAR_C PTCOMA
-    (20) lista_datos -> lista_datos . COMA expresion
+    (18) lista_parametros_lista -> lista_parametros_lista COMA . ID
 
-    PAR_C           shift and go to state 268
-    COMA            shift and go to state 269
+    ID              shift and go to state 268
 
 
 state 176
+
+    (16) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES . PAR_A lista_datos PAR_C PTCOMA
+
+    PAR_A           shift and go to state 269
+
+
+state 177
+
+    (17) insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos . PAR_C PTCOMA
+    (20) lista_datos -> lista_datos . COMA expresion
+
+    PAR_C           shift and go to state 270
+    COMA            shift and go to state 271
+
+
+state 178
 
     (21) lista_datos -> expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -2816,59 +2844,63 @@ state 176
 
     PAR_C           reduce using rule 21 (lista_datos -> expresion .)
     COMA            reduce using rule 21 (lista_datos -> expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
-
-
-state 177
-
-    (72) createDB_dosParam -> OWNER ID MODE ENTERO .
-
-    PTCOMA          reduce using rule 72 (createDB_dosParam -> OWNER ID MODE ENTERO .)
-
-
-state 178
-
-    (73) createDB_dosParam -> OWNER ID MODE IGUAL . ENTERO
-
-    ENTERO          shift and go to state 270
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
 state 179
 
-    (74) createDB_dosParam -> OWNER IGUAL ID MODE . ENTERO
-    (75) createDB_dosParam -> OWNER IGUAL ID MODE . IGUAL ENTERO
+    (72) createDB_dosParam -> OWNER string_type MODE ENTERO .
 
-    ENTERO          shift and go to state 272
-    IGUAL           shift and go to state 271
+    PTCOMA          reduce using rule 72 (createDB_dosParam -> OWNER string_type MODE ENTERO .)
 
 
 state 180
 
-    (76) createDB_dosParam -> MODE ENTERO OWNER ID .
+    (73) createDB_dosParam -> OWNER string_type MODE IGUAL . ENTERO
 
-    PTCOMA          reduce using rule 76 (createDB_dosParam -> MODE ENTERO OWNER ID .)
+    ENTERO          shift and go to state 272
 
 
 state 181
 
-    (77) createDB_dosParam -> MODE ENTERO OWNER IGUAL . ID
+    (74) createDB_dosParam -> OWNER IGUAL string_type MODE . ENTERO
+    (75) createDB_dosParam -> OWNER IGUAL string_type MODE . IGUAL ENTERO
 
-    ID              shift and go to state 273
+    ENTERO          shift and go to state 274
+    IGUAL           shift and go to state 273
 
 
 state 182
 
-    (78) createDB_dosParam -> MODE IGUAL ENTERO OWNER . ID
-    (79) createDB_dosParam -> MODE IGUAL ENTERO OWNER . IGUAL ID
+    (76) createDB_dosParam -> MODE ENTERO OWNER string_type .
 
-    ID              shift and go to state 275
-    IGUAL           shift and go to state 274
+    PTCOMA          reduce using rule 76 (createDB_dosParam -> MODE ENTERO OWNER string_type .)
 
 
 state 183
+
+    (77) createDB_dosParam -> MODE ENTERO OWNER IGUAL . string_type
+    (158) string_type -> . CADENA
+    (159) string_type -> . ID
+
+    CADENA          shift and go to state 79
+    ID              shift and go to state 80
+
+    string_type                    shift and go to state 275
+
+state 184
+
+    (78) createDB_dosParam -> MODE IGUAL ENTERO OWNER . ID
+    (79) createDB_dosParam -> MODE IGUAL ENTERO OWNER . IGUAL ID
+
+    ID              shift and go to state 277
+    IGUAL           shift and go to state 276
+
+
+state 185
 
     (58) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID PTCOMA .
 
@@ -2882,21 +2914,21 @@ state 183
     $end            reduce using rule 58 (createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID PTCOMA .)
 
 
-state 184
+state 186
 
     (62) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_unParam . PTCOMA
 
-    PTCOMA          shift and go to state 276
+    PTCOMA          shift and go to state 278
 
 
-state 185
+state 187
 
     (70) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_dosParam . PTCOMA
 
-    PTCOMA          shift and go to state 277
+    PTCOMA          shift and go to state 279
 
 
-state 186
+state 188
 
     (61) createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA .
 
@@ -2910,7 +2942,7 @@ state 186
     $end            reduce using rule 61 (createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA .)
 
 
-state 187
+state 189
 
     (69) createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA .
 
@@ -2924,37 +2956,37 @@ state 187
     $end            reduce using rule 69 (createDB_insrt -> CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA .)
 
 
-state 188
+state 190
 
     (59) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS . ID PTCOMA
     (63) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS . ID createDB_unParam PTCOMA
     (71) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS . ID createDB_dosParam PTCOMA
-
-    ID              shift and go to state 278
-
-
-state 189
-
-    (90) cuerpo_createTable -> ID TIPO_DATO_DEF PRIMARY . KEY
-
-    KEY             shift and go to state 279
-
-
-state 190
-
-    (91) cuerpo_createTable -> ID TIPO_DATO_DEF REFERENCES . ID
 
     ID              shift and go to state 280
 
 
 state 191
 
-    (92) cuerpo_createTable -> ID TIPO_DATO_DEF NOT . NULL
+    (90) cuerpo_createTable -> ID TIPO_DATO_DEF PRIMARY . KEY
 
-    NULL            shift and go to state 281
+    KEY             shift and go to state 281
 
 
 state 192
+
+    (91) cuerpo_createTable -> ID TIPO_DATO_DEF REFERENCES . ID
+
+    ID              shift and go to state 282
+
+
+state 193
+
+    (92) cuerpo_createTable -> ID TIPO_DATO_DEF NOT . NULL
+
+    NULL            shift and go to state 283
+
+
+state 194
 
     (93) cuerpo_createTable -> ID TIPO_DATO_DEF NULL .
 
@@ -2962,21 +2994,21 @@ state 192
     COMA            reduce using rule 93 (cuerpo_createTable -> ID TIPO_DATO_DEF NULL .)
 
 
-state 193
+state 195
 
     (130) TIPO_DATO_DEF -> DECIMAL PAR_A . ENTERO COMA ENTERO PAR_C
 
-    ENTERO          shift and go to state 282
+    ENTERO          shift and go to state 284
 
 
-state 194
+state 196
 
     (131) TIPO_DATO_DEF -> NUMERIC PAR_A . ENTERO COMA ENTERO PAR_C
 
-    ENTERO          shift and go to state 283
+    ENTERO          shift and go to state 285
 
 
-state 195
+state 197
 
     (134) TIPO_DATO_DEF -> DOUBLE PRECISION .
 
@@ -2988,14 +3020,14 @@ state 195
     COMA            reduce using rule 134 (TIPO_DATO_DEF -> DOUBLE PRECISION .)
 
 
-state 196
+state 198
 
     (135) TIPO_DATO_DEF -> INTERVAL extract_time . TO extract_time
 
-    TO              shift and go to state 284
+    TO              shift and go to state 286
 
 
-state 197
+state 199
 
     (119) extract_time -> YEAR .
 
@@ -3009,7 +3041,7 @@ state 197
     PTCOMA          reduce using rule 119 (extract_time -> YEAR .)
 
 
-state 198
+state 200
 
     (120) extract_time -> DAY .
 
@@ -3023,7 +3055,7 @@ state 198
     PTCOMA          reduce using rule 120 (extract_time -> DAY .)
 
 
-state 199
+state 201
 
     (121) extract_time -> MONTH .
 
@@ -3037,7 +3069,7 @@ state 199
     PTCOMA          reduce using rule 121 (extract_time -> MONTH .)
 
 
-state 200
+state 202
 
     (122) extract_time -> HOUR .
 
@@ -3051,7 +3083,7 @@ state 200
     PTCOMA          reduce using rule 122 (extract_time -> HOUR .)
 
 
-state 201
+state 203
 
     (123) extract_time -> MINUTE .
 
@@ -3065,7 +3097,7 @@ state 201
     PTCOMA          reduce using rule 123 (extract_time -> MINUTE .)
 
 
-state 202
+state 204
 
     (124) extract_time -> SECOND .
 
@@ -3079,39 +3111,39 @@ state 202
     PTCOMA          reduce using rule 124 (extract_time -> SECOND .)
 
 
-state 203
+state 205
 
     (140) TIPO_DATO_DEF -> CHARACTER VARYING . PAR_A ENTERO PAR_C
 
-    PAR_A           shift and go to state 285
-
-
-state 204
-
-    (143) TIPO_DATO_DEF -> CHARACTER PAR_A . ENTERO PAR_C
-    (145) TIPO_DATO_DEF -> CHARACTER PAR_A . PAR_C
-
-    ENTERO          shift and go to state 286
-    PAR_C           shift and go to state 287
-
-
-state 205
-
-    (141) TIPO_DATO_DEF -> VARCHAR PAR_A . ENTERO PAR_C
-
-    ENTERO          shift and go to state 288
+    PAR_A           shift and go to state 287
 
 
 state 206
 
-    (142) TIPO_DATO_DEF -> CHAR PAR_A . ENTERO PAR_C
-    (144) TIPO_DATO_DEF -> CHAR PAR_A . PAR_C
+    (143) TIPO_DATO_DEF -> CHARACTER PAR_A . ENTERO PAR_C
+    (145) TIPO_DATO_DEF -> CHARACTER PAR_A . PAR_C
 
-    ENTERO          shift and go to state 289
-    PAR_C           shift and go to state 290
+    ENTERO          shift and go to state 288
+    PAR_C           shift and go to state 289
 
 
 state 207
+
+    (141) TIPO_DATO_DEF -> VARCHAR PAR_A . ENTERO PAR_C
+
+    ENTERO          shift and go to state 290
+
+
+state 208
+
+    (142) TIPO_DATO_DEF -> CHAR PAR_A . ENTERO PAR_C
+    (144) TIPO_DATO_DEF -> CHAR PAR_A . PAR_C
+
+    ENTERO          shift and go to state 291
+    PAR_C           shift and go to state 292
+
+
+state 209
 
     (85) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA .
 
@@ -3125,14 +3157,14 @@ state 207
     $end            reduce using rule 85 (create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA .)
 
 
-state 208
+state 210
 
     (86) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS . PAR_A ID PAR_C PTCOMA
 
-    PAR_A           shift and go to state 291
+    PAR_A           shift and go to state 293
 
 
-state 209
+state 211
 
     (87) cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable .
 
@@ -3140,30 +3172,30 @@ state 209
     COMA            reduce using rule 87 (cuerpo_createTable_lista -> cuerpo_createTable_lista COMA cuerpo_createTable .)
 
 
-state 210
+state 212
 
     (94) cuerpo_createTable -> PRIMARY KEY PAR_A . ID PAR_C
 
-    ID              shift and go to state 292
+    ID              shift and go to state 294
 
 
-state 211
+state 213
 
     (95) cuerpo_createTable -> FOREING KEY PAR_A . ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
-    ID              shift and go to state 293
+    ID              shift and go to state 295
 
 
-state 212
+state 214
 
     (96) cuerpo_createTable -> UNIQUE PAR_A campos_c . PAR_C
     (83) campos_c -> campos_c . COMA ID
 
-    PAR_C           shift and go to state 294
-    COMA            shift and go to state 222
+    PAR_C           shift and go to state 296
+    COMA            shift and go to state 224
 
 
-state 213
+state 215
 
     (97) cuerpo_createTable -> CONSTRAINT ID constraint_esp .
 
@@ -3171,28 +3203,28 @@ state 213
     COMA            reduce using rule 97 (cuerpo_createTable -> CONSTRAINT ID constraint_esp .)
 
 
-state 214
+state 216
 
     (80) constraint_esp -> CHECK . PAR_A expresion_logica PAR_C
 
-    PAR_A           shift and go to state 295
-
-
-state 215
-
-    (81) constraint_esp -> UNIQUE . PAR_A campos_c PAR_C
-
-    PAR_A           shift and go to state 296
-
-
-state 216
-
-    (82) constraint_esp -> FOREING . KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
-
-    KEY             shift and go to state 297
+    PAR_A           shift and go to state 297
 
 
 state 217
+
+    (81) constraint_esp -> UNIQUE . PAR_A campos_c PAR_C
+
+    PAR_A           shift and go to state 298
+
+
+state 218
+
+    (82) constraint_esp -> FOREING . KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+
+    KEY             shift and go to state 299
+
+
+state 219
 
     (45) alterDB_insrt -> ALTER DATABASE ID RENAME TO ID PTCOMA .
 
@@ -3206,7 +3238,7 @@ state 217
     $end            reduce using rule 45 (alterDB_insrt -> ALTER DATABASE ID RENAME TO ID PTCOMA .)
 
 
-state 218
+state 220
 
     (46) alterDB_insrt -> ALTER DATABASE ID OWNER TO usuariosDB PTCOMA .
 
@@ -3220,7 +3252,7 @@ state 218
     $end            reduce using rule 46 (alterDB_insrt -> ALTER DATABASE ID OWNER TO usuariosDB PTCOMA .)
 
 
-state 219
+state 221
 
     (22) Table_alter -> ALTER COLUMN ID TYPE . TIPO_DATO
     (98) TIPO_DATO -> . TEXT
@@ -3245,34 +3277,34 @@ state 219
     (117) TIPO_DATO -> . CHAR PAR_A PAR_C
     (118) TIPO_DATO -> . CHARACTER PAR_A PAR_C
 
-    TEXT            shift and go to state 225
-    FLOAT           shift and go to state 226
-    INTEGER         shift and go to state 227
-    SMALLINT        shift and go to state 228
-    MONEY           shift and go to state 229
-    DECIMAL         shift and go to state 230
-    NUMERIC         shift and go to state 231
-    BIGINT          shift and go to state 232
-    REAL            shift and go to state 233
-    DOUBLE          shift and go to state 234
-    INTERVAL        shift and go to state 235
-    TIME            shift and go to state 236
-    TIMESTAMP       shift and go to state 237
-    DATE            shift and go to state 238
-    CHARACTER       shift and go to state 239
-    VARCHAR         shift and go to state 240
-    CHAR            shift and go to state 241
+    TEXT            shift and go to state 227
+    FLOAT           shift and go to state 228
+    INTEGER         shift and go to state 229
+    SMALLINT        shift and go to state 230
+    MONEY           shift and go to state 231
+    DECIMAL         shift and go to state 232
+    NUMERIC         shift and go to state 233
+    BIGINT          shift and go to state 234
+    REAL            shift and go to state 235
+    DOUBLE          shift and go to state 236
+    INTERVAL        shift and go to state 237
+    TIME            shift and go to state 238
+    TIMESTAMP       shift and go to state 239
+    DATE            shift and go to state 240
+    CHARACTER       shift and go to state 241
+    VARCHAR         shift and go to state 242
+    CHAR            shift and go to state 243
 
-    TIPO_DATO                      shift and go to state 298
+    TIPO_DATO                      shift and go to state 300
 
-state 220
+state 222
 
     (37) Table_alter -> ALTER COLUMN ID SET . NOT NULL
 
-    NOT             shift and go to state 299
+    NOT             shift and go to state 301
 
 
-state 221
+state 223
 
     (23) alterTable_insrt -> ALTER TABLE ID DROP CONSTRAINT campos_c PTCOMA .
 
@@ -3286,21 +3318,21 @@ state 221
     $end            reduce using rule 23 (alterTable_insrt -> ALTER TABLE ID DROP CONSTRAINT campos_c PTCOMA .)
 
 
-state 222
+state 224
 
     (83) campos_c -> campos_c COMA . ID
 
-    ID              shift and go to state 300
+    ID              shift and go to state 302
 
 
-state 223
+state 225
 
     (24) alterTable_insrt -> ALTER TABLE ID RENAME COLUMN ID TO . ID PTCOMA
 
-    ID              shift and go to state 301
+    ID              shift and go to state 303
 
 
-state 224
+state 226
 
     (28) tipos_datos_columnas -> ID TIPO_DATO .
 
@@ -3308,7 +3340,7 @@ state 224
     COMA            reduce using rule 28 (tipos_datos_columnas -> ID TIPO_DATO .)
 
 
-state 225
+state 227
 
     (98) TIPO_DATO -> TEXT .
 
@@ -3316,7 +3348,7 @@ state 225
     COMA            reduce using rule 98 (TIPO_DATO -> TEXT .)
 
 
-state 226
+state 228
 
     (99) TIPO_DATO -> FLOAT .
 
@@ -3324,7 +3356,7 @@ state 226
     COMA            reduce using rule 99 (TIPO_DATO -> FLOAT .)
 
 
-state 227
+state 229
 
     (100) TIPO_DATO -> INTEGER .
 
@@ -3332,7 +3364,7 @@ state 227
     COMA            reduce using rule 100 (TIPO_DATO -> INTEGER .)
 
 
-state 228
+state 230
 
     (101) TIPO_DATO -> SMALLINT .
 
@@ -3340,7 +3372,7 @@ state 228
     COMA            reduce using rule 101 (TIPO_DATO -> SMALLINT .)
 
 
-state 229
+state 231
 
     (102) TIPO_DATO -> MONEY .
 
@@ -3348,21 +3380,21 @@ state 229
     COMA            reduce using rule 102 (TIPO_DATO -> MONEY .)
 
 
-state 230
+state 232
 
     (103) TIPO_DATO -> DECIMAL . PAR_A ENTERO COMA ENTERO PAR_C
 
-    PAR_A           shift and go to state 302
+    PAR_A           shift and go to state 304
 
 
-state 231
+state 233
 
     (104) TIPO_DATO -> NUMERIC . PAR_A ENTERO COMA ENTERO PAR_C
 
-    PAR_A           shift and go to state 303
+    PAR_A           shift and go to state 305
 
 
-state 232
+state 234
 
     (105) TIPO_DATO -> BIGINT .
 
@@ -3370,7 +3402,7 @@ state 232
     COMA            reduce using rule 105 (TIPO_DATO -> BIGINT .)
 
 
-state 233
+state 235
 
     (106) TIPO_DATO -> REAL .
 
@@ -3378,14 +3410,14 @@ state 233
     COMA            reduce using rule 106 (TIPO_DATO -> REAL .)
 
 
-state 234
+state 236
 
     (107) TIPO_DATO -> DOUBLE . PRECISION
 
-    PRECISION       shift and go to state 304
+    PRECISION       shift and go to state 306
 
 
-state 235
+state 237
 
     (108) TIPO_DATO -> INTERVAL . extract_time TO extract_time
     (109) TIPO_DATO -> INTERVAL .
@@ -3398,16 +3430,16 @@ state 235
 
     PTCOMA          reduce using rule 109 (TIPO_DATO -> INTERVAL .)
     COMA            reduce using rule 109 (TIPO_DATO -> INTERVAL .)
-    YEAR            shift and go to state 197
-    DAY             shift and go to state 198
-    MONTH           shift and go to state 199
-    HOUR            shift and go to state 200
-    MINUTE          shift and go to state 201
-    SECOND          shift and go to state 202
+    YEAR            shift and go to state 199
+    DAY             shift and go to state 200
+    MONTH           shift and go to state 201
+    HOUR            shift and go to state 202
+    MINUTE          shift and go to state 203
+    SECOND          shift and go to state 204
 
-    extract_time                   shift and go to state 305
+    extract_time                   shift and go to state 307
 
-state 236
+state 238
 
     (110) TIPO_DATO -> TIME .
 
@@ -3415,7 +3447,7 @@ state 236
     COMA            reduce using rule 110 (TIPO_DATO -> TIME .)
 
 
-state 237
+state 239
 
     (111) TIPO_DATO -> TIMESTAMP .
 
@@ -3423,7 +3455,7 @@ state 237
     COMA            reduce using rule 111 (TIPO_DATO -> TIMESTAMP .)
 
 
-state 238
+state 240
 
     (112) TIPO_DATO -> DATE .
 
@@ -3431,32 +3463,32 @@ state 238
     COMA            reduce using rule 112 (TIPO_DATO -> DATE .)
 
 
-state 239
+state 241
 
     (113) TIPO_DATO -> CHARACTER . VARYING PAR_A ENTERO PAR_C
     (116) TIPO_DATO -> CHARACTER . PAR_A ENTERO PAR_C
     (118) TIPO_DATO -> CHARACTER . PAR_A PAR_C
 
-    VARYING         shift and go to state 306
-    PAR_A           shift and go to state 307
-
-
-state 240
-
-    (114) TIPO_DATO -> VARCHAR . PAR_A ENTERO PAR_C
-
-    PAR_A           shift and go to state 308
-
-
-state 241
-
-    (115) TIPO_DATO -> CHAR . PAR_A ENTERO PAR_C
-    (117) TIPO_DATO -> CHAR . PAR_A PAR_C
-
+    VARYING         shift and go to state 308
     PAR_A           shift and go to state 309
 
 
 state 242
+
+    (114) TIPO_DATO -> VARCHAR . PAR_A ENTERO PAR_C
+
+    PAR_A           shift and go to state 310
+
+
+state 243
+
+    (115) TIPO_DATO -> CHAR . PAR_A ENTERO PAR_C
+    (117) TIPO_DATO -> CHAR . PAR_A PAR_C
+
+    PAR_A           shift and go to state 311
+
+
+state 244
 
     (25) alterTable_insrt -> ALTER TABLE ID ADD COLUMN campos_add_Column PTCOMA .
 
@@ -3470,34 +3502,34 @@ state 242
     $end            reduce using rule 25 (alterTable_insrt -> ALTER TABLE ID ADD COLUMN campos_add_Column PTCOMA .)
 
 
-state 243
+state 245
 
     (26) campos_add_Column -> campos_add_Column COMA . tipos_datos_columnas
     (28) tipos_datos_columnas -> . ID TIPO_DATO
 
-    ID              shift and go to state 155
+    ID              shift and go to state 157
 
-    tipos_datos_columnas           shift and go to state 310
+    tipos_datos_columnas           shift and go to state 312
 
-state 244
+state 246
 
     (29) alterTable_insrt -> ALTER TABLE ID ADD CHECK PAR_A expresion_logica . PAR_C PTCOMA
 
-    PAR_C           shift and go to state 311
+    PAR_C           shift and go to state 313
 
 
-state 245
+state 247
 
     (169) expresion_logica -> expresion_relacional . AND expresion_relacional
     (170) expresion_logica -> expresion_relacional . OR expresion_relacional
     (172) expresion_logica -> expresion_relacional .
 
-    AND             shift and go to state 312
-    OR              shift and go to state 313
+    AND             shift and go to state 314
+    OR              shift and go to state 315
     PAR_C           reduce using rule 172 (expresion_logica -> expresion_relacional .)
 
 
-state 246
+state 248
 
     (171) expresion_logica -> NOT . expresion_relacional
     (160) expresion_relacional -> . expresion MAYQUE expresion
@@ -3521,55 +3553,55 @@ state 246
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion_relacional           shift and go to state 314
-    expresion                      shift and go to state 170
+    expresion_relacional           shift and go to state 316
+    expresion                      shift and go to state 172
 
-state 247
+state 249
 
     (30) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A . campos_c PAR_C REFERENCES campos_c PTCOMA
     (83) campos_c -> . campos_c COMA ID
     (84) campos_c -> . ID
 
-    ID              shift and go to state 152
+    ID              shift and go to state 154
 
-    campos_c                       shift and go to state 315
-
-state 248
-
-    (31) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK . PAR_A expresion_logica PAR_C PTCOMA
-
-    PAR_A           shift and go to state 316
-
-
-state 249
-
-    (32) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE . PAR_A campos_c PAR_C PTCOMA
-
-    PAR_A           shift and go to state 317
-
+    campos_c                       shift and go to state 317
 
 state 250
 
-    (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN . KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA
+    (31) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK . PAR_A expresion_logica PAR_C PTCOMA
 
-    KEY             shift and go to state 318
+    PAR_A           shift and go to state 318
 
 
 state 251
 
-    (151) expresion -> ID PUNTO . ID
+    (32) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE . PAR_A campos_c PAR_C PTCOMA
 
-    ID              shift and go to state 319
+    PAR_A           shift and go to state 319
 
 
 state 252
+
+    (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN . KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA
+
+    KEY             shift and go to state 320
+
+
+state 253
+
+    (151) expresion -> ID PUNTO . ID
+
+    ID              shift and go to state 321
+
+
+state 254
 
     (152) expresion -> expresion SUMA . expresion
     (147) expresion -> . CADENA
@@ -3584,16 +3616,16 @@ state 252
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 320
+    expresion                      shift and go to state 322
 
-state 253
+state 255
 
     (153) expresion -> expresion RESTA . expresion
     (147) expresion -> . CADENA
@@ -3608,16 +3640,16 @@ state 253
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 321
+    expresion                      shift and go to state 323
 
-state 254
+state 256
 
     (154) expresion -> expresion DIVISION . expresion
     (147) expresion -> . CADENA
@@ -3632,16 +3664,16 @@ state 254
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 322
+    expresion                      shift and go to state 324
 
-state 255
+state 257
 
     (155) expresion -> expresion ASTERISCO . expresion
     (147) expresion -> . CADENA
@@ -3656,16 +3688,16 @@ state 255
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 323
+    expresion                      shift and go to state 325
 
-state 256
+state 258
 
     (41) update_insrt -> UPDATE ID SET lista_update WHERE expresion_relacional PTCOMA .
 
@@ -3679,7 +3711,7 @@ state 256
     $end            reduce using rule 41 (update_insrt -> UPDATE ID SET lista_update WHERE expresion_relacional PTCOMA .)
 
 
-state 257
+state 259
 
     (160) expresion_relacional -> expresion MAYQUE . expresion
     (147) expresion -> . CADENA
@@ -3694,16 +3726,16 @@ state 257
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 324
+    expresion                      shift and go to state 326
 
-state 258
+state 260
 
     (161) expresion_relacional -> expresion MENQUE . expresion
     (147) expresion -> . CADENA
@@ -3718,16 +3750,16 @@ state 258
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 325
+    expresion                      shift and go to state 327
 
-state 259
+state 261
 
     (162) expresion_relacional -> expresion MAYIGQUE . expresion
     (147) expresion -> . CADENA
@@ -3742,16 +3774,16 @@ state 259
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 326
+    expresion                      shift and go to state 328
 
-state 260
+state 262
 
     (163) expresion_relacional -> expresion MENIGQUE . expresion
     (147) expresion -> . CADENA
@@ -3766,16 +3798,16 @@ state 260
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 327
+    expresion                      shift and go to state 329
 
-state 261
+state 263
 
     (164) expresion_relacional -> expresion DOBLEIG . expresion
     (147) expresion -> . CADENA
@@ -3790,16 +3822,16 @@ state 261
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 328
+    expresion                      shift and go to state 330
 
-state 262
+state 264
 
     (165) expresion_relacional -> expresion IGUAL . expresion
     (147) expresion -> . CADENA
@@ -3814,16 +3846,16 @@ state 262
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 329
+    expresion                      shift and go to state 331
 
-state 263
+state 265
 
     (166) expresion_relacional -> expresion NOIG . expresion
     (147) expresion -> . CADENA
@@ -3838,16 +3870,16 @@ state 263
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 330
+    expresion                      shift and go to state 332
 
-state 264
+state 266
 
     (167) expresion_relacional -> expresion NOIGUAL . expresion
     (147) expresion -> . CADENA
@@ -3862,23 +3894,23 @@ state 264
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 331
+    expresion                      shift and go to state 333
 
-state 265
+state 267
 
     (15) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES . PAR_A lista_datos PAR_C PTCOMA
 
-    PAR_A           shift and go to state 332
+    PAR_A           shift and go to state 334
 
 
-state 266
+state 268
 
     (18) lista_parametros_lista -> lista_parametros_lista COMA ID .
 
@@ -3886,7 +3918,7 @@ state 266
     COMA            reduce using rule 18 (lista_parametros_lista -> lista_parametros_lista COMA ID .)
 
 
-state 267
+state 269
 
     (16) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A . lista_datos PAR_C PTCOMA
     (20) lista_datos -> . lista_datos COMA expresion
@@ -3903,24 +3935,24 @@ state 267
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    lista_datos                    shift and go to state 333
-    expresion                      shift and go to state 176
+    lista_datos                    shift and go to state 335
+    expresion                      shift and go to state 178
 
-state 268
+state 270
 
     (17) insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 334
+    PTCOMA          shift and go to state 336
 
 
-state 269
+state 271
 
     (20) lista_datos -> lista_datos COMA . expresion
     (147) expresion -> . CADENA
@@ -3935,58 +3967,58 @@ state 269
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion                      shift and go to state 335
-
-state 270
-
-    (73) createDB_dosParam -> OWNER ID MODE IGUAL ENTERO .
-
-    PTCOMA          reduce using rule 73 (createDB_dosParam -> OWNER ID MODE IGUAL ENTERO .)
-
-
-state 271
-
-    (75) createDB_dosParam -> OWNER IGUAL ID MODE IGUAL . ENTERO
-
-    ENTERO          shift and go to state 336
-
+    expresion                      shift and go to state 337
 
 state 272
 
-    (74) createDB_dosParam -> OWNER IGUAL ID MODE ENTERO .
+    (73) createDB_dosParam -> OWNER string_type MODE IGUAL ENTERO .
 
-    PTCOMA          reduce using rule 74 (createDB_dosParam -> OWNER IGUAL ID MODE ENTERO .)
+    PTCOMA          reduce using rule 73 (createDB_dosParam -> OWNER string_type MODE IGUAL ENTERO .)
 
 
 state 273
 
-    (77) createDB_dosParam -> MODE ENTERO OWNER IGUAL ID .
+    (75) createDB_dosParam -> OWNER IGUAL string_type MODE IGUAL . ENTERO
 
-    PTCOMA          reduce using rule 77 (createDB_dosParam -> MODE ENTERO OWNER IGUAL ID .)
+    ENTERO          shift and go to state 338
 
 
 state 274
 
-    (79) createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL . ID
+    (74) createDB_dosParam -> OWNER IGUAL string_type MODE ENTERO .
 
-    ID              shift and go to state 337
+    PTCOMA          reduce using rule 74 (createDB_dosParam -> OWNER IGUAL string_type MODE ENTERO .)
 
 
 state 275
+
+    (77) createDB_dosParam -> MODE ENTERO OWNER IGUAL string_type .
+
+    PTCOMA          reduce using rule 77 (createDB_dosParam -> MODE ENTERO OWNER IGUAL string_type .)
+
+
+state 276
+
+    (79) createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL . ID
+
+    ID              shift and go to state 339
+
+
+state 277
 
     (78) createDB_dosParam -> MODE IGUAL ENTERO OWNER ID .
 
     PTCOMA          reduce using rule 78 (createDB_dosParam -> MODE IGUAL ENTERO OWNER ID .)
 
 
-state 276
+state 278
 
     (62) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .
 
@@ -4000,7 +4032,7 @@ state 276
     $end            reduce using rule 62 (createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .)
 
 
-state 277
+state 279
 
     (70) createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .
 
@@ -4014,32 +4046,32 @@ state 277
     $end            reduce using rule 70 (createDB_insrt -> CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .)
 
 
-state 278
+state 280
 
     (59) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID . PTCOMA
     (63) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID . createDB_unParam PTCOMA
     (71) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID . createDB_dosParam PTCOMA
-    (64) createDB_unParam -> . OWNER ID
-    (65) createDB_unParam -> . OWNER IGUAL ID
+    (64) createDB_unParam -> . OWNER string_type
+    (65) createDB_unParam -> . OWNER IGUAL string_type
     (66) createDB_unParam -> . MODE ENTERO
     (67) createDB_unParam -> . MODE IGUAL ENTERO
-    (72) createDB_dosParam -> . OWNER ID MODE ENTERO
-    (73) createDB_dosParam -> . OWNER ID MODE IGUAL ENTERO
-    (74) createDB_dosParam -> . OWNER IGUAL ID MODE ENTERO
-    (75) createDB_dosParam -> . OWNER IGUAL ID MODE IGUAL ENTERO
-    (76) createDB_dosParam -> . MODE ENTERO OWNER ID
-    (77) createDB_dosParam -> . MODE ENTERO OWNER IGUAL ID
+    (72) createDB_dosParam -> . OWNER string_type MODE ENTERO
+    (73) createDB_dosParam -> . OWNER string_type MODE IGUAL ENTERO
+    (74) createDB_dosParam -> . OWNER IGUAL string_type MODE ENTERO
+    (75) createDB_dosParam -> . OWNER IGUAL string_type MODE IGUAL ENTERO
+    (76) createDB_dosParam -> . MODE ENTERO OWNER string_type
+    (77) createDB_dosParam -> . MODE ENTERO OWNER IGUAL string_type
     (78) createDB_dosParam -> . MODE IGUAL ENTERO OWNER ID
     (79) createDB_dosParam -> . MODE IGUAL ENTERO OWNER IGUAL ID
 
-    PTCOMA          shift and go to state 338
+    PTCOMA          shift and go to state 340
     OWNER           shift and go to state 53
     MODE            shift and go to state 54
 
-    createDB_unParam               shift and go to state 339
-    createDB_dosParam              shift and go to state 340
+    createDB_unParam               shift and go to state 341
+    createDB_dosParam              shift and go to state 342
 
-state 279
+state 281
 
     (90) cuerpo_createTable -> ID TIPO_DATO_DEF PRIMARY KEY .
 
@@ -4047,7 +4079,7 @@ state 279
     COMA            reduce using rule 90 (cuerpo_createTable -> ID TIPO_DATO_DEF PRIMARY KEY .)
 
 
-state 280
+state 282
 
     (91) cuerpo_createTable -> ID TIPO_DATO_DEF REFERENCES ID .
 
@@ -4055,7 +4087,7 @@ state 280
     COMA            reduce using rule 91 (cuerpo_createTable -> ID TIPO_DATO_DEF REFERENCES ID .)
 
 
-state 281
+state 283
 
     (92) cuerpo_createTable -> ID TIPO_DATO_DEF NOT NULL .
 
@@ -4063,21 +4095,21 @@ state 281
     COMA            reduce using rule 92 (cuerpo_createTable -> ID TIPO_DATO_DEF NOT NULL .)
 
 
-state 282
+state 284
 
     (130) TIPO_DATO_DEF -> DECIMAL PAR_A ENTERO . COMA ENTERO PAR_C
 
-    COMA            shift and go to state 341
+    COMA            shift and go to state 343
 
 
-state 283
+state 285
 
     (131) TIPO_DATO_DEF -> NUMERIC PAR_A ENTERO . COMA ENTERO PAR_C
 
-    COMA            shift and go to state 342
+    COMA            shift and go to state 344
 
 
-state 284
+state 286
 
     (135) TIPO_DATO_DEF -> INTERVAL extract_time TO . extract_time
     (119) extract_time -> . YEAR
@@ -4087,30 +4119,30 @@ state 284
     (123) extract_time -> . MINUTE
     (124) extract_time -> . SECOND
 
-    YEAR            shift and go to state 197
-    DAY             shift and go to state 198
-    MONTH           shift and go to state 199
-    HOUR            shift and go to state 200
-    MINUTE          shift and go to state 201
-    SECOND          shift and go to state 202
+    YEAR            shift and go to state 199
+    DAY             shift and go to state 200
+    MONTH           shift and go to state 201
+    HOUR            shift and go to state 202
+    MINUTE          shift and go to state 203
+    SECOND          shift and go to state 204
 
-    extract_time                   shift and go to state 343
+    extract_time                   shift and go to state 345
 
-state 285
+state 287
 
     (140) TIPO_DATO_DEF -> CHARACTER VARYING PAR_A . ENTERO PAR_C
 
-    ENTERO          shift and go to state 344
+    ENTERO          shift and go to state 346
 
 
-state 286
+state 288
 
     (143) TIPO_DATO_DEF -> CHARACTER PAR_A ENTERO . PAR_C
 
-    PAR_C           shift and go to state 345
+    PAR_C           shift and go to state 347
 
 
-state 287
+state 289
 
     (145) TIPO_DATO_DEF -> CHARACTER PAR_A PAR_C .
 
@@ -4122,21 +4154,21 @@ state 287
     COMA            reduce using rule 145 (TIPO_DATO_DEF -> CHARACTER PAR_A PAR_C .)
 
 
-state 288
+state 290
 
     (141) TIPO_DATO_DEF -> VARCHAR PAR_A ENTERO . PAR_C
 
-    PAR_C           shift and go to state 346
+    PAR_C           shift and go to state 348
 
 
-state 289
+state 291
 
     (142) TIPO_DATO_DEF -> CHAR PAR_A ENTERO . PAR_C
 
-    PAR_C           shift and go to state 347
+    PAR_C           shift and go to state 349
 
 
-state 290
+state 292
 
     (144) TIPO_DATO_DEF -> CHAR PAR_A PAR_C .
 
@@ -4148,28 +4180,28 @@ state 290
     COMA            reduce using rule 144 (TIPO_DATO_DEF -> CHAR PAR_A PAR_C .)
 
 
-state 291
+state 293
 
     (86) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS PAR_A . ID PAR_C PTCOMA
 
-    ID              shift and go to state 348
-
-
-state 292
-
-    (94) cuerpo_createTable -> PRIMARY KEY PAR_A ID . PAR_C
-
-    PAR_C           shift and go to state 349
-
-
-state 293
-
-    (95) cuerpo_createTable -> FOREING KEY PAR_A ID . PAR_C REFERENCES ID PAR_A ID PAR_C
-
-    PAR_C           shift and go to state 350
+    ID              shift and go to state 350
 
 
 state 294
+
+    (94) cuerpo_createTable -> PRIMARY KEY PAR_A ID . PAR_C
+
+    PAR_C           shift and go to state 351
+
+
+state 295
+
+    (95) cuerpo_createTable -> FOREING KEY PAR_A ID . PAR_C REFERENCES ID PAR_A ID PAR_C
+
+    PAR_C           shift and go to state 352
+
+
+state 296
 
     (96) cuerpo_createTable -> UNIQUE PAR_A campos_c PAR_C .
 
@@ -4177,7 +4209,7 @@ state 294
     COMA            reduce using rule 96 (cuerpo_createTable -> UNIQUE PAR_A campos_c PAR_C .)
 
 
-state 295
+state 297
 
     (80) constraint_esp -> CHECK PAR_A . expresion_logica PAR_C
     (169) expresion_logica -> . expresion_relacional AND expresion_relacional
@@ -4205,36 +4237,36 @@ state 295
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    NOT             shift and go to state 246
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    NOT             shift and go to state 248
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion_logica               shift and go to state 351
-    expresion_relacional           shift and go to state 245
-    expresion                      shift and go to state 170
+    expresion_logica               shift and go to state 353
+    expresion_relacional           shift and go to state 247
+    expresion                      shift and go to state 172
 
-state 296
+state 298
 
     (81) constraint_esp -> UNIQUE PAR_A . campos_c PAR_C
     (83) campos_c -> . campos_c COMA ID
     (84) campos_c -> . ID
 
-    ID              shift and go to state 152
+    ID              shift and go to state 154
 
-    campos_c                       shift and go to state 352
+    campos_c                       shift and go to state 354
 
-state 297
+state 299
 
     (82) constraint_esp -> FOREING KEY . PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
-    PAR_A           shift and go to state 353
+    PAR_A           shift and go to state 355
 
 
-state 298
+state 300
 
     (22) Table_alter -> ALTER COLUMN ID TYPE TIPO_DATO .
 
@@ -4242,14 +4274,14 @@ state 298
     COMA            reduce using rule 22 (Table_alter -> ALTER COLUMN ID TYPE TIPO_DATO .)
 
 
-state 299
+state 301
 
     (37) Table_alter -> ALTER COLUMN ID SET NOT . NULL
 
-    NULL            shift and go to state 354
+    NULL            shift and go to state 356
 
 
-state 300
+state 302
 
     (83) campos_c -> campos_c COMA ID .
 
@@ -4258,28 +4290,28 @@ state 300
     PAR_C           reduce using rule 83 (campos_c -> campos_c COMA ID .)
 
 
-state 301
+state 303
 
     (24) alterTable_insrt -> ALTER TABLE ID RENAME COLUMN ID TO ID . PTCOMA
 
-    PTCOMA          shift and go to state 355
-
-
-state 302
-
-    (103) TIPO_DATO -> DECIMAL PAR_A . ENTERO COMA ENTERO PAR_C
-
-    ENTERO          shift and go to state 356
-
-
-state 303
-
-    (104) TIPO_DATO -> NUMERIC PAR_A . ENTERO COMA ENTERO PAR_C
-
-    ENTERO          shift and go to state 357
+    PTCOMA          shift and go to state 357
 
 
 state 304
+
+    (103) TIPO_DATO -> DECIMAL PAR_A . ENTERO COMA ENTERO PAR_C
+
+    ENTERO          shift and go to state 358
+
+
+state 305
+
+    (104) TIPO_DATO -> NUMERIC PAR_A . ENTERO COMA ENTERO PAR_C
+
+    ENTERO          shift and go to state 359
+
+
+state 306
 
     (107) TIPO_DATO -> DOUBLE PRECISION .
 
@@ -4287,46 +4319,46 @@ state 304
     COMA            reduce using rule 107 (TIPO_DATO -> DOUBLE PRECISION .)
 
 
-state 305
+state 307
 
     (108) TIPO_DATO -> INTERVAL extract_time . TO extract_time
 
-    TO              shift and go to state 358
-
-
-state 306
-
-    (113) TIPO_DATO -> CHARACTER VARYING . PAR_A ENTERO PAR_C
-
-    PAR_A           shift and go to state 359
-
-
-state 307
-
-    (116) TIPO_DATO -> CHARACTER PAR_A . ENTERO PAR_C
-    (118) TIPO_DATO -> CHARACTER PAR_A . PAR_C
-
-    ENTERO          shift and go to state 360
-    PAR_C           shift and go to state 361
+    TO              shift and go to state 360
 
 
 state 308
 
-    (114) TIPO_DATO -> VARCHAR PAR_A . ENTERO PAR_C
+    (113) TIPO_DATO -> CHARACTER VARYING . PAR_A ENTERO PAR_C
 
-    ENTERO          shift and go to state 362
+    PAR_A           shift and go to state 361
 
 
 state 309
 
-    (115) TIPO_DATO -> CHAR PAR_A . ENTERO PAR_C
-    (117) TIPO_DATO -> CHAR PAR_A . PAR_C
+    (116) TIPO_DATO -> CHARACTER PAR_A . ENTERO PAR_C
+    (118) TIPO_DATO -> CHARACTER PAR_A . PAR_C
 
-    ENTERO          shift and go to state 363
-    PAR_C           shift and go to state 364
+    ENTERO          shift and go to state 362
+    PAR_C           shift and go to state 363
 
 
 state 310
+
+    (114) TIPO_DATO -> VARCHAR PAR_A . ENTERO PAR_C
+
+    ENTERO          shift and go to state 364
+
+
+state 311
+
+    (115) TIPO_DATO -> CHAR PAR_A . ENTERO PAR_C
+    (117) TIPO_DATO -> CHAR PAR_A . PAR_C
+
+    ENTERO          shift and go to state 365
+    PAR_C           shift and go to state 366
+
+
+state 312
 
     (26) campos_add_Column -> campos_add_Column COMA tipos_datos_columnas .
 
@@ -4334,14 +4366,14 @@ state 310
     COMA            reduce using rule 26 (campos_add_Column -> campos_add_Column COMA tipos_datos_columnas .)
 
 
-state 311
+state 313
 
     (29) alterTable_insrt -> ALTER TABLE ID ADD CHECK PAR_A expresion_logica PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 365
+    PTCOMA          shift and go to state 367
 
 
-state 312
+state 314
 
     (169) expresion_logica -> expresion_relacional AND . expresion_relacional
     (160) expresion_relacional -> . expresion MAYQUE expresion
@@ -4365,17 +4397,17 @@ state 312
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion_relacional           shift and go to state 366
-    expresion                      shift and go to state 170
+    expresion_relacional           shift and go to state 368
+    expresion                      shift and go to state 172
 
-state 313
+state 315
 
     (170) expresion_logica -> expresion_relacional OR . expresion_relacional
     (160) expresion_relacional -> . expresion MAYQUE expresion
@@ -4399,33 +4431,33 @@ state 313
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion_relacional           shift and go to state 367
-    expresion                      shift and go to state 170
+    expresion_relacional           shift and go to state 369
+    expresion                      shift and go to state 172
 
-state 314
+state 316
 
     (171) expresion_logica -> NOT expresion_relacional .
 
     PAR_C           reduce using rule 171 (expresion_logica -> NOT expresion_relacional .)
 
 
-state 315
+state 317
 
     (30) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A campos_c . PAR_C REFERENCES campos_c PTCOMA
     (83) campos_c -> campos_c . COMA ID
 
-    PAR_C           shift and go to state 368
-    COMA            shift and go to state 222
+    PAR_C           shift and go to state 370
+    COMA            shift and go to state 224
 
 
-state 316
+state 318
 
     (31) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A . expresion_logica PAR_C PTCOMA
     (169) expresion_logica -> . expresion_relacional AND expresion_relacional
@@ -4453,36 +4485,36 @@ state 316
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    NOT             shift and go to state 246
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    NOT             shift and go to state 248
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    expresion_logica               shift and go to state 369
-    expresion_relacional           shift and go to state 245
-    expresion                      shift and go to state 170
+    expresion_logica               shift and go to state 371
+    expresion_relacional           shift and go to state 247
+    expresion                      shift and go to state 172
 
-state 317
+state 319
 
     (32) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A . campos_c PAR_C PTCOMA
     (83) campos_c -> . campos_c COMA ID
     (84) campos_c -> . ID
 
-    ID              shift and go to state 152
+    ID              shift and go to state 154
 
-    campos_c                       shift and go to state 370
+    campos_c                       shift and go to state 372
 
-state 318
+state 320
 
     (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY . PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA
 
-    PAR_A           shift and go to state 371
+    PAR_A           shift and go to state 373
 
 
-state 319
+state 321
 
     (151) expresion -> ID PUNTO ID .
 
@@ -4506,7 +4538,7 @@ state 319
     OR              reduce using rule 151 (expresion -> ID PUNTO ID .)
 
 
-state 320
+state 322
 
     (152) expresion -> expresion SUMA expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4530,16 +4562,16 @@ state 320
     PAR_C           reduce using rule 152 (expresion -> expresion SUMA expresion .)
     AND             reduce using rule 152 (expresion -> expresion SUMA expresion .)
     OR              reduce using rule 152 (expresion -> expresion SUMA expresion .)
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
   ! DIVISION        [ reduce using rule 152 (expresion -> expresion SUMA expresion .) ]
   ! ASTERISCO       [ reduce using rule 152 (expresion -> expresion SUMA expresion .) ]
-  ! SUMA            [ shift and go to state 252 ]
-  ! RESTA           [ shift and go to state 253 ]
+  ! SUMA            [ shift and go to state 254 ]
+  ! RESTA           [ shift and go to state 255 ]
 
 
-state 321
+state 323
 
     (153) expresion -> expresion RESTA expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4563,16 +4595,16 @@ state 321
     PAR_C           reduce using rule 153 (expresion -> expresion RESTA expresion .)
     AND             reduce using rule 153 (expresion -> expresion RESTA expresion .)
     OR              reduce using rule 153 (expresion -> expresion RESTA expresion .)
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
   ! DIVISION        [ reduce using rule 153 (expresion -> expresion RESTA expresion .) ]
   ! ASTERISCO       [ reduce using rule 153 (expresion -> expresion RESTA expresion .) ]
-  ! SUMA            [ shift and go to state 252 ]
-  ! RESTA           [ shift and go to state 253 ]
+  ! SUMA            [ shift and go to state 254 ]
+  ! RESTA           [ shift and go to state 255 ]
 
 
-state 322
+state 324
 
     (154) expresion -> expresion DIVISION expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4599,13 +4631,13 @@ state 322
     AND             reduce using rule 154 (expresion -> expresion DIVISION expresion .)
     OR              reduce using rule 154 (expresion -> expresion DIVISION expresion .)
 
-  ! SUMA            [ shift and go to state 252 ]
-  ! RESTA           [ shift and go to state 253 ]
-  ! DIVISION        [ shift and go to state 254 ]
-  ! ASTERISCO       [ shift and go to state 255 ]
+  ! SUMA            [ shift and go to state 254 ]
+  ! RESTA           [ shift and go to state 255 ]
+  ! DIVISION        [ shift and go to state 256 ]
+  ! ASTERISCO       [ shift and go to state 257 ]
 
 
-state 323
+state 325
 
     (155) expresion -> expresion ASTERISCO expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4632,13 +4664,13 @@ state 323
     AND             reduce using rule 155 (expresion -> expresion ASTERISCO expresion .)
     OR              reduce using rule 155 (expresion -> expresion ASTERISCO expresion .)
 
-  ! SUMA            [ shift and go to state 252 ]
-  ! RESTA           [ shift and go to state 253 ]
-  ! DIVISION        [ shift and go to state 254 ]
-  ! ASTERISCO       [ shift and go to state 255 ]
+  ! SUMA            [ shift and go to state 254 ]
+  ! RESTA           [ shift and go to state 255 ]
+  ! DIVISION        [ shift and go to state 256 ]
+  ! ASTERISCO       [ shift and go to state 257 ]
 
 
-state 324
+state 326
 
     (160) expresion_relacional -> expresion MAYQUE expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4650,13 +4682,13 @@ state 324
     AND             reduce using rule 160 (expresion_relacional -> expresion MAYQUE expresion .)
     OR              reduce using rule 160 (expresion_relacional -> expresion MAYQUE expresion .)
     PAR_C           reduce using rule 160 (expresion_relacional -> expresion MAYQUE expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 325
+state 327
 
     (161) expresion_relacional -> expresion MENQUE expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4668,13 +4700,13 @@ state 325
     AND             reduce using rule 161 (expresion_relacional -> expresion MENQUE expresion .)
     OR              reduce using rule 161 (expresion_relacional -> expresion MENQUE expresion .)
     PAR_C           reduce using rule 161 (expresion_relacional -> expresion MENQUE expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 326
+state 328
 
     (162) expresion_relacional -> expresion MAYIGQUE expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4686,13 +4718,13 @@ state 326
     AND             reduce using rule 162 (expresion_relacional -> expresion MAYIGQUE expresion .)
     OR              reduce using rule 162 (expresion_relacional -> expresion MAYIGQUE expresion .)
     PAR_C           reduce using rule 162 (expresion_relacional -> expresion MAYIGQUE expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 327
+state 329
 
     (163) expresion_relacional -> expresion MENIGQUE expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4704,13 +4736,13 @@ state 327
     AND             reduce using rule 163 (expresion_relacional -> expresion MENIGQUE expresion .)
     OR              reduce using rule 163 (expresion_relacional -> expresion MENIGQUE expresion .)
     PAR_C           reduce using rule 163 (expresion_relacional -> expresion MENIGQUE expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 328
+state 330
 
     (164) expresion_relacional -> expresion DOBLEIG expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4722,13 +4754,13 @@ state 328
     AND             reduce using rule 164 (expresion_relacional -> expresion DOBLEIG expresion .)
     OR              reduce using rule 164 (expresion_relacional -> expresion DOBLEIG expresion .)
     PAR_C           reduce using rule 164 (expresion_relacional -> expresion DOBLEIG expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 329
+state 331
 
     (165) expresion_relacional -> expresion IGUAL expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4740,13 +4772,13 @@ state 329
     AND             reduce using rule 165 (expresion_relacional -> expresion IGUAL expresion .)
     OR              reduce using rule 165 (expresion_relacional -> expresion IGUAL expresion .)
     PAR_C           reduce using rule 165 (expresion_relacional -> expresion IGUAL expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 330
+state 332
 
     (166) expresion_relacional -> expresion NOIG expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4758,13 +4790,13 @@ state 330
     AND             reduce using rule 166 (expresion_relacional -> expresion NOIG expresion .)
     OR              reduce using rule 166 (expresion_relacional -> expresion NOIG expresion .)
     PAR_C           reduce using rule 166 (expresion_relacional -> expresion NOIG expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 331
+state 333
 
     (167) expresion_relacional -> expresion NOIGUAL expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4776,13 +4808,13 @@ state 331
     AND             reduce using rule 167 (expresion_relacional -> expresion NOIGUAL expresion .)
     OR              reduce using rule 167 (expresion_relacional -> expresion NOIGUAL expresion .)
     PAR_C           reduce using rule 167 (expresion_relacional -> expresion NOIGUAL expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 332
+state 334
 
     (15) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A . lista_datos PAR_C PTCOMA
     (20) lista_datos -> . lista_datos COMA expresion
@@ -4799,26 +4831,26 @@ state 332
     (156) expresion -> . TRUE
     (157) expresion -> . FALSE
 
-    CADENA          shift and go to state 164
-    ENTERO          shift and go to state 165
-    FLOTANTE        shift and go to state 166
-    ID              shift and go to state 162
-    TRUE            shift and go to state 167
-    FALSE           shift and go to state 168
+    CADENA          shift and go to state 166
+    ENTERO          shift and go to state 167
+    FLOTANTE        shift and go to state 168
+    ID              shift and go to state 164
+    TRUE            shift and go to state 169
+    FALSE           shift and go to state 170
 
-    lista_datos                    shift and go to state 372
-    expresion                      shift and go to state 176
+    lista_datos                    shift and go to state 374
+    expresion                      shift and go to state 178
 
-state 333
+state 335
 
     (16) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos . PAR_C PTCOMA
     (20) lista_datos -> lista_datos . COMA expresion
 
-    PAR_C           shift and go to state 373
-    COMA            shift and go to state 269
+    PAR_C           shift and go to state 375
+    COMA            shift and go to state 271
 
 
-state 334
+state 336
 
     (17) insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA .
 
@@ -4832,7 +4864,7 @@ state 334
     $end            reduce using rule 17 (insert_insrt -> INSERT INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA .)
 
 
-state 335
+state 337
 
     (20) lista_datos -> lista_datos COMA expresion .
     (152) expresion -> expresion . SUMA expresion
@@ -4842,27 +4874,27 @@ state 335
 
     PAR_C           reduce using rule 20 (lista_datos -> lista_datos COMA expresion .)
     COMA            reduce using rule 20 (lista_datos -> lista_datos COMA expresion .)
-    SUMA            shift and go to state 252
-    RESTA           shift and go to state 253
-    DIVISION        shift and go to state 254
-    ASTERISCO       shift and go to state 255
+    SUMA            shift and go to state 254
+    RESTA           shift and go to state 255
+    DIVISION        shift and go to state 256
+    ASTERISCO       shift and go to state 257
 
 
-state 336
+state 338
 
-    (75) createDB_dosParam -> OWNER IGUAL ID MODE IGUAL ENTERO .
+    (75) createDB_dosParam -> OWNER IGUAL string_type MODE IGUAL ENTERO .
 
-    PTCOMA          reduce using rule 75 (createDB_dosParam -> OWNER IGUAL ID MODE IGUAL ENTERO .)
+    PTCOMA          reduce using rule 75 (createDB_dosParam -> OWNER IGUAL string_type MODE IGUAL ENTERO .)
 
 
-state 337
+state 339
 
     (79) createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL ID .
 
     PTCOMA          reduce using rule 79 (createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL ID .)
 
 
-state 338
+state 340
 
     (59) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA .
 
@@ -4876,35 +4908,35 @@ state 338
     $end            reduce using rule 59 (createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA .)
 
 
-state 339
+state 341
 
     (63) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam . PTCOMA
 
-    PTCOMA          shift and go to state 374
-
-
-state 340
-
-    (71) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam . PTCOMA
-
-    PTCOMA          shift and go to state 375
-
-
-state 341
-
-    (130) TIPO_DATO_DEF -> DECIMAL PAR_A ENTERO COMA . ENTERO PAR_C
-
-    ENTERO          shift and go to state 376
+    PTCOMA          shift and go to state 376
 
 
 state 342
 
-    (131) TIPO_DATO_DEF -> NUMERIC PAR_A ENTERO COMA . ENTERO PAR_C
+    (71) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam . PTCOMA
 
-    ENTERO          shift and go to state 377
+    PTCOMA          shift and go to state 377
 
 
 state 343
+
+    (130) TIPO_DATO_DEF -> DECIMAL PAR_A ENTERO COMA . ENTERO PAR_C
+
+    ENTERO          shift and go to state 378
+
+
+state 344
+
+    (131) TIPO_DATO_DEF -> NUMERIC PAR_A ENTERO COMA . ENTERO PAR_C
+
+    ENTERO          shift and go to state 379
+
+
+state 345
 
     (135) TIPO_DATO_DEF -> INTERVAL extract_time TO extract_time .
 
@@ -4916,14 +4948,14 @@ state 343
     COMA            reduce using rule 135 (TIPO_DATO_DEF -> INTERVAL extract_time TO extract_time .)
 
 
-state 344
+state 346
 
     (140) TIPO_DATO_DEF -> CHARACTER VARYING PAR_A ENTERO . PAR_C
 
-    PAR_C           shift and go to state 378
+    PAR_C           shift and go to state 380
 
 
-state 345
+state 347
 
     (143) TIPO_DATO_DEF -> CHARACTER PAR_A ENTERO PAR_C .
 
@@ -4935,7 +4967,7 @@ state 345
     COMA            reduce using rule 143 (TIPO_DATO_DEF -> CHARACTER PAR_A ENTERO PAR_C .)
 
 
-state 346
+state 348
 
     (141) TIPO_DATO_DEF -> VARCHAR PAR_A ENTERO PAR_C .
 
@@ -4947,7 +4979,7 @@ state 346
     COMA            reduce using rule 141 (TIPO_DATO_DEF -> VARCHAR PAR_A ENTERO PAR_C .)
 
 
-state 347
+state 349
 
     (142) TIPO_DATO_DEF -> CHAR PAR_A ENTERO PAR_C .
 
@@ -4959,14 +4991,14 @@ state 347
     COMA            reduce using rule 142 (TIPO_DATO_DEF -> CHAR PAR_A ENTERO PAR_C .)
 
 
-state 348
+state 350
 
     (86) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS PAR_A ID . PAR_C PTCOMA
 
-    PAR_C           shift and go to state 379
+    PAR_C           shift and go to state 381
 
 
-state 349
+state 351
 
     (94) cuerpo_createTable -> PRIMARY KEY PAR_A ID PAR_C .
 
@@ -4974,37 +5006,37 @@ state 349
     COMA            reduce using rule 94 (cuerpo_createTable -> PRIMARY KEY PAR_A ID PAR_C .)
 
 
-state 350
+state 352
 
     (95) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C
 
-    REFERENCES      shift and go to state 380
-
-
-state 351
-
-    (80) constraint_esp -> CHECK PAR_A expresion_logica . PAR_C
-
-    PAR_C           shift and go to state 381
-
-
-state 352
-
-    (81) constraint_esp -> UNIQUE PAR_A campos_c . PAR_C
-    (83) campos_c -> campos_c . COMA ID
-
-    PAR_C           shift and go to state 382
-    COMA            shift and go to state 222
+    REFERENCES      shift and go to state 382
 
 
 state 353
 
-    (82) constraint_esp -> FOREING KEY PAR_A . ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (80) constraint_esp -> CHECK PAR_A expresion_logica . PAR_C
 
-    ID              shift and go to state 383
+    PAR_C           shift and go to state 383
 
 
 state 354
+
+    (81) constraint_esp -> UNIQUE PAR_A campos_c . PAR_C
+    (83) campos_c -> campos_c . COMA ID
+
+    PAR_C           shift and go to state 384
+    COMA            shift and go to state 224
+
+
+state 355
+
+    (82) constraint_esp -> FOREING KEY PAR_A . ID PAR_C REFERENCES ID PAR_A ID PAR_C
+
+    ID              shift and go to state 385
+
+
+state 356
 
     (37) Table_alter -> ALTER COLUMN ID SET NOT NULL .
 
@@ -5012,7 +5044,7 @@ state 354
     COMA            reduce using rule 37 (Table_alter -> ALTER COLUMN ID SET NOT NULL .)
 
 
-state 355
+state 357
 
     (24) alterTable_insrt -> ALTER TABLE ID RENAME COLUMN ID TO ID PTCOMA .
 
@@ -5026,21 +5058,21 @@ state 355
     $end            reduce using rule 24 (alterTable_insrt -> ALTER TABLE ID RENAME COLUMN ID TO ID PTCOMA .)
 
 
-state 356
+state 358
 
     (103) TIPO_DATO -> DECIMAL PAR_A ENTERO . COMA ENTERO PAR_C
 
-    COMA            shift and go to state 384
+    COMA            shift and go to state 386
 
 
-state 357
+state 359
 
     (104) TIPO_DATO -> NUMERIC PAR_A ENTERO . COMA ENTERO PAR_C
 
-    COMA            shift and go to state 385
+    COMA            shift and go to state 387
 
 
-state 358
+state 360
 
     (108) TIPO_DATO -> INTERVAL extract_time TO . extract_time
     (119) extract_time -> . YEAR
@@ -5050,30 +5082,30 @@ state 358
     (123) extract_time -> . MINUTE
     (124) extract_time -> . SECOND
 
-    YEAR            shift and go to state 197
-    DAY             shift and go to state 198
-    MONTH           shift and go to state 199
-    HOUR            shift and go to state 200
-    MINUTE          shift and go to state 201
-    SECOND          shift and go to state 202
+    YEAR            shift and go to state 199
+    DAY             shift and go to state 200
+    MONTH           shift and go to state 201
+    HOUR            shift and go to state 202
+    MINUTE          shift and go to state 203
+    SECOND          shift and go to state 204
 
-    extract_time                   shift and go to state 386
+    extract_time                   shift and go to state 388
 
-state 359
+state 361
 
     (113) TIPO_DATO -> CHARACTER VARYING PAR_A . ENTERO PAR_C
 
-    ENTERO          shift and go to state 387
+    ENTERO          shift and go to state 389
 
 
-state 360
+state 362
 
     (116) TIPO_DATO -> CHARACTER PAR_A ENTERO . PAR_C
 
-    PAR_C           shift and go to state 388
+    PAR_C           shift and go to state 390
 
 
-state 361
+state 363
 
     (118) TIPO_DATO -> CHARACTER PAR_A PAR_C .
 
@@ -5081,21 +5113,21 @@ state 361
     COMA            reduce using rule 118 (TIPO_DATO -> CHARACTER PAR_A PAR_C .)
 
 
-state 362
+state 364
 
     (114) TIPO_DATO -> VARCHAR PAR_A ENTERO . PAR_C
 
-    PAR_C           shift and go to state 389
+    PAR_C           shift and go to state 391
 
 
-state 363
+state 365
 
     (115) TIPO_DATO -> CHAR PAR_A ENTERO . PAR_C
 
-    PAR_C           shift and go to state 390
+    PAR_C           shift and go to state 392
 
 
-state 364
+state 366
 
     (117) TIPO_DATO -> CHAR PAR_A PAR_C .
 
@@ -5103,7 +5135,7 @@ state 364
     COMA            reduce using rule 117 (TIPO_DATO -> CHAR PAR_A PAR_C .)
 
 
-state 365
+state 367
 
     (29) alterTable_insrt -> ALTER TABLE ID ADD CHECK PAR_A expresion_logica PAR_C PTCOMA .
 
@@ -5117,70 +5149,70 @@ state 365
     $end            reduce using rule 29 (alterTable_insrt -> ALTER TABLE ID ADD CHECK PAR_A expresion_logica PAR_C PTCOMA .)
 
 
-state 366
+state 368
 
     (169) expresion_logica -> expresion_relacional AND expresion_relacional .
 
     PAR_C           reduce using rule 169 (expresion_logica -> expresion_relacional AND expresion_relacional .)
 
 
-state 367
+state 369
 
     (170) expresion_logica -> expresion_relacional OR expresion_relacional .
 
     PAR_C           reduce using rule 170 (expresion_logica -> expresion_relacional OR expresion_relacional .)
 
 
-state 368
+state 370
 
     (30) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A campos_c PAR_C . REFERENCES campos_c PTCOMA
 
-    REFERENCES      shift and go to state 391
+    REFERENCES      shift and go to state 393
 
 
-state 369
+state 371
 
     (31) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica . PAR_C PTCOMA
 
-    PAR_C           shift and go to state 392
+    PAR_C           shift and go to state 394
 
 
-state 370
+state 372
 
     (32) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c . PAR_C PTCOMA
     (83) campos_c -> campos_c . COMA ID
 
-    PAR_C           shift and go to state 393
-    COMA            shift and go to state 222
+    PAR_C           shift and go to state 395
+    COMA            shift and go to state 224
 
 
-state 371
+state 373
 
     (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A . campos_c PAR_C REFERENCES campos_c PTCOMA
     (83) campos_c -> . campos_c COMA ID
     (84) campos_c -> . ID
 
-    ID              shift and go to state 152
+    ID              shift and go to state 154
 
-    campos_c                       shift and go to state 394
+    campos_c                       shift and go to state 396
 
-state 372
+state 374
 
     (15) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos . PAR_C PTCOMA
     (20) lista_datos -> lista_datos . COMA expresion
 
-    PAR_C           shift and go to state 395
-    COMA            shift and go to state 269
+    PAR_C           shift and go to state 397
+    COMA            shift and go to state 271
 
 
-state 373
+state 375
 
     (16) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 396
+    PTCOMA          shift and go to state 398
 
 
-state 374
+state 376
 
     (63) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .
 
@@ -5194,7 +5226,7 @@ state 374
     $end            reduce using rule 63 (createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA .)
 
 
-state 375
+state 377
 
     (71) createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .
 
@@ -5208,21 +5240,21 @@ state 375
     $end            reduce using rule 71 (createDB_insrt -> CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA .)
 
 
-state 376
+state 378
 
     (130) TIPO_DATO_DEF -> DECIMAL PAR_A ENTERO COMA ENTERO . PAR_C
 
-    PAR_C           shift and go to state 397
+    PAR_C           shift and go to state 399
 
 
-state 377
+state 379
 
     (131) TIPO_DATO_DEF -> NUMERIC PAR_A ENTERO COMA ENTERO . PAR_C
 
-    PAR_C           shift and go to state 398
+    PAR_C           shift and go to state 400
 
 
-state 378
+state 380
 
     (140) TIPO_DATO_DEF -> CHARACTER VARYING PAR_A ENTERO PAR_C .
 
@@ -5234,21 +5266,21 @@ state 378
     COMA            reduce using rule 140 (TIPO_DATO_DEF -> CHARACTER VARYING PAR_A ENTERO PAR_C .)
 
 
-state 379
+state 381
 
     (86) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS PAR_A ID PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 399
+    PTCOMA          shift and go to state 401
 
 
-state 380
+state 382
 
     (95) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C
 
-    ID              shift and go to state 400
+    ID              shift and go to state 402
 
 
-state 381
+state 383
 
     (80) constraint_esp -> CHECK PAR_A expresion_logica PAR_C .
 
@@ -5256,7 +5288,7 @@ state 381
     COMA            reduce using rule 80 (constraint_esp -> CHECK PAR_A expresion_logica PAR_C .)
 
 
-state 382
+state 384
 
     (81) constraint_esp -> UNIQUE PAR_A campos_c PAR_C .
 
@@ -5264,28 +5296,28 @@ state 382
     COMA            reduce using rule 81 (constraint_esp -> UNIQUE PAR_A campos_c PAR_C .)
 
 
-state 383
+state 385
 
     (82) constraint_esp -> FOREING KEY PAR_A ID . PAR_C REFERENCES ID PAR_A ID PAR_C
 
-    PAR_C           shift and go to state 401
-
-
-state 384
-
-    (103) TIPO_DATO -> DECIMAL PAR_A ENTERO COMA . ENTERO PAR_C
-
-    ENTERO          shift and go to state 402
-
-
-state 385
-
-    (104) TIPO_DATO -> NUMERIC PAR_A ENTERO COMA . ENTERO PAR_C
-
-    ENTERO          shift and go to state 403
+    PAR_C           shift and go to state 403
 
 
 state 386
+
+    (103) TIPO_DATO -> DECIMAL PAR_A ENTERO COMA . ENTERO PAR_C
+
+    ENTERO          shift and go to state 404
+
+
+state 387
+
+    (104) TIPO_DATO -> NUMERIC PAR_A ENTERO COMA . ENTERO PAR_C
+
+    ENTERO          shift and go to state 405
+
+
+state 388
 
     (108) TIPO_DATO -> INTERVAL extract_time TO extract_time .
 
@@ -5293,14 +5325,14 @@ state 386
     COMA            reduce using rule 108 (TIPO_DATO -> INTERVAL extract_time TO extract_time .)
 
 
-state 387
+state 389
 
     (113) TIPO_DATO -> CHARACTER VARYING PAR_A ENTERO . PAR_C
 
-    PAR_C           shift and go to state 404
+    PAR_C           shift and go to state 406
 
 
-state 388
+state 390
 
     (116) TIPO_DATO -> CHARACTER PAR_A ENTERO PAR_C .
 
@@ -5308,7 +5340,7 @@ state 388
     COMA            reduce using rule 116 (TIPO_DATO -> CHARACTER PAR_A ENTERO PAR_C .)
 
 
-state 389
+state 391
 
     (114) TIPO_DATO -> VARCHAR PAR_A ENTERO PAR_C .
 
@@ -5316,7 +5348,7 @@ state 389
     COMA            reduce using rule 114 (TIPO_DATO -> VARCHAR PAR_A ENTERO PAR_C .)
 
 
-state 390
+state 392
 
     (115) TIPO_DATO -> CHAR PAR_A ENTERO PAR_C .
 
@@ -5324,47 +5356,47 @@ state 390
     COMA            reduce using rule 115 (TIPO_DATO -> CHAR PAR_A ENTERO PAR_C .)
 
 
-state 391
+state 393
 
     (30) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A campos_c PAR_C REFERENCES . campos_c PTCOMA
     (83) campos_c -> . campos_c COMA ID
     (84) campos_c -> . ID
 
-    ID              shift and go to state 152
+    ID              shift and go to state 154
 
-    campos_c                       shift and go to state 405
-
-state 392
-
-    (31) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C . PTCOMA
-
-    PTCOMA          shift and go to state 406
-
-
-state 393
-
-    (32) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C . PTCOMA
-
-    PTCOMA          shift and go to state 407
-
+    campos_c                       shift and go to state 407
 
 state 394
 
-    (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A campos_c . PAR_C REFERENCES campos_c PTCOMA
-    (83) campos_c -> campos_c . COMA ID
+    (31) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C . PTCOMA
 
-    PAR_C           shift and go to state 408
-    COMA            shift and go to state 222
+    PTCOMA          shift and go to state 408
 
 
 state 395
 
-    (15) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C . PTCOMA
+    (32) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C . PTCOMA
 
     PTCOMA          shift and go to state 409
 
 
 state 396
+
+    (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A campos_c . PAR_C REFERENCES campos_c PTCOMA
+    (83) campos_c -> campos_c . COMA ID
+
+    PAR_C           shift and go to state 410
+    COMA            shift and go to state 224
+
+
+state 397
+
+    (15) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C . PTCOMA
+
+    PTCOMA          shift and go to state 411
+
+
+state 398
 
     (16) insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .
 
@@ -5378,7 +5410,7 @@ state 396
     $end            reduce using rule 16 (insert_insrt -> INSERT INTO ID PAR_A PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .)
 
 
-state 397
+state 399
 
     (130) TIPO_DATO_DEF -> DECIMAL PAR_A ENTERO COMA ENTERO PAR_C .
 
@@ -5390,7 +5422,7 @@ state 397
     COMA            reduce using rule 130 (TIPO_DATO_DEF -> DECIMAL PAR_A ENTERO COMA ENTERO PAR_C .)
 
 
-state 398
+state 400
 
     (131) TIPO_DATO_DEF -> NUMERIC PAR_A ENTERO COMA ENTERO PAR_C .
 
@@ -5402,7 +5434,7 @@ state 398
     COMA            reduce using rule 131 (TIPO_DATO_DEF -> NUMERIC PAR_A ENTERO COMA ENTERO PAR_C .)
 
 
-state 399
+state 401
 
     (86) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS PAR_A ID PAR_C PTCOMA .
 
@@ -5416,35 +5448,35 @@ state 399
     $end            reduce using rule 86 (create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS PAR_A ID PAR_C PTCOMA .)
 
 
-state 400
+state 402
 
     (95) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C
 
-    PAR_A           shift and go to state 410
-
-
-state 401
-
-    (82) constraint_esp -> FOREING KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C
-
-    REFERENCES      shift and go to state 411
-
-
-state 402
-
-    (103) TIPO_DATO -> DECIMAL PAR_A ENTERO COMA ENTERO . PAR_C
-
-    PAR_C           shift and go to state 412
+    PAR_A           shift and go to state 412
 
 
 state 403
 
-    (104) TIPO_DATO -> NUMERIC PAR_A ENTERO COMA ENTERO . PAR_C
+    (82) constraint_esp -> FOREING KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C
 
-    PAR_C           shift and go to state 413
+    REFERENCES      shift and go to state 413
 
 
 state 404
+
+    (103) TIPO_DATO -> DECIMAL PAR_A ENTERO COMA ENTERO . PAR_C
+
+    PAR_C           shift and go to state 414
+
+
+state 405
+
+    (104) TIPO_DATO -> NUMERIC PAR_A ENTERO COMA ENTERO . PAR_C
+
+    PAR_C           shift and go to state 415
+
+
+state 406
 
     (113) TIPO_DATO -> CHARACTER VARYING PAR_A ENTERO PAR_C .
 
@@ -5452,16 +5484,16 @@ state 404
     COMA            reduce using rule 113 (TIPO_DATO -> CHARACTER VARYING PAR_A ENTERO PAR_C .)
 
 
-state 405
+state 407
 
     (30) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c . PTCOMA
     (83) campos_c -> campos_c . COMA ID
 
-    PTCOMA          shift and go to state 414
-    COMA            shift and go to state 222
+    PTCOMA          shift and go to state 416
+    COMA            shift and go to state 224
 
 
-state 406
+state 408
 
     (31) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C PTCOMA .
 
@@ -5475,7 +5507,7 @@ state 406
     $end            reduce using rule 31 (alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C PTCOMA .)
 
 
-state 407
+state 409
 
     (32) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C PTCOMA .
 
@@ -5489,14 +5521,14 @@ state 407
     $end            reduce using rule 32 (alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C PTCOMA .)
 
 
-state 408
+state 410
 
     (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A campos_c PAR_C . REFERENCES campos_c PTCOMA
 
-    REFERENCES      shift and go to state 415
+    REFERENCES      shift and go to state 417
 
 
-state 409
+state 411
 
     (15) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .
 
@@ -5510,21 +5542,21 @@ state 409
     $end            reduce using rule 15 (insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .)
 
 
-state 410
+state 412
 
     (95) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C
 
-    ID              shift and go to state 416
+    ID              shift and go to state 418
 
 
-state 411
+state 413
 
     (82) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C
 
-    ID              shift and go to state 417
+    ID              shift and go to state 419
 
 
-state 412
+state 414
 
     (103) TIPO_DATO -> DECIMAL PAR_A ENTERO COMA ENTERO PAR_C .
 
@@ -5532,7 +5564,7 @@ state 412
     COMA            reduce using rule 103 (TIPO_DATO -> DECIMAL PAR_A ENTERO COMA ENTERO PAR_C .)
 
 
-state 413
+state 415
 
     (104) TIPO_DATO -> NUMERIC PAR_A ENTERO COMA ENTERO PAR_C .
 
@@ -5540,7 +5572,7 @@ state 413
     COMA            reduce using rule 104 (TIPO_DATO -> NUMERIC PAR_A ENTERO COMA ENTERO PAR_C .)
 
 
-state 414
+state 416
 
     (30) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA .
 
@@ -5554,40 +5586,40 @@ state 414
     $end            reduce using rule 30 (alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA .)
 
 
-state 415
+state 417
 
     (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A campos_c PAR_C REFERENCES . campos_c PTCOMA
     (83) campos_c -> . campos_c COMA ID
     (84) campos_c -> . ID
 
-    ID              shift and go to state 152
+    ID              shift and go to state 154
 
-    campos_c                       shift and go to state 418
+    campos_c                       shift and go to state 420
 
-state 416
+state 418
 
     (95) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C
 
-    PAR_C           shift and go to state 419
+    PAR_C           shift and go to state 421
 
 
-state 417
+state 419
 
     (82) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C
 
-    PAR_A           shift and go to state 420
+    PAR_A           shift and go to state 422
 
 
-state 418
+state 420
 
     (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c . PTCOMA
     (83) campos_c -> campos_c . COMA ID
 
-    PTCOMA          shift and go to state 421
-    COMA            shift and go to state 222
+    PTCOMA          shift and go to state 423
+    COMA            shift and go to state 224
 
 
-state 419
+state 421
 
     (95) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .
 
@@ -5595,14 +5627,14 @@ state 419
     COMA            reduce using rule 95 (cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
 
 
-state 420
+state 422
 
     (82) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C
 
-    ID              shift and go to state 422
+    ID              shift and go to state 424
 
 
-state 421
+state 423
 
     (33) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA .
 
@@ -5616,14 +5648,14 @@ state 421
     $end            reduce using rule 33 (alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA .)
 
 
-state 422
+state 424
 
     (82) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C
 
-    PAR_C           shift and go to state 423
+    PAR_C           shift and go to state 425
 
 
-state 423
+state 425
 
     (82) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .
 

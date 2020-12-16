@@ -47,6 +47,6 @@ alter table Estudiante7 alter column alumno5 type varchar(30);
 insert into Prueba(hola,carlos) values('hola','carro');
 
 
-insert into Prueba() values('hola','mario');
+insert into Prueba values('hola','mario');
 
 insert into Prueba(hola,carlos) values('hola','mario');
