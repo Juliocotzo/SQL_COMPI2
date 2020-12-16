@@ -923,7 +923,6 @@ def p_createTable_combs2(t):
     ' createTable_options : cT_options'
     t[0] = [t[1]]
 
-
 def p_cT_options(t):
     ''' cT_options : N_null
                 | C_unique
