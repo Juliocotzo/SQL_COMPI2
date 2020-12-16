@@ -389,8 +389,78 @@ def p_instruccion(t) :
                         | update_insrt
                         | drop_insrt
                         | alterTable_insrt
-                        | insert_insrt'''
+                        | insert_insrt
+                        | TIPO_ENUM_INSRT
+                        | delete_insrt'''
     t[0] = t[1]
+
+#--------------------------------------------------------------
+' ---------- GRAMATICA PARA LA INSTRUCCION DELETE --------'
+#--------------------------------------------------------------
+
+def p_delete_insrt_delete(t):
+    ' delete_insrt : DELETE FROM ID PTCOMA'
+    t[0] = Definicion_delete(t[3], TIPO_DELETE.DELETE_NORMAL, None, None, None)
+def p_delete_insrt(t):
+    ' delete_insrt : DELETE FROM ONLY ID PTCOMA'
+    t[0] = Definicion_delete(t[4], TIPO_DELETE.DELETE_NORMAL, None, None, None)
+def p_delete_insert2(t):
+    ' delete_insrt : DELETE FROM ONLY ID RETURNING returning_exp PTCOMA'
+    t[0] = Definicion_delete(t[4], TIPO_DELETE.DELETE_RETURNING , None, None,t[6])
+def p_delete_insrt3(t):
+    ' delete_insrt : DELETE FROM ID WHERE EXISTS expresion_logica PTCOMA '
+    t[0] = Definicion_delete(t[3], TIPO_DELETE.DELETE_EXIST ,t[6],None,None)
+def p_delete_insrt4(t):
+    ' delete_insrt : DELETE FROM ID WHERE EXISTS expresion_logica RETURNING returning_exp PTCOMA '
+    t[0] = Definicion_delete(t[3], TIPO_DELETE.DELETE_EXIST_RETURNING, t[6], None, t[8])
+
+def p_delete_insrt5(t):
+    ' delete_insrt : DELETE FROM ID WHERE expresion_logica PTCOMA ' 
+    t[0] = Definicion_delete(t[3], TIPO_DELETE.DELETE_EXIST,t[5],None,None)
+def p_delete_insrt6(t):
+    ' delete_insrt : DELETE FROM ID WHERE expresion_logica RETURNING returning_exp PTCOMA'
+    t[0] = Definicion_delete(t[3], TIPO_DELETE.DELETE_EXIST_RETURNING, t[5], None, t[7])
+
+def p_delete_insrt7(t):
+    ' delete_insrt : DELETE FROM ID RETURNING returning_exp PTCOMA '
+    t[0] = Definicion_delete(t[3], TIPO_DELETE.DELETE_RETURNING, None, None, t[5])
+
+def p_delete_insrt8(t):
+    ' delete_insrt : DELETE FROM ID USING ID WHERE EXISTS expresion_logica PTCOMA '
+    t[0] = Definicion_delete(t[3], TIPO_DELETE.DELETE_USING, t[8],t[5],None)
+
+def p_delete_insrt9(t):
+    ' delete_insrt : DELETE FROM ID USING ID WHERE EXISTS expresion_logica RETURNING returning_exp PTCOMA '
+    t[0] = Definicion_delete(t[3], TIPO_DELETE.DELETE_USING_returnin,t[8],t[5],t[10])
+
+def p_delete_insrt10(t):
+    ' delete_insrt : DELETE FROM ID USING ID WHERE expresion_logica PTCOMA '
+    t[0] = Definicion_delete(t[3], TIPO_DELETE.DELETE_USING, t[7],t[5],None )
+
+
+def p_returning_exp(t):
+    ''' returning_exp : ASTERISCO 
+                      | campos_c'''
+    t[0] = t[1]
+
+
+
+#--------------------------------------------------------------
+'----------- GRAMATICA PARA LA INSTRUCCION ENUM ---------'
+#--------------------------------------------------------------
+
+def p_Create_Type_Enum(t):
+    ' TIPO_ENUM_INSRT : CREATE TYPE ID AS ENUM PAR_A lista_datos_enum PAR_C PTCOMA'
+    t[0] = Create_type(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),t[7])
+
+def p_parametros_lista_datos_(t):
+    ' lista_datos_enum : lista_datos_enum COMA CADENA'
+    t[1].append(ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[3]))
+    t[0] = t[1]
+
+def p_expresion_lista_(t):
+    ' lista_datos_enum : CADENA '
+    t[0] = [ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[1])]
 
 
 #--------------------------------------------------------------

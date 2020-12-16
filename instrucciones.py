@@ -123,3 +123,16 @@ class Definicion_Insert(Instruccion):
         self.etiqueta = etiqueta
         self.lista_parametros = lista_parametros
         self.lista_datos = lista_datos
+
+class Create_type(Instruccion):
+    def __init__(self,identificador,lista_datos = []):
+        self.identificador = identificador
+        self.lista_datos = lista_datos
+
+class Definicion_delete(Instruccion):
+    def __init__(self, id, etiqueta, expresion, id_using, returning = []):
+        self.id = id
+        self.etiqueta = etiqueta
+        self.expresion = expresion
+        self.id_using = id_using
+        self.returning = returning

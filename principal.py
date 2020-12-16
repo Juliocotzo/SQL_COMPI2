@@ -351,6 +351,62 @@ def procesar_insert(instr,ts,tc):
             for parametros in instr.lista_datos:
                 print(parametros.val)
 
+#Enum
+def procesar_create_type(instr,ts,tc):
+    
+    print("TYPE------------------------------")
+    print(instr.identificador.id)
+    if instr.lista_datos != []:
+        for datos in instr.lista_datos:
+            print(datos.val)
+
+#delete
+def procesar_delete(instr,ts,tc):
+    if instr.etiqueta == TIPO_DELETE.DELETE_NORMAL:
+        print(instr.id)
+
+    elif instr.etiqueta == TIPO_DELETE.DELETE_RETURNING:
+        print(instr.id)
+        if instr.returning != []:
+            for retornos in instr.returning:
+                print(retornos.etiqueta)
+
+    elif instr.etiqueta == TIPO_DELETE.DELETE_EXIST:    
+        if instr.expresion.operador == OPERACION_RELACIONAL.MAYQUE:
+            if instr.expresion.exp1.etiqueta == TIPO_VALOR.IDENTIFICADOR and instr.expresion.exp2.etiqueta ==  TIPO_VALOR.NUMERO:
+                print(instr.expresion.exp1.id)
+                print(instr.expresion.exp2.val)            
+
+   
+    elif instr.etiqueta == TIPO_DELETE.DELETE_EXIST_RETURNING:
+        
+        print(instr.id)
+
+        if instr.expresion.operador == OPERACION_RELACIONAL.MAYQUE:
+            if instr.expresion.exp1.etiqueta == TIPO_VALOR.IDENTIFICADOR and instr.expresion.exp2.etiqueta ==  TIPO_VALOR.NUMERO:
+                print(instr.expresion.exp1.id)
+                print(instr.expresion.exp2.val)
+
+        if instr.returning != []:
+            for retornos in instr.returning:
+                print(retornos.etiqueta)
+
+        
+    elif instr.etiqueta == TIPO_DELETE.DELETE_CONDIFION:
+        print(instr.id, instr.expresion)
+    
+    elif instr.etiqueta == TIPO_DELETE.DELETE_CONDICION_RETURNING:
+        if instr.returning != []:
+            for retornos in instr.returning:
+                print(instr.id,instr.expresion, retornos.id)
+
+    elif instr.etiqueta == TIPO_DELETE.DELETE_USING:
+        print(instr.id, instr.id_using, instr.expresion)
+
+    elif instr.etiqueta == TIPO_DELETE.DELETE_USING_returnin:
+        if instr.returning != []:
+            for retornos in instr.returning:
+                print(instr.id,instr.id_using,instr.expresion)
 
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
@@ -390,9 +446,14 @@ def procesar_instrucciones(instrucciones,ts,tc) :
             elif isinstance(instr, Crear_Drop) : 
                 procesar_drop(instr,ts,tc)
             elif isinstance(instr, Crear_altertable) :
-                 procesar_altertable(instr,ts,tc)
+                procesar_altertable(instr,ts,tc)
             elif isinstance(instr, Definicion_Insert) :
-                 procesar_insert(instr,ts,tc)
+                procesar_insert(instr,ts,tc)
+            elif isinstance(instr, Create_type) :
+                procesar_create_type(instr,ts,tc)
+            elif isinstance(instr, Definicion_delete) :
+                procesar_delete(instr,ts,tc)
+            
             
             else : print('Error: instrucción no válida ' + str(instr))
         return salida 

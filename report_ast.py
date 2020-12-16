@@ -46,6 +46,10 @@ class AST:
                 self.crearNodoAlterTable("node2",instruccion)
             elif isinstance(instruccion, Definicion_Insert):
                 self.crearNodoInsert("node2",instruccion)
+            elif isinstance(instruccion, Create_type):
+                self.crearNodoEnum("node2",instruccion)
+            elif isinstance(instruccion, Definicion_delete):
+                self.crearNodoDelete("node2",instruccion)
             indice = indice +1
         dot.view('reportes/AST', cleanup=True)
 
@@ -781,6 +785,245 @@ class AST:
             for parametros in instruccion.lista_datos:
                  self.crearNodoExpresion(temp1,parametros.val)
         
+
+    #ENUM TYPE
+    def crearNodoEnum(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Enum')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1,instruccion.identificador.id)
+        self.crearNodoEnum_lista(temp1,instruccion)
+
+    def crearNodoEnum_lista(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Lista_parametros')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        if instruccion.lista_datos != []:
+            for datos in instruccion.lista_datos:
+                self.crearNodoExpresion(temp1,datos.val)
+
+    def crearNodoDelete(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'DELETE')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        if instruccion.etiqueta == TIPO_DELETE.DELETE_NORMAL:
+            self.crearNodoDelete_Normal(temp1, instruccion) 
+        elif instruccion.etiqueta == TIPO_DELETE.DELETE_RETURNING:
+            self.crearNodoDelete_returning(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_DELETE.DELETE_EXIST:
+            self.crearNodoExpresion(temp1,instruccion.id)
+            self.crearNodoWhereDelete(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_DELETE.DELETE_EXIST_RETURNING:
+            self.Nombre_existes_returning(temp1, instruccion)
+            self.crearNodoDelete_returning(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_DELETE.DELETE_USING:
+            self.crearNodoExpresion(temp1, instruccion.id)
+            self.crearNodO_USING(temp1, instruccion)
+            self.crearNodoWhereDelete(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_DELETE.DELETE_USING_returnin:
+            self.crearNodoExpresion(temp1, instruccion.id)
+            self.crearNodO_USING(temp1, instruccion)
+            self.crearNodoWhereDelete(temp1, instruccion)
+
+    def crearNodO_USING(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'USING')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)    
+        self.crearNodoExpresion(temp1, instruccion.id_using)
+
+    def crearNodoDelete_Normal(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'DELETE NORMAL')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)    
+        if instruccion.etiqueta == TIPO_DELETE.DELETE_NORMAL:
+            self.crearNodoExpresion(temp1,instruccion.id)
+
+    def crearNodoDelete_returning(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'DELETE_RETURNING')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)  
+        
+        if instruccion.etiqueta == TIPO_DELETE.DELETE_RETURNING:
+            self.crearNodoExpresion(temp1, instruccion.id)
+            self.NombreTabla_returning(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_DELETE.DELETE_USING_returnin:
+            self.NombreTabla_returning(temp1, instruccion)
+
+
+    def crearNodoWhereDelete(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'WHERE')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos) 
+
+
+        print(instruccion.etiqueta)
+
+        if instruccion.etiqueta == TIPO_DELETE.DELETE_EXIST:
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MAYQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MENQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MAYIGQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MENIGQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.DOBLEIGUAL:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.NOIG:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.DIFERENTE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.IGUAL:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+
+        elif instruccion.etiqueta == TIPO_DELETE.DELETE_USING:
+            
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MAYQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MENQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MAYIGQUE:
+                self.Valores1(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MENIGQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.DOBLEIGUAL:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.NOIG:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.DIFERENTE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.IGUAL:
+                self.Valores1Delete(temp1, instruccion)
+                self.operadorDelete(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+
+        elif instruccion.etiqueta == TIPO_DELETE.DELETE_USING_returnin:
+            
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MAYQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MENQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MAYIGQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.MENIGQUE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.DOBLEIGUAL:
+                self.Valores1Delete(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.NOIG:
+                self.Valores1Delete(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.DIFERENTE:
+                self.Valores1Delete(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+            if instruccion.expresion.operador == OPERACION_RELACIONAL.IGUAL:
+                self.Valores1Delete(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2Delete(temp1, instruccion)
+
+    def Nombre_existes_returning(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'DATOS DELETE RETURNING')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)  
+
+        if instruccion.etiqueta == TIPO_DELETE.DELETE_EXIST_RETURNING:
+            self.crearNodoExpresion(temp1, instruccion.id)
+            self.NombreTabla_returning(temp1, instruccion)
+
+    def NombreTabla_returning(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'DATOS DELETE RETURNING')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)                
+
+        if instruccion.etiqueta == TIPO_DELETE.DELETE_RETURNING:
+            if instruccion.returning != []:
+                    for retornos in instruccion.returning:
+                        self.crearNodoExpresion(temp1, retornos.etiqueta)
+
+    def operadorDelete(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Operador')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1, instruccion.expresion.operador)      
+
+    def Valores1Delete(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'expresion 1')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos) 
+        if instruccion.expresion.exp1.etiqueta == TIPO_VALOR.IDENTIFICADOR:
+            self.crearNodoExpresion(temp1,instruccion.expresion.exp1.id)
+
+    def Valores2Delete(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'expresion 2')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        if instruccion.expresion.exp2.etiqueta == TIPO_VALOR.NUMERO:
+            self.crearNodoExpresion(temp1, instruccion.expresion.exp2.val)   
 
 
 

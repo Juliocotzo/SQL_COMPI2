@@ -90,6 +90,16 @@ class TIPO_ALTER_TABLE(Enum):
     ADD_CONSTRAINT_FOREIGN = 8
     ALTER_COLUMN = 9
 
+class TIPO_DELETE(Enum):
+    DELETE_NORMAL = 1
+    DELETE_RETURNING = 2
+    DELETE_EXIST = 3
+    DELETE_CONDIFION = 4
+    DELETE_USING = 5
+    DELETE_EXIST_RETURNING = 6
+    DELETE_CONDICION_RETURNING = 7
+    DELETE_USING_returnin = 8
+
 class ExpresionNumerica:
     '''
         Esta clase representa una expresión numérica
