@@ -24,6 +24,7 @@ class OPERACION_ARITMETICA(Enum):
 class TIPO_VALOR(Enum):
     IDENTIFICADOR = 1
     NUMERO = 2
+    CADENA = 3
 
 class ExpresionNumerica:
     '''

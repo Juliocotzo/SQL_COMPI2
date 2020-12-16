@@ -68,6 +68,7 @@ class TIPO_DE_DATOS(Enum):
 class TIPO_VALOR(Enum):
     IDENTIFICADOR = 1
     NUMERO = 2
+    CADENA = 3
 
 class ExpresionNumerica:
     '''

@@ -425,7 +425,7 @@ def p_agrupacion_expresion(t):
 
 def p_expresion_cadena(t):
     'expresion : CADENA'
-    t[0] = ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[1])
+    t[0] = ExpresionComillaSimple(TIPO_VALOR.CADENA,t[1])
 
 
 def p_expresion1(t):
