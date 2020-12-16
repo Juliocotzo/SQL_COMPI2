@@ -29,7 +29,7 @@ ALTER DATABASE prueba2 RENAME TO compiladores2;
 
 drop table autos,banco,flaco;
 
-alter table Estudiante add check (Prueba < 4);
+alter table Estudiante add check (Prueba < 4 and Grupo < 'Bueno');
 
 alter table Estudiante2 add foreign key (hola, juan) references prueba;
 

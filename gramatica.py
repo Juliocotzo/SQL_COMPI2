@@ -531,7 +531,7 @@ def p_usuarioDB3(t):
     t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
 def p_usuarioDB4(t):
     ' usuariosDB : CADENA '
-    t[0] = ExpresionComillaSimple(t[1])
+    t[0] = ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[1])
 
 #---------------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION DROP DATABASES------------'

@@ -241,7 +241,7 @@ def procesar_drop(instr,ts,tc):
 def procesar_altertable(instr,ts,tc):
     print(instr.etiqueta)
     if instr.etiqueta == TIPO_ALTER_TABLE.ADD_CHECK:
-        if instr.expresionlogica.operador == TIPO_LOGICA.AND or instr.expresionlogica.operador == TIPO_LOGICA.OR: 
+        if instr.expresionlogica.operador == OPERACION_LOGICA.AND or instr.expresionlogica.operador == OPERACION_LOGICA.OR: 
             print(instr.identificador)
             print(instr.expresionlogica.exp1.exp1.id)
             print(instr.expresionlogica.exp1.exp2.val)

@@ -635,7 +635,8 @@ class AST:
         dot.node("node" + str(contadorNodos), 'Condicion')
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)
-        if instruccion.expresionlogica.operador == TIPO_LOGICA.AND or instruccion.expresionlogica.operador == TIPO_LOGICA.OR: 
+        print(instruccion.expresionlogica.operador)
+        if instruccion.expresionlogica.operador == OPERACION_LOGICA.AND or instruccion.expresionlogica.operador == OPERACION_LOGICA.OR: 
             self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp1.exp1.id)
             self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp1.exp2.val)
             self.crearNodoExpresion(temp1,instruccion.expresionlogica.operador)
