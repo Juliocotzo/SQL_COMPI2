@@ -38,8 +38,13 @@ class AST:
                 self.crearNodo_alterDatabase("node2", instruccion)
             elif isinstance(instruccion, showTables):
                 self.crearNodoshowTables("node2", instruccion)
+            elif isinstance(instruccion, Crear_Drop):
+                self.crearNodoDropTable("node2",instruccion)
             indice = indice +1
         dot.view('reportes/AST', cleanup=True)
+
+
+    
 
     def crearNodoCreateDatabase(self, padre, instruccion):
         global  contadorNodos, dot
@@ -468,3 +473,22 @@ class AST:
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)
         self.crearNodoExpresion(temp1,instruccion.tipo_id)
+
+    def crearNodoDropTable(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'DROP_TABLE')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.Crear_lista_parametros(temp1,instruccion)
+        
+
+    def Crear_lista_parametros(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Tablas')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        if instruccion.lista_ids != []:
+            for datos in instruccion.lista_ids:
+                self.crearNodoExpresion(temp1,datos.id)

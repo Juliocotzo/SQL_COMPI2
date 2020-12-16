@@ -84,3 +84,7 @@ class Create_Alterdatabase(Instruccion):
 class showTables(Instruccion):
     def __init__(self):
         ''' SHOW DATABASES'''
+
+class Crear_Drop(Instruccion):
+    def __init__(self, lista_ids = []):
+        self.lista_ids = lista_ids

@@ -1,5 +1,9 @@
 from enum import Enum
 
+class TIPO_VALOR(Enum):
+    IDENTIFICADOR = 1
+    NUMERO = 2
+
 class OPCIONESCREATE_TABLE(Enum):
     PRIMARIA = 1
     FORANEA = 2
@@ -91,7 +95,8 @@ class ExpresionBinaria(ExpresionNumerica) :
         self.operador = operador
 
 class ExpresionIdentificador(ExpresionNumerica) :
-    def __init__(self, id = "") :
+    def __init__(self, etiqueta ,id = "") :
+        self.etiqueta = etiqueta
         self.id = id
 
 class ExpresionIdentificadorDoble(ExpresionNumerica) :

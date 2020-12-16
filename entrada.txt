@@ -26,3 +26,5 @@ CREATE TABLE usuario1(
 );
 
 ALTER DATABASE prueba2 RENAME TO compiladores2;
+
+drop table autos,banco,flaco;

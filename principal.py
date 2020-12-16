@@ -231,6 +231,12 @@ def procesar_alterdatabase(instr,ts,tc):
         elif result == 3 :
             salida = "\nERROR:  database \"" + str(instr.tipo_id) +"\" alredy exists\nSQL state: 42P04"
 
+def procesar_drop(instr,ts,tc):
+    if instr.lista_ids != []:
+        for datos in instr.lista_ids:
+            print(datos.id)
+
+
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
         global salida,useCurrentDatabase
@@ -264,13 +270,14 @@ def procesar_instrucciones(instrucciones,ts,tc) :
                     procesar_showTables(instr,ts,tc)
                 else:
                     salida = "\nSELECT DATABASE"
-            
+            elif isinstance(instr, Crear_Drop) : 
+                procesar_drop(instr,ts,tc)
             else : print('Error: instrucción no válida ' + str(instr))
         return salida 
     except:
         pass
 
-'''f = open("./entrada.txt", "r")
+f = open("./entrada.txt", "r")
 input = f.read()
 listaErrores = []
 instrucciones = g.parse(input)
@@ -283,5 +290,6 @@ erroressss.crearReporte()
 typeC = TipeChecker()
 typeC.crearReporte(tc_global)
 typeS = RTablaDeSimbolos()
-typeS.crearReporte(ts_global)'''
-
+typeS.crearReporte(ts_global)
+astG = AST()
+astG.generarAST(instrucciones)
