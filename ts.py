@@ -28,10 +28,10 @@ class TablaDeSimbolos() :
                 return self.simbolos[i]
             i += 1
 
-    def actualizarDB(self, simbolo, tabla) :
+    def actualizarDB(self, simbolo, idDB) :
         i = 0
         while i < len(self.simbolos):
-            if self.simbolos[i].id == tabla:
+            if self.simbolos[i].id == idDB:
                 self.simbolos[i] = simbolo
             i += 1
 

@@ -1,21 +1,24 @@
 import ts as TS
 ts_global = TS.TablaDeSimbolos()
 ts1 = TS.Simbolo('Compi2','Database',0,None)
-ts2 = TS.Simbolo('Compi3','Database',0,None)
 ts3 = TS.Simbolo('Usuario','Tabla',4,'Compi2')
 ts4 = TS.Simbolo('Usuario3','Tabla',4,'Compi2')
 ts5 = TS.Simbolo('usuarioNull','Constraint',0,'Usuario')
 
 ts_global.agregar(ts1)
-ts_global.agregar(ts2)
 ts_global.agregar(ts3)
 ts_global.agregar(ts4)
 ts_global.agregar(ts5)
 
-ts3 = TS.Simbolo('Compi4','Database',0,None)
+tspp = ts_global.obtener('Compi2',None)
+tsss = TS.Simbolo('Compiladores2',tspp.tipo,tspp.valor,tspp.ambito)
+ts_global.actualizarDB(tsss,tspp.id)
+ts_global.actualizarDBTable(tspp.id,tsss.id)
+
+'''ts3 = TS.Simbolo('Compi4','Database',0,None)
 ts_global.actualizarDB(ts3,'Compi2')
 
-ts_global.actualizarDBTable('Compi2','Compi3')
+ts_global.actualizarDBTable('Compi2','Compi3')'''
 '''
 #print(ts_global.obtenerDb('Compi2'))
 

@@ -4,19 +4,25 @@ CREATE DATABASE prueba2;
 USE prueba1;
 
 CREATE TABLE usuario(
-    id_usuario INTEGER
+    id_usuario INTEGER,
+    constraint unicos UNIQUE(id_usuario)
 );
 
 CREATE TABLE usuario1(
-    id_usuario INTEGER
+    id_usuario INTEGER,
+    constraint unicos UNIQUE(id_usuario)
 );
 
 USE prueba2;
 
 CREATE TABLE usuario(
-    id_usuario INTEGER
+    id_usuario INTEGER,
+    constraint unicos UNIQUE(id_usuario)
 );
 
 CREATE TABLE usuario1(
-    id_usuario INTEGER
+    id_usuario INTEGER,
+    constraint unicos UNIQUE(id_usuario)
 );
+
+ALTER DATABASE prueba2 RENAME TO compiladores2;

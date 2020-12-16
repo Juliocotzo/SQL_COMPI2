@@ -67,16 +67,23 @@ def procesar_Foranea(instr,ts,tc,tabla):
 def procesar_constraint(instr,ts,tc,tabla):
     if instr.tipo == 'UNIQUE':
         if instr.opciones_constraint != []:
+            
+            temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+            ts.agregar(temp)
             for ids in instr.opciones_constraint:
                 tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,None,OPCIONESCREATE_TABLE.UNIQUE,None,None)
                 tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.id,OPCIONESCREATE_TABLE.UNIQUE)
     elif instr.tipo == 'FOREING':
         if instr.opciones_constraint != []:
+            temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+            ts.agregar(temp)
             for ids in instr.opciones_constraint:
                 tipo = TC.Tipo(useCurrentDatabase,tabla,instr.columna,None,OPCIONESCREATE_TABLE.FORANEA,ids,instr.referencia)
                 tc.actualizarLlaveForanea(tipo,useCurrentDatabase,tabla,instr.columna,OPCIONESCREATE_TABLE.FORANEA,instr.referencia,ids)
     elif instr.tipo == 'CHECK':
         if instr.opciones_constraint != []:
+            temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+            ts.agregar(temp)
             for ids in instr.opciones_constraint:
                 if type(ids.exp1) == ExpresionIdentificador:
                     tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp1.id,None,OPCIONES_CONSTRAINT.CHECK,None,None)
@@ -120,14 +127,14 @@ def procesar_createDatabase(instr,ts,tc) :
         elif result1 == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
     else:
-        result = j.createDatabase(str(instr.nombre.id))
-        if result == 0:
+        result1 = j.createDatabase(str(instr.nombre.id))
+        if result1 == 0:
             salida = "\nCREATE DATABASE"
             temp1 = TS.Simbolo(instr.nombre.id,'Database',0,"")
             ts.agregar(temp1)
-        elif result == 1 :
+        elif result1 == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
-        elif result == 2 :
+        elif result1 == 2 :
             salida = "\nERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 "
 
 def procesar_showDatabases(instr,ts,tc):
@@ -165,6 +172,7 @@ def procesar_dropDatabase(instr,ts,tc):
         if result == 0:
             global salida
             salida = "\nDROP DATABASE"
+            ts.deleteDatabase(instr.id.id)
         elif result == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
             print("ERROR:  internal_error \nSQL state: XX000 ")
@@ -210,7 +218,12 @@ def procesar_alterdatabase(instr,ts,tc):
         if result == 0:
             tipo = TC.Tipo(useCurrentDatabase,instr.id_tabla,instr.id_tabla,None,OPCIONES_CONSTRAINT.CHECK,None,None)
             tc.actualizarDatabase(tipo,instr.id_tabla,instr.tipo_id)
-            salida = "\nALTER DATABASE"
+            temp1 = ts.obtener(instr.id_tabla,"")
+            temp2 = TS.Simbolo(instr.tipo_id,temp1.tipo,temp1.valor,temp1.ambito)
+            ts.actualizarDB(temp2,temp1.id)
+            ts.actualizarDBTable(temp1.id,temp2.id)
+            salida = "\nALTER DATABASE"            
+
         elif result == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
         elif result == 2 :
@@ -257,7 +270,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
     except:
         pass
 
-f = open("./entrada.txt", "r")
+'''f = open("./entrada.txt", "r")
 input = f.read()
 listaErrores = []
 instrucciones = g.parse(input)
@@ -270,7 +283,5 @@ erroressss.crearReporte()
 typeC = TipeChecker()
 typeC.crearReporte(tc_global)
 typeS = RTablaDeSimbolos()
-typeS.crearReporte(ts_global)
+typeS.crearReporte(ts_global)'''
 
-astG = AST()
-astG.generarAST(instrucciones)
