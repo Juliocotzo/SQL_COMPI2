@@ -46,10 +46,66 @@ def procesar_createTable(instr,ts,tc) :
             salida = "\nERROR:  relation \"" + str(instr.id) +"\" alredy exists\nSQL state: 42P07"
             
 def procesar_Definicion(instr,ts,tc,tabla) :
-    print(tabla,instr.id,instr.tipo_datos.etiqueta,instr.etiqueta,instr.id_referencia)
-    tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,instr.etiqueta,instr.id_referencia,None)
-    tc.agregar(tipo)
+    #print(instr.opciones_constraint)
+    if instr.opciones_constraint == None:
+        tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,"","","")
+        tc.agregar(tipo)
+    else:
+        for ins in instr.opciones_constraint:
+            tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,"","","")
+            tc.agregar(tipo)
+            if isinstance(ins, definicion_constraint): 
+                procesar_constraintDefinicion(ins,ts,tc,tabla,instr.id)
     
+def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
+    
+    #print(tabla,id,instr.id,instr.tipo)
+
+    if instr.id == None:
+        if instr.tipo == OPCIONES_CONSTRAINT.NOT_NULL:
+            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.NOT_NULL,None,None)
+            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.NOT_NULL)
+        elif instr.tipo == OPCIONES_CONSTRAINT.NULL:
+            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.NULL,None,None)
+            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.NULL)
+        elif instr.tipo == OPCIONES_CONSTRAINT.PRIMARY:
+            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.PRIMARY,None,None)
+            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.PRIMARY)
+        elif instr.tipo == OPCIONES_CONSTRAINT.FOREIGN:
+            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.FOREIGN,None,None)
+            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.FOREIGN)
+        elif instr.tipo == OPCIONES_CONSTRAINT.UNIQUE:
+            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.UNIQUE,None,None)
+            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.UNIQUE)
+        elif instr.tipo == OPCIONES_CONSTRAINT.DEFAULT:
+            if instr.opciones_constraint != []:
+                tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.DEFAULT,None,None)
+                tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.DEFAULT)
+        elif instr.tipo == OPCIONES_CONSTRAINT.CHECK:
+            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.CHECK,None,None)
+            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.CHECK)
+
+    else:
+        if instr.tipo == OPCIONES_CONSTRAINT.UNIQUE:
+            if instr.opciones_constraint == None:
+                temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+                ts.agregar(temp)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.UNIQUE,None,None)
+                tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.UNIQUE)
+        elif instr.tipo == OPCIONES_CONSTRAINT.CHECK:
+            if instr.opciones_constraint != None:
+                temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+                ts.agregar(temp)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.CHECK,None,None)
+                tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.CHECK)
+            
+            
+            
+                
+
+    
+    
+
 def procesar_listaId(instr,ts,tc,tabla):
     if instr.identificadores != []:
         for ids in instr.identificadores:

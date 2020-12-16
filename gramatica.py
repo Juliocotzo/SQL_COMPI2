@@ -20,6 +20,7 @@ reservadas = {
     'integer': 'INTEGER',
     'show': 'SHOW',
     'databases': 'DATABASES',
+    'default': 'DEFAULT',
     # CREATE DATABASE
     'database': 'DATABASE',
     'if' : 'IF',
@@ -908,23 +909,83 @@ def p_createTable(t):
     ' cuerpo_createTable :  ID TIPO_DATO_DEF '
     t[0] = Definicion_Columnas(t[1],t[2], None,None,None)
 
+
 def p_createTable_id_pk(t):
-    ' cuerpo_createTable : ID TIPO_DATO_DEF PRIMARY KEY'
-    t[0] = Definicion_Columnas(t[1],t[2], OPCIONESCREATE_TABLE.PRIMARIA,None,None)    
+    ' cuerpo_createTable : ID TIPO_DATO_DEF createTable_options'
+    t[0] = Definicion_Columnas(t[1],t[2], None,None,t[3])
+# -------------------------------------------
+def p_createTable_combs1(t):
+    ' createTable_options : createTable_options cT_options' 
+    t[1].append(t[2])
+    t[0] = t[1]
+
+def p_createTable_combs2(t):
+    ' createTable_options : cT_options'
+    t[0] = [t[1]]
 
 
-def p_createTable_id_ref(t):
-    ' cuerpo_createTable : ID TIPO_DATO_DEF REFERENCES ID'
-    t[0] = Definicion_Columnas(t[1], t[2], OPCIONESCREATE_TABLE.REFERENCES, t[4],None)
+def p_cT_options(t):
+    ''' cT_options : N_null
+                | C_unique
+                | C_check
+                | llave 
+                | O_DEFAULT'''
+
+    t[0] = t[1]
+    #--------------------------------------------------
+def p_default(t):
+    ' O_DEFAULT : DEFAULT expresion_dato_default '
+    t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.DEFAULT,None,None,t[2])
 
 
-def p_createTable_id_not_null(t):
-    ' cuerpo_createTable : ID TIPO_DATO_DEF NOT NULL'
-    t[0] = Definicion_Columnas(t[1], t[2], OPCIONESCREATE_TABLE.NOT_NULL, None,None)
+def p_N_null(t):
+    ''' N_null : NULL
+                | NOT NULL'''
+    if t[1].upper() == 'NULL':
+        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.NULL,None,None,None)
+    else: 
+        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.NOT_NULL,None,None,None)
+  
 
-def p_createTable_null(t):
-    ' cuerpo_createTable : ID TIPO_DATO_DEF NULL'
-    t[0] = Definicion_Columnas(t[1], t[2], OPCIONESCREATE_TABLE.NULL, None,None)
+def p_C_unique(t):
+    ''' C_unique : UNIQUE
+                 | CONSTRAINT ID UNIQUE'''
+    if t[1].upper() == 'UNIQUE':
+        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.UNIQUE,None,None,None)
+    else:
+        t[0] =  definicion_constraint(t[2],OPCIONES_CONSTRAINT.UNIQUE,None,None,None)
+        
+            
+
+def p_Ccheck(t):
+    ''' C_check : CHECK PAR_A expresion_logica PAR_C
+                | CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C '''
+
+    if t[1].upper() == 'CHECK':
+        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.CHECK,None,None,t[3])
+    else:
+        t[0] =  definicion_constraint(t[2],OPCIONES_CONSTRAINT.CHECK,None,None,t[3])
+
+def p_llave(t):
+    ''' llave : PRIMARY KEY 
+            | FOREIGN KEY'''
+    if t[1].upper() == 'PRIMARY':
+        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.PRIMARY,None,None,None)
+    else:
+        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.FOREIGN,None,None,None)
+
+def p_expresion_cadena_DEFAULT(t):
+    'expresion_dato_default : CADENA'
+    t[0] = ExpresionComillaSimple(TIPO_VALOR.CADENA,t[1])
+
+
+def p_expresion1_DEFAULT(t):
+    '''expresion_dato_default : ENTERO 
+                   | FLOTANTE'''
+    t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1]) 
+##########################################################
+##########################################################
+##########################################################
 
 
 def p_createTable_pk(t):

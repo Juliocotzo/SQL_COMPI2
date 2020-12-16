@@ -1,65 +1,10 @@
-CREATE DATABASE prueba1;
-CREATE DATABASE prueba2;
-
 USE prueba1;
 
-CREATE TABLE usuario(
-    id_usuario INTEGER,
-    constraint unicos UNIQUE(id_usuario)
+CREATE TABLE tbusuario (
+    idusuario integer NOT NULL PRIMARY KEY,
+	nombre varchar(50),
+	apellido varchar(50),
+	usuario varchar(15)  constraint unicos UNIQUE NOT NULL,
+	password varchar(15) NULL,
+	fechacreacion date constraint cehasd CHECK (fechacreacion < 10)
 );
-
-CREATE TABLE usuario1(
-    id_usuario INTEGER,
-    constraint unicos UNIQUE(id_usuario)
-);
-
-USE prueba2;
-
-CREATE TABLE usuario(
-    id_usuario INTEGER,
-    constraint unicos UNIQUE(id_usuario)
-);
-
-CREATE TABLE usuario1(
-    id_usuario INTEGER,
-    constraint unicos UNIQUE(id_usuario)
-);
-
-ALTER DATABASE prueba2 RENAME TO compiladores2;
-
-drop table autos,banco,flaco;
-
-alter table Estudiante add check (Prueba < 4 and Grupo < 'Bueno');
-
-alter table Estudiante2 add foreign key (hola, juan) references prueba;
-
-alter table Estudiante3 add constraint alumno check (prueba > 'alberto');
-
-alter table Estudiante4 add constraint alumno2 unique(hola);
-
-alter table Estudiante5 add constraint alumno3 foreign key(hola2) references prueba;
-
-alter table Estudiante6 alter column alumno4 set not null;
-
-alter table Estudiante7 alter column alumno5 type varchar(30);
-
-CREATE TYPE happiness AS ENUM ('happy', 'very happy', 'ecstatic');
-
-CREATE TYPE autos AS ENUM ('toyota', 'mazda', 'subaru');
-
-CREATE TYPE colores AS ENUM ('rojo', 'rosado', 'amarillo');
-
-delete from only Estudiante;
-
-delete from only Estudiante Returning Prueba, claro;
-
-delete from Colegio where exists 4 > 4;
-
-delete from Colegio where exists preuba != 'mario';
-
-
-delete from Mariano Returning mala, pesima;
-
-delete from San_Carlos USING usac where exists Prueba > 'mejor';
-
-delete from VillaNueva USING lugar where exists Villa == 'Buen lugar' Returning preuba;

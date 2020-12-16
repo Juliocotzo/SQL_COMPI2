@@ -22,6 +22,10 @@ class OPCIONES_CONSTRAINT(Enum):
     CHECK = 1
     UNIQUE = 2
     FOREIGN = 3
+    NULL = 4
+    NOT_NULL = 5
+    DEFAULT = 6
+    PRIMARY = 7
 
 class OPERACION_ARITMETICA(Enum):
     MAS = 1

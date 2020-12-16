@@ -40,6 +40,14 @@ class TablaDeTipos() :
                 self.tipos[i].restriccion = restriccion
             i += 1
 
+            
+    def actualizarRestriccion2(self,tipo, database, tabla, column, restriccion) :
+        i = 0
+        while i < len(self.tipos):
+            if self.tipos[i].database == database and self.tipos[i].tabla == tabla and self.tipos[i].id == column and self.tipos[i].restriccion == "":
+                self.tipos[i].restriccion = restriccion
+            i += 1
+
     def actualizarLlaveForanea(self,tipo,database, tabla, column, restriccion,tablaRef, referencia) :
         i = 0
         while i < len(self.tipos):
