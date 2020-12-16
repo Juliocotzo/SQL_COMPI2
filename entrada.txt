@@ -4,24 +4,24 @@ CREATE DATABASE prueba2;
 USE prueba1;
 
 CREATE TABLE usuario(
-    id_usuario VARCHAR(10),
+    id_usuario INTEGER,
     constraint unicos UNIQUE(id_usuario)
 );
 
 CREATE TABLE usuario1(
-    id_usuario VARCHAR(10),
+    id_usuario INTEGER,
     constraint unicos UNIQUE(id_usuario)
 );
 
 USE prueba2;
 
 CREATE TABLE usuario(
-    id_usuario VARCHAR(10),
+    id_usuario INTEGER,
     constraint unicos UNIQUE(id_usuario)
 );
 
 CREATE TABLE usuario1(
-    id_usuario VARCHAR(10),
+    id_usuario INTEGER,
     constraint unicos UNIQUE(id_usuario)
 );
 
@@ -43,10 +43,23 @@ alter table Estudiante6 alter column alumno4 set not null;
 
 alter table Estudiante7 alter column alumno5 type varchar(30);
 
+CREATE TYPE happiness AS ENUM ('happy', 'very happy', 'ecstatic');
 
-insert into Prueba(hola,carlos) values('hola','carro');
+CREATE TYPE autos AS ENUM ('toyota', 'mazda', 'subaru');
+
+CREATE TYPE colores AS ENUM ('rojo', 'rosado', 'amarillo');
+
+delete from only Estudiante;
+
+delete from only Estudiante Returning Prueba, claro;
+
+delete from Colegio where exists 4 > 4;
+
+delete from Colegio where exists preuba != 'mario';
 
 
-insert into Prueba values('hola','mario');
+delete from Mariano Returning mala, pesima;
 
-insert into Prueba(hola,carlos) values('hola','mario');
+delete from San_Carlos USING usac where exists Prueba > 'mejor';
+
+delete from VillaNueva USING lugar where exists Villa == 'Buen lugar' Returning preuba;
