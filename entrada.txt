@@ -1,1 +1,52 @@
-update tabla_prueba set a = 'cadena',ab = 'otra' where tabla2 > 'autos' ;
+CREATE DATABASE prueba1;
+CREATE DATABASE prueba2;
+
+USE prueba1;
+
+CREATE TABLE usuario(
+    id_usuario VARCHAR(10),
+    constraint unicos UNIQUE(id_usuario)
+);
+
+CREATE TABLE usuario1(
+    id_usuario VARCHAR(10),
+    constraint unicos UNIQUE(id_usuario)
+);
+
+USE prueba2;
+
+CREATE TABLE usuario(
+    id_usuario VARCHAR(10),
+    constraint unicos UNIQUE(id_usuario)
+);
+
+CREATE TABLE usuario1(
+    id_usuario VARCHAR(10),
+    constraint unicos UNIQUE(id_usuario)
+);
+
+ALTER DATABASE prueba2 RENAME TO compiladores2;
+
+drop table autos,banco,flaco;
+
+alter table Estudiante add check (Prueba < 4 and Grupo < 'Bueno');
+
+alter table Estudiante2 add foreign key (hola, juan) references prueba;
+
+alter table Estudiante3 add constraint alumno check (prueba > 'alberto');
+
+alter table Estudiante4 add constraint alumno2 unique(hola);
+
+alter table Estudiante5 add constraint alumno3 foreign key(hola2) references prueba;
+
+alter table Estudiante6 alter column alumno4 set not null;
+
+alter table Estudiante7 alter column alumno5 type varchar(30);
+
+
+insert into Prueba(hola,carlos) values('hola','carro');
+
+
+insert into Prueba() values('hola','mario');
+
+insert into Prueba(hola,carlos) values('hola','mario');

@@ -70,6 +70,26 @@ class TIPO_VALOR(Enum):
     NUMERO = 2
     CADENA = 3
 
+class TIPO_INSERT(Enum):
+    CON_PARAMETROS = 1
+    SIN_PARAMETROS = 2
+
+class TIPO_LOGICA(Enum):
+    AND = 1
+    OR = 2
+    NOT = 3
+
+class TIPO_ALTER_TABLE(Enum):
+    DROP_CONSTRAINT = 1
+    RENAME_COLUMN = 2
+    ADD_COLUMN = 3
+    ADD_CHECK = 4
+    ADD_FOREIGN = 5
+    ADD_CONSTRAINT_CHECK = 6
+    ADD_CONSTRAINT_UNIQUE = 7
+    ADD_CONSTRAINT_FOREIGN = 8
+    ALTER_COLUMN = 9
+
 class ExpresionNumerica:
     '''
         Esta clase representa una expresión numérica

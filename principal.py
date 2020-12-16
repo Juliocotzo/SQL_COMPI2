@@ -46,6 +46,7 @@ def procesar_createTable(instr,ts,tc) :
             salida = "\nERROR:  relation \"" + str(instr.id) +"\" alredy exists\nSQL state: 42P07"
             
 def procesar_Definicion(instr,ts,tc,tabla) :
+    print(tabla,instr.id,instr.tipo_datos.etiqueta,instr.etiqueta,instr.id_referencia)
     tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,instr.etiqueta,instr.id_referencia,None)
     tc.agregar(tipo)
     
@@ -237,6 +238,119 @@ def procesar_update(instr,ts,tc):
         for datos in instr.lista_update:
             print(datos.ids.id)
             print(datos.expresion.val)
+    
+
+def procesar_drop(instr,ts,tc):
+    if instr.lista_ids != []:
+        for datos in instr.lista_ids:
+            print(datos.id)
+
+#Alter table
+
+def procesar_altertable(instr,ts,tc):
+    print(instr.etiqueta)
+    if instr.etiqueta == TIPO_ALTER_TABLE.ADD_CHECK:
+        if instr.expresionlogica.operador == OPERACION_LOGICA.AND or instr.expresionlogica.operador == OPERACION_LOGICA.OR: 
+            print(instr.identificador)
+            print(instr.expresionlogica.exp1.exp1.id)
+            print(instr.expresionlogica.exp1.exp2.val)
+            print(instr.expresionlogica.operador)
+            print(instr.expresionlogica.exp2.exp1.id)
+            print(instr.expresionlogica.exp2.exp2.val)
+        else:
+            print(instr.identificador)
+            print(instr.expresionlogica.exp1.id)
+            print(instr.expresionlogica.exp2.val)
+
+
+    elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_FOREIGN:
+        print(instr.identificador)
+        if instr.lista_campos != []:
+            for datos in instr.lista_campos:
+                print(datos.id)
+        if instr.lista_ref != []:
+            for datos in instr.lista_ref:
+                print(datos.id)
+
+    elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_CHECK:
+        print(instr.identificador)
+        print(instr.columnid)
+        if instr.expresionlogica.operador == TIPO_LOGICA.AND or instr.expresionlogica.operador == TIPO_LOGICA.OR: 
+            print(instr.expresionlogica.exp1.exp1.id)
+            print(instr.expresionlogica.exp1.exp2.val)
+            print(instr.expresionlogica.operador)
+            print(instr.expresionlogica.exp2.exp1.id)
+            print(instr.expresionlogica.exp2.exp2.val)
+        else:
+            print(instr.expresionlogica.exp1.id)
+            print(instr.expresionlogica.exp2.val)
+        
+    elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_UNIQUE:
+        print(instr.identificador)
+        print(instr.columnid)
+        if instr.lista_campos != []:
+            for datos in instr.lista_campos:
+                print(datos.id)
+    elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_FOREIGN:
+        print(instr.identificador)
+        print(instr.columnid)
+        if instr.lista_campos != []:
+            for datos in instr.lista_campos:
+                print(datos.id)
+        print("references")
+        if instr.lista_ref != []:
+            for datos in instr.lista_ref:
+                print(datos.id)
+
+    elif instr.etiqueta == TIPO_ALTER_TABLE.ALTER_COLUMN:
+        print(instr.identificador)
+        if instr.lista_campos != []:
+            for datos in instr.lista_campos:
+                print(datos.identificador.id)
+                print(datos.tipo.val)
+                if datos.par1 != None:
+                    print(datos.par1)
+                if datos.par2 != None:
+                    print(datos.par2)
+    
+    elif instr.etiqueta ==  TIPO_ALTER_TABLE.DROP_CONSTRAINT:
+        print(instr.identificador)
+        if instr.lista_campos != []:
+            for datos in instr.lista_campos:
+                print(datos.val)
+
+    elif instr.etiqueta ==  TIPO_ALTER_TABLE.RENAME_COLUMN:
+        print(instr.identificador)
+        print(instr.columnid)
+        print(instr.tocolumnid)
+
+    elif instr.etiqueta ==  TIPO_ALTER_TABLE.ADD_COLUMN:
+        print(instr.identificador)
+        if instr.lista_campos != []:
+            for datos in instr.lista_campos:
+                print(datos.identificador.val)
+                print(datos.tipo.val)
+                if datos.par1 != None:
+                    print(datos.par1)
+                if datos.par2 != None:
+                    print(datos.par2)
+
+
+#INSERT
+def procesar_insert(instr,ts,tc):
+    print('esta en el insert')
+
+    if instr.etiqueta == TIPO_INSERT.CON_PARAMETROS:
+
+        if instr.lista_parametros != []:
+            for parametros in instr.lista_parametros:
+                print(instr.id, instr.etiqueta, parametros.id)
+       
+    else:
+        if instr.lista_datos != []:
+            for parametros in instr.lista_datos:
+                print(parametros.val)
+
 
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
@@ -273,6 +387,12 @@ def procesar_instrucciones(instrucciones,ts,tc) :
                     salida = "\nSELECT DATABASE"
             elif isinstance(instr,Create_update) : 
                 procesar_update(instr,ts,tc)
+            elif isinstance(instr, Crear_Drop) : 
+                procesar_drop(instr,ts,tc)
+            elif isinstance(instr, Crear_altertable) :
+                 procesar_altertable(instr,ts,tc)
+            elif isinstance(instr, Definicion_Insert) :
+                 procesar_insert(instr,ts,tc)
             
             else : print('Error: instrucción no válida ' + str(instr))
         return salida 
