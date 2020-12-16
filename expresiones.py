@@ -4,6 +4,18 @@ class TIPO_VALOR(Enum):
     IDENTIFICADOR = 1
     NUMERO = 2
 
+class TIPO_ALTER_TABLE(Enum):
+    DROP_CONSTRAINT = 1
+    RENAME_COLUMN = 2
+    ADD_COLUMN = 3
+    ADD_CHECK = 4
+    ADD_FOREIGN = 5
+    ADD_CONSTRAINT_CHECK = 6
+    ADD_CONSTRAINT_UNIQUE = 7
+    ADD_CONSTRAINT_FOREIGN = 8
+    ALTER_COLUMN = 9
+
+
 class OPCIONESCREATE_TABLE(Enum):
     PRIMARIA = 1
     FORANEA = 2
@@ -47,6 +59,11 @@ class OPERACION_LOGICA(Enum):
     AND = 1
     OR = 2
     NOT = 3
+
+class TIPO_LOGICA(Enum):
+    AND = 1
+    OR = 2
+    NOT = 3
     
 class TIPO_DE_DATOS(Enum):
     text_ = 1
@@ -79,7 +96,8 @@ class ExpresionEntero(ExpresionNumerica) :
         Esta clase representa una expresión numérica entera o decimal.
     '''
 
-    def __init__(self, val = 0) :
+    def __init__(self, etiqueta ,val = 0) :
+        self.etiqueta = etiqueta
         self.val = val
 
 
@@ -142,7 +160,8 @@ class ExpresionComillaSimple(ExpresionCadena) :
         Recibe como parámetro el valor del token procesado por el analizador léxico
     '''
 
-    def __init__(self, val) :
+    def __init__(self, etiqueta ,val) :
+        self.etiqueta = etiqueta
         self.val = val
 
 class ExpresionRelacional() :

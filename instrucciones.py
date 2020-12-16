@@ -88,3 +88,20 @@ class showTables(Instruccion):
 class Crear_Drop(Instruccion):
     def __init__(self, lista_ids = []):
         self.lista_ids = lista_ids
+
+class Crear_altertable(Instruccion):
+    def __init__(self,etiqueta,identificador,columnid,tocolumnid,expresionlogica,lista_campos = [],lista_ref = []):
+        self.etiqueta = etiqueta
+        self.identificador = identificador
+        self.columnid = columnid
+        self.tocolumnid = tocolumnid
+        self.lista_campos = lista_campos
+        self.expresionlogica = expresionlogica
+        self.lista_ref = lista_ref
+
+class Crear_tipodato(Instruccion):
+    def __init__(self,identificador,tipo,par1,par2):
+        self.identificador = identificador
+        self.tipo = tipo
+        self.par1 = par1
+        self.par2 = par2

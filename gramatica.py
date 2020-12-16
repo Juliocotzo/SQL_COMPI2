@@ -386,8 +386,111 @@ def p_instruccion(t) :
                         | drop_database_instr
                         | use_database_instr
                         | alterDB_insrt
-                        | drop_insrt'''
+                        | drop_insrt
+                        | alterTable_insrt'''
     t[0] = t[1]
+
+#--------------------------------------------------------------
+'----------- GRAMATICA PARA LA INSTRUCCION ALTER TABLE ---------'
+#--------------------------------------------------------------
+def p_Table_alter(t):
+    'Table_alter : ALTER COLUMN ID TYPE TIPO_DATO'
+    if t[5][0] == 'VARCHAR':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],None)
+    elif t[5][0] == 'DECIMAL':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],t[5][2])
+    elif t[5][0] == 'NUMERIC':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],t[5][2])
+    elif t[5][0] == 'VARING':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],None)
+    elif t[5][0] == 'CHAR':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],None)
+    elif t[5][0] == 'CHARACTER':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],None)
+    elif t[5][0] == 'INTERVAL' and t[5][1] == 'TO':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][2],t[5][3])
+    else:
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),t[5][0],None,None)
+
+
+def p_alterTable3(t):
+    'alterTable_insrt : ALTER TABLE ID DROP CONSTRAINT campos_c PTCOMA'
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.DROP_CONSTRAINT,t[3],None,None,None,t[6],None)
+
+def p_alterTable4(t):
+    'alterTable_insrt : ALTER TABLE ID RENAME COLUMN ID TO ID PTCOMA'
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.RENAME_COLUMN,t[3],t[6],t[8],None,None,None)
+
+def p_alterTable5(t):
+    'alterTable_insrt : ALTER TABLE ID ADD COLUMN campos_add_Column PTCOMA' 
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_COLUMN,t[3],None,None,None,t[6],None)
+
+def p_alterTable_add_column(t):
+    'campos_add_Column : campos_add_Column COMA tipos_datos_columnas '
+    t[1].append(t[3])
+    t[0] = t[1]
+
+def p_alterTable_add_columna(t):
+    'campos_add_Column : tipos_datos_columnas '
+    t[0] = [t[1]]
+
+def p_alterTable_add_tipodato(t):
+    'tipos_datos_columnas : ID TIPO_DATO'
+    if t[2][0] == 'VARCHAR':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],None)
+    elif t[2][0] == 'DECIMAL':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],t[2][2])
+    elif t[2][0] == 'NUMERIC':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],t[2][2])
+    elif t[2][0] == 'VARING':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],None)
+    elif t[2][0] == 'CHAR':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],None)
+    elif t[2][0] == 'CHARACTER':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],None)
+    elif t[2][0] == 'INTERVAL' and t[2][1] == 'TO':
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][2],t[2][3])
+    else:
+        t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),t[2][0],None,None)
+
+def p_alterTable6(t):
+    'alterTable_insrt : ALTER TABLE ID ADD CHECK PAR_A expresion_logica PAR_C PTCOMA' 
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CHECK,t[3],None,None,t[7],None,None)
+
+def p_alterTable8(t):
+    'alterTable_insrt : ALTER TABLE ID ADD FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA' 
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_FOREIGN,t[3],None,None,None,t[8],t[11])
+     
+def p_alterTable7(t):
+    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C PTCOMA'  
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CONSTRAINT_CHECK,t[3],t[6],None,t[9],None,None)
+
+def p_constraint_esp(t):
+    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C PTCOMA'
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CONSTRAINT_UNIQUE,t[3],t[6],None,None,t[9],None)
+
+def p_constraint_esp_1(t):
+    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA'
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CONSTRAINT_FOREIGN,t[3],t[6],None,None,t[10],t[13])
+
+def p_alterTable2(t):
+    'alterTable_insrt : ALTER TABLE ID alterTable_alter PTCOMA'
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ALTER_COLUMN,t[3],None,None,None,t[4],None)
+
+def p_alerTable_alter(t):
+    'alterTable_alter : alterTable_alter COMA Table_alter'
+    t[1].append(t[3])
+    t[0] = t[1]
+    
+def p_alerTable_alter_1(t):
+    'alterTable_alter : Table_alter'
+    t[0] = [t[1]]
+
+def p_Table_alter2(t):
+    'Table_alter : ALTER COLUMN ID SET NOT NULL'
+    t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,"Null"),None,None)
+      
+
 
 # DROP
 #--------------------------------------------------------------
@@ -605,7 +708,7 @@ def p_createDB_dosParam_Owner(t):
     t[0] = temp
 
 # --------- ALTER TABLE ADD PRODUCCIONES-------------------------
-def p_constraint_esp(t):
+def p_constraint_esp_(t):
     'constraint_esp : CHECK PAR_A expresion_logica PAR_C '
     temp = [] 
     temp.append(t[1].upper())
@@ -721,88 +824,140 @@ def p_createTable_constraint(t):
 
 def p_tipo_dato_text(t):
     ' TIPO_DATO : TEXT'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.text_)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_float(t):
     ' TIPO_DATO : FLOAT'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.float_)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_integer(t):
     ' TIPO_DATO : INTEGER'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.integer_)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_smallint(t):
     ' TIPO_DATO : SMALLINT'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.smallint_)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_money(t):
     ' TIPO_DATO : MONEY'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.money)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_decimal(t):
     ' TIPO_DATO : DECIMAL PAR_A ENTERO COMA ENTERO PAR_C'
-    t[0] = ExpresionNumero(TIPO_DE_DATOS.decimal,t[3], t[5])
+    temp = []
+    temp.append(t[1].upper())
+    temp.append(t[3])
+    temp.append(t[5])
+    t[0] = temp
 
 def p_tipo_dato_numerico(t):
     ' TIPO_DATO : NUMERIC PAR_A ENTERO COMA ENTERO PAR_C'
-    t[0] = ExpresionNumero(TIPO_DE_DATOS.numeric,t[3],t[5])
+    temp = []
+    temp.append(t[1].upper())
+    temp.append(t[3])
+    temp.append(t[5])
+    t[0] = temp
 
 def p_tipo_dato_bigint(t):
     ' TIPO_DATO : BIGINT'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.bigint)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_real(t):
     ' TIPO_DATO : REAL'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.real)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_double_precision(t):
     ' TIPO_DATO : DOUBLE PRECISION'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.double_precision)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_interval_to(t):
-    ' TIPO_DATO :  INTERVAL extract_time TO extract_time'
-    t[0] = Etiqueta_Interval(t[2],t[4], TIPO_DE_DATOS.interval)
-
+    ' TIPO_DATO : INTERVAL extract_time TO extract_time'
+    temp = []
+    temp.append(t[1].upper())
+    temp.append(t[3].upper())
+    temp.append(t[2])
+    temp.append(t[4])
+    t[0] = temp
 
 def p_tipo_dato_interval(t):
     ' TIPO_DATO :  INTERVAL'
-    t[0] = ExpresionTiempo(OPERACION_TIEMPO.YEAR)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_time(t):
     ' TIPO_DATO :  TIME'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.time)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_interval_tsmp(t):
     ' TIPO_DATO :  TIMESTAMP'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.timestamp)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato(t):
     'TIPO_DATO : DATE'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.date)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_character_varying(t):
     ' TIPO_DATO : CHARACTER VARYING PAR_A ENTERO PAR_C'
-    t[0] = Expresion_Caracter(TIPO_DE_DATOS.character, t[4])
+    temp = []
+    temp.append(t[2].upper())
+    temp.append(t[3])
+    t[0] = temp
 
 def p_tipo_dato_varchar(t):
     ' TIPO_DATO : VARCHAR PAR_A ENTERO PAR_C'
-    t[0] = Expresion_Caracter(TIPO_DE_DATOS.varchar,t[3])
+    temp = []
+    temp.append(t[1].upper())
+    temp.append(t[3])
+    t[0] = temp
 
 def p_tipo_dato_char(t):
     ' TIPO_DATO : CHAR PAR_A ENTERO PAR_C'
-    t[0] = Expresion_Caracter(TIPO_DE_DATOS.char,t[3])
+    temp = []
+    temp.append(t[1].upper())
+    temp.append(t[3])
+    t[0] = temp
 
 def p_tipo_dato_character(t):
     ' TIPO_DATO : CHARACTER PAR_A ENTERO PAR_C'
-    t[0] = Expresion_Caracter(TIPO_DE_DATOS.character,t[3])
+    temp = []
+    temp.append(t[1].upper())
+    temp.append(t[3])
+    t[0] = temp
 
 def p_tipo_dato_char_no_esp(t):
     ' TIPO_DATO : CHAR PAR_A PAR_C'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.char)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_tipo_dato_character_no_esp(t):
     ' TIPO_DATO : CHARACTER PAR_A PAR_C'
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.character)
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
 
 def p_extract_time(t):
     ''' extract_time : YEAR
@@ -823,13 +978,13 @@ def p_agrupacion_expresion(t):
 
 def p_expresion_cadena(t):
     'expresion : CADENA'
-    t[0] = ExpresionComillaSimple(t[1])
+    t[0] = ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[1])
 
 
 def p_expresion1(t):
     '''expresion : ENTERO 
                    | FLOTANTE'''
-    t[0] = ExpresionEntero(t[1])               
+    t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1])               
 
 
 def p_expresion3(t):

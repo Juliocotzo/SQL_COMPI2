@@ -28,3 +28,17 @@ CREATE TABLE usuario1(
 ALTER DATABASE prueba2 RENAME TO compiladores2;
 
 drop table autos,banco,flaco;
+
+alter table Estudiante add check (Prueba < 4);
+
+alter table Estudiante2 add foreign key (hola, juan) references prueba;
+
+alter table Estudiante3 add constraint alumno check (prueba > 'alberto');
+
+alter table Estudiante4 add constraint alumno2 unique(hola);
+
+alter table Estudiante5 add constraint alumno3 foreign key(hola2) references prueba;
+
+alter table Estudiante6 alter column alumno4 set not null;
+
+alter table Estudiante7 alter column alumno5 type varchar(30);

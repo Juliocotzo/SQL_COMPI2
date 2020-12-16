@@ -40,6 +40,8 @@ class AST:
                 self.crearNodoshowTables("node2", instruccion)
             elif isinstance(instruccion, Crear_Drop):
                 self.crearNodoDropTable("node2",instruccion)
+            if isinstance(instruccion, Crear_altertable):
+                self.crearNodoAlterTable("node2",instruccion)
             indice = indice +1
         dot.view('reportes/AST', cleanup=True)
 
@@ -88,6 +90,10 @@ class AST:
                 contadorNodos = contadorNodos + 1
                 dot.node("node" + str(contadorNodos), str(expresion.id))
                 dot.edge(padre, "node" + str(contadorNodos))
+        elif isinstance(expresion, ExpresionComillaSimple):
+            contadorNodos = contadorNodos + 1
+            dot.node("node" + str(contadorNodos), str(expresion.val))
+            dot.edge(padre, "node" + str(contadorNodos))
         elif isinstance(expresion, ExpresionNumeroSimple):
             contadorNodos = contadorNodos + 1
             dot.node("node" + str(contadorNodos), str(expresion.val))
@@ -95,6 +101,24 @@ class AST:
         elif isinstance(expresion, ExpresionComillaSimple):
             contadorNodos = contadorNodos + 1
             dot.node("node" + str(contadorNodos), str(expresion.val))
+            dot.edge(padre, "node" + str(contadorNodos))
+        elif isinstance(expresion, ExpresionRelacional):
+            contadorNodos = contadorNodos + 1
+            dot.node("node" + str(contadorNodos), str(expresion.exp1))
+            dot.node("node" + str(contadorNodos), str(expresion.exp2))
+            dot.node("node" + str(contadorNodos), str(expresion.operador))
+            dot.edge(padre, "node" + str(contadorNodos))
+        elif isinstance(expresion, ExpresionBinaria):
+            contadorNodos = contadorNodos + 1
+            dot.node("node" + str(contadorNodos), str(expresion.exp1))
+            dot.node("node" + str(contadorNodos), str(expresion.exp2))
+            dot.node("node" + str(contadorNodos), str(expresion.operador))
+            dot.edge(padre, "node" + str(contadorNodos))
+        elif isinstance(expresion, ExpresionLogica):
+            contadorNodos = contadorNodos + 1
+            dot.node("node" + str(contadorNodos), str(expresion.exp1))
+            dot.node("node" + str(contadorNodos), str(expresion.exp2))
+            dot.node("node" + str(contadorNodos), str(expresion.operador))
             dot.edge(padre, "node" + str(contadorNodos))
         else:
             contadorNodos = contadorNodos + 1
@@ -161,7 +185,7 @@ class AST:
         dot.node("node" + str(contadorNodos), 'TIPO DATO')
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)
-        self.crearNodoExpresion(temp1,instruccion.tipo_datos.etiqueta)
+        self.crearNodoExpresion(temp1,instruccion.id)
 
     def crearNodoDefinicionRestriccion(self, padre, instruccion):
         global  contadorNodos, dot
@@ -492,3 +516,132 @@ class AST:
         if instruccion.lista_ids != []:
             for datos in instruccion.lista_ids:
                 self.crearNodoExpresion(temp1,datos.id)
+
+            
+    def crearNodoAlterTable(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'ALTER TABLE')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        if instruccion.etiqueta == TIPO_ALTER_TABLE.ADD_CHECK:
+            self.crearAlterTable_addcheck(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.ADD_FOREIGN:
+            self.crearAlterTable_foreign(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_CHECK:
+            self.crearAlterTable_addContraintCheck(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_UNIQUE:
+            self.crearAlterTable_Unique(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_FOREIGN:
+            self.crearAlterTable_ConstraintForeign(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.ALTER_COLUMN:
+            self.crearAlterTable_Column(temp1, instruccion)
+
+    def crearAlterTable_Column(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Alter Column')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)   
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        if instruccion.lista_campos != []:
+            for datos in instruccion.lista_campos:
+                self.crearNodoExpresion(temp1,datos.identificador.id)
+                self.crearNodoExpresion(temp1,datos.tipo.id)
+                if datos.par1 != None:
+                    self.crearNodoExpresion(temp1,datos.par1)
+                if datos.par2 != None:
+                    self.crearNodoExpresion(temp1,datos.par2)
+
+    def crearAlterTable_ConstraintForeign(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Constraint Foreign')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        self.crearNodoExpresion(temp1,instruccion.columnid)
+        self.crearAlterTable_foreign_columna(temp1, instruccion)
+        self.crearAlterTable_foreign_referencia(temp1, instruccion)
+
+    def crearAlterTable_Unique(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Unique')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        self.crearNodoExpresion(temp1,instruccion.columnid)
+        self.crearAlterTable_foreign_columna(temp1, instruccion)
+
+
+    def crearAlterTable_addContraintCheck(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Add Contraint Check')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        self.crearNodoExpresion(temp1,instruccion.columnid)   
+        self.crearAlterTable_addcheck_Condicion(temp1, instruccion)
+
+
+    def crearAlterTable_foreign(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Add Foreign')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)                
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        self.crearAlterTable_foreign_columna(temp1, instruccion)
+        self.crearAlterTable_foreign_referencia(temp1, instruccion)
+
+    def crearAlterTable_foreign_columna(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Columna')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)                
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        if instruccion.lista_campos != []:
+            for datos in instruccion.lista_campos:
+                self.crearNodoExpresion(temp1,datos.id)
+
+
+    def crearAlterTable_foreign_referencia(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'referencia')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)                
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+      
+        if instruccion.lista_ref != []:
+            for datos in instruccion.lista_ref:
+                self.crearNodoExpresion(temp1,datos.id)
+
+    def crearAlterTable_addcheck(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Add check')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)                
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        self.crearAlterTable_addcheck_Condicion(temp1, instruccion)
+
+    def crearAlterTable_addcheck_Condicion(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Condicion')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        if instruccion.expresionlogica.operador == TIPO_LOGICA.AND or instruccion.expresionlogica.operador == TIPO_LOGICA.OR: 
+            self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp1.exp1.id)
+            self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp1.exp2.val)
+            self.crearNodoExpresion(temp1,instruccion.expresionlogica.operador)
+            self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp2.exp1.id)
+            self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp2.exp2.val)
+        else:
+            self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp1.id)
+            self.crearNodoExpresion(temp1,instruccion.expresionlogica.operador)
+            self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp2.val)
