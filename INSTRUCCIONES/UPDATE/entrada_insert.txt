@@ -1,0 +1,4 @@
+
+
+update tabla_prueba set a = 'cadena',ab = 'otra' where tabla2 > 'autos' ;
+UPDATE products SET price = 10,costo = 9 WHERE tabla2 > 'autos' ;

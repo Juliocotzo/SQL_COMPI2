@@ -231,6 +231,13 @@ def procesar_alterdatabase(instr,ts,tc):
         elif result == 3 :
             salida = "\nERROR:  database \"" + str(instr.tipo_id) +"\" alredy exists\nSQL state: 42P04"
 
+def procesar_update(instr,ts,tc):
+    print(instr.identificador.id)
+    if instr.lista_update != []:
+        for datos in instr.lista_update:
+            print(datos.ids.id)
+            print(datos.expresion.val)
+
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
         global salida,useCurrentDatabase
@@ -264,13 +271,15 @@ def procesar_instrucciones(instrucciones,ts,tc) :
                     procesar_showTables(instr,ts,tc)
                 else:
                     salida = "\nSELECT DATABASE"
+            elif isinstance(instr,Create_update) : 
+                procesar_update(instr,ts,tc)
             
             else : print('Error: instrucción no válida ' + str(instr))
         return salida 
     except:
         pass
 
-'''f = open("./entrada.txt", "r")
+f = open("./entrada.txt", "r")
 input = f.read()
 listaErrores = []
 instrucciones = g.parse(input)
@@ -283,5 +292,8 @@ erroressss.crearReporte()
 typeC = TipeChecker()
 typeC.crearReporte(tc_global)
 typeS = RTablaDeSimbolos()
-typeS.crearReporte(ts_global)'''
+typeS.crearReporte(ts_global)
+
+astt = AST()
+astt.generarAST(instrucciones)
 

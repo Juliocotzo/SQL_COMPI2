@@ -84,3 +84,14 @@ class Create_Alterdatabase(Instruccion):
 class showTables(Instruccion):
     def __init__(self):
         ''' SHOW DATABASES'''
+
+class Create_update(Instruccion):
+    def __init__(self,identificador,expresion,lista_update = []):
+        self.identificador = identificador
+        self.lista_update = lista_update
+        self.expresion = expresion
+
+class Create_Parametro_update(Instruccion):
+    def __init__(self,ids,expresion):
+        self.ids = ids
+        self.expresion = expresion

@@ -65,6 +65,10 @@ class TIPO_DE_DATOS(Enum):
     numeric = 18
     double_precision = 19
 
+class TIPO_VALOR(Enum):
+    IDENTIFICADOR = 1
+    NUMERO = 2
+
 class ExpresionNumerica:
     '''
         Esta clase representa una expresión numérica
@@ -75,7 +79,8 @@ class ExpresionEntero(ExpresionNumerica) :
         Esta clase representa una expresión numérica entera o decimal.
     '''
 
-    def __init__(self, val = 0) :
+    def __init__(self,etiqueta, val = 0) :
+        self.etiqueta = etiqueta
         self.val = val
 
 
@@ -91,7 +96,8 @@ class ExpresionBinaria(ExpresionNumerica) :
         self.operador = operador
 
 class ExpresionIdentificador(ExpresionNumerica) :
-    def __init__(self, id = "") :
+    def __init__(self,etiqueta, id = "") :
+        self.etiqueta = etiqueta
         self.id = id
 
 class ExpresionIdentificadorDoble(ExpresionNumerica) :
@@ -137,8 +143,9 @@ class ExpresionComillaSimple(ExpresionCadena) :
         Recibe como parámetro el valor del token procesado por el analizador léxico
     '''
 
-    def __init__(self, val) :
+    def __init__(self,etiqueta, val) :
         self.val = val
+        self.etiqueta = etiqueta
 
 class ExpresionRelacional() :
     '''

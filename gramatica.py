@@ -385,8 +385,30 @@ def p_instruccion(t) :
                         | show_tables_instr
                         | drop_database_instr
                         | use_database_instr
-                        | alterDB_insrt'''
+                        | alterDB_insrt
+                        | update_insrt'''
     t[0] = t[1]
+
+#--------------------------------------------------------------
+'----------- GRAMATICA PARA LA INSTRUCCION UPDATE ---------'
+#--------------------------------------------------------------
+def p_update_insrt(t):
+    ' update_insrt : UPDATE ID SET lista_update WHERE expresion_relacional PTCOMA'
+    t[0] = Create_update(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,(t[2])),t[6],t[4])
+
+def p_lista_update(t):
+    ' lista_update :  lista_update COMA parametro_update'
+    t[1].append(t[3])
+    t[0] = t[1]
+
+def p_lista_update_lista(t):
+    ' lista_update : parametro_update'
+    t[0] = [t[1]]
+
+def p_parametro_update(t):
+    ' parametro_update : ID IGUAL expresion'
+    t[0] = Create_Parametro_update(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),t[3])
+
 
 #--------------------------------------------------------------
 '----------- GRAMATICA PARA LA INSTRUCCION ALTER DATABASE ---------'
@@ -399,16 +421,16 @@ def p_AlterDB_opc2(t):
     t[0] = Create_Alterdatabase(t[3],t[6]) 
 def p_usuarioDB(t):
     ' usuariosDB :  ID '
-    t[0] = ExpresionIdentificador(t[1])
+    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
 def p_usuarioDB2(t):
     ' usuariosDB : CURRENT_USER '
-    t[0] = ExpresionIdentificador(t[1])
+    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
 def p_usuarioDB3(t):
     ' usuariosDB : SESSION_USER '
-    t[0] = ExpresionIdentificador(t[1])
+    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
 def p_usuarioDB4(t):
     ' usuariosDB : CADENA '
-    t[0] = ExpresionComillaSimple(t[1])
+    t[0] = ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[1])
 
 #---------------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION DROP DATABASES------------'
@@ -417,7 +439,7 @@ def p_usuarioDB4(t):
 
 def p_instruccion_use_database(t):
     'use_database_instr : USE ID PTCOMA'
-    t[0] = useDatabase(ExpresionIdentificador(t[2]))
+    t[0] = useDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2]))
 
 #---------------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION DROP DATABASES------------'
@@ -428,9 +450,9 @@ def p_instruccion_drop_database(t):
     '''drop_database_instr : DROP DATABASE ID PTCOMA
                         | DROP DATABASE IF EXISTS ID PTCOMA'''
     if t[4] == ';':
-        t[0] = dropDatabase(ExpresionIdentificador(t[3]), 0)
+        t[0] = dropDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]), 0)
     else:
-        t[0] = dropDatabase(ExpresionIdentificador(t[5]), 1)
+        t[0] = dropDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5]), 1)
 
 #---------------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION SHOW DATABASES------------'
@@ -461,19 +483,19 @@ def p_instruccion_showTables(t):
 
 def p_createDB(t):
     'createDB_insrt : CREATE DATABASE ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), ExpresionIdentificador(""), ExpresionNumeroSimple(1), 0)
+    t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]), ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,""), ExpresionNumeroSimple(1), 0)
 
 def p_createDB_wRP(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), ExpresionIdentificador(""), ExpresionNumeroSimple(1), 1)
+    t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5]), ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,""), ExpresionNumeroSimple(1), 1)
 
 def p_createDB_wIfNot(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), ExpresionNumeroSimple(1), 0)
+    t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[6]), ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,""), ExpresionNumeroSimple(1), 0)
 
 def p_createDB_wRP_wIN(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), ExpresionIdentificador(""), ExpresionNumeroSimple(1), 1)
+    t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[8]), ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,""), ExpresionNumeroSimple(1), 1)
 
 
 #***********************************************
@@ -482,31 +504,31 @@ def p_createDB_wRP_wIN(t):
 def p_createDB_up(t):
     'createDB_insrt : CREATE DATABASE ID createDB_unParam PTCOMA'
     if type(t[4]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4], ExpresionNumeroSimple(1),0)
+        t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]), t[4], ExpresionNumeroSimple(1),0)
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[3]), ExpresionIdentificador(""), t[4],0)
+        t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]), ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,""), t[4],0)
 
 
 def p_createDB_wRP_up(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID createDB_unParam PTCOMA'
     if type(t[6]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6], ExpresionNumeroSimple(1),1)
+        t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5]), t[6], ExpresionNumeroSimple(1),1)
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[5]), ExpresionIdentificador(""), t[6],1)
+        t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5]), ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,""), t[6],1)
 
 def p_createDB_wIfNot_up(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
     if type(t[7]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], ExpresionNumeroSimple(1),0)
+        t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[6]), t[7], ExpresionNumeroSimple(1),0)
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), t[7],0)
+        t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[6]), ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,""), t[7],0)
 
 def p_createDB_wRP_wIN_up(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_unParam PTCOMA'
     if type(t[7]) == ExpresionIdentificador:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7], ExpresionNumeroSimple(1),1)
+        t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[6]), t[7], ExpresionNumeroSimple(1),1)
     else:
-        t[0] = CreateDatabase(ExpresionIdentificador(t[6]), ExpresionIdentificador(""), t[7],1)
+        t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[6]), ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,""), t[7],1)
 
 def p_createDB_unParam_Owner(t):
     '''createDB_unParam : OWNER ID
@@ -515,9 +537,9 @@ def p_createDB_unParam_Owner(t):
                         | MODE IGUAL ENTERO'''
     if t[1].upper() == 'OWNER':
         if t[2] == '=':
-            t[0] = ExpresionIdentificador(t[3])
+            t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3])
         else:
-            t[0] = t[0] = ExpresionIdentificador(t[2])
+            t[0] = t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2])
     elif  t[1].upper() == 'MODE':
         if t[2] == '=':
             t[0] = ExpresionNumeroSimple(t[3])
@@ -529,19 +551,19 @@ def p_createDB_unParam_Owner(t):
 
 def p_createDB_dp(t):
     'createDB_insrt : CREATE DATABASE ID createDB_dosParam PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[3]), t[4][0], t[4][1],0)
+    t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]), t[4][0], t[4][1],0)
 
 def p_createDB_wRP_dp(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE ID createDB_dosParam PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[5]), t[6][0], t[6][1],1)
+    t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5]), t[6][0], t[6][1],1)
 
 def p_createDB_wIfNot_dp(t):
     'createDB_insrt : CREATE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[6]), t[7][0], t[7][1],0)
+    t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[6]), t[7][0], t[7][1],0)
 
 def p_createDB_wRP_wIN_dp(t):
     'createDB_insrt : CREATE OR REPLACE DATABASE IF NOT EXISTS ID createDB_dosParam PTCOMA'
-    t[0] = CreateDatabase(ExpresionIdentificador(t[8]), t[9][0], t[9][1],1)
+    t[0] = CreateDatabase(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[8]), t[9][0], t[9][1],1)
 
 def p_createDB_dosParam_Owner(t):
     '''createDB_dosParam : OWNER ID MODE ENTERO
@@ -556,31 +578,31 @@ def p_createDB_dosParam_Owner(t):
     temp = []     
     if t[1].upper() == 'OWNER' and t[3].upper() == 'MODE':
         if t[4] == '=':
-            temp.append(ExpresionIdentificador(t[2]))
+            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2]))
             temp.append(ExpresionNumeroSimple(t[5]))
         else: 
-            temp.append(ExpresionIdentificador(t[2]))
+            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2]))
             temp.append(ExpresionNumeroSimple(t[4]))
     elif t[1].upper() == 'OWNER' and t[4].upper() == 'MODE':
         if t[5] == '=':
-            temp.append(ExpresionIdentificador(t[3]))
+            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]))
             temp.append(ExpresionNumeroSimple(t[6]))
         else: 
-            temp.append(ExpresionIdentificador(t[3]))
+            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]))
             temp.append(ExpresionNumeroSimple(t[5]))
     elif t[1].upper() == 'MODE' and type(t[3]) != int:
         if t[4] == '=':
-            temp.append(ExpresionIdentificador(t[5]))
+            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5]))
             temp.append(ExpresionNumeroSimple(t[2]))
         else: 
-            temp.append(ExpresionIdentificador(t[4]))
+            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[4]))
             temp.append(ExpresionNumeroSimple(t[2]))
     elif t[1].upper() == 'MODE' and type(t[3]) == int:
         if t[5] == '=':
-            temp.append(ExpresionIdentificador(t[6]))
+            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[6]))
             temp.append(ExpresionNumeroSimple(t[3]))
         else: 
-            temp.append(ExpresionIdentificador(t[5]))
+            temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5]))
             temp.append(ExpresionNumeroSimple(t[3]))
     t[0] = temp
 
@@ -614,12 +636,12 @@ def p_constraint_esp2(t):
 #YA ESTA
 def p_cons_campos(t):
     'campos_c : campos_c COMA ID '
-    t[1].append(ExpresionIdentificador(t[3]))
+    t[1].append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]))
     t[0] = t[1]
 
 def p_cons_campos_id(t):
     ' campos_c : ID'
-    t[0] = [ExpresionIdentificador(t[1])]
+    t[0] = [ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])]
 
 #-------------------------------------------------------------------------
 #
@@ -803,18 +825,18 @@ def p_agrupacion_expresion(t):
 
 def p_expresion_cadena(t):
     'expresion : CADENA'
-    t[0] = ExpresionComillaSimple(t[1])
+    t[0] = ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[1])
 
 
 def p_expresion1(t):
     '''expresion : ENTERO 
                    | FLOTANTE'''
-    t[0] = ExpresionEntero(t[1])               
+    t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1])               
 
 
 def p_expresion3(t):
     'expresion : ID'
-    t[0] = ExpresionIdentificador(t[1])                  
+    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])                  
                       
 def p_expresion4(t):
     ' expresion : ID PUNTO ID '
@@ -840,7 +862,7 @@ def p_expresion_boolean(t):
 def p_string_type(t):
     ''' string_type : CADENA
                      | ID '''
-    t[0] = ExpresionIdentificador(t[1])
+    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
 
 ' --------------- EXPRESIONES -----------------------'
 def p_expresion_relacional(t):

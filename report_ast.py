@@ -38,6 +38,8 @@ class AST:
                 self.crearNodo_alterDatabase("node2", instruccion)
             elif isinstance(instruccion, showTables):
                 self.crearNodoshowTables("node2", instruccion)
+            elif isinstance(instruccion, Create_update):
+                self.crearNodoUpdate("node2",instruccion)
             indice = indice +1
         dot.view('reportes/AST', cleanup=True)
 
@@ -90,6 +92,22 @@ class AST:
         elif isinstance(expresion, ExpresionComillaSimple):
             contadorNodos = contadorNodos + 1
             dot.node("node" + str(contadorNodos), str(expresion.val))
+            dot.edge(padre, "node" + str(contadorNodos))
+        elif isinstance(expresion, ExpresionEntero):
+            contadorNodos = contadorNodos + 1
+            dot.node("node" + str(contadorNodos), str(expresion.val))
+            dot.edge(padre, "node" + str(contadorNodos))
+        elif isinstance(expresion, ExpresionRelacional):
+            contadorNodos = contadorNodos + 1
+            dot.node("node" + str(contadorNodos), str(expresion.exp1))
+            dot.node("node" + str(contadorNodos), str(expresion.exp2))
+            dot.node("node" + str(contadorNodos), str(expresion.operador))
+            dot.edge(padre, "node" + str(contadorNodos))
+        elif isinstance(expresion, ExpresionBinaria):
+            contadorNodos = contadorNodos + 1
+            dot.node("node" + str(contadorNodos), str(expresion.exp1))
+            dot.node("node" + str(contadorNodos), str(expresion.exp2))
+            dot.node("node" + str(contadorNodos), str(expresion.operador))
             dot.edge(padre, "node" + str(contadorNodos))
         else:
             contadorNodos = contadorNodos + 1
@@ -468,3 +486,118 @@ class AST:
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)
         self.crearNodoExpresion(temp1,instruccion.tipo_id)
+
+    def crearNodoUpdate(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'UPDATE')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.CrearNombreTabla(temp1, instruccion)
+        self.Crear_lista_parametros(temp1, instruccion)
+
+    def CrearNombreTabla(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Nombre Tabla')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1,instruccion.identificador.id)
+
+    def Crear_lista_parametros(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Lista_parametros')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        if instruccion.lista_update != []:
+            for datos in instruccion.lista_update:
+                self.crearNodoExpresion(temp1,datos.ids.id)
+                self.crearNodoExpresion(temp1,"=")
+                self.crearNodoExpresion(temp1,datos.expresion.val)
+        self.crearNodoWhere(temp1, instruccion)
+
+    def crearNodoWhere(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'WHERE')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos) 
+
+        if instruccion.expresion.operador == OPERACION_RELACIONAL.MAYQUE:
+                self.Valores1(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2(temp1, instruccion)
+        if instruccion.expresion.operador == OPERACION_RELACIONAL.MENQUE:
+                self.Valores1(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2(temp1, instruccion)
+        if instruccion.expresion.operador == OPERACION_RELACIONAL.MAYIGQUE:
+                self.Valores1(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2(temp1, instruccion)
+        if instruccion.expresion.operador == OPERACION_RELACIONAL.MENIGQUE:
+                self.Valores1(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2(temp1, instruccion)
+        if instruccion.expresion.operador == OPERACION_RELACIONAL.DOBLEIGUAL:
+                self.Valores1(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2(temp1, instruccion)
+        if instruccion.expresion.operador == OPERACION_RELACIONAL.NOIG:
+                self.Valores1(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2(temp1, instruccion)
+        if instruccion.expresion.operador == OPERACION_RELACIONAL.DIFERENTE:
+                self.Valores1(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2(temp1, instruccion)
+        if instruccion.expresion.operador == OPERACION_RELACIONAL.IGUAL:
+                self.Valores1(temp1, instruccion)
+                self.operador(temp1, instruccion)
+                self.Valores2(temp1, instruccion)  
+
+    def operador(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Operador')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1, instruccion.expresion.operador)      
+
+    def Valores1(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'expresion 1')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos) 
+        if instruccion.expresion.exp1.etiqueta == TIPO_VALOR.IDENTIFICADOR:
+            self.crearNodoExpresion(temp1,instruccion.expresion.exp1.id)
+
+          
+    def Valores2(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'expresion 2')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        if instruccion.expresion.exp2.etiqueta == TIPO_VALOR.NUMERO:
+            self.crearNodoExpresion(temp1, instruccion.expresion.exp2.val)  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+digraph AST {
+	node [color=lightblue2 shape=note style=filled]
+	node1 [label=INIT]
+}
