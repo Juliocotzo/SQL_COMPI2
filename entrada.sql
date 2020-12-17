@@ -1,7 +1,5 @@
 CREATE DATABASE compiladores2;
 
-CREATE DATABASE lenguajes;
-
 USE compiladores2;
 
 CREATE TABLE tbUSUARIO(
@@ -18,14 +16,13 @@ CREATE TABLE tbCURSO(
 CREATE TABLE tbASIGNACION(
     id_asignacion   INTEGER PRIMARY KEY,
     id_ususario     INTEGER NOT NULL,
-    id_curso        INTEGER NOT NULL
+    id_curso        INTEGER NOT NULL,
+    CONSTRAINT userr FOREIGN KEY (id_ususario) REFERENCES tbUSUARIO(id_ususario),
+    CONSTRAINT cursoo FOREIGN KEY (id_curso) REFERENCES tbCURSO(id_curso)
 );
-
-ALTER DATABASE compiladores2 RENAME TO compi2;
-
-USE compi2;
-
 
 SHOW TABLES;
 
-DROP DATABASE compi2;
+ALTER TABLE tbUSUARIO ADD COLUMN telefono VARCHAR(50);
+
+SHOW TABLES;

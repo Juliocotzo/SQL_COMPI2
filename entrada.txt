@@ -1,3 +1,7 @@
+CREATE DATABASE compiladores2;
+
+CREATE DATABASE lenguajes;
+
 USE compiladores2;
 
 CREATE TABLE tbUSUARIO(
@@ -18,3 +22,6 @@ CREATE TABLE tbASIGNACION(
     CONSTRAINT userr FOREIGN KEY (id_ususario) REFERENCES tbUSUARIO(id_ususario),
     CONSTRAINT cursoo FOREIGN KEY (id_curso) REFERENCES tbCURSO(id_curso)
 );
+
+
+ALTER TABLE tbUSUARIO ADD COLUMN direccion INTEGER,direccion2 VARCHAR(50);

@@ -98,12 +98,6 @@ def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
                 ts.agregar(temp)
                 tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.CHECK,None,None)
                 tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.CHECK)
-            
-            
-            
-                
-
-    
     
 
 def procesar_listaId(instr,ts,tc,tabla):
@@ -298,7 +292,20 @@ def procesar_update(instr,ts,tc):
 def procesar_drop(instr,ts,tc):
     if instr.lista_ids != []:
         for datos in instr.lista_ids:
-            print(datos.id)
+            #print(datos.id)
+            result = j.dropTable(str(useCurrentDatabase),str(datos.id))
+            global salida
+            if result == 0:
+                global salida
+                salida = "\nDROP TABLE"
+                ts.deleteDatabase(datos.id)
+            elif result == 1 :
+                salida = "\nERROR:  internal_error \nSQL state: XX000 "
+            elif result == 2 :
+                salida = "\nERROR:  database \"" + str(useCurrentDatabase) +"\" does not exist \nSQL state: 3D000"
+            elif result == 3 :
+                salida = "\nERROR:  table \"" + str(datos.id) +"\" does not exist \nSQL state: 42P01"
+        
 
 #Alter table
 
@@ -383,12 +390,24 @@ def procesar_altertable(instr,ts,tc):
         print(instr.identificador)
         if instr.lista_campos != []:
             for datos in instr.lista_campos:
-                print(datos.identificador.val)
-                print(datos.tipo.val)
-                if datos.par1 != None:
-                    print(datos.par1)
-                if datos.par2 != None:
-                    print(datos.par2)
+                print(str(useCurrentDatabase),str(instr.identificador))
+                result = j.alterAddColumn(str(useCurrentDatabase),str(instr.identificador),1)
+                if result == 0:
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,datos.identificador.id,datos.tipo.id,"","","")
+                    tc.agregar(tipo)
+                    temp1 = ts.obtener(instr.identificador,useCurrentDatabase)
+                    temp2 = TS.Simbolo(temp1.id,temp1.tipo,temp1.valor+1,temp1.ambito)
+                    ts.actualizarDB(temp2,instr.identificador)
+                    salida = "\nALTER TABLE"            
+
+                elif result == 1 :
+                    salida = "\nERROR:  internal_error \nSQL state: XX000 "
+                elif result == 2 :
+                    salida = "\nERROR:  database \"" + str(useCurrentDatabase) +"\" does not exist \nSQL state: 3D000"
+                elif result == 3 :
+                    salida = "\nERROR:  relation \"" + str(instr.tipo_id) +"\" does not exist\nSQL state: 42P01"
+                
+                
 
 
 #INSERT
@@ -500,9 +519,15 @@ def procesar_instrucciones(instrucciones,ts,tc) :
             elif isinstance(instr,Create_update) : 
                 procesar_update(instr,ts,tc)
             elif isinstance(instr, Crear_Drop) : 
-                procesar_drop(instr,ts,tc)
+                if useCurrentDatabase != "":
+                    procesar_drop(instr,ts,tc)
+                else:
+                    salida = "\nSELECT DATABASE"
             elif isinstance(instr, Crear_altertable) :
-                procesar_altertable(instr,ts,tc)
+                if useCurrentDatabase != "":
+                    procesar_altertable(instr,ts,tc)
+                else:
+                    salida = "\nSELECT DATABASE"
             elif isinstance(instr, Definicion_Insert) :
                 procesar_insert(instr,ts,tc)
             elif isinstance(instr, Create_type) :
@@ -529,8 +554,8 @@ erroressss.crearReporte()
 typeC = TipeChecker()
 typeC.crearReporte(tc_global)
 typeS = RTablaDeSimbolos()
-typeS.crearReporte(ts_global)
+typeS.crearReporte(ts_global)'''
 
-astt = AST()
+'''astt = AST()
 astt.generarAST(instrucciones)'''
 

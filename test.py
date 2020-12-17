@@ -4,6 +4,42 @@
 
 from storageManager import jsonMode as j
 
-j.createTable('compiladores2','materia',3)
-print(j.showDatabases())
-print(j.showTables('compiladores2'))
+# drop all databases if exists
+j.dropAll()
+
+# create database
+j.createDatabase('world')
+
+# create tables
+j.createTable('world', 'countries', 4)
+j.createTable('world', 'cities',    4)
+j.createTable('world', 'languages', 4)
+
+# create simple primary keys
+j.alterAddPK('world', 'countries', [0])
+j.alterAddPK('world', 'cities',    [0])
+j.alterAddPK('world', 'languages', [0, 1])
+
+# insert data in countries
+j.insert('world', 'countries', ['GTM', 'Guatemala',  'Central America', 108889])
+j.insert('world', 'countries', ['SLV', 'El Salvado', 'Central America',  21041])  
+
+# insert data in cities
+j.insert('world', 'cities', [1, 'Guatemala',    'Guatemala',    'GTM'])
+j.insert('world', 'cities', [2, 'Cuilapa',      'Santa Rosa',   'GTM'])
+j.insert('world', 'cities', [3, 'San Salvador', 'San Salvador', 'SLV'])
+j.insert('world', 'cities', [4, 'San Miguel',   'San Miguel',   'SLV'])
+         
+# inser data in languages
+j.insert('world', 'languages', ['GTM', 'Spanish', 'official',  64.7])
+j.insert('world', 'languages', ['SLV', 'Spanish', 'official', 100.0])
+
+# show all datap
+print(j.extractTable('world','countries')) #SELECT
+j.showCollection()
+
+print(j.alterAddColumn('world','countries',1))
+print(j.alterAddColumn('world','countries',1))
+print(j.alterAddColumn('world','countries',1))
+print(j.alterAddColumn('world','countries',1))
+print(j.alterAddColumn('world','countries',1))
