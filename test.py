@@ -43,3 +43,5 @@ print(j.alterAddColumn('world','countries',1))
 print(j.alterAddColumn('world','countries',1))
 print(j.alterAddColumn('world','countries',1))
 print(j.alterAddColumn('world','countries',1))
+
+print(j.alterDropColumn('world','countries',1))

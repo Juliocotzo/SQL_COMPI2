@@ -389,6 +389,7 @@ def procesar_altertable(instr,ts,tc):
     elif instr.etiqueta ==  TIPO_ALTER_TABLE.ADD_COLUMN:
         print(instr.identificador)
         if instr.lista_campos != []:
+            global salida
             for datos in instr.lista_campos:
                 print(str(useCurrentDatabase),str(instr.identificador))
                 result = j.alterAddColumn(str(useCurrentDatabase),str(instr.identificador),1)

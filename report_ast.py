@@ -632,6 +632,8 @@ class AST:
             self.crearAlterTable_ConstraintForeign(temp1, instruccion)
         elif instruccion.etiqueta == TIPO_ALTER_TABLE.ALTER_COLUMN:
             self.crearAlterTable_Column(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.ADD_COLUMN:
+            self.crearAlterAddDropColumn(temp1, instruccion)
 
     def crearAlterTable_Column(self,padre,instruccion):
         global  contadorNodos, dot
@@ -1025,7 +1027,20 @@ class AST:
         if instruccion.expresion.exp2.etiqueta == TIPO_VALOR.NUMERO:
             self.crearNodoExpresion(temp1, instruccion.expresion.exp2.val)   
 
-
+    def crearAlterAddDropColumn(self,padre,instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Alter Add Column')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        if instruccion.lista_campos != []:
+            for datos in instruccion.lista_campos:
+                self.crearNodoExpresion(temp1,datos.identificador.id)
+                self.crearNodoExpresion(temp1,datos.tipo.id)
+                if datos.par1 != None:
+                    self.crearNodoExpresion(temp1,datos.par1)
+                if datos.par2 != None:
+                    self.crearNodoExpresion(temp1,datos.par2)
 
 
 
