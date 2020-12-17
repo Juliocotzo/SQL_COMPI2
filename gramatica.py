@@ -373,6 +373,7 @@ def p_instrucciones_lista(t) :
     'instrucciones    : instrucciones instruccion'
     t[1].append(t[2])
     t[0] = t[1]
+    
 
 def p_instrucciones_instruccion(t) :
     'instrucciones    : instruccion '
