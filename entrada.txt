@@ -5,8 +5,10 @@ USE compiladores2;
 
 CREATE TABLE tbUSUARIO(
 	id_ususario		INTEGER PRIMARY KEY,
-	usuario		INTEGER,
-	password		INTEGER
+	usuario		    INTEGER,
+	password		INTEGER,
+    telefono        VARCHAR(50),
+    direccion       VARCHAR(50)
 );
 
 CREATE TABLE tbCURSO(
@@ -22,4 +24,4 @@ CREATE TABLE tbASIGNACION(
     CONSTRAINT cursoo FOREIGN KEY (id_curso) REFERENCES tbCURSO(id_curso)
 );
 
-ALTER TABLE tbUSUARIO ADD COLUMN telefono VARCHAR(50);
+ALTER TABLE tbUSUARIO DROP COLUMN telefono;

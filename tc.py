@@ -88,6 +88,17 @@ class TablaDeTipos() :
             if elem.database == database and elem.tabla == tabla and elem.id == id:
                 self.tipos.remove(elem)
 
+    def getPos(self,database,tabla,id):
+        i = 0;
+        for elem in list(self.tipos):
+            if elem.database == database and elem.tabla == tabla:
+                if elem.id == id:
+                    return i;
+                i+=1
+
+        return False
+        
+
 
     def clear(self):
         self.tipos = []

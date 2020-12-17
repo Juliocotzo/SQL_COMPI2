@@ -3,24 +3,16 @@ from  expresiones import *
 
 tc_global = TC.TablaDeTipos()
 
-'''variable = TC.Tipo('Compi2','usuario','id_usuario','varchar(50)',None,None,None,[OPCIONES_CONSTRAINT.FOREIGN,OPCIONES_CONSTRAINT.NOT_NULL])
-tc_global.agregar(variable)'''
-buscar = tc_global.obtenerReturn('Compi2','usuario','id_usuario')
-'''
-variable1 = TC.Tipo('Compi2','usuario2','id_usuario','varchar(50)',None,None,None,[OPCIONES_CONSTRAINT.FOREIGN,OPCIONES_CONSTRAINT.NOT_NULL])
+variable = TC.Tipo('Compi2','usuario','id_usuario','varchar(50)',None,None,None,[OPCIONES_CONSTRAINT.FOREIGN,OPCIONES_CONSTRAINT.NOT_NULL])
+tc_global.agregar(variable)
+variable1 = TC.Tipo('Compi2','usuario1','id_usuario2','varchar(50)',None,None,None,[OPCIONES_CONSTRAINT.FOREIGN,OPCIONES_CONSTRAINT.NOT_NULL])
 tc_global.agregar(variable1)
-variable1 = TC.Tipo('Compi2','usuario2','usuario','varchar(50)',None,None,None,[OPCIONES_CONSTRAINT.FOREIGN,OPCIONES_CONSTRAINT.NOT_NULL])
-tc_global.agregar(variable1)'''
+variable2 = TC.Tipo('Compi2','usuario','usuario','varchar(50)',None,None,None,[OPCIONES_CONSTRAINT.FOREIGN,OPCIONES_CONSTRAINT.NOT_NULL])
+tc_global.agregar(variable2)
 
-if buscar != False:
-    tempA = buscar.listaCons
-    tempA.remove(OPCIONES_CONSTRAINT.FOREIGN)
-    print(tempA)
-    variable2 = TC.Tipo('Compi2','usuario','id_usuario','varchar(60)',None,None,None,tempA)
-    tc_global.actualizar(variable2,'Compi2','usuario','id_usuario')
-else:
-    variable = TC.Tipo('Compi2','usuario','id_usuario','varchar(50)',None,None,None,[OPCIONES_CONSTRAINT.FOREIGN,OPCIONES_CONSTRAINT.NOT_NULL])
-    tc_global.agregar(variable)
+
+print(tc_global.getPos('Compi2','usuario1','id_usuario2'))
+
 #tc_global.eliminarTabla('Compi2','usuario2')
 #tc_global.eliminarID('Compi2','usuario2','id_usuario')
 #tc_global.eliminarDatabase('Compi2')

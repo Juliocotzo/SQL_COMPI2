@@ -38,10 +38,3 @@ j.insert('world', 'languages', ['SLV', 'Spanish', 'official', 100.0])
 print(j.extractTable('world','countries')) #SELECT
 j.showCollection()
 
-print(j.alterAddColumn('world','countries',1))
-print(j.alterAddColumn('world','countries',1))
-print(j.alterAddColumn('world','countries',1))
-print(j.alterAddColumn('world','countries',1))
-print(j.alterAddColumn('world','countries',1))
-
-print(j.alterDropColumn('world','countries',1))

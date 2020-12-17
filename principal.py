@@ -421,7 +421,7 @@ def procesar_drop(instr,ts,tc):
 #Alter table
 
 def procesar_altertable(instr,ts,tc):
-    print(instr.etiqueta)
+    #print(instr.etiqueta)
     if instr.etiqueta == TIPO_ALTER_TABLE.ADD_CHECK:
         if instr.expresionlogica.operador == OPERACION_LOGICA.AND or instr.expresionlogica.operador == OPERACION_LOGICA.OR: 
             print(instr.identificador)
@@ -498,10 +498,37 @@ def procesar_altertable(instr,ts,tc):
         print(instr.tocolumnid)
     
     elif instr.etiqueta == TIPO_ALTER_TABLE.DROP_COLUMN:
-        print(instr.identificador)
+        #print('Tabla',instr.identificador)
         if instr.lista_campos != []:
             for datos in instr.lista_campos:
-                print(datos.id)
+                #print('Columna',datos.id)
+                
+                pos = tc.getPos(useCurrentDatabase,instr.identificador,datos.id)
+                print(pos)
+                #result = j.alterDropColumn('world','countries',1)
+                #print(result)
+                result = 0
+                if result == 0:
+                    global salida
+                    tc.eliminarID(useCurrentDatabase,instr.identificador,datos.id)
+                    temp1 = ts.obtener(instr.identificador,useCurrentDatabase)
+                    temp2 = TS.Simbolo(temp1.id,temp1.tipo,temp1.valor-1,temp1.ambito)
+                    ts.actualizarDB(temp2,instr.identificador)
+                    salida = "\nALTER TABLE"            
+                    print(salida)
+
+                elif result == 1 :
+                    salida = "\nERROR:  internal_error \nSQL state: XX000 "
+                elif result == 2 :
+                    salida = "\nERROR:  database \"" + str(useCurrentDatabase) +"\" does not exist \nSQL state: 3D000"
+                elif result == 3 :
+                    salida = "\nERROR:  relation \"" + str(instr.identificador) +"\" does not exist\nSQL state: 42P01"
+                elif result == 4 :
+                    salida = "\nERROR:  key cannot be removed\nSQL state: 42P04"
+                elif result == 5 :
+                    salida = "\nERROR:  column out of bounds\nSQL state: 42P05"
+
+                
 
     elif instr.etiqueta ==  TIPO_ALTER_TABLE.ADD_COLUMN:
         tipodatoo = TIPO_DE_DATOS.text_ 
@@ -543,13 +570,9 @@ def procesar_altertable(instr,ts,tc):
             tipodatoo = TIPO_DE_DATOS.numeric 
         elif instr.lista_campos[0].tipo.id.upper() == 'DOUBLE':
             tipodatoo = TIPO_DE_DATOS.double_precision
-
-
-        print(instr.lista_campos[0].tipo.id)
+        
         if instr.lista_campos != []:
-            global salida
             for datos in instr.lista_campos:
-                print(str(useCurrentDatabase),str(instr.identificador))
                 result = j.alterAddColumn(str(useCurrentDatabase),str(instr.identificador),1)
                 if result == 0:
                     buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,datos.identificador.id)
