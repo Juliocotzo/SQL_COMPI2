@@ -1,3 +1,4 @@
+CREATE DATABASE compiladores1;
 CREATE DATABASE compiladores2;
 
 USE compiladores2;
@@ -20,3 +21,5 @@ CREATE TABLE tbASIGNACION(
     CONSTRAINT userr FOREIGN KEY (id_ususario) REFERENCES tbUSUARIO(id_ususario),
     CONSTRAINT cursoo FOREIGN KEY (id_curso) REFERENCES tbCURSO(id_curso)
 );
+
+ALTER TABLE tbUSUARIO ADD COLUMN telefono VARCHAR(50);

@@ -332,6 +332,7 @@ def procesar_dropDatabase(instr,ts,tc):
             global salida
             salida = "\nDROP DATABASE"
             ts.deleteDatabase(instr.id.id)
+            tc.eliminarDatabase(instr.id.id)
         elif result == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
             print("ERROR:  internal_error \nSQL state: XX000 ")
@@ -408,6 +409,7 @@ def procesar_drop(instr,ts,tc):
                 global salida
                 salida = "\nDROP TABLE"
                 ts.deleteDatabase(datos.id)
+                tc.eliminarTabla(useCurrentDatabase,datos.id)
             elif result == 1 :
                 salida = "\nERROR:  internal_error \nSQL state: XX000 "
             elif result == 2 :
@@ -502,15 +504,61 @@ def procesar_altertable(instr,ts,tc):
                 print(datos.id)
 
     elif instr.etiqueta ==  TIPO_ALTER_TABLE.ADD_COLUMN:
-        print(instr.identificador)
+        tipodatoo = TIPO_DE_DATOS.text_ 
+        if instr.lista_campos[0].tipo.id.upper() == 'TEXT':
+            tipodatoo = TIPO_DE_DATOS.text_ 
+        elif instr.lista_campos[0].tipo.id.upper() == 'FLOAT':
+            tipodatoo = TIPO_DE_DATOS.float_ 
+        elif instr.lista_campos[0].tipo.id.upper() == 'INTEGER':
+            tipodatoo = TIPO_DE_DATOS.integer_ 
+        elif instr.lista_campos[0].tipo.id.upper() == 'SMALLINT':
+            tipodatoo = TIPO_DE_DATOS.smallint_ 
+        elif instr.lista_campos[0].tipo.id.upper() == 'MONEY':
+            tipodatoo = TIPO_DE_DATOS.money 
+        elif instr.lista_campos[0].tipo.id.upper() == 'BIGINT':
+            tipodatoo = TIPO_DE_DATOS.bigint 
+        elif instr.lista_campos[0].tipo.id.upper() == 'REAL':
+            tipodatoo = TIPO_DE_DATOS.real 
+        elif instr.lista_campos[0].tipo.id.upper() == 'DOUBLE':
+            tipodatoo = TIPO_DE_DATOS.double 
+        elif instr.lista_campos[0].tipo.id.upper() == 'INTERVAL':
+            tipodatoo = TIPO_DE_DATOS.interval 
+        elif instr.lista_campos[0].tipo.id.upper() == 'TIME':
+            tipodatoo = TIPO_DE_DATOS.time 
+        elif instr.lista_campos[0].tipo.id.upper() == 'TIMESTAMP':
+            tipodatoo = TIPO_DE_DATOS.timestamp 
+        elif instr.lista_campos[0].tipo.id.upper() == 'DATE':
+            tipodatoo = TIPO_DE_DATOS.date 
+        elif instr.lista_campos[0].tipo.id.upper() == 'VARING':
+            tipodatoo = TIPO_DE_DATOS.varing 
+        elif instr.lista_campos[0].tipo.id.upper() == 'VARCHAR':
+            tipodatoo = TIPO_DE_DATOS.varchar 
+        elif instr.lista_campos[0].tipo.id.upper() == 'CHAR':
+            tipodatoo = TIPO_DE_DATOS.char 
+        elif instr.lista_campos[0].tipo.id.upper() == 'CHARACTER':
+            tipodatoo = TIPO_DE_DATOS.character 
+        elif instr.lista_campos[0].tipo.id.upper() == 'DECIMAL':
+            tipodatoo = TIPO_DE_DATOS.decimal 
+        elif instr.lista_campos[0].tipo.id.upper() == 'NUMERIC':
+            tipodatoo = TIPO_DE_DATOS.numeric 
+        elif instr.lista_campos[0].tipo.id.upper() == 'DOUBLE':
+            tipodatoo = TIPO_DE_DATOS.double_precision
+
+
+        print(instr.lista_campos[0].tipo.id)
         if instr.lista_campos != []:
             global salida
             for datos in instr.lista_campos:
                 print(str(useCurrentDatabase),str(instr.identificador))
                 result = j.alterAddColumn(str(useCurrentDatabase),str(instr.identificador),1)
                 if result == 0:
-                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,datos.identificador.id,datos.tipo.id,"","","")
-                    tc.agregar(tipo)
+                    buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,datos.identificador.id)
+                    if buscar == False:
+                        tipo = TC.Tipo(useCurrentDatabase,instr.identificador,datos.identificador.id,tipodatoo,"","","",[])
+                        tc.agregar(tipo)
+                    else:
+                        print('New')
+                    
                     temp1 = ts.obtener(instr.identificador,useCurrentDatabase)
                     temp2 = TS.Simbolo(temp1.id,temp1.tipo,temp1.valor+1,temp1.ambito)
                     ts.actualizarDB(temp2,instr.identificador)
