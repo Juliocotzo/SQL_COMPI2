@@ -62,7 +62,6 @@ reservadas = {
     'drop': 'DROP',
     'currUser' : 'CURRENT_USER',
     'sessUser' : 'SESSION_USER',
-    'foreign' : 'FOREIGN',
     'add' : 'ADD',
     'check' : 'CHECK',
     'constraint': 'CONSTRAINT',
@@ -529,6 +528,10 @@ def p_alterTable3(t):
     'alterTable_insrt : ALTER TABLE ID DROP CONSTRAINT campos_c PTCOMA'
     t[0] = Crear_altertable(TIPO_ALTER_TABLE.DROP_CONSTRAINT,t[3],None,None,None,t[6],None)
 
+def p_alterTable_Drop(t):
+    'alterTable_insrt : ALTER TABLE ID DROP COLUMN campos_c PTCOMA'
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.DROP_COLUMN, t[3], None,None,None,t[6],None)
+
 def p_alterTable4(t):
     'alterTable_insrt : ALTER TABLE ID RENAME COLUMN ID TO ID PTCOMA'
     t[0] = Crear_altertable(TIPO_ALTER_TABLE.RENAME_COLUMN,t[3],t[6],t[8],None,None,None)
@@ -985,7 +988,6 @@ def p_expresion1_DEFAULT(t):
 ##########################################################
 ##########################################################
 ##########################################################
-
 
 def p_createTable_pk(t):
     ' cuerpo_createTable :  PRIMARY KEY PAR_A ID PAR_C'

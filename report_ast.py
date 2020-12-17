@@ -634,6 +634,19 @@ class AST:
             self.crearAlterTable_Column(temp1, instruccion)
         elif instruccion.etiqueta == TIPO_ALTER_TABLE.ADD_COLUMN:
             self.crearAlterAddDropColumn(temp1, instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.DROP_COLUMN:
+            self.crearAlterDrop_Column(temp1,instruccion)
+
+    def crearAlterDrop_Column(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'Alter Add Column')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos) 
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        if instruccion.lista_campos != []:
+            for datos in instruccion.lista_campos:
+                self.crearNodoExpresion(temp1,datos.id)
 
     def crearAlterTable_Column(self,padre,instruccion):
         global  contadorNodos, dot

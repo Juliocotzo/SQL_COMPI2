@@ -33,27 +33,39 @@ def procesar_createTable(instr,ts,tc) :
             elif isinstance(ins, definicion_constraint): 
                 procesar_constraint(ins,ts,tc,instr.id)
         
-        result = j.createTable(str(useCurrentDatabase),str(instr.id),int(len(columns)))
-        if result == 0:
-            salida = "\nCREATE TABLE"
-            temp1 = TS.Simbolo(str(instr.id),'Table',int(len(columns)),str(useCurrentDatabase))
-            ts.agregar(temp1)
-        elif result == 1 :
-            salida = "\nERROR:  internal_error \nSQL state: XX000 "
-        elif result == 2 :
-            salida = "\nERROR:  database \"" + useCurrentDatabase +"\" does not exist \nSQL state: 3D000"
-        elif result == 3 :
-            salida = "\nERROR:  relation \"" + str(instr.id) +"\" alredy exists\nSQL state: 42P07"
+        try:
+            result = j.createTable(str(useCurrentDatabase),str(instr.id),int(len(columns)))
+            if result == 0:
+                salida = "\nCREATE TABLE"
+                temp1 = TS.Simbolo(str(instr.id),'Table',int(len(columns)),str(useCurrentDatabase))
+                ts.agregar(temp1)
+            elif result == 1 :
+                salida = "\nERROR:  internal_error \nSQL state: XX000 "
+            elif result == 2 :
+                salida = "\nERROR:  database \"" + useCurrentDatabase +"\" does not exist \nSQL state: 3D000"
+            elif result == 3 :
+                salida = "\nERROR:  relation \"" + str(instr.id) +"\" alredy exists\nSQL state: 42P07"
+        except :
+            pass
             
 def procesar_Definicion(instr,ts,tc,tabla) :
-    #print(instr.opciones_constraint)
     if instr.opciones_constraint == None:
-        tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,"","","")
-        tc.agregar(tipo)
-    else:
-        for ins in instr.opciones_constraint:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,"","","")
+        buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.id)
+        if buscar == False:
+            tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,"","","",[])
             tc.agregar(tipo)
+        else:
+            print('No Encontrado')
+            
+    else:
+        buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.id)
+        if buscar == False:
+            tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,instr.tipo_datos.etiqueta,"","","",[])
+            tc.agregar(tipo)
+        else:
+            print('No Encontrado')
+            
+        for ins in instr.opciones_constraint:
             if isinstance(ins, definicion_constraint): 
                 procesar_constraintDefinicion(ins,ts,tc,tabla,instr.id)
     
@@ -63,84 +75,181 @@ def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
 
     if instr.id == None:
         if instr.tipo == OPCIONES_CONSTRAINT.NOT_NULL:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.NOT_NULL,None,None)
-            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.NOT_NULL)
+            buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
+            if buscar == False:
+                print('Encontrado')
+            else:
+                tempA = buscar.listaCons
+                tempA.append(OPCIONES_CONSTRAINT.NOT_NULL)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,buscar.tipo,"","","",tempA)
+                tc.actualizar(tipo,useCurrentDatabase,tabla,instr.id)
         elif instr.tipo == OPCIONES_CONSTRAINT.NULL:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.NULL,None,None)
-            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.NULL)
+            buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
+            if buscar == False:
+                print('Encontrado')
+            else:
+                tempA = buscar.listaCons
+                tempA.append(OPCIONES_CONSTRAINT.NULL)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,buscar.tipo,"","","",tempA)
+                tc.actualizar(tipo,useCurrentDatabase,tabla,instr.id)
         elif instr.tipo == OPCIONES_CONSTRAINT.PRIMARY:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.PRIMARY,None,None)
-            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.PRIMARY)
+            buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
+            if buscar == False:
+                print('Encontrado')
+            else:
+                tempA = buscar.listaCons
+                tempA.append(OPCIONES_CONSTRAINT.PRIMARY)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,buscar.tipo,"","","",tempA)
+                tc.actualizar(tipo,useCurrentDatabase,tabla,instr.id)
         elif instr.tipo == OPCIONES_CONSTRAINT.FOREIGN:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.FOREIGN,None,None)
-            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.FOREIGN)
+            buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
+            if buscar == False:
+                print('Encontrado')
+            else:
+                tempA = buscar.listaCons
+                tempA.append(OPCIONES_CONSTRAINT.FOREIGN)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,buscar.tipo,"","","",tempA)
+                tc.actualizar(tipo,useCurrentDatabase,tabla,instr.id)
         elif instr.tipo == OPCIONES_CONSTRAINT.UNIQUE:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.UNIQUE,None,None)
-            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.UNIQUE)
+            buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
+            if buscar == False:
+                print('Encontrado')
+            else:
+                tempA = buscar.listaCons
+                tempA.append(OPCIONES_CONSTRAINT.UNIQUE)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,buscar.tipo,"","","",tempA)
+                tc.actualizar(tipo,useCurrentDatabase,tabla,instr.id)
         elif instr.tipo == OPCIONES_CONSTRAINT.DEFAULT:
             if instr.opciones_constraint != []:
-                tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.DEFAULT,None,None)
-                tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.DEFAULT)
+                buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
+                if buscar == False:
+                    print('Encontrado')
+                else:
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.DEFAULT)
+                    tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,buscar.tipo,"","","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,tabla,instr.id)
         elif instr.tipo == OPCIONES_CONSTRAINT.CHECK:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.CHECK,None,None)
-            tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.CHECK)
+            buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
+            if buscar == False:
+                print('Encontrado')
+            else:
+                tempA = buscar.listaCons
+                tempA.append(OPCIONES_CONSTRAINT.CHECK)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,buscar.tipo,"","","",tempA)
+                tc.actualizar(tipo,useCurrentDatabase,tabla,instr.id)
 
     else:
         if instr.tipo == OPCIONES_CONSTRAINT.UNIQUE:
             if instr.opciones_constraint == None:
                 temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
                 ts.agregar(temp)
-                tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.UNIQUE,None,None)
-                tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.UNIQUE)
+                buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
+                if buscar == False:
+                    print('Encontrado')
+                else:
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.UNIQUE)
+                    tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,buscar.tipo,"","","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,tabla,id_column)
         elif instr.tipo == OPCIONES_CONSTRAINT.CHECK:
             if instr.opciones_constraint != None:
                 temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
                 ts.agregar(temp)
-                tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,None,OPCIONES_CONSTRAINT.CHECK,None,None)
-                tc.actualizarRestriccion2(tipo,useCurrentDatabase,tabla,id_column,OPCIONES_CONSTRAINT.CHECK)
+                buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
+                if buscar == False:
+                    print('Encontrado')
+                else:
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.CHECK)
+                    tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,buscar.tipo,"","","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,tabla,id_column)
     
 
 def procesar_listaId(instr,ts,tc,tabla):
     if instr.identificadores != []:
         for ids in instr.identificadores:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,None,OPCIONESCREATE_TABLE.UNIQUE,None,None)
-            tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.id,OPCIONESCREATE_TABLE.UNIQUE)
+            buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.id)
+            if buscar == False:
+                print('No Encontrado')
+            else:
+                tempA = buscar.listaCons
+                tempA.append(OPCIONES_CONSTRAINT.UNIQUE)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,buscar.tipo,"","","",tempA)
+                tc.actualizar(tipo,useCurrentDatabase,tabla,ids.id)
 
 def procesar_primaria(instr,ts,tc,tabla):
-    tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,None,OPCIONESCREATE_TABLE.PRIMARIA,None,None)
-    tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,instr.id,OPCIONESCREATE_TABLE.PRIMARIA)
+    buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.id)
+    if buscar == False:
+        print('No Encontrado')
+    else:
+        tempA = buscar.listaCons
+        tempA.append(OPCIONES_CONSTRAINT.PRIMARY)
+        tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,buscar.tipo,"","","",tempA)
+        tc.actualizar(tipo,useCurrentDatabase,tabla,instr.id)
 
 def procesar_Foranea(instr,ts,tc,tabla):
-    # print(instr.nombre_tabla,instr.referencia_tabla,instr.campo_referencia)
-    tipo = TC.Tipo(useCurrentDatabase,tabla,instr.nombre_tabla,None,OPCIONESCREATE_TABLE.PRIMARIA,instr.campo_referencia,instr.referencia_tabla)
-    tc.actualizarLlaveForanea(tipo,useCurrentDatabase,tabla,instr.nombre_tabla,OPCIONESCREATE_TABLE.FORANEA,instr.referencia_tabla,instr.campo_referencia)
-    
+    buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.nombre_tabla)
+    if buscar == False:
+        print('No Encontrado')
+    else:
+        tempA = buscar.listaCons
+        tempA.append(OPCIONES_CONSTRAINT.FOREIGN)
+        tipo = TC.Tipo(useCurrentDatabase,tabla,instr.nombre_tabla,buscar.tipo,"",instr.campo_referencia,instr.referencia_tabla,tempA)
+        tc.actualizar(tipo,useCurrentDatabase,tabla,instr.nombre_tabla)
+
 def procesar_constraint(instr,ts,tc,tabla):
     if instr.tipo == 'UNIQUE':
         if instr.opciones_constraint != []:
             temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
             ts.agregar(temp)
             for ids in instr.opciones_constraint:
-                tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,None,OPCIONESCREATE_TABLE.UNIQUE,None,None)
-                tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.id,OPCIONESCREATE_TABLE.UNIQUE)
+                buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.id)
+                if buscar == False:
+                    print('No Encontrado')
+                else:
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.UNIQUE)
+                    tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,buscar.tipo,"",ids,instr.referencia,tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,tabla,ids.id)
+                
     elif instr.tipo == 'FOREIGN':
         if instr.opciones_constraint != []:
             temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
             ts.agregar(temp)
             for ids in instr.opciones_constraint:
-                tipo = TC.Tipo(useCurrentDatabase,tabla,instr.columna,None,OPCIONESCREATE_TABLE.FORANEA,ids,instr.referencia)
-                tc.actualizarLlaveForanea(tipo,useCurrentDatabase,tabla,instr.columna,OPCIONESCREATE_TABLE.FORANEA,instr.referencia,ids)
+                buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.columna)
+                if buscar == False:
+                    print('No Encontrado')
+                else:
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.FOREIGN)
+                    tipo = TC.Tipo(useCurrentDatabase,tabla,instr.columna,buscar.tipo,"",ids,instr.referencia,tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,tabla,instr.columna)
+
     elif instr.tipo == 'CHECK':
         if instr.opciones_constraint != []:
             temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
             ts.agregar(temp)
             for ids in instr.opciones_constraint:
                 if type(ids.exp1) == ExpresionIdentificador:
-                    tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp1.id,None,OPCIONES_CONSTRAINT.CHECK,None,None)
-                    tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.exp1.id,OPCIONES_CONSTRAINT.CHECK)
+                    buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.exp1.id)
+                    if buscar == False:
+                        print('No Encontrado')
+                    else:
+                        tempA = buscar.listaCons
+                        tempA.append(OPCIONES_CONSTRAINT.CHECK)
+                        tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp1.id,buscar.tipo,"","","",tempA)
+                        tc.actualizar(tipo,useCurrentDatabase,tabla,ids.exp1.id)
                 else: 
-                    tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp2.id,None,OPCIONES_CONSTRAINT.CHECK,None,None)
-                    tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.exp2.id,OPCIONES_CONSTRAINT.CHECK)
+                    buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.exp2.id)
+                    if buscar == False:
+                        print('No Encontrado')
+                    else:
+                        tempA = buscar.listaCons
+                        tempA.append(OPCIONES_CONSTRAINT.CHECK)
+                        tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp2.id,buscar.tipo,"","","",tempA)
+                        tc.actualizar(tipo,useCurrentDatabase,tabla,ids.exp2.id)
     
 def procesar_check(instr,ts,tc):
     print('Check')
@@ -385,6 +494,12 @@ def procesar_altertable(instr,ts,tc):
         print(instr.identificador)
         print(instr.columnid)
         print(instr.tocolumnid)
+    
+    elif instr.etiqueta == TIPO_ALTER_TABLE.DROP_COLUMN:
+        print(instr.identificador)
+        if instr.lista_campos != []:
+            for datos in instr.lista_campos:
+                print(datos.id)
 
     elif instr.etiqueta ==  TIPO_ALTER_TABLE.ADD_COLUMN:
         print(instr.identificador)
@@ -494,7 +609,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
                 procesar_createDatabase(instr,ts,tc)
             elif isinstance(instr, Create_Table) : 
                 if useCurrentDatabase != "":
-                    print(useCurrentDatabase)
+                    #print(useCurrentDatabase)
                     procesar_createTable(instr,ts,tc)
                 else:
                     salida = "\nSELECT DATABASE"
@@ -542,7 +657,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
     except:
         pass
 
-'''f = open("./entrada.txt", "r")
+f = open("./entrada.txt", "r")
 input = f.read()
 listaErrores = []
 instrucciones = g.parse(input)
@@ -550,13 +665,14 @@ instrucciones_Global = instrucciones
 ts_global = TS.TablaDeSimbolos()
 tc_global = TC.TablaDeTipos()
 procesar_instrucciones(instrucciones,ts_global,tc_global)
+
 erroressss = ErrorHTML()
 erroressss.crearReporte()
 typeC = TipeChecker()
 typeC.crearReporte(tc_global)
 typeS = RTablaDeSimbolos()
-typeS.crearReporte(ts_global)'''
+typeS.crearReporte(ts_global)
 
-'''astt = AST()
-astt.generarAST(instrucciones)'''
+astt = AST()
+astt.generarAST(instrucciones)
 

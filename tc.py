@@ -2,7 +2,7 @@
 class Tipo() :
     'Esta clase representa un tipo dentro de nuestra tabla de tipos'
 
-    def __init__(self, database, tabla, id, tipo, restriccion, referencia, tablaRef) :
+    def __init__(self, database, tabla, id, tipo, restriccion, referencia, tablaRef, listaCons = []) :
         self.database = database
         self.tabla = tabla
         self.id = id
@@ -10,6 +10,7 @@ class Tipo() :
         self.restriccion = restriccion
         self.referencia = referencia
         self.tablaRef = tablaRef
+        self.listaCons = listaCons
 
 class TablaDeTipos() :
     'Esta clase representa la tabla de tipos'
@@ -25,6 +26,14 @@ class TablaDeTipos() :
             print('Error: variable ', id, ' no definida.')
 
         return self.tipos[id]
+
+    def obtenerReturn(self,database,tabla,column) :
+        i = 0
+        while i < len(self.tipos):
+            if self.tipos[i].database == database and self.tipos[i].tabla == tabla and self.tipos[i].id == column:
+                return self.tipos[i]
+            i += 1
+        return False
 
     def actualizar(self,tipo,database, tabla, column) :
         i = 0
@@ -63,6 +72,22 @@ class TablaDeTipos() :
             if self.tipos[i].database == database:
                 self.tipos[i].database = newDatabase
             i += 1
+
+    def eliminarDatabase(self,database):
+        for elem in list(self.tipos):
+            if elem.database == database:
+                self.tipos.remove(elem)
+
+    def eliminarTabla(self,database,tabla):
+        for elem in list(self.tipos):
+            if elem.database == database and elem.tabla == tabla:
+                self.tipos.remove(elem)
+
+    def eliminarID(self,database,tabla,id):
+        for elem in list(self.tipos):
+            if elem.database == database and elem.tabla == tabla and elem.id == id:
+                self.tipos.remove(elem)
+
 
     def clear(self):
         self.tipos = []
