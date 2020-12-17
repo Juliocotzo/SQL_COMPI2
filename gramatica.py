@@ -395,6 +395,20 @@ def p_instruccion(t) :
                         | delete_insrt'''
     t[0] = t[1]
 
+def p_instruccion_error(t) :
+    '''instruccion      : createDB_insrt error
+                        | create_Table_isnrt error 
+                        | show_databases_instr error
+                        | show_tables_instr error
+                        | drop_database_instr error
+                        | use_database_instr error
+                        | alterDB_insrt error
+                        | update_insrt error
+                        | drop_insrt error
+                        | alterTable_insrt error
+                        | insert_insrt error
+                        | TIPO_ENUM_INSRT error
+                        | delete_insrt error'''
 #--------------------------------------------------------------
 ' ---------- GRAMATICA PARA LA INSTRUCCION DELETE --------'
 #--------------------------------------------------------------

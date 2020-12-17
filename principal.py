@@ -730,20 +730,21 @@ def procesar_instrucciones(instrucciones,ts,tc) :
 
 f = open("./entrada.txt", "r")
 input = f.read()
-listaErrores = []
 instrucciones = g.parse(input)
-instrucciones_Global = instrucciones
-ts_global = TS.TablaDeSimbolos()
-tc_global = TC.TablaDeTipos()
-procesar_instrucciones(instrucciones,ts_global,tc_global)
 
-erroressss = ErrorHTML()
-erroressss.crearReporte()
-typeC = TipeChecker()
-typeC.crearReporte(tc_global)
-typeS = RTablaDeSimbolos()
-typeS.crearReporte(ts_global)
-
-astt = AST()
-astt.generarAST(instrucciones)
+if listaErrores == []:
+    instrucciones_Global = instrucciones
+    ts_global = TS.TablaDeSimbolos()
+    tc_global = TC.TablaDeTipos()
+    procesar_instrucciones(instrucciones,ts_global,tc_global)
+    typeC = TipeChecker()
+    typeC.crearReporte(tc_global)
+    typeS = RTablaDeSimbolos()
+    typeS.crearReporte(ts_global)
+    astt = AST()
+    astt.generarAST(instrucciones)
+else:
+    erroressss = ErrorHTML()
+    erroressss.crearReporte()
+    listaErrores = []
 
