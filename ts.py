@@ -60,6 +60,17 @@ class TablaDeSimbolos() :
     def deleteDatabase(self,ambito) :
         for elem in list(self.simbolos):
             if elem.ambito == ambito or elem.id == ambito:
+                self.deleteTable(elem.id)
+
+        for elem in list(self.simbolos):
+            if elem.ambito == ambito or elem.id == ambito:
+                self.simbolos.remove(elem)
+                
+                
+    
+    def deleteTable(self,ambito) :
+        for elem in list(self.simbolos):
+            if elem.ambito == ambito:
                 self.simbolos.remove(elem)
 
 

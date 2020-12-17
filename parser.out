@@ -222,7 +222,7 @@ Rule 96    createDB_dosParam -> MODE IGUAL ENTERO OWNER ID
 Rule 97    createDB_dosParam -> MODE IGUAL ENTERO OWNER IGUAL ID
 Rule 98    constraint_esp -> CHECK PAR_A expresion_logica PAR_C
 Rule 99    constraint_esp -> UNIQUE PAR_A campos_c PAR_C
-Rule 100   constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+Rule 100   constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 Rule 101   campos_c -> campos_c COMA ID
 Rule 102   campos_c -> ID
 Rule 103   create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA
@@ -251,7 +251,7 @@ Rule 125   expresion_dato_default -> CADENA
 Rule 126   expresion_dato_default -> ENTERO
 Rule 127   expresion_dato_default -> FLOTANTE
 Rule 128   cuerpo_createTable -> PRIMARY KEY PAR_A ID PAR_C
-Rule 129   cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+Rule 129   cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 Rule 130   cuerpo_createTable -> UNIQUE PAR_A campos_c PAR_C
 Rule 131   cuerpo_createTable -> CONSTRAINT ID constraint_esp
 Rule 132   TIPO_DATO -> TEXT
@@ -411,8 +411,7 @@ FALSE                : 191
 FLOAT                : 133 160
 FLOOR                : 
 FLOTANTE             : 127 183
-FOREIGN              : 48 51 124
-FOREING              : 100 129
+FOREIGN              : 48 51 100 124 129
 FROM                 : 17 18 19 20 21 22 23 24 25 26 27
 FULL                 : 
 GCD                  : 
@@ -1562,13 +1561,13 @@ state 65
     (107) cuerpo_createTable -> . ID TIPO_DATO_DEF
     (108) cuerpo_createTable -> . ID TIPO_DATO_DEF createTable_options
     (128) cuerpo_createTable -> . PRIMARY KEY PAR_A ID PAR_C
-    (129) cuerpo_createTable -> . FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (129) cuerpo_createTable -> . FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
     (130) cuerpo_createTable -> . UNIQUE PAR_A campos_c PAR_C
     (131) cuerpo_createTable -> . CONSTRAINT ID constraint_esp
 
     ID              shift and go to state 100
     PRIMARY         shift and go to state 103
-    FOREING         shift and go to state 104
+    FOREIGN         shift and go to state 104
     UNIQUE          shift and go to state 105
     CONSTRAINT      shift and go to state 106
 
@@ -2032,7 +2031,7 @@ state 103
 
 state 104
 
-    (129) cuerpo_createTable -> FOREING . KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (129) cuerpo_createTable -> FOREIGN . KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
     KEY             shift and go to state 176
 
@@ -3048,13 +3047,13 @@ state 174
     (107) cuerpo_createTable -> . ID TIPO_DATO_DEF
     (108) cuerpo_createTable -> . ID TIPO_DATO_DEF createTable_options
     (128) cuerpo_createTable -> . PRIMARY KEY PAR_A ID PAR_C
-    (129) cuerpo_createTable -> . FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (129) cuerpo_createTable -> . FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
     (130) cuerpo_createTable -> . UNIQUE PAR_A campos_c PAR_C
     (131) cuerpo_createTable -> . CONSTRAINT ID constraint_esp
 
     ID              shift and go to state 100
     PRIMARY         shift and go to state 103
-    FOREING         shift and go to state 104
+    FOREIGN         shift and go to state 104
     UNIQUE          shift and go to state 105
     CONSTRAINT      shift and go to state 106
 
@@ -3069,7 +3068,7 @@ state 175
 
 state 176
 
-    (129) cuerpo_createTable -> FOREING KEY . PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (129) cuerpo_createTable -> FOREIGN KEY . PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
     PAR_A           shift and go to state 273
 
@@ -3089,11 +3088,11 @@ state 178
     (131) cuerpo_createTable -> CONSTRAINT ID . constraint_esp
     (98) constraint_esp -> . CHECK PAR_A expresion_logica PAR_C
     (99) constraint_esp -> . UNIQUE PAR_A campos_c PAR_C
-    (100) constraint_esp -> . FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (100) constraint_esp -> . FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
     CHECK           shift and go to state 276
     UNIQUE          shift and go to state 277
-    FOREING         shift and go to state 278
+    FOREIGN         shift and go to state 278
 
     constraint_esp                 shift and go to state 275
 
@@ -4424,7 +4423,7 @@ state 272
 
 state 273
 
-    (129) cuerpo_createTable -> FOREING KEY PAR_A . ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (129) cuerpo_createTable -> FOREIGN KEY PAR_A . ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
     ID              shift and go to state 370
 
@@ -4462,7 +4461,7 @@ state 277
 
 state 278
 
-    (100) constraint_esp -> FOREING . KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (100) constraint_esp -> FOREIGN . KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
     KEY             shift and go to state 374
 
@@ -5716,7 +5715,7 @@ state 369
 
 state 370
 
-    (129) cuerpo_createTable -> FOREING KEY PAR_A ID . PAR_C REFERENCES ID PAR_A ID PAR_C
+    (129) cuerpo_createTable -> FOREIGN KEY PAR_A ID . PAR_C REFERENCES ID PAR_A ID PAR_C
 
     PAR_C           shift and go to state 419
 
@@ -5781,7 +5780,7 @@ state 373
 
 state 374
 
-    (100) constraint_esp -> FOREING KEY . PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (100) constraint_esp -> FOREIGN KEY . PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
     PAR_A           shift and go to state 422
 
@@ -6252,7 +6251,7 @@ state 418
 
 state 419
 
-    (129) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C
+    (129) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C
 
     REFERENCES      shift and go to state 454
 
@@ -6275,7 +6274,7 @@ state 421
 
 state 422
 
-    (100) constraint_esp -> FOREING KEY PAR_A . ID PAR_C REFERENCES ID PAR_A ID PAR_C
+    (100) constraint_esp -> FOREIGN KEY PAR_A . ID PAR_C REFERENCES ID PAR_A ID PAR_C
 
     ID              shift and go to state 457
 
@@ -6636,7 +6635,7 @@ state 453
 
 state 454
 
-    (129) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C
+    (129) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C
 
     ID              shift and go to state 476
 
@@ -6659,7 +6658,7 @@ state 456
 
 state 457
 
-    (100) constraint_esp -> FOREING KEY PAR_A ID . PAR_C REFERENCES ID PAR_A ID PAR_C
+    (100) constraint_esp -> FOREIGN KEY PAR_A ID . PAR_C REFERENCES ID PAR_A ID PAR_C
 
     PAR_C           shift and go to state 477
 
@@ -6835,14 +6834,14 @@ state 475
 
 state 476
 
-    (129) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C
+    (129) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C
 
     PAR_A           shift and go to state 488
 
 
 state 477
 
-    (100) constraint_esp -> FOREING KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C
+    (100) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C
 
     REFERENCES      shift and go to state 489
 
@@ -6963,14 +6962,14 @@ state 487
 
 state 488
 
-    (129) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C
+    (129) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C
 
     ID              shift and go to state 494
 
 
 state 489
 
-    (100) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C
+    (100) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C
 
     ID              shift and go to state 495
 
@@ -7018,14 +7017,14 @@ state 493
 
 state 494
 
-    (129) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C
+    (129) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C
 
     PAR_C           shift and go to state 497
 
 
 state 495
 
-    (100) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C
+    (100) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C
 
     PAR_A           shift and go to state 498
 
@@ -7041,15 +7040,15 @@ state 496
 
 state 497
 
-    (129) cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .
+    (129) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .
 
-    PAR_C           reduce using rule 129 (cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
-    COMA            reduce using rule 129 (cuerpo_createTable -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
+    PAR_C           reduce using rule 129 (cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
+    COMA            reduce using rule 129 (cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
 
 
 state 498
 
-    (100) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C
+    (100) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C
 
     ID              shift and go to state 500
 
@@ -7071,15 +7070,15 @@ state 499
 
 state 500
 
-    (100) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C
+    (100) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C
 
     PAR_C           shift and go to state 501
 
 
 state 501
 
-    (100) constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .
+    (100) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .
 
-    PAR_C           reduce using rule 100 (constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
-    COMA            reduce using rule 100 (constraint_esp -> FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
+    PAR_C           reduce using rule 100 (constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
+    COMA            reduce using rule 100 (constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
 

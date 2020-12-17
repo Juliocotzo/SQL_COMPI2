@@ -123,7 +123,7 @@ reservadas = {
     'desc' : 'DESC',
     'primary' : 'PRIMARY',
     'key' : 'KEY',
-    'foreing' : 'FOREING',
+    'foreign' : 'FOREIGN',
     'avg' : 'AVG',
     'min' : 'MIN',
     'max' : 'MAX',
@@ -857,7 +857,7 @@ def p_constraint_esp1(t):
     t[0] = temp
 
 def p_constraint_esp2(t):
-    'constraint_esp : FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C '
+    'constraint_esp : FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C '
     temp = []
     temp.append(t[1].upper())
     temp.append(t[4])
@@ -992,7 +992,7 @@ def p_createTable_pk(t):
     t[0] = LLave_Primaria(t[4])
 
 def p_createTable_fk(t):
-    ' cuerpo_createTable : FOREING KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C'
+    ' cuerpo_createTable : FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C'
     t[0] = Definicon_Foranea(t[4], t[7], t[9])
 
 def p_createTable_unique(t):
@@ -1005,7 +1005,7 @@ def p_createTable_constraint(t):
         t[0] = definicion_constraint(t[2], t[3][0], None, None ,t[3][1])
     elif t[3][0] == 'UNIQUE':
         t[0] = definicion_constraint(t[2], t[3][0], None, None ,t[3][1])
-    elif t[3][0] == 'FOREING':
+    elif t[3][0] == 'FOREIGN':
         t[0] = definicion_constraint(t[2], t[3][0], t[3][2], t[3][1] ,t[3][3])
 
 

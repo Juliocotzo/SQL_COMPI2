@@ -124,13 +124,12 @@ def procesar_Foranea(instr,ts,tc,tabla):
 def procesar_constraint(instr,ts,tc,tabla):
     if instr.tipo == 'UNIQUE':
         if instr.opciones_constraint != []:
-            
             temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
             ts.agregar(temp)
             for ids in instr.opciones_constraint:
                 tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,None,OPCIONESCREATE_TABLE.UNIQUE,None,None)
                 tc.actualizarRestriccion(tipo,useCurrentDatabase,tabla,ids.id,OPCIONESCREATE_TABLE.UNIQUE)
-    elif instr.tipo == 'FOREING':
+    elif instr.tipo == 'FOREIGN':
         if instr.opciones_constraint != []:
             temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
             ts.agregar(temp)
@@ -475,6 +474,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
                 procesar_createDatabase(instr,ts,tc)
             elif isinstance(instr, Create_Table) : 
                 if useCurrentDatabase != "":
+                    print(useCurrentDatabase)
                     procesar_createTable(instr,ts,tc)
                 else:
                     salida = "\nSELECT DATABASE"
@@ -516,7 +516,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
     except:
         pass
 
-f = open("./entrada.txt", "r")
+'''f = open("./entrada.txt", "r")
 input = f.read()
 listaErrores = []
 instrucciones = g.parse(input)
@@ -532,5 +532,5 @@ typeS = RTablaDeSimbolos()
 typeS.crearReporte(ts_global)
 
 astt = AST()
-astt.generarAST(instrucciones)
+astt.generarAST(instrucciones)'''
 

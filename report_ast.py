@@ -328,7 +328,7 @@ class AST:
         self.crearNodoConstraintId(temp1,instruccion)
         if instruccion.tipo == 'UNIQUE':
             self.crearNodoConstraintLISTA(temp1,instruccion)
-        elif instruccion.tipo == 'FOREING':
+        elif instruccion.tipo == 'FOREIGN':
             self.crearNodoConstraintForaneaId(temp1,instruccion)
             self.crearNodoConstraintForaneaTablaRef(temp1,instruccion)
             self.crearNodoConstraintForaneaIdRef(temp1,instruccion)
@@ -356,7 +356,7 @@ class AST:
         contadorNodos = contadorNodos + 1
         if instruccion.tipo == 'UNIQUE':
             dot.node("node" + str(contadorNodos), str(OPCIONES_CONSTRAINT.UNIQUE))
-        elif instruccion.tipo == 'FOREING':
+        elif instruccion.tipo == 'FOREIGN':
             dot.node("node" + str(contadorNodos), str(OPCIONES_CONSTRAINT.FOREIGN))
         elif instruccion.tipo == 'CHECK':
             dot.node("node" + str(contadorNodos), str(OPCIONES_CONSTRAINT.CHECK))
@@ -380,7 +380,7 @@ class AST:
         dot.node("node" + str(contadorNodos), 'ID')
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)  
-        if instruccion.tipo == 'FOREING':
+        if instruccion.tipo == 'FOREIGN':
             if instruccion.opciones_constraint != []:
                 for ids in instruccion.opciones_constraint:
                     self.crearNodoExpresion(temp1,instruccion.columna)
@@ -391,7 +391,7 @@ class AST:
         dot.node("node" + str(contadorNodos), 'TABLA REFERENCIA')
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)  
-        if instruccion.tipo == 'FOREING':
+        if instruccion.tipo == 'FOREIGN':
             if instruccion.opciones_constraint != []:
                 for ids in instruccion.opciones_constraint:
                     self.crearNodoExpresion(temp1,instruccion.referencia)
@@ -402,7 +402,7 @@ class AST:
         dot.node("node" + str(contadorNodos), 'ID REFERENCIA')
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)  
-        if instruccion.tipo == 'FOREING':
+        if instruccion.tipo == 'FOREIGN':
             if instruccion.opciones_constraint != []:
                 for ids in instruccion.opciones_constraint:
                     self.crearNodoExpresion(temp1,ids)
