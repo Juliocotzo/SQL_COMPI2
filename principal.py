@@ -421,8 +421,8 @@ def procesar_drop(instr,ts,tc):
 #Alter table
 
 def procesar_altertable(instr,ts,tc):
-    #print(instr.etiqueta)
     if instr.etiqueta == TIPO_ALTER_TABLE.ADD_CHECK:
+        global salida
         if instr.expresionlogica.operador == OPERACION_LOGICA.AND or instr.expresionlogica.operador == OPERACION_LOGICA.OR: 
             print(instr.identificador)
             print(instr.expresionlogica.exp1.exp1.id)
@@ -432,70 +432,201 @@ def procesar_altertable(instr,ts,tc):
             print(instr.expresionlogica.exp2.exp2.val)
         else:
             print(instr.identificador)
-            print(instr.expresionlogica.exp1.id)
-            print(instr.expresionlogica.exp2.val)
+            if isinstance(instr.expresionlogica.exp1,ExpresionIdentificador):
+                print(instr.expresionlogica.exp1.id)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id)
+                if buscar == False:
+                    print('No Encontrado')
+                else:
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.CHECK)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id,buscar.tipo,"","","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id)
+                    
+                    salida = "\nALTER TABLE" 
+
+            elif isinstance(instr.expresionlogica.exp2,ExpresionIdentificador):
+                print(instr.expresionlogica.exp2.id)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id)
+                if buscar == False:
+                    print('No Encontrado')
+                else:
+                    salida = "\nALTER TABLE" 
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.CHECK)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id,buscar.tipo,"","","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id)
+                    salida = "\nALTER TABLE" 
 
 
     elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_FOREIGN:
-        print(instr.identificador)
-        if instr.lista_campos != []:
-            for datos in instr.lista_campos:
-                print(datos.id)
-        if instr.lista_ref != []:
-            for datos in instr.lista_ref:
-                print(datos.id)
+        buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.columnid)
+        if buscar == False:
+            print('No Encontrado')
+        else:
+            tempA = buscar.listaCons
+            tempA.append(OPCIONES_CONSTRAINT.FOREIGN)
+            tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.columnid,buscar.tipo,"",instr.lista_campos,instr.tocolumnid,tempA)
+            tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.columnid)
+            salida = "\nALTER TABLE" 
 
     elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_CHECK:
-        print(instr.identificador)
-        print(instr.columnid)
         if instr.expresionlogica.operador == TIPO_LOGICA.AND or instr.expresionlogica.operador == TIPO_LOGICA.OR: 
             print(instr.expresionlogica.exp1.exp1.id)
             print(instr.expresionlogica.exp1.exp2.val)
             print(instr.expresionlogica.operador)
             print(instr.expresionlogica.exp2.exp1.id)
             print(instr.expresionlogica.exp2.exp2.val)
+            
         else:
-            print(instr.expresionlogica.exp1.id)
-            print(instr.expresionlogica.exp2.val)
-        
+            temp = TS.Simbolo(instr.columnid,'CONSTRAINT',0,instr.identificador)
+            ts.agregar(temp)
+            if type(instr.expresionlogica.exp1) == ExpresionIdentificador:
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id)
+                if buscar == False:
+                    print('No Encontrado')
+                else:
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.CHECK)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id,buscar.tipo,"","","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id)
+                    salida = "\nALTER TABLE" 
+            else:
+                print(instr.expresionlogica.exp1.val)
+                print(instr.expresionlogica.exp2.id)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id)
+                if buscar == False:
+                    print('No Encontrado')
+                else:
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.CHECK)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id,buscar.tipo,"","","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id)
+                    salida = "\nALTER TABLE" 
+
     elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_UNIQUE:
         print(instr.identificador)
         print(instr.columnid)
         if instr.lista_campos != []:
+            temp = TS.Simbolo(instr.columnid,'CONSTRAINT',0,instr.identificador)
+            ts.agregar(temp)
+            
             for datos in instr.lista_campos:
                 print(datos.id)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,datos.id)
+                if buscar == False:
+                    print('Encontrado')
+                else:
+                    tempA = buscar.listaCons
+                    tempA.append(OPCIONES_CONSTRAINT.UNIQUE)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,datos.id,buscar.tipo,"","","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,datos.id)
+                    salida = "\nALTER TABLE" 
+
     elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_FOREIGN:
-        print(instr.identificador)
-        print(instr.columnid)
-        if instr.lista_campos != []:
-            for datos in instr.lista_campos:
-                print(datos.id)
-        print("references")
-        if instr.lista_ref != []:
-            for datos in instr.lista_ref:
-                print(datos.id)
+        temp = TS.Simbolo(instr.columnid,'CONSTRAINT',0,instr.identificador)
+        ts.agregar(temp)
+        buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.tocolumnid)
+        if buscar == False:
+            print('No Encontrado')
+        else:
+            tempA = buscar.listaCons
+            tempA.append(OPCIONES_CONSTRAINT.FOREIGN)
+            tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.tocolumnid,buscar.tipo,"",instr.lista_ref,instr.lista_campos,tempA)
+            tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.tocolumnid)
+            salida = "\nALTER TABLE" 
+        
+
+        salida = "\nALTER TABLE" 
 
     elif instr.etiqueta == TIPO_ALTER_TABLE.ALTER_COLUMN:
         print(instr.identificador)
         if instr.lista_campos != []:
-            for datos in instr.lista_campos:
-                print(datos.identificador.id)
-                print(datos.tipo.val)
-                if datos.par1 != None:
-                    print(datos.par1)
-                if datos.par2 != None:
-                    print(datos.par2)
+            for lista in instr.lista_campos:
+                print(lista.identificador.id)
+                print(lista.tipo.id)
+                print(lista.par1)
+
+                tipodatoo = TIPO_DE_DATOS.text_ 
+                if instr.lista_campos[0].tipo.id.upper() == 'TEXT':
+                    tipodatoo = TIPO_DE_DATOS.text_ 
+                elif instr.lista_campos[0].tipo.id.upper() == 'FLOAT':
+                    tipodatoo = TIPO_DE_DATOS.float_ 
+                elif instr.lista_campos[0].tipo.id.upper() == 'INTEGER':
+                    tipodatoo = TIPO_DE_DATOS.integer_ 
+                elif instr.lista_campos[0].tipo.id.upper() == 'SMALLINT':
+                    tipodatoo = TIPO_DE_DATOS.smallint_ 
+                elif instr.lista_campos[0].tipo.id.upper() == 'MONEY':
+                    tipodatoo = TIPO_DE_DATOS.money 
+                elif instr.lista_campos[0].tipo.id.upper() == 'BIGINT':
+                    tipodatoo = TIPO_DE_DATOS.bigint 
+                elif instr.lista_campos[0].tipo.id.upper() == 'REAL':
+                    tipodatoo = TIPO_DE_DATOS.real 
+                elif instr.lista_campos[0].tipo.id.upper() == 'DOUBLE':
+                    tipodatoo = TIPO_DE_DATOS.double 
+                elif instr.lista_campos[0].tipo.id.upper() == 'INTERVAL':
+                    tipodatoo = TIPO_DE_DATOS.interval 
+                elif instr.lista_campos[0].tipo.id.upper() == 'TIME':
+                    tipodatoo = TIPO_DE_DATOS.time 
+                elif instr.lista_campos[0].tipo.id.upper() == 'TIMESTAMP':
+                    tipodatoo = TIPO_DE_DATOS.timestamp 
+                elif instr.lista_campos[0].tipo.id.upper() == 'DATE':
+                    tipodatoo = TIPO_DE_DATOS.date 
+                elif instr.lista_campos[0].tipo.id.upper() == 'VARING':
+                    tipodatoo = TIPO_DE_DATOS.varing 
+                elif instr.lista_campos[0].tipo.id.upper() == 'VARCHAR':
+                    tipodatoo = TIPO_DE_DATOS.varchar 
+                elif instr.lista_campos[0].tipo.id.upper() == 'CHAR':
+                    tipodatoo = TIPO_DE_DATOS.char 
+                elif instr.lista_campos[0].tipo.id.upper() == 'CHARACTER':
+                    tipodatoo = TIPO_DE_DATOS.character 
+                elif instr.lista_campos[0].tipo.id.upper() == 'DECIMAL':
+                    tipodatoo = TIPO_DE_DATOS.decimal 
+                elif instr.lista_campos[0].tipo.id.upper() == 'NUMERIC':
+                    tipodatoo = TIPO_DE_DATOS.numeric 
+                elif instr.lista_campos[0].tipo.id.upper() == 'DOUBLE':
+                    tipodatoo = TIPO_DE_DATOS.double_precision
+
+        salida = "\nALTER TABLE"
+    
+    elif instr.etiqueta == TIPO_ALTER_TABLE.ALTER_COLUMN_NULL:
+        #print(instr.identificador,instr.columnid)
+        
+        buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.columnid)
+        if buscar == False:
+            print('No Encontrado')
+        else:
+            tempA = buscar.listaCons
+            tempA.append(OPCIONES_CONSTRAINT.NULL)
+            tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.columnid,buscar.tipo,"","","",tempA)
+            tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.columnid)
+            salida = "\nALTER TABLE"   
+
+    elif instr.etiqueta == TIPO_ALTER_TABLE.ALTER_COLUMN_NOT_NULL:
+        buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.columnid)
+        if buscar == False:
+            print('No Encontrado')
+        else:
+            tempA = buscar.listaCons
+            tempA.append(OPCIONES_CONSTRAINT.NOT_NULL)
+            tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.columnid,buscar.tipo,"","","",tempA)
+            tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.columnid)
+            salida = "\nALTER TABLE"        
     
     elif instr.etiqueta ==  TIPO_ALTER_TABLE.DROP_CONSTRAINT:
         print(instr.identificador)
         if instr.lista_campos != []:
             for datos in instr.lista_campos:
-                print(datos.val)
+                print(datos.id)
+                ts.deleteConstraint(datos.id,instr.identificador)
+            salida = "\nALTER TABLE" 
 
     elif instr.etiqueta ==  TIPO_ALTER_TABLE.RENAME_COLUMN:
+        # NO EXISTE :(
         print(instr.identificador)
         print(instr.columnid)
         print(instr.tocolumnid)
+        salida = "\nALTER TABLE" 
     
     elif instr.etiqueta == TIPO_ALTER_TABLE.DROP_COLUMN:
         #print('Tabla',instr.identificador)
@@ -509,7 +640,6 @@ def procesar_altertable(instr,ts,tc):
                 #print(result)
                 result = 0
                 if result == 0:
-                    global salida
                     tc.eliminarID(useCurrentDatabase,instr.identificador,datos.id)
                     temp1 = ts.obtener(instr.identificador,useCurrentDatabase)
                     temp2 = TS.Simbolo(temp1.id,temp1.tipo,temp1.valor-1,temp1.ambito)

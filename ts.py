@@ -73,6 +73,11 @@ class TablaDeSimbolos() :
             if elem.ambito == ambito:
                 self.simbolos.remove(elem)
 
+    def deleteConstraint(self,id,ambito) :
+        for elem in list(self.simbolos):
+            if elem.ambito == ambito and elem.id == id:
+                self.simbolos.remove(elem)
+
 
     def clear(self):
         self.simbolos = []

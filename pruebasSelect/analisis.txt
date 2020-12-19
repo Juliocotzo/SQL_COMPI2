@@ -1,0 +1,80 @@
+
+
+EXPRESIONAND
+            MAYOR 
+            IGUAL 
+
+
+
+select * from estudiantes LISTAWHERE
+    if LISTAWHERE != []
+        for linea in []
+            tabla_temp = []
+            tabla_temp.append(select[0])
+            tabla_temp.append(select[i])
+            var3 = ResolverExpresion(expresion,tabla_temp)
+
+        
+            
+            if var3
+                nuevoarreglo.appen(linea)
+
+        
+
+
+
+        salida = []
+    else:
+        salida = []
+
+
+
+
+
+
+where 10+10+10<10+40 and nombre == 'Carlos';
+
+
+[
+    ['edad', 'nombre']
+    [19,'carlos'],
+    [10,'carlos2'],
+    [32,'carlos3'],
+    [60,'carlos'],
+]
+
+
+
+
+
+ABS(18) + 10   ->>> 28 
+
+
+WHERE 10 + 20 and 10+10
+
+WHERE TRUE
+
+
+
+
+10<20 and 2<3
+
+TRUE       TRUE
+      TRUE
+
+
+
+
+        and
+    <         <
+
+10   20     2   3
+
+                <   
+        and  
+
+   <
+10  20
+
+
+

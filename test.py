@@ -15,6 +15,9 @@ j.createTable('world', 'countries', 4)
 j.createTable('world', 'cities',    4)
 j.createTable('world', 'languages', 4)
 
+j.alterDropColumn('world','contries',1)
+j.alterDropColumn('world','contries',2)
+'''
 # create simple primary keys
 j.alterAddPK('world', 'countries', [0])
 j.alterAddPK('world', 'cities',    [0])
@@ -37,4 +40,4 @@ j.insert('world', 'languages', ['SLV', 'Spanish', 'official', 100.0])
 # show all datap
 print(j.extractTable('world','countries')) #SELECT
 j.showCollection()
-
+'''

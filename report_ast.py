@@ -636,6 +636,41 @@ class AST:
             self.crearAlterAddDropColumn(temp1, instruccion)
         elif instruccion.etiqueta == TIPO_ALTER_TABLE.DROP_COLUMN:
             self.crearAlterDrop_Column(temp1,instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.ALTER_COLUMN_NULL:
+            self.crearNodoAlterColumSET_NULL(temp1,instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.ALTER_COLUMN_NOT_NULL:
+            self.crearNodoAlterColumSET_NONULL(temp1,instruccion)
+        elif instruccion.etiqueta == TIPO_ALTER_TABLE.DROP_CONSTRAINT:
+            self.crearNodoAlterDROPCONSTRAINT(temp1,instruccion)
+
+    def crearNodoAlterDROPCONSTRAINT(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'DROP CONSTRAINT')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        if instruccion.lista_campos != []:
+            for datos in instruccion.lista_campos:
+                self.crearNodoExpresion(temp1,datos)
+
+    def crearNodoAlterColumSET_NONULL(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'ALTER COLUMN SET NOT NULL')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos) 
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        self.crearNodoExpresion(temp1,instruccion.columnid)
+
+    def crearNodoAlterColumSET_NULL(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'ALTER COLUMN SET NULL')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos) 
+        self.crearNodoExpresion(temp1,instruccion.identificador)
+        self.crearNodoExpresion(temp1,instruccion.columnid)
 
     def crearAlterDrop_Column(self, padre, instruccion):
         global  contadorNodos, dot
@@ -713,10 +748,7 @@ class AST:
         dot.node("node" + str(contadorNodos), 'Columna')
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)                
-        self.crearNodoExpresion(temp1,instruccion.identificador)
-        if instruccion.lista_campos != []:
-            for datos in instruccion.lista_campos:
-                self.crearNodoExpresion(temp1,datos.id)
+        self.crearNodoExpresion(temp1,instruccion.columnid)
 
 
     def crearAlterTable_foreign_referencia(self,padre,instruccion):
@@ -724,12 +756,9 @@ class AST:
         contadorNodos = contadorNodos + 1
         dot.node("node" + str(contadorNodos), 'referencia')
         dot.edge(padre, "node" + str(contadorNodos))
-        temp1 = "node" + str(contadorNodos)                
-        self.crearNodoExpresion(temp1,instruccion.identificador)
-      
-        if instruccion.lista_ref != []:
-            for datos in instruccion.lista_ref:
-                self.crearNodoExpresion(temp1,datos.id)
+        temp1 = "node" + str(contadorNodos)      
+        self.crearNodoExpresion(temp1,instruccion.tocolumnid)          
+        self.crearNodoExpresion(temp1,instruccion.lista_campos)      
 
     def crearAlterTable_addcheck(self,padre,instruccion):
         global  contadorNodos, dot
@@ -746,7 +775,6 @@ class AST:
         dot.node("node" + str(contadorNodos), 'Condicion')
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)
-        print(instruccion.expresionlogica.operador)
         if instruccion.expresionlogica.operador == OPERACION_LOGICA.AND or instruccion.expresionlogica.operador == OPERACION_LOGICA.OR: 
             self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp1.exp1.id)
             self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp1.exp2.val)
@@ -754,9 +782,10 @@ class AST:
             self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp2.exp1.id)
             self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp2.exp2.val)
         else:
-            self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp1.id)
-            self.crearNodoExpresion(temp1,instruccion.expresionlogica.operador)
-            self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp2.val)
+            if isinstance(instruccion.expresionlogica.exp1,ExpresionIdentificador):
+                self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp1.id)
+            elif isinstance(instruccion.expresionlogica.exp2,ExpresionIdentificador):
+                self.crearNodoExpresion(temp1,instruccion.expresionlogica.exp2.id)
 
     
     def crearNodoInsert(self,padre,instruccion):

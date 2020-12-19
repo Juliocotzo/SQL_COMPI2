@@ -17,6 +17,7 @@ instrucciones_Global = []
 tc_global1 = []
 ts_global1 = []
 
+erroressss = ErrorHTML()
 
 root = Tk() 
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
@@ -30,41 +31,46 @@ selected = False
 # ACTIONS
 def analizar(txt):
 
-    listaErrores = []
-    global instrucciones_Global,tc_global1,ts_global1
+    global instrucciones_Global,tc_global1,ts_global1,listaErrores
     instrucciones = g.parse(txt)
-    instrucciones_Global = instrucciones
-    ts_global = TS.TablaDeSimbolos()
-    tc_global = TC.TablaDeTipos()
-    tc_global1 = tc_global
-    ts_global1 = ts_global
-    salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
-
-    if type(salida) == list:
-        salida_table(1,salida)
-    else:
-        salida_table(2,salida)
-    #parse(txt)
-
-def analizar_select(e):
-    global selected
-    if my_text.selection_get():
-
-        listaErrores = []
-        global instrucciones_Global,tc_global1,ts_global1
-        selected = my_text.selection_get()
-        #print(selected)
-        instrucciones = g.parse(selected)
+    if  erroressss.getList()== []:
         instrucciones_Global = instrucciones
         ts_global = TS.TablaDeSimbolos()
         tc_global = TC.TablaDeTipos()
         tc_global1 = tc_global
         ts_global1 = ts_global
         salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
+
         if type(salida) == list:
             salida_table(1,salida)
         else:
             salida_table(2,salida)
+    else:
+        salida_table(2,"PARSER ERROR")
+    #parse(txt)
+
+def analizar_select(e):
+    global selected
+    if my_text.selection_get():
+
+        global instrucciones_Global,tc_global1,ts_global1,listaErrores
+        selected = my_text.selection_get()
+        #print(selected)
+        instrucciones = g.parse(selected)
+        
+        if erroressss.getList() == []:
+            instrucciones_Global = instrucciones
+            ts_global = TS.TablaDeSimbolos()
+            tc_global = TC.TablaDeTipos()
+            tc_global1 = tc_global
+            ts_global1 = ts_global
+            salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
+            if type(salida) == list:
+                salida_table(1,salida)
+            else:
+                salida_table(2,salida)
+        else:
+            salida_table(2,"PARSER ERROR")
 
 def generarReporteAST():
     global instrucciones_Global
@@ -77,7 +83,6 @@ def generarReporteTC():
     typeC.crearReporte(tc_global1)
 
 def generarReporteErrores():
-    erroressss = ErrorHTML()
     erroressss.crearReporte()
 
 def generarReporteTS():

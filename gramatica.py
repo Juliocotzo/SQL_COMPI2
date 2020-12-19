@@ -215,7 +215,9 @@ reservadas = {
     'right' : 'RIGHT',
     'full' : 'FULL',
     'natural' : 'NATURAL',
-    'outer' : 'OUTER'
+    'outer' : 'OUTER',
+    'bytea' : 'BYTEA'
+
 }
 
 tokens = [
@@ -248,11 +250,14 @@ tokens = [
     'S_OR',
     'HASHTAG',
     'CEJILLA',
-    'D_OR'
+    'D_OR',
+    'D_DOSPTS'
+
     
 ] + list(reservadas.values())
 
 #tokens
+t_D_DOSPTS      = r'::'
 t_PTCOMA        = r';'
 t_COMA          = r','
 t_MENIGQUE      = r'<='
@@ -357,6 +362,7 @@ precedence = (
     ('left','AND','OR'),
     ('left','SUMA','RESTA'),
     ('left','ASTERISCO','DIVISION'),
+    ('nonassoc', 'IS')
     )
 
 
@@ -588,8 +594,8 @@ def p_alterTable6(t):
     t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CHECK,t[3],None,None,t[7],None,None)
 
 def p_alterTable8(t):
-    'alterTable_insrt : ALTER TABLE ID ADD FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA' 
-    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_FOREIGN,t[3],None,None,None,t[8],t[11])
+    'alterTable_insrt : ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C PTCOMA' 
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_FOREIGN,t[3],t[8],t[11],None,t[13],None)
      
 def p_alterTable7(t):
     'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C PTCOMA'  
@@ -600,8 +606,16 @@ def p_constraint_esp(t):
     t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CONSTRAINT_UNIQUE,t[3],t[6],None,None,t[9],None)
 
 def p_constraint_esp_1(t):
-    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A campos_c PAR_C REFERENCES campos_c PTCOMA'
-    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CONSTRAINT_FOREIGN,t[3],t[6],None,None,t[10],t[13])
+    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C  PTCOMA'
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CONSTRAINT_FOREIGN,t[3],t[6],t[10],None,t[13],t[15])
+
+def p_constraint_esp_null(t):
+    'alterTable_insrt : ALTER TABLE ID ALTER COLUMN ID SET NULL PTCOMA'
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ALTER_COLUMN_NULL,t[3],t[6],None,None,None,None)
+
+def p_constraint_esp_Notnull(t):
+    'alterTable_insrt : ALTER TABLE ID ALTER COLUMN ID SET NOT NULL PTCOMA'
+    t[0] = Crear_altertable(TIPO_ALTER_TABLE.ALTER_COLUMN_NOT_NULL,t[3],t[6],None,None,None,None)
 
 def p_alterTable2(t):
     'alterTable_insrt : ALTER TABLE ID alterTable_alter PTCOMA'
@@ -615,11 +629,6 @@ def p_alerTable_alter(t):
 def p_alerTable_alter_1(t):
     'alterTable_alter : Table_alter'
     t[0] = [t[1]]
-
-def p_Table_alter2(t):
-    'Table_alter : ALTER COLUMN ID SET NOT NULL'
-    t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,"Null"),None,None)
-      
 
 
 # DROP
@@ -641,11 +650,11 @@ def p_lista_tabla_lista2(t):
     t[0] = [ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])]
 
 #--------------------------------------------------------------
-'----------- GRAMATICA PARA LA INSTRUCCION UPDATE ---------'
+' ----------- GRAMATICA PARA LA INSTRUCCION UPDATE ------'
 #--------------------------------------------------------------
 def p_update_insrt(t):
-    ' update_insrt : UPDATE ID SET lista_update WHERE expresion_relacional PTCOMA'
-    t[0] = Create_update(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,(t[2])),t[6],t[4])
+    ' update_insrt : UPDATE ID SET lista_update cond_where PTCOMA'
+    t[0] = Create_update(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,(t[2])),t[5],t[4])
 
 def p_lista_update(t):
     ' lista_update :  lista_update COMA parametro_update'
@@ -660,7 +669,156 @@ def p_parametro_update(t):
     ' parametro_update : ID IGUAL expresion'
     t[0] = Create_Parametro_update(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),t[3])
 
+def p_cond_where(t):
+    'cond_where : WHERE expresion_where'
+    t[0] = Create_hijo_select(OPCIONES_SELECT.WHERE,None,None,t[2])
 
+def p_expresion_where2(t):
+    'expresion_where : expresion_logica_w'
+    t[0] = t[1]
+
+def p_expresion_where(t):
+    ''' expresion_where : expresion_dato IS DISTINCT FROM expresion_dato
+                        | expresion_dato IS NOT DISTINCT FROM expresion_dato 
+                        | expresion_dato LIKE CADENA
+                        | expresion_dato NOT LIKE expresion
+                        | expresion_dato BETWEEN expresion
+                        '''
+
+    if t[3].upper() == 'DISTINCT':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.ISDISTINCT, t[1],t[5],None,None)
+    elif t[3].upper() == 'NOT':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.NOT_DISTINCT, t[1],t[6],None,None)
+    elif t[2].upper() == 'LIKE':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.LIKE, t[1],t[3],None,None)
+    elif t[3].upper() == 'LIKE':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.NOT_LIKE, t[1],t[4],None,None)
+    elif t[2].upper() == 'NOT' and t[3].upper() == 'IN':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.NOT_IN, t[1],t[5],None,None)
+    elif t[2].upper() == 'NOT' and t[3].upper() == 'LIKE':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.NOT_LIKE,t[1],t[4],None,None)
+    elif t[2].upper() == 'BETWEEN':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.BETWEEN,t[1],t[3],None,None)
+    elif t[2].upper() == 'IN':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.INN,t[1],t[4],None,None)
+    elif t[1].upper() == 'NOT' and t[2].upper() == 'EXISTS':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.NOT_EXISTS,t[4],None,None,None)
+    else:
+        t[0] = t[1]
+
+def p_expresion_where_3(t):
+    ''' expresion_where : expresion_dato IS NOT DISTINCT FROM expresion_dato AND expresion_dato
+                        | expresion_dato BETWEEN expresion_dato AND expresion_dato 
+                        | expresion_dato NOT BETWEEN expresion_dato AND expresion_dato
+                        | expresion_dato BETWEEN SYMMETRIC expresion_dato AND expresion_dato
+                        | expresion_dato NOT BETWEEN SYMMETRIC expresion_dato AND expresion_dato
+                        '''
+    if t[4].upper() == 'DISTINCT':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.NOT_DISTINCT,t[1],t[6],t[8],None)
+    elif t[2].upper() == 'BETWEEN':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.BETWEEN,t[1],t[3],t[5],None)
+    elif t[3].upper() == 'BETWEEN':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.N_BETWEEN,t[1],t[4],t[6],None)
+    elif t[3].upper() == 'SYMMETRIC':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.BETWEEN_SYMETRIC,t[1],t[4],t[6],None)
+    elif t[2].upper() == 'NOT' and t[4].upper() == 'SYMMETRIC':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.NOT_BETWEEN_SYMETRIC,t[1],t[5],t[7],None)
+
+def p_expresion_where_fin(t):
+    ''' expresion_where : expresion_whereb IS NULL
+                        | expresion_whereb IS NOT NULL
+                        | expresion_whereb ISNULL
+                        | expresion_whereb NOTNULL
+                        | expresion_whereb IS TRUE
+                        | expresion_whereb IS FALSE
+                        | expresion_whereb IS NOT TRUE
+                        | expresion_whereb IS NOT FALSE
+                        | expresion_whereb IS UNKNOWN
+                        | expresion_whereb IS NOT UNKNOWN 
+                        '''
+
+    if t[3].upper() == 'NULL':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.NULL, t[1],None,None,None)
+    elif t[4].upper() == 'NULL':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.N_NULL, t[1],None,None,None)
+    elif t[2].upper() == 'ISNULL':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.ISNULL, t[1],None,None,None)
+    elif t[2].upper() == 'NOTNULL':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.NOTNULL, t[1],None,None,None)
+    elif t[3].upper() == 'TRUE':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.TRUE, t[1],None,None,None)
+    elif t[3].upper() == 'FALSE':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.FALSE, t[1],None,None,None)
+    elif t[4].upper() == 'TRUE':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.N_TRUE, t[1],None,None,None)
+    elif t[4].upper() == 'FALSE':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.N_FALSE, t[1],None,None,None)
+    elif t[3].upper() == 'UNKNOWN':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.UNKNOWN, t[1],None,None,None)
+    elif t[4].upper() == 'UNKNOWN':
+        t[0] = Expresiondatos(OPCION_VERIFICAR.N_UNKNOWN, t[1],None,None,None)
+
+def p_expresion_wherea2(t):
+    ' expresion_wherea : expresion '
+    t[0] = t[1]
+
+def p_expresion_wherea(t):
+    '''expresion_wherea :  ABS PAR_A expresion PAR_C
+                        | LENGTH PAR_A string_type PAR_C
+                        | CBRT PAR_A expresion PAR_C
+                        | CEIL PAR_A expresion PAR_C 
+                        | CEILING PAR_A expresion PAR_C 
+                        | SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
+                        | TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
+                        | SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C
+                        | EXTRACT PAR_A extract_time FROM string_type PAR_C '''
+
+    if t[1].upper() == 'ABS':
+        t[0] = Expresiondatos(OPERACION_ARITMETICA.ABS, t[3],None,None,None)
+    elif t[1].upper() == 'LENGTH':
+        t[0] = Expresiondatos(OPERACION_ARITMETICA.LENGTH, t[3],None,None,None)
+    elif t[1].upper() == 'CBRT':
+        t[0] = Expresiondatos(OPERACION_ARITMETICA.CBRT, t[3],None,None,None)
+    elif t[1].upper() == 'CEIL':
+        t[0] = Expresiondatos(OPERACION_ARITMETICA.CEIL, t[3],None,None,None)
+    elif t[1].upper() == 'CEILING':
+        t[0] = Expresiondatos(OPERACION_ARITMETICA.CEILING, t[3],None,None,None)
+    elif t[1].upper() == 'SUBSTRING':
+        t[0] = Expresiondatos(OPCIONES_DATOS.SUBSTRING, t[3],t[5],t[7],None)
+    elif t[1].upper() == 'TRIM':
+        t[0] = Expresiondatos(OPCIONES_DATOS.TRIM, t[3],t[7],None,None)
+    elif t[1].upper() == 'SUBSTR':
+        t[0] = Expresiondatos(OPCIONES_DATOS.SUBSTR, t[3],t[5],t[7],None)
+    elif t[1].upper() == 'EXTRACT':
+        t[0] = Expresiondatos(OPCIONES_DATOS.EXTRACT, t[3],t[5],None,None)
+    elif t[1].upper() == 'SOME':
+        t[0] = Expresiondatos(OPCIONES_DATOS.SOME, t[3],None,None,None)
+    elif t[1].upper() == 'ANY':
+        t[0] = Expresiondatos(OPCIONES_DATOS.ANY, t[3],None,None,None)
+    else:
+        t[0] = t[1]
+
+def p_expresion_dato(t):
+    ''' expresion_dato : string_type '''
+    t[0] = t[1]
+
+def p_expresion_dato2(t):
+    ' expresion_dato : RESTA ENTERO '
+    t[0] = ExpresionIdentificadorDoble(TIPO_VALOR.NEGATIVO,t[1],t[2])
+    # PREGUNTAR SI SE GUARDA ASI
+
+def p_expresion_dato3(t):
+    ' expresion_dato : ID PUNTO ID'
+    t[0] = ExpresionIdentificadorDoble(TIPO_VALOR.DOBLE,t[1],t[3])
+
+def p_expresion_dato_numero(t):
+    'expresion_dato : expresion_numero'
+    t[0] = t[1]
+
+def p_expresion_numero(t):
+    '''expresion_numero :  ENTERO
+                        | FLOTANTE'''
+    t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1])
 #--------------------------------------------------------------
 '----------- GRAMATICA PARA LA INSTRUCCION ALTER DATABASE ---------'
 #--------------------------------------------------------------
@@ -683,6 +841,53 @@ def p_usuarioDB4(t):
     ' usuariosDB : CADENA '
     t[0] = ExpresionComillaSimple(TIPO_VALOR.CADENA,t[1])
 
+def p_expresion_whereb(t):
+    '''expresion_whereb :     expresion_wherea MAYQUE expresion_wherea
+                             | expresion_wherea MENQUE expresion_wherea
+                             | expresion_wherea MAYIGQUE expresion_wherea
+                             | expresion_wherea MENIGQUE expresion_wherea
+                             | expresion_wherea DOBLEIG expresion_wherea
+                             | expresion_wherea IGUAL expresion_wherea
+                             | expresion_wherea NOIG expresion_wherea
+                             | expresion_wherea NOIGUAL expresion_wherea '''
+
+    if t[2] == '>':
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYQUE)
+    elif t[2] == '<':
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MENQUE)
+    elif t[2] == '>=':
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYIGQUE)
+    elif t[2] == '<=':
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MENIGQUE)
+    elif t[2] == '==':
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.DOBLEIGUAL)
+    elif t[2] == '=':
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.IGUAL)
+    elif t[2] == '<>':
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.NOIG)
+    elif t[2] == '!=':
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.DIFERENTE)
+
+def p_expresion_whereb2(t):
+    ' expresion_whereb : expresion_wherea '
+    t[0] = t[1]
+
+def p_expresion_logica_w(t):
+    ''' expresion_logica_w : expresion_whereb AND expresion_whereb
+                            | expresion_whereb OR expresion_whereb '''
+    if t[2].upper() == 'AND':
+        t[0] = ExpresionLogica(t[1],t[3],OPERACION_LOGICA.AND)
+    elif t[2].upper() == 'OR':
+        t[0] = ExpresionLogica(t[1],t[3],OPERACION_LOGICA.OR)
+
+def p_expresion_logica_w_not(t):
+    ' expresion_logica_w : NOT expresion_logica_w '
+#    t[0].append(ExpresionLogica(t[2],None,OPERACION_LOGICA.NOT)) 
+
+
+def p_expresion_logica_w2(t):
+    ' expresion_logica_w : expresion_whereb '
+    t[0] = [t[1]]
 #---------------------------------------------------------------------
 ' -----------GRAMATICA PARA LA INSTRUCCION DROP DATABASES------------'
 #---------------------------------------------------------------------
@@ -1174,6 +1379,7 @@ def p_extract_time(t):
                     | HOUR
                     | MINUTE
                     | SECOND '''
+    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
 
 #################### TIPO DE DATOS #####################################
 
@@ -1275,25 +1481,7 @@ def p_tipo_dato_character_no_esp_DEF(t):
 def p_agrupacion_expresion(t):
     ' agrupacion_expresion : PAR_A expresion PAR_C'
     t[0] = t[2]
-
-def p_expresion_cadena(t):
-    'expresion : CADENA'
-    t[0] = ExpresionComillaSimple(TIPO_VALOR.CADENA,t[1])
-
-
-def p_expresion1(t):
-    '''expresion : ENTERO 
-                   | FLOTANTE'''
-    t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1])               
-
-
-def p_expresion3(t):
-    'expresion : ID'
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])                  
-                      
-def p_expresion4(t):
-    ' expresion : ID PUNTO ID '
-    t[0] = ExpresionIdentificadorDoble(t[1],t[3])   
+      
 
 def p_expresion(t):
     '''expresion : expresion SUMA expresion 
@@ -1355,6 +1543,20 @@ def p_expresion_logica_not(t):
 def p_expresion_logica_rel(t):
     ''' expresion_logica : expresion_relacional''' 
     t[0] = t[1]
+
+def p_expresion2(t):
+    ''' expresion :   expresion_dato 
+                    | sum_insrt
+                    | count_insrt '''
+    t[0] = t[1]
+
+' ---------- GRAMATICA PARA LA INSTRUCCION DE SUM ----------'
+def p_sum_insert(t):
+    ' sum_insrt : SUM agrupacion_expresion'
+
+' ---------- GRAMATICA PAR LA INSTRUCCIONN DE COUNT ---------'
+def p_count_insrt(t):
+    ' count_insrt : COUNT agrupacion_expresion '
 
 ##################################EXPRESIONES#####################################
 

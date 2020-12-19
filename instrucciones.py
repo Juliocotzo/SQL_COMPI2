@@ -136,3 +136,10 @@ class Definicion_delete(Instruccion):
         self.expresion = expresion
         self.id_using = id_using
         self.returning = returning
+
+class Create_hijo_select(Instruccion):
+    def init(self,etiqueta,expresion,expresion2, lista_objetos = []):
+        self.etiqueta = etiqueta
+        self.expresion = expresion
+        self.expresion2 = expresion2
+        self.lista_objetos = lista_objetos
