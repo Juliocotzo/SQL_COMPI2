@@ -4,11 +4,10 @@ USE compiladores2;
 
 CREATE TABLE tbUSUARIO(
 	id_ususario		INTEGER,
-	usuario		    INTEGER,
-	password		INTEGER,
+	usuario		    INTEGER ,
+	password		bigint,
     telefono        VARCHAR(50),
     direccion       VARCHAR(50),
-    edad            INTEGER
+    edad            numeric(10,10),
+    PRIMARY KEY (id_ususario,usuario)
 );
-
-ALTER TABLE tbUSUARIO ALTER COLUMN id_ususario TYPE varchar(100),ALTER COLUMN usuario TYPE varchar(150);

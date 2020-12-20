@@ -2,12 +2,12 @@
 class Tipo() :
     'Esta clase representa un tipo dentro de nuestra tabla de tipos'
 
-    def __init__(self, database, tabla, id, tipo, restriccion, referencia, tablaRef, listaCons = []) :
+    def __init__(self, database, tabla, id, tipo, tamanio, referencia, tablaRef, listaCons = []) :
         self.database = database
         self.tabla = tabla
         self.id = id
         self.tipo = tipo
-        self.restriccion = restriccion
+        self.tamanio = tamanio
         self.referencia = referencia
         self.tablaRef = tablaRef
         self.listaCons = listaCons
@@ -42,30 +42,6 @@ class TablaDeTipos() :
                 self.tipos[i] = tipo
             i += 1
 
-    def actualizarRestriccion(self,tipo, database, tabla, column, restriccion) :
-        i = 0
-        while i < len(self.tipos):
-            if self.tipos[i].database == database and self.tipos[i].tabla == tabla and self.tipos[i].id == column:
-                self.tipos[i].restriccion = restriccion
-            i += 1
-
-            
-    def actualizarRestriccion2(self,tipo, database, tabla, column, restriccion) :
-        i = 0
-        while i < len(self.tipos):
-            if self.tipos[i].database == database and self.tipos[i].tabla == tabla and self.tipos[i].id == column and self.tipos[i].restriccion == "":
-                self.tipos[i].restriccion = restriccion
-            i += 1
-
-    def actualizarLlaveForanea(self,tipo,database, tabla, column, restriccion,tablaRef, referencia) :
-        i = 0
-        while i < len(self.tipos):
-            if self.tipos[i].database == database and self.tipos[i].tabla == tabla and self.tipos[i].id == column:
-                self.tipos[i].restriccion = restriccion
-                self.tipos[i].referencia = referencia
-                self.tipos[i].tablaRef = tablaRef
-            i += 1
-
     def actualizarDatabase(self,tipo,database, newDatabase) :
         i = 0
         while i < len(self.tipos):
@@ -96,8 +72,7 @@ class TablaDeTipos() :
                     return i;
                 i+=1
 
-        return False
-        
+        return False      
 
 
     def clear(self):

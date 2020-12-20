@@ -3,13 +3,13 @@ import random
 
 arraySelect = [
     ['id_usuario','nombre','apellido'],
-    [201503392,'MYNOR','MOLINA'],
+    [201503392,'MYNOR','MOLINA',None],
     [201503421,'JORGE','VASQUEZ'],
     [201503442,'YADIRA','FERRER'],
     [201503484,'ANDREA','DUARTE']
 ]
 
-#print(arraySelect)
+print(arraySelect)
 
 def getPosition(ts,id):    
     pos = ts[0].index(id)

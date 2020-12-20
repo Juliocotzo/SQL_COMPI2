@@ -4,8 +4,6 @@
 
 from storageManager import jsonMode as j
 
-# drop all databases if exists
-j.dropAll()
 
 # create database
 j.createDatabase('world')
@@ -15,14 +13,12 @@ j.createTable('world', 'countries', 4)
 j.createTable('world', 'cities',    4)
 j.createTable('world', 'languages', 4)
 
-j.alterDropColumn('world','contries',1)
-j.alterDropColumn('world','contries',2)
-'''
 # create simple primary keys
 j.alterAddPK('world', 'countries', [0])
 j.alterAddPK('world', 'cities',    [0])
-j.alterAddPK('world', 'languages', [0, 1])
-
+j.alterAddPK('world', 'languages', [0])
+j.alterAddPK('world', 'languages', [1])
+'''
 # insert data in countries
 j.insert('world', 'countries', ['GTM', 'Guatemala',  'Central America', 108889])
 j.insert('world', 'countries', ['SLV', 'El Salvado', 'Central America',  21041])  
