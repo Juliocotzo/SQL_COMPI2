@@ -1210,7 +1210,7 @@ def p_expresion1_DEFAULT(t):
 ##########################################################
 
 def p_createTable_pk(t):
-    ' cuerpo_createTable :  PRIMARY KEY PAR_A ID PAR_C'
+    ' cuerpo_createTable :  PRIMARY KEY PAR_A campos_c PAR_C'
     t[0] = LLave_Primaria(t[4])
 
 def p_createTable_fk(t):

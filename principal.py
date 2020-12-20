@@ -13,8 +13,10 @@ from storageManager import jsonMode as j
 
 salida = ""
 useCurrentDatabase = ""
+pks = []
 
 def procesar_createTable(instr,ts,tc) :
+    global pks
     columns = []
     i = 0
     if instr.instrucciones != []:
@@ -47,6 +49,16 @@ def procesar_createTable(instr,ts,tc) :
                 salida = "\nERROR:  relation \"" + str(instr.id) +"\" alredy exists\nSQL state: 42P07"
         except :
             pass
+
+        try:
+            print(pks)
+            result = j.alterAddPK(str(useCurrentDatabase),str(instr.id),pks)
+            pks = []
+            print(pks)
+
+        except :
+            pass
+
             
 def procesar_Definicion(instr,ts,tc,tabla) :
     tipo_dato = ""
@@ -88,11 +100,12 @@ def procesar_Definicion(instr,ts,tc,tabla) :
                 procesar_constraintDefinicion(ins,ts,tc,tabla,instr.id)
 
         
+
+        
     
 def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
-    
     #print(tabla,id,instr.id,instr.tipo)
-
+    global pks
     if instr.id == None:
         if instr.tipo == OPCIONES_CONSTRAINT.NOT_NULL:
             buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
@@ -113,6 +126,7 @@ def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
                 tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,buscar.tipo,buscar.tamanio,"","",tempA)
                 tc.actualizar(tipo,useCurrentDatabase,tabla,id_column)
         elif instr.tipo == OPCIONES_CONSTRAINT.PRIMARY:
+            pk = []
             buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
             if buscar == False:
                 print('Encontrado')
@@ -121,7 +135,13 @@ def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
                 tempA.append(OPCIONES_CONSTRAINT.PRIMARY)
                 tipo = TC.Tipo(useCurrentDatabase,tabla,id_column,buscar.tipo,buscar.tamanio,"","",tempA)
                 tc.actualizar(tipo,useCurrentDatabase,tabla,id_column)
-                print(tc.getPos(useCurrentDatabase,tabla,id_column))
+                pos = tc.getPos(useCurrentDatabase,tabla,id_column)
+                pk.append(pos)
+                
+            pks = pk
+                
+            
+
 
         elif instr.tipo == OPCIONES_CONSTRAINT.FOREIGN:
             buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
@@ -201,17 +221,22 @@ def procesar_listaId(instr,ts,tc,tabla):
                 tc.actualizar(tipo,useCurrentDatabase,tabla,ids.id)
 
 def procesar_primaria(instr,ts,tc,tabla):
-    buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.id)
-    if buscar == False:
-        print('No Encontrado')
-    else:
-        tempA = buscar.listaCons
-        tempA.append(OPCIONES_CONSTRAINT.PRIMARY)
-        tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,buscar.tipo,buscar.tamanio,"","",tempA)
-        tc.actualizar(tipo,useCurrentDatabase,tabla,instr.id)
-        
-    
-    print(tc.getPos(useCurrentDatabase,tabla,instr.id))
+    global pks
+    pk = []
+    for ids in instr.id:
+        buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.id)
+        if buscar == False:
+            print('No Encontrado')
+        else:
+            tempA = buscar.listaCons
+            tempA.append(OPCIONES_CONSTRAINT.PRIMARY)
+            tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,buscar.tipo,buscar.tamanio,"","",tempA)
+            tc.actualizar(tipo,useCurrentDatabase,tabla,ids.id)
+            
+            pos = tc.getPos(useCurrentDatabase,tabla,ids.id)
+            pk.append(pos)
+
+    pks = pk
 
 def procesar_Foranea(instr,ts,tc,tabla):
     buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.nombre_tabla)

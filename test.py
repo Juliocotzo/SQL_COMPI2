@@ -16,8 +16,7 @@ j.createTable('world', 'languages', 4)
 # create simple primary keys
 j.alterAddPK('world', 'countries', [0])
 j.alterAddPK('world', 'cities',    [0])
-j.alterAddPK('world', 'languages', [0])
-j.alterAddPK('world', 'languages', [1])
+j.alterAddPK('world', 'languages', [0, 1])
 '''
 # insert data in countries
 j.insert('world', 'countries', ['GTM', 'Guatemala',  'Central America', 108889])
