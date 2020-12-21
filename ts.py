@@ -35,6 +35,13 @@ class TablaDeSimbolos() :
                 self.simbolos[i] = simbolo
             i += 1
 
+    def actualizarTableNum(self, simbolo, idDB, database) :
+        i = 0
+        while i < len(self.simbolos):
+            if self.simbolos[i].id == idDB and self.simbolos[i].ambito == database:
+                self.simbolos[i] = simbolo
+            i += 1
+
     def actualizarDBTable(self, tabla, newTable) :
         i = 0
         while i < len(self.simbolos):

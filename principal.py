@@ -18,10 +18,25 @@ pks = []
 def procesar_createTable(instr,ts,tc) :
     global pks
     columns = []
+    numC = 0
     i = 0
     if instr.instrucciones != []:
+        
         global salida
         for ins in instr.instrucciones:
+            if instr.herencia != None:
+                columnsH = tc.obtenerColumns(useCurrentDatabase,instr.herencia)
+                numC = len(columnsH)
+                #ACTUALIZAR NUM TABLA
+                '''temp1 = ts.obtener(instr.id,useCurrentDatabase)
+                temp2 = TS.Simbolo(temp1.id,temp1.tipo,temp1.valor+numC,temp1.ambito)
+                ts.actualizarTableNum(temp2,instr.id,useCurrentDatabase)'''
+                if columnsH != []:
+                    for col in columnsH:
+                        typeC = tc.obtenerReturn(useCurrentDatabase,instr.herencia,col)
+                        newType = TC.Tipo(typeC.database,instr.id,typeC.id,typeC.tipo,typeC.tamanio,typeC.referencia,typeC.tablaRef,[])
+                        if typeC != False:
+                            tc.agregar(newType) 
             if isinstance(ins, Definicion_Columnas): 
                 i+=1
                 columns.append(i)
@@ -34,30 +49,37 @@ def procesar_createTable(instr,ts,tc) :
                 procesar_listaId(ins,ts,tc,instr.id)
             elif isinstance(ins, definicion_constraint): 
                 procesar_constraint(ins,ts,tc,instr.id)
+    
         
-        try:
-            result = j.createTable(str(useCurrentDatabase),str(instr.id),int(len(columns)))
-            if result == 0:
-                salida = "\nCREATE TABLE"
-                temp1 = TS.Simbolo(str(instr.id),'Table',int(len(columns)),str(useCurrentDatabase))
-                ts.agregar(temp1)
-            elif result == 1 :
-                salida = "\nERROR:  internal_error \nSQL state: XX000 "
-            elif result == 2 :
-                salida = "\nERROR:  database \"" + useCurrentDatabase +"\" does not exist \nSQL state: 3D000"
-            elif result == 3 :
-                salida = "\nERROR:  relation \"" + str(instr.id) +"\" alredy exists\nSQL state: 42P07"
-        except :
-            pass
 
-        try:
-            #print(pks)
-            result = j.alterAddPK(str(useCurrentDatabase),str(instr.id),pks)
-            pks = []
-            #print(pks)
+    
 
-        except :
-            pass
+    try:
+        #print(str(useCurrentDatabase),str(instr.id),int(len(columns)))
+        result = j.createTable(str(useCurrentDatabase),str(instr.id),int(len(columns))+numC)
+        if result == 0:
+            salida = "\nCREATE TABLE"
+            temp1 = TS.Simbolo(str(instr.id),'Table',int(len(columns)+numC),str(useCurrentDatabase))
+            ts.agregar(temp1)
+        elif result == 1 :
+            salida = "\nERROR:  internal_error \nSQL state: XX000 "
+        elif result == 2 :
+            salida = "\nERROR:  database \"" + useCurrentDatabase +"\" does not exist \nSQL state: 3D000"
+        elif result == 3 :
+            salida = "\nERROR:  relation \"" + str(instr.id) +"\" alredy exists\nSQL state: 42P07"
+    except :
+        pass
+
+    try:
+        #print(pks)
+        result = j.alterAddPK(str(useCurrentDatabase),str(instr.id),pks)
+        pks = []
+        #print(pks)
+
+    except :
+        pass
+
+    
 
             
 def procesar_Definicion(instr,ts,tc,tabla) :
@@ -857,8 +879,8 @@ def procesar_insert(instr,ts,tc):
                 arrayNone.append(None)
             ii+=1
 
-        print(columns)
-        print(arrayNone)
+        #print(columns)
+        #print(arrayNone)
 
         if len(arrayNone) == numC:
             i = 0
@@ -1001,7 +1023,7 @@ def procesar_insert(instr,ts,tc):
     elif result == 5:
         salida = "\nERROR:  INSERT has more expressions than target columns\nSQL state: 42601"
 
-    print(salida)
+    #print(salida)
 
     
 
@@ -1128,7 +1150,7 @@ f = open("./entrada.txt", "r")
 input = f.read()
 instrucciones = g.parse(input)
 
-if listaErrores == []:
+'''if listaErrores == []:
     instrucciones_Global = instrucciones
     ts_global = TS.TablaDeSimbolos()
     tc_global = TC.TablaDeTipos()
@@ -1142,5 +1164,5 @@ if listaErrores == []:
 else:
     erroressss = ErrorHTML()
     erroressss.crearReporte()
-    listaErrores = []
+    listaErrores = []'''
 

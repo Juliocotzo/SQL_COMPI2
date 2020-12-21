@@ -1114,7 +1114,7 @@ def p_create_table(t):
     if t[7] == ';' :
         t[0] = Create_Table(t[3], None , t[5])
     else:
-        t[0] = Create_Table(t[3], t[7], t[5])
+        t[0] = Create_Table(t[3], t[9], t[5])
 
 
 def p_cuerpo_createTable_lista(t):
