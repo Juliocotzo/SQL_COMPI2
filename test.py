@@ -17,11 +17,10 @@ j.createTable('world', 'languages', 4)
 j.alterAddPK('world', 'countries', [0])
 j.alterAddPK('world', 'cities',    [0])
 j.alterAddPK('world', 'languages', [0, 1])
-'''
-# insert data in countries
-j.insert('world', 'countries', ['GTM', 'Guatemala',  'Central America', 108889])
-j.insert('world', 'countries', ['SLV', 'El Salvado', 'Central America',  21041])  
 
+j.insert('compiladores2', 'tbUSUARIO' ,[1, 'Juliocotzo', 'password', 12345678, None, None])
+
+'''
 # insert data in cities
 j.insert('world', 'cities', [1, 'Guatemala',    'Guatemala',    'GTM'])
 j.insert('world', 'cities', [2, 'Cuilapa',      'Santa Rosa',   'GTM'])

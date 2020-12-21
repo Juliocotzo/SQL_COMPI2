@@ -35,6 +35,24 @@ class TablaDeTipos() :
             i += 1
         return False
 
+    def obtenerColumns(self,database,tabla) :
+        arrayColumns = []
+        i = 0
+        while i < len(self.tipos):
+            if self.tipos[i].database == database and self.tipos[i].tabla == tabla:
+                arrayColumns.append(self.tipos[i].id) 
+            i += 1
+        return arrayColumns
+
+    def obtenerColumnsNum(self,database,tabla) :
+        numColumns = 0
+        i = 0
+        while i < len(self.tipos):
+            if self.tipos[i].database == database and self.tipos[i].tabla == tabla:
+                numColumns += 1
+            i += 1
+        return numColumns
+
     def actualizar(self,tipo,database, tabla, column) :
         i = 0
         while i < len(self.tipos):

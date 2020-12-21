@@ -56,6 +56,13 @@ class TablaDeSimbolos() :
                 return self.simbolos[i]
             i += 1
 
+    def obtenerNumColumns(self, database, tabla) :
+        i = 0
+        while i < len(self.simbolos):
+            if self.simbolos[i].ambito == database and self.simbolos[i].id == tabla:
+                return self.simbolos[i].valor
+            i += 1
+
 
     def deleteDatabase(self,ambito) :
         for elem in list(self.simbolos):

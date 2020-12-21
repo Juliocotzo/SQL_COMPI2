@@ -51,10 +51,10 @@ def procesar_createTable(instr,ts,tc) :
             pass
 
         try:
-            print(pks)
+            #print(pks)
             result = j.alterAddPK(str(useCurrentDatabase),str(instr.id),pks)
             pks = []
-            print(pks)
+            #print(pks)
 
         except :
             pass
@@ -805,18 +805,208 @@ def procesar_altertable(instr,ts,tc):
 
 #INSERT
 def procesar_insert(instr,ts,tc):
-    print('esta en el insert')
-
+    # tabla -> print(instr.id)
+    
+    global salida
+    columns = tc.obtenerColumns(useCurrentDatabase,instr.id)
+    numC = len(columns)
+    arrayInsert = []
+    arrayInserteFinal = []
+    arrayParametros = []
     if instr.etiqueta == TIPO_INSERT.CON_PARAMETROS:
 
         if instr.lista_parametros != []:
             for parametros in instr.lista_parametros:
-                print(instr.id, instr.etiqueta, parametros.id)
+                #print(parametros.id)
+                typeC = tc.obtenerReturn(useCurrentDatabase,instr.id,parametros.id)
+                #print('tc',typeC.id)
+                arrayParametros.append(typeC.id)
+
+        if instr.lista_datos != []:
+            for parametros in instr.lista_datos:
+                if isinstance(parametros, ExpresionIdentificador):
+                    #print(parametros.id)
+                    arrayInsert.append(parametros.id)
+                elif isinstance(parametros, ExpresionEntero):
+                    #print(parametros.val) 
+                    arrayInsert.append(parametros.val)
+
+        arrayNew = []           
+        ar = 0
+        while ar < len(columns):
+            if ar < len(arrayInsert):
+                arrayNew.append([arrayParametros[ar],arrayInsert[ar]])
+            else:
+                arrayNew.append([None,None])
+            ar+=1
+
+        
+        arrayNone = []
+        ii = 0
+        jj = 0
+        while ii < len(columns):
+            iii = 0
+            arrPP = []
+            while iii < len(arrayNew):
+                arrPP.append(arrayNew[iii][0])
+                iii+=1
+            if columns[ii] in arrPP:
+                arrayNone.append(arrayNew[jj][1])
+                jj+=1
+            else:
+                arrayNone.append(None)
+            ii+=1
+
+        print(columns)
+        print(arrayNone)
+
+        if len(arrayNone) == numC:
+            i = 0
+            while i < numC:
+                restricciones = []
+                it = 0
+                typeC = tc.obtenerReturn(useCurrentDatabase,instr.id,columns[i])
+
+                while it < len(typeC.listaCons):
+                    restricciones.append(typeC.listaCons[it])
+                    it+=1
+                #print(typeC.id,typeC.tamanio,restricciones)
+
+                insertBool = False
+                if restricciones != []:
+                    for res in restricciones:
+                        if res == OPCIONES_CONSTRAINT.CHECK:
+                            insertBool = True
+                        if res == OPCIONES_CONSTRAINT.UNIQUE:
+                            insertBool = True
+                        if res == OPCIONES_CONSTRAINT.FOREIGN:
+                            if arrayNone[i] == None:
+                                insertBool = False
+                            else:
+                                insertBool = True
+                        if res == OPCIONES_CONSTRAINT.NULL:
+                            insertBool = True
+                        if res == OPCIONES_CONSTRAINT.NOT_NULL:
+                            if arrayNone[i] == None:
+                                insertBool = False
+                            else:
+                                insertBool = True
+                        if res == OPCIONES_CONSTRAINT.DEFAULT:
+                            insertBool = True
+                        if res == OPCIONES_CONSTRAINT.PRIMARY:
+                            if arrayNone[i] == None:
+                                insertBool = False
+                            else:
+                                insertBool = True
+                else:
+                    insertBool = True
+
+                
+                if insertBool:
+                    arrayInserteFinal.append(arrayNone[i])
+
+                i+=1 
+            #print(arrayInserteFinal)
+
+        elif len(arrayInsert) > numC:
+            salida = "\nERROR:  INSERT has more expressions than target columns\nSQL state: 42601"
+            print(salida)
        
     else:
         if instr.lista_datos != []:
+            #print(columns)
+            #print(numC)
             for parametros in instr.lista_datos:
-                print(parametros.val)
+                if isinstance(parametros, ExpresionIdentificador):
+                    arrayInsert.append(parametros.id)
+                elif isinstance(parametros, ExpresionEntero):
+                    arrayInsert.append(parametros.val)
+
+        # LLENAR CAMPOS CON None
+        if len(arrayInsert) < numC:
+            i = len(arrayInsert)
+            while i < numC:
+                arrayInsert.append(None)
+                i+=1
+
+        if len(arrayInsert) == numC:
+            i = 0
+            while i < numC:
+                restricciones = []
+                it = 0
+                typeC = tc.obtenerReturn(useCurrentDatabase,instr.id,columns[i])
+
+                while it < len(typeC.listaCons):
+                    restricciones.append(typeC.listaCons[it])
+                    it+=1
+                #print(typeC.id,typeC.tamanio,restricciones)
+
+                insertBool = False
+                if restricciones != []:
+                    for res in restricciones:
+                        if res == OPCIONES_CONSTRAINT.CHECK:
+                            insertBool = True
+                        if res == OPCIONES_CONSTRAINT.UNIQUE:
+                            insertBool = True
+                        if res == OPCIONES_CONSTRAINT.FOREIGN:
+                            if arrayInsert[i] == None:
+                                insertBool = False
+                            else:
+                                insertBool = True
+                        if res == OPCIONES_CONSTRAINT.NULL:
+                            insertBool = True
+                        if res == OPCIONES_CONSTRAINT.NOT_NULL:
+                            if arrayInsert[i] == None:
+                                insertBool = False
+                            else:
+                                insertBool = True
+                        if res == OPCIONES_CONSTRAINT.DEFAULT:
+                            insertBool = True
+                        if res == OPCIONES_CONSTRAINT.PRIMARY:
+                            if arrayInsert[i] == None:
+                                insertBool = False
+                            else:
+                                insertBool = True
+                else:
+                    insertBool = True
+
+                
+                if insertBool:
+                    arrayInserteFinal.append(arrayInsert[i])
+
+                i+=1 
+            #print(arrayInserteFinal)
+
+        elif len(arrayInsert) > numC:
+            salida = "\nERROR:  INSERT has more expressions than target columns\nSQL state: 42601"
+            print(salida)
+
+
+    #FUNCION INSERTAR
+    '''print(arrayInserteFinal)
+    print(str(useCurrentDatabase),str(instr.id), arrayInserteFinal)'''
+
+    result = j.insert(useCurrentDatabase,instr.id, arrayInserteFinal)
+
+    if result == 0:
+        salida = "\nINSERT 0 1"            
+    elif result == 1 :
+        salida = "\nERROR:  internal_error \nSQL state: XX000 "
+    elif result == 2 :
+        salida = "\nERROR:  database \"" + str(useCurrentDatabase) +"\" does not exist \nSQL state: 3D000"
+    elif result == 3 :
+        salida = "\nERROR:  relation \"" + str(instr.id) +"\" does not exist\nSQL state: 42P01"
+    elif result == 4:
+        salida = "\nERROR:  duplicate key value violates unique constraint \"" + str(instr.id) + "_pkey\"\nSQL state: 23505"
+    elif result == 5:
+        salida = "\nERROR:  INSERT has more expressions than target columns\nSQL state: 42601"
+
+    print(salida)
+
+    
+
+
+    
 
 #Enum
 def procesar_create_type(instr,ts,tc):
