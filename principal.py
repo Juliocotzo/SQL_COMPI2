@@ -648,8 +648,8 @@ def procesar_altertable(instr,ts,tc):
                     tipodatoo = TIPO_DE_DATOS.timestamp 
                 elif lista.tipo.id.upper() == 'DATE':
                     tipodatoo = TIPO_DE_DATOS.date 
-                elif lista.tipo.id.upper() == 'VARING':
-                    tipodatoo = TIPO_DE_DATOS.varing 
+                elif lista.tipo.id.upper() == 'VARYING':
+                    tipodatoo = TIPO_DE_DATOS.varying 
                     tamanioD = lista.par1
                 elif lista.tipo.id.upper() == 'VARCHAR':
                     tipodatoo = TIPO_DE_DATOS.varchar 
@@ -778,8 +778,8 @@ def procesar_altertable(instr,ts,tc):
             tipodatoo = TIPO_DE_DATOS.timestamp 
         elif instr.lista_campos[0].tipo.id.upper() == 'DATE':
             tipodatoo = TIPO_DE_DATOS.date 
-        elif instr.lista_campos[0].tipo.id.upper() == 'VARING':
-            tipodatoo = TIPO_DE_DATOS.varing 
+        elif instr.lista_campos[0].tipo.id.upper() == 'VARYING':
+            tipodatoo = TIPO_DE_DATOS.varying 
             tamanioD = instr.lista_campos[0].par1
         elif instr.lista_campos[0].tipo.id.upper() == 'VARCHAR':
             tipodatoo = TIPO_DE_DATOS.varchar 
@@ -1164,5 +1164,5 @@ instrucciones = g.parse(input)
 else:
     erroressss = ErrorHTML()
     erroressss.crearReporte()
-    listaErrores = []'''
-
+    listaErrores = []
+'''

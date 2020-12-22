@@ -86,7 +86,7 @@ class TIPO_DE_DATOS(Enum):
     time = 10
     timestamp = 11
     date = 12
-    varing = 13
+    varying = 13
     varchar = 14
     char = 15
     character = 16

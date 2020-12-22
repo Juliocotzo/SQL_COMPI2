@@ -533,7 +533,7 @@ def p_Table_alter(t):
         t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],t[5][2])
     elif t[5][0] == 'NUMERIC':
         t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],t[5][2])
-    elif t[5][0] == 'VARING':
+    elif t[5][0] == 'VARYING':
         t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],None)
     elif t[5][0] == 'CHAR':
         t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[5][0]),t[5][1],None)
@@ -578,7 +578,7 @@ def p_alterTable_add_tipodato(t):
         t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],t[2][2])
     elif t[2][0] == 'NUMERIC':
         t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],t[2][2])
-    elif t[2][0] == 'VARING':
+    elif t[2][0] == 'VARYING':
         t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],None)
     elif t[2][0] == 'CHAR':
         t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[2][0]),t[2][1],None)
@@ -1453,7 +1453,7 @@ def p_tipo_dato_DEF(t):
 
 def p_tipo_dato_character_varying_DEF(t):
     ' TIPO_DATO_DEF : CHARACTER VARYING PAR_A ENTERO PAR_C'
-    t[0] = Expresion_Caracter(TIPO_DE_DATOS.character, t[4])
+    t[0] = Expresion_Caracter(TIPO_DE_DATOS.varying, t[4])
 
 def p_tipo_dato_varchar_DEF(t):
     ' TIPO_DATO_DEF : VARCHAR PAR_A ENTERO PAR_C'
