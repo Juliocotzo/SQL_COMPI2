@@ -1144,6 +1144,9 @@ def procesar_select_general(instr,ts,tc):
     arrayColumns = []
     tables = []
     arrayReturn = []
+    #WHERE
+    arrayWhere = []
+    arrayFilter = []
     
     if  instr.instr1 != None and instr.instr2 == None and instr.instr3 == None and instr.listains == None and instr.listanombres != None:
         global salida
@@ -1166,7 +1169,8 @@ def procesar_select_general(instr,ts,tc):
                     print(datos.val+'.*')
                     return datos.val
                 else:
-                    print(datos.etiqueta) #RESTO DE ETIQUETAS
+                    #print(datos.val) #RESTO DE ETIQUETAS
+                    arrayColumns.append(datos.val)
         
         if instr.listanombres != []:
             for datos in instr.listanombres:
@@ -1182,19 +1186,31 @@ def procesar_select_general(instr,ts,tc):
                     print(datos.val)
                     tables.append(datos.val)
 
-        #print(arrayColumns)
-        #print(tables)
-        
-        columnsTable = tc.obtenerColumns(useCurrentDatabase,tables[0])
-        resultArray = j.extractTable(str(useCurrentDatabase),str(tables[0]))
-        #print(resultArray)
-        #print(columnsTable)
-        arrayReturn.append(columnsTable)
-        for filas in resultArray:
-            #print(filas)
-            arrayReturn.append(filas)
+        if '*' in arrayColumns:
+            columnsTable = tc.obtenerColumns(useCurrentDatabase,tables[0])
+            resultArray = j.extractTable(str(useCurrentDatabase),str(tables[0]))
+            arrayReturn.append(columnsTable)
+            for filas in resultArray:
+                arrayReturn.append(filas)
 
-        salida = arrayReturn
+            salida = arrayReturn
+        else:
+            columnsTable = tc.obtenerColumns(useCurrentDatabase,tables[0])
+            resultArray = j.extractTable(str(useCurrentDatabase),str(tables[0]))
+            arrayReturn.append(arrayColumns)
+            for filasF in resultArray:
+                #print(filasF)
+                arrayTemp = []
+                for colF in arrayColumns:
+                    #print(filasF[columnsTable.index(colF)])
+                    arrayTemp.append(filasF[columnsTable.index(colF)])
+                    #print(colF)
+                arrayReturn.append(arrayTemp)
+
+            salida = arrayReturn
+            print(arrayReturn)
+
+        
 
         
 
@@ -1332,18 +1348,55 @@ def procesar_select_general(instr,ts,tc):
                         print(objs.operador) #SOLO ETIQUETAS
                     print(datos.expresion.etiqueta)
                 elif datos.etiqueta == TIPO_VALOR.ASTERISCO:
-                    print(datos.val)
+                    arrayColumns.append(datos.val) # *
                 elif datos.etiqueta == TIPO_VALOR.ID_ASTERISCO:
                     print(datos.val+'.*')
                 else:
-                    print(datos.etiqueta) #RESTO DE ETIQUETAS
+                    arrayColumns.append(datos.val) #IDS
 
         for objs in instr.listains:
-            print(objs.val)
+            tables.append(objs.val) #tables
+
+
+        columnsTable = tc.obtenerColumns(useCurrentDatabase,tables[0])
+        resultArray = j.extractTable(str(useCurrentDatabase),str(tables[0]))
+        arrayWhere = resultArray
+        arrayWhere.insert(0,columnsTable)           
 
         if instr.instr3.expwhere != None:
-            print(instr.instr3.expwhere.etiqueta)
-           
+            arrayFilter.append(arrayWhere[0])
+            i = 1
+            while i < len(arrayWhere):
+                arrayTS = []
+                arrayTS.append(arrayWhere[0])
+                arrayTS.append(arrayWhere[i])
+                val = resolver_expresion_logica(instr.instr3.expwhere.expresion,arrayTS)
+                if val == 1:
+                    arrayFilter.append(arrayWhere[i])
+                i+=1
+            
+        #print(arrayFilter)
+
+        if '*' in arrayColumns:
+            for filas in arrayFilter:
+                arrayReturn.append(filas)
+
+            salida = arrayReturn
+            print(arrayReturn)
+
+        else:
+            for filasF in arrayFilter:
+                #print(filasF)
+                arrayTemp = []
+                for colF in arrayColumns:
+                    #print(filasF[columnsTable.index(colF)])
+                    arrayTemp.append(filasF[columnsTable.index(colF)])
+                    #print(colF)
+                arrayReturn.append(arrayTemp)
+
+            salida = arrayReturn
+            print(arrayReturn)
+
         if instr.instr3.expgb != None:
             print(instr.instr3.expgb.etiqueta)
             for datos in instr.instr3.expgb.expresion:
@@ -1885,7 +1938,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
         return salida 
     except:
         pass
-'''
+
 f = open("./entrada.txt", "r")
 input = f.read()
 instrucciones = g.parse(input)
@@ -1899,10 +1952,10 @@ if listaErrores == []:
     typeC.crearReporte(tc_global)
     typeS = RTablaDeSimbolos()
     typeS.crearReporte(ts_global)
-    astt = AST()
-    astt.generarAST(instrucciones)
+    '''astt = AST()
+    astt.generarAST(instrucciones)'''
 else:
     erroressss = ErrorHTML()
     erroressss.crearReporte()
     listaErrores = []
-'''
+

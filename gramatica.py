@@ -426,6 +426,10 @@ def p_instruccion_f_select(t):
     'instruccion : select_insrt PTCOMA'
     t[0] = t[1]
 
+def p_instruccion_f_select_union(t):
+    'instruccion : select_uniones PTCOMA'   
+    t[0] = t[1]  
+
 def p_instruccion_error(t) :
     '''instruccion      : createDB_insrt error
                         | create_Table_isnrt error 
@@ -894,7 +898,7 @@ def p_createDB_dosParam_Owner(t):
             temp.append(t[2])
             temp.append(ExpresionNumeroSimple(t[5]))
         else: 
-            temp.append([2])
+            temp.append(t[2])
             temp.append(ExpresionNumeroSimple(t[4]))
     elif t[1].upper() == 'OWNER' and t[4].upper() == 'MODE':
         if t[5] == '=':
