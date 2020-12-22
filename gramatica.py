@@ -1498,7 +1498,10 @@ def p_expresion(t):
 def p_expresion_boolean(t):
     ''' expresion :  TRUE
                     | FALSE'''
-    t[0] = ExpresionBooleana(t[1])
+    if t[1].upper() == 'TRUE':
+        t[0] = ExpresionBooleana(OPERACION_LOGICA.TRUE,t[1])
+    elif t[1].upper() == 'FALSE':
+        t[0] = ExpresionBooleana(OPERACION_LOGICA.FALSE,t[1])
                          
 def p_string_type(t):
     ''' string_type : CADENA

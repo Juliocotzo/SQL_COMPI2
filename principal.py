@@ -28,51 +28,51 @@ def procesar_createTable(instr,ts,tc) :
                 columnsH = tc.obtenerColumns(useCurrentDatabase,instr.herencia)
                 numC = len(columnsH)
                 #ACTUALIZAR NUM TABLA
-                '''temp1 = ts.obtener(instr.id,useCurrentDatabase)
-                temp2 = TS.Simbolo(temp1.id,temp1.tipo,temp1.valor+numC,temp1.ambito)
-                ts.actualizarTableNum(temp2,instr.id,useCurrentDatabase)'''
+                '''temp1 = ts.obtener(instr.val,useCurrentDatabase)
+                temp2 = TS.Simbolo(temp1.val,temp1.tipo,temp1.valor+numC,temp1.ambito)
+                ts.actualizarTableNum(temp2,instr.val,useCurrentDatabase)'''
                 if columnsH != []:
                     for col in columnsH:
                         typeC = tc.obtenerReturn(useCurrentDatabase,instr.herencia,col)
-                        newType = TC.Tipo(typeC.database,instr.id,typeC.id,typeC.tipo,typeC.tamanio,typeC.referencia,typeC.tablaRef,[])
+                        newType = TC.Tipo(typeC.database,instr.val,typeC.val,typeC.tipo,typeC.tamanio,typeC.referencia,typeC.tablaRef,[])
                         if typeC != False:
                             tc.agregar(newType) 
             if isinstance(ins, Definicion_Columnas): 
                 i+=1
                 columns.append(i)
-                procesar_Definicion(ins,ts,tc,instr.id)
+                procesar_Definicion(ins,ts,tc,instr.val)
             elif isinstance(ins, LLave_Primaria): 
-                procesar_primaria(ins,ts,tc,instr.id)
+                procesar_primaria(ins,ts,tc,instr.val)
             elif isinstance(ins, Definicon_Foranea): 
-                procesar_Foranea(ins,ts,tc,instr.id)
+                procesar_Foranea(ins,ts,tc,instr.val)
             elif isinstance(ins, Lista_Parametros): 
-                procesar_listaId(ins,ts,tc,instr.id)
+                procesar_listaId(ins,ts,tc,instr.val)
             elif isinstance(ins, definicion_constraint): 
-                procesar_constraint(ins,ts,tc,instr.id)
+                procesar_constraint(ins,ts,tc,instr.val)
     
         
 
     
 
     try:
-        #print(str(useCurrentDatabase),str(instr.id),int(len(columns)))
-        result = j.createTable(str(useCurrentDatabase),str(instr.id),int(len(columns))+numC)
+        #print(str(useCurrentDatabase),str(instr.val),int(len(columns)))
+        result = j.createTable(str(useCurrentDatabase),str(instr.val),int(len(columns))+numC)
         if result == 0:
             salida = "\nCREATE TABLE"
-            temp1 = TS.Simbolo(str(instr.id),'Table',int(len(columns)+numC),str(useCurrentDatabase))
+            temp1 = TS.Simbolo(str(instr.val),'Table',int(len(columns)+numC),str(useCurrentDatabase))
             ts.agregar(temp1)
         elif result == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
         elif result == 2 :
             salida = "\nERROR:  database \"" + useCurrentDatabase +"\" does not exist \nSQL state: 3D000"
         elif result == 3 :
-            salida = "\nERROR:  relation \"" + str(instr.id) +"\" alredy exists\nSQL state: 42P07"
+            salida = "\nERROR:  relation \"" + str(instr.val) +"\" alredy exists\nSQL state: 42P07"
     except :
         pass
 
     try:
         #print(pks)
-        result = j.alterAddPK(str(useCurrentDatabase),str(instr.id),pks)
+        result = j.alterAddPK(str(useCurrentDatabase),str(instr.val),pks)
         pks = []
         #print(pks)
 
@@ -102,33 +102,33 @@ def procesar_Definicion(instr,ts,tc,tabla) :
         tamanio =  instr.val
     
     if instr.opciones_constraint == None:
-        buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.id)
+        buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.val)
         if buscar == False:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,tipo_dato,tamanio,"","",[])
+            tipo = TC.Tipo(useCurrentDatabase,tabla,instr.val,tipo_dato,tamanio,"","",[])
             tc.agregar(tipo)
         else:
             print('No Encontrado')
             
     else:
-        buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.id)
+        buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.val)
         if buscar == False:
-            tipo = TC.Tipo(useCurrentDatabase,tabla,instr.id,tipo_dato,tamanio,"","",[])
+            tipo = TC.Tipo(useCurrentDatabase,tabla,instr.val,tipo_dato,tamanio,"","",[])
             tc.agregar(tipo)
         else:
             print('No Encontrado')
             
         for ins in instr.opciones_constraint:
             if isinstance(ins, definicion_constraint): 
-                procesar_constraintDefinicion(ins,ts,tc,tabla,instr.id)
+                procesar_constraintDefinicion(ins,ts,tc,tabla,instr.val)
 
         
 
         
     
 def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
-    #print(tabla,id,instr.id,instr.tipo)
+    #print(tabla,id,instr.val,instr.tipo)
     global pks
-    if instr.id == None:
+    if instr.val == None:
         if instr.tipo == OPCIONES_CONSTRAINT.NOT_NULL:
             buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
             if buscar == False:
@@ -206,7 +206,7 @@ def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
     else:
         if instr.tipo == OPCIONES_CONSTRAINT.UNIQUE:
             if instr.opciones_constraint == None:
-                temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+                temp = TS.Simbolo(instr.val,'CONSTRAINT',0,tabla)
                 ts.agregar(temp)
                 buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
                 if buscar == False:
@@ -218,7 +218,7 @@ def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
                     tc.actualizar(tipo,useCurrentDatabase,tabla,id_column)
         elif instr.tipo == OPCIONES_CONSTRAINT.CHECK:
             if instr.opciones_constraint != None:
-                temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+                temp = TS.Simbolo(instr.val,'CONSTRAINT',0,tabla)
                 ts.agregar(temp)
                 buscar = tc.obtenerReturn(useCurrentDatabase,tabla,id_column)
                 if buscar == False:
@@ -233,29 +233,29 @@ def procesar_constraintDefinicion(instr,ts,tc,tabla,id_column):
 def procesar_listaId(instr,ts,tc,tabla):
     if instr.identificadores != []:
         for ids in instr.identificadores:
-            buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.id)
+            buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.val)
             if buscar == False:
                 print('No Encontrado')
             else:
                 tempA = buscar.listaCons
                 tempA.append(OPCIONES_CONSTRAINT.UNIQUE)
-                tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,buscar.tipo,buscar.tamanio,"","",tempA)
-                tc.actualizar(tipo,useCurrentDatabase,tabla,ids.id)
+                tipo = TC.Tipo(useCurrentDatabase,tabla,ids.val,buscar.tipo,buscar.tamanio,"","",tempA)
+                tc.actualizar(tipo,useCurrentDatabase,tabla,ids.val)
 
 def procesar_primaria(instr,ts,tc,tabla):
     global pks
     pk = []
-    for ids in instr.id:
-        buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.id)
+    for ids in instr.val:
+        buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.val)
         if buscar == False:
             print('No Encontrado')
         else:
             tempA = buscar.listaCons
             tempA.append(OPCIONES_CONSTRAINT.PRIMARY)
-            tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,buscar.tipo,buscar.tamanio,"","",tempA)
-            tc.actualizar(tipo,useCurrentDatabase,tabla,ids.id)
+            tipo = TC.Tipo(useCurrentDatabase,tabla,ids.val,buscar.tipo,buscar.tamanio,"","",tempA)
+            tc.actualizar(tipo,useCurrentDatabase,tabla,ids.val)
             
-            pos = tc.getPos(useCurrentDatabase,tabla,ids.id)
+            pos = tc.getPos(useCurrentDatabase,tabla,ids.val)
             pk.append(pos)
 
     pks = pk
@@ -273,21 +273,21 @@ def procesar_Foranea(instr,ts,tc,tabla):
 def procesar_constraint(instr,ts,tc,tabla):
     if instr.tipo == 'UNIQUE':
         if instr.opciones_constraint != []:
-            temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+            temp = TS.Simbolo(instr.val,'CONSTRAINT',0,tabla)
             ts.agregar(temp)
             for ids in instr.opciones_constraint:
-                buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.id)
+                buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.val)
                 if buscar == False:
                     print('No Encontrado')
                 else:
                     tempA = buscar.listaCons
                     tempA.append(OPCIONES_CONSTRAINT.UNIQUE)
-                    tipo = TC.Tipo(useCurrentDatabase,tabla,ids.id,buscar.tipo,buscar.tamanio,ids,instr.referencia,tempA)
-                    tc.actualizar(tipo,useCurrentDatabase,tabla,ids.id)
+                    tipo = TC.Tipo(useCurrentDatabase,tabla,ids.val,buscar.tipo,buscar.tamanio,ids,instr.referencia,tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,tabla,ids.val)
                 
     elif instr.tipo == 'FOREIGN':
         if instr.opciones_constraint != []:
-            temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+            temp = TS.Simbolo(instr.val,'CONSTRAINT',0,tabla)
             ts.agregar(temp)
             for ids in instr.opciones_constraint:
                 buscar = tc.obtenerReturn(useCurrentDatabase,tabla,instr.columna)
@@ -301,27 +301,27 @@ def procesar_constraint(instr,ts,tc,tabla):
 
     elif instr.tipo == 'CHECK':
         if instr.opciones_constraint != []:
-            temp = TS.Simbolo(instr.id,'CONSTRAINT',0,tabla)
+            temp = TS.Simbolo(instr.val,'CONSTRAINT',0,tabla)
             ts.agregar(temp)
             for ids in instr.opciones_constraint:
                 if type(ids.exp1) == ExpresionIdentificador:
-                    buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.exp1.id)
+                    buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.exp1.val)
                     if buscar == False:
                         print('No Encontrado')
                     else:
                         tempA = buscar.listaCons
                         tempA.append(OPCIONES_CONSTRAINT.CHECK)
-                        tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp1.id,buscar.tipo,buscar.tamanio,"","",tempA)
-                        tc.actualizar(tipo,useCurrentDatabase,tabla,ids.exp1.id)
+                        tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp1.val,buscar.tipo,buscar.tamanio,"","",tempA)
+                        tc.actualizar(tipo,useCurrentDatabase,tabla,ids.exp1.val)
                 else: 
-                    buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.exp2.id)
+                    buscar = tc.obtenerReturn(useCurrentDatabase,tabla,ids.exp2.val)
                     if buscar == False:
                         print('No Encontrado')
                     else:
                         tempA = buscar.listaCons
                         tempA.append(OPCIONES_CONSTRAINT.CHECK)
-                        tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp2.id,buscar.tipo,buscar.tamanio,"","",tempA)
-                        tc.actualizar(tipo,useCurrentDatabase,tabla,ids.exp2.id)
+                        tipo = TC.Tipo(useCurrentDatabase,tabla,ids.exp2.val,buscar.tipo,buscar.tamanio,"","",tempA)
+                        tc.actualizar(tipo,useCurrentDatabase,tabla,ids.exp2.val)
     
 def procesar_check(instr,ts,tc):
     print('Check')
@@ -344,29 +344,29 @@ def procesar_Expresion_Numerica(instr,ts,tc):
 def procesar_createDatabase(instr,ts,tc) :
     if instr.replace == 1:
         
-        result = j.dropDatabase(str(instr.nombre.id))
+        result = j.dropDatabase(str(instr.nombre.val))
         global salida
         if result == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
 
-        result1 = j.createDatabase(str(instr.nombre.id))
+        result1 = j.createDatabase(str(instr.nombre.val))
         if result1 == 0:
-            temp1 = TS.Simbolo(instr.nombre.id,'Database',0,"")
+            temp1 = TS.Simbolo(instr.nombre.val,'Database',0,"")
             ts.agregar(temp1)
             salida = "\nCREATE DATABASE"
             
         elif result1 == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
     else:
-        result1 = j.createDatabase(str(instr.nombre.id))
+        result1 = j.createDatabase(str(instr.nombre.val))
         if result1 == 0:
             salida = "\nCREATE DATABASE"
-            temp1 = TS.Simbolo(instr.nombre.id,'Database',0,"")
+            temp1 = TS.Simbolo(instr.nombre.val,'Database',0,"")
             ts.agregar(temp1)
         elif result1 == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
         elif result1 == 2 :
-            salida = "\nERROR:  database \"" + str(instr.nombre.id) +"\" already exists \nSQL state: 42P04 "
+            salida = "\nERROR:  database \"" + str(instr.nombre.val) +"\" already exists \nSQL state: 42P04 "
 
 def procesar_showDatabases(instr,ts,tc):
     global salida
@@ -396,43 +396,43 @@ def procesar_showTables(instr,ts,tc):
 def procesar_dropDatabase(instr,ts,tc):
     global salida
 
-    result = j.dropDatabase(str(instr.id.id))
+    result = j.dropDatabase(str(instr.val.val))
 
     if instr.exists == 0:
         global salida
         if result == 0:
             global salida
             salida = "\nDROP DATABASE"
-            ts.deleteDatabase(instr.id.id)
-            tc.eliminarDatabase(instr.id.id)
+            ts.deleteDatabase(instr.val.val)
+            tc.eliminarDatabase(instr.val.val)
         elif result == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
             print("ERROR:  internal_error \nSQL state: XX000 ")
         elif result == 2 :
-            salida = "\nERROR:  database \"" + str(instr.id.id) +"\" does not exist \nSQL state: 3D000"
+            salida = "\nERROR:  database \"" + str(instr.val.val) +"\" does not exist \nSQL state: 3D000"
     else:
         if result == 0:
             salida = "\nDROP DATABASE"
         elif result == 1 :
             salida = "\nERROR:  internal_error \nSQL state: XX000 "
         elif result == 2 :
-            salida = "\nERROR:  database \"" + str(instr.id.id) +"\" does not exist, skipping DROP DATABASE"
+            salida = "\nERROR:  database \"" + str(instr.val.val) +"\" does not exist, skipping DROP DATABASE"
 
 def procesar_useDatabase(instr,ts,tc):
-    #print(instr.id.id)
+    #print(instr.val.val)
     global salida, useCurrentDatabase
     encontrado = False
     dataTables = j.showDatabases()
     for databases in dataTables:
-        if databases == instr.id.id:
+        if databases == instr.val.val:
             encontrado = True
     
     if encontrado:
         global salida, useCurrentDatabase
-        useCurrentDatabase = str(instr.id.id)
-        salida = "\nYou are now connected to database  \"" + str(instr.id.id) +"\""
+        useCurrentDatabase = str(instr.val.val)
+        salida = "\nYou are now connected to database  \"" + str(instr.val.val) +"\""
     else: 
-        salida = "\nERROR:  database \"" + str(instr.id.id) +"\" does not exist \nSQL state: 3D000"
+        salida = "\nERROR:  database \"" + str(instr.val.val) +"\" does not exist \nSQL state: 3D000"
         useCurrentDatabase = ""
         
 def procesar_alterdatabase(instr,ts,tc):
@@ -440,7 +440,7 @@ def procesar_alterdatabase(instr,ts,tc):
     
     if isinstance(instr.tipo_id,ExpresionIdentificador) : 
         global salida
-        print('OWNER ' + str(instr.tipo_id.id))
+        print('OWNER ' + str(instr.tipo_id.val))
 
     elif isinstance(instr.tipo_id, ExpresionComillaSimple) : 
         print('OWNER ' + str(instr.tipo_id.val))
@@ -452,8 +452,8 @@ def procesar_alterdatabase(instr,ts,tc):
             tc.actualizarDatabase(tipo,instr.id_tabla,instr.tipo_id)
             temp1 = ts.obtener(instr.id_tabla,"")
             temp2 = TS.Simbolo(instr.tipo_id,temp1.tipo,temp1.valor,temp1.ambito)
-            ts.actualizarDB(temp2,temp1.id)
-            ts.actualizarDBTable(temp1.id,temp2.id)
+            ts.actualizarDB(temp2,temp1.val)
+            ts.actualizarDBTable(temp1.val,temp2.val)
             salida = "\nALTER DATABASE"            
 
         elif result == 1 :
@@ -464,30 +464,30 @@ def procesar_alterdatabase(instr,ts,tc):
             salida = "\nERROR:  database \"" + str(instr.tipo_id) +"\" alredy exists\nSQL state: 42P04"
 
 def procesar_update(instr,ts,tc):
-    print(instr.identificador.id)
+    print(instr.identificador.val)
     if instr.lista_update != []:
         for datos in instr.lista_update:
-            print(datos.ids.id)
+            print(datos.ids.val)
             print(datos.expresion.val)
     
 
 def procesar_drop(instr,ts,tc):
     if instr.lista_ids != []:
         for datos in instr.lista_ids:
-            #print(datos.id)
-            result = j.dropTable(str(useCurrentDatabase),str(datos.id))
+            #print(datos.val)
+            result = j.dropTable(str(useCurrentDatabase),str(datos.val))
             global salida
             if result == 0:
                 global salida
                 salida = "\nDROP TABLE"
-                ts.deleteDatabase(datos.id)
-                tc.eliminarTabla(useCurrentDatabase,datos.id)
+                ts.deleteDatabase(datos.val)
+                tc.eliminarTabla(useCurrentDatabase,datos.val)
             elif result == 1 :
                 salida = "\nERROR:  internal_error \nSQL state: XX000 "
             elif result == 2 :
                 salida = "\nERROR:  database \"" + str(useCurrentDatabase) +"\" does not exist \nSQL state: 3D000"
             elif result == 3 :
-                salida = "\nERROR:  table \"" + str(datos.id) +"\" does not exist \nSQL state: 42P01"
+                salida = "\nERROR:  table \"" + str(datos.val) +"\" does not exist \nSQL state: 42P01"
         
 
 #Alter table
@@ -497,37 +497,37 @@ def procesar_altertable(instr,ts,tc):
         global salida
         if instr.expresionlogica.operador == OPERACION_LOGICA.AND or instr.expresionlogica.operador == OPERACION_LOGICA.OR: 
             print(instr.identificador)
-            print(instr.expresionlogica.exp1.exp1.id)
+            print(instr.expresionlogica.exp1.exp1.val)
             print(instr.expresionlogica.exp1.exp2.val)
             print(instr.expresionlogica.operador)
-            print(instr.expresionlogica.exp2.exp1.id)
+            print(instr.expresionlogica.exp2.exp1.val)
             print(instr.expresionlogica.exp2.exp2.val)
         else:
             print(instr.identificador)
             if isinstance(instr.expresionlogica.exp1,ExpresionIdentificador):
-                print(instr.expresionlogica.exp1.id)
-                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id)
+                print(instr.expresionlogica.exp1.val)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.val)
                 if buscar == False:
                     print('No Encontrado')
                 else:
                     tempA = buscar.listaCons
                     tempA.append(OPCIONES_CONSTRAINT.CHECK)
-                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id,buscar.tipo,buscar.tamanio,"","",tempA)
-                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.val,buscar.tipo,buscar.tamanio,"","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.val)
                     
                     salida = "\nALTER TABLE" 
 
             elif isinstance(instr.expresionlogica.exp2,ExpresionIdentificador):
-                print(instr.expresionlogica.exp2.id)
-                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id)
+                print(instr.expresionlogica.exp2.val)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.val)
                 if buscar == False:
                     print('No Encontrado')
                 else:
                     salida = "\nALTER TABLE" 
                     tempA = buscar.listaCons
                     tempA.append(OPCIONES_CONSTRAINT.CHECK)
-                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id,buscar.tipo,buscar.tamanio,"","",tempA)
-                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.val,buscar.tipo,buscar.tamanio,"","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.val)
                     salida = "\nALTER TABLE" 
 
 
@@ -544,36 +544,36 @@ def procesar_altertable(instr,ts,tc):
 
     elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_CHECK:
         if instr.expresionlogica.operador == TIPO_LOGICA.AND or instr.expresionlogica.operador == TIPO_LOGICA.OR: 
-            print(instr.expresionlogica.exp1.exp1.id)
+            print(instr.expresionlogica.exp1.exp1.val)
             print(instr.expresionlogica.exp1.exp2.val)
             print(instr.expresionlogica.operador)
-            print(instr.expresionlogica.exp2.exp1.id)
+            print(instr.expresionlogica.exp2.exp1.val)
             print(instr.expresionlogica.exp2.exp2.val)
             
         else:
             temp = TS.Simbolo(instr.columnid,'CONSTRAINT',0,instr.identificador)
             ts.agregar(temp)
             if type(instr.expresionlogica.exp1) == ExpresionIdentificador:
-                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.val)
                 if buscar == False:
                     print('No Encontrado')
                 else:
                     tempA = buscar.listaCons
                     tempA.append(OPCIONES_CONSTRAINT.CHECK)
-                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id,buscar.tipo,buscar.tamanio,"","",tempA)
-                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.id)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.val,buscar.tipo,buscar.tamanio,"","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp1.val)
                     salida = "\nALTER TABLE" 
             else:
                 print(instr.expresionlogica.exp1.val)
-                print(instr.expresionlogica.exp2.id)
-                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id)
+                print(instr.expresionlogica.exp2.val)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.val)
                 if buscar == False:
                     print('No Encontrado')
                 else:
                     tempA = buscar.listaCons
                     tempA.append(OPCIONES_CONSTRAINT.CHECK)
-                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id,buscar.tipo,buscar.tamanio,"","",tempA)
-                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.id)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.val,buscar.tipo,buscar.tamanio,"","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,instr.expresionlogica.exp2.val)
                     salida = "\nALTER TABLE" 
 
     elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_UNIQUE:
@@ -584,15 +584,15 @@ def procesar_altertable(instr,ts,tc):
             ts.agregar(temp)
             
             for datos in instr.lista_campos:
-                print(datos.id)
-                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,datos.id)
+                print(datos.val)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,datos.val)
                 if buscar == False:
                     print('Encontrado')
                 else:
                     tempA = buscar.listaCons
                     tempA.append(OPCIONES_CONSTRAINT.UNIQUE)
-                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,datos.id,buscar.tipo,buscar.tamanio,"","",tempA)
-                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,datos.id)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,datos.val,buscar.tipo,buscar.tamanio,"","",tempA)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,datos.val)
                     salida = "\nALTER TABLE" 
 
     elif instr.etiqueta == TIPO_ALTER_TABLE.ADD_CONSTRAINT_FOREIGN:
@@ -615,66 +615,66 @@ def procesar_altertable(instr,ts,tc):
         print(instr.identificador)
         if instr.lista_campos != []:
             for lista in instr.lista_campos:
-                print(lista.identificador.id)
-                print(lista.tipo.id)
+                print(lista.identificador.val)
+                print(lista.tipo.val)
                 print(lista.par1)
 
                 tipodatoo = TIPO_DE_DATOS.text_ 
                 tamanioD = ""
-                if lista.tipo.id.upper() == 'TEXT':
+                if lista.tipo.val.upper() == 'TEXT':
                     tipodatoo = TIPO_DE_DATOS.text_ 
                     tamanioD = ""
-                elif lista.tipo.id.upper() == 'FLOAT':
+                elif lista.tipo.val.upper() == 'FLOAT':
                     tipodatoo = TIPO_DE_DATOS.float_ 
-                elif lista.tipo.id.upper() == 'INTEGER':
+                elif lista.tipo.val.upper() == 'INTEGER':
                     tipodatoo = TIPO_DE_DATOS.integer_ 
                     tamanioD = ""
-                elif lista.tipo.id.upper() == 'SMALLINT':
+                elif lista.tipo.val.upper() == 'SMALLINT':
                     tipodatoo = TIPO_DE_DATOS.smallint_ 
-                elif lista.tipo.id.upper() == 'MONEY':
+                elif lista.tipo.val.upper() == 'MONEY':
                     tipodatoo = TIPO_DE_DATOS.money 
-                elif lista.tipo.id.upper() == 'BIGINT':
+                elif lista.tipo.val.upper() == 'BIGINT':
                     tipodatoo = TIPO_DE_DATOS.bigint 
-                elif lista.tipo.id.upper() == 'REAL':
+                elif lista.tipo.val.upper() == 'REAL':
                     tipodatoo = TIPO_DE_DATOS.real 
-                elif lista.tipo.id.upper() == 'DOUBLE':
+                elif lista.tipo.val.upper() == 'DOUBLE':
                     tipodatoo = TIPO_DE_DATOS.double 
-                elif lista.tipo.id.upper() == 'INTERVAL':
+                elif lista.tipo.val.upper() == 'INTERVAL':
                     tipodatoo = TIPO_DE_DATOS.interval 
                     tamanioD = lista.par1
-                elif lista.tipo.id.upper() == 'TIME':
+                elif lista.tipo.val.upper() == 'TIME':
                     tipodatoo = TIPO_DE_DATOS.time 
-                elif lista.tipo.id.upper() == 'TIMESTAMP':
+                elif lista.tipo.val.upper() == 'TIMESTAMP':
                     tipodatoo = TIPO_DE_DATOS.timestamp 
-                elif lista.tipo.id.upper() == 'DATE':
+                elif lista.tipo.val.upper() == 'DATE':
                     tipodatoo = TIPO_DE_DATOS.date 
-                elif lista.tipo.id.upper() == 'VARYING':
+                elif lista.tipo.val.upper() == 'VARYING':
                     tipodatoo = TIPO_DE_DATOS.varying 
                     tamanioD = lista.par1
-                elif lista.tipo.id.upper() == 'VARCHAR':
+                elif lista.tipo.val.upper() == 'VARCHAR':
                     tipodatoo = TIPO_DE_DATOS.varchar 
                     tamanioD = lista.par1
-                elif lista.tipo.id.upper() == 'CHAR':
+                elif lista.tipo.val.upper() == 'CHAR':
                     tipodatoo = TIPO_DE_DATOS.char 
                     tamanioD = lista.par1
-                elif lista.tipo.id.upper() == 'CHARACTER':
+                elif lista.tipo.val.upper() == 'CHARACTER':
                     tipodatoo = TIPO_DE_DATOS.character 
                     tamanioD = lista.par1
-                elif lista.tipo.id.upper() == 'DECIMAL':
+                elif lista.tipo.val.upper() == 'DECIMAL':
                     tipodatoo = TIPO_DE_DATOS.decimal 
                     tamanioD = lista.par1
-                elif lista.tipo.id.upper() == 'NUMERIC':
+                elif lista.tipo.val.upper() == 'NUMERIC':
                     tipodatoo = TIPO_DE_DATOS.numeric           
                     tamanioD = lista.par1
-                elif lista.tipo.id.upper() == 'DOUBLE':
+                elif lista.tipo.val.upper() == 'DOUBLE':
                     tipodatoo = TIPO_DE_DATOS.double_precision
 
-                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,lista.identificador.id)
+                buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,lista.identificador.val)
                 if buscar == False:
                     print('No Encontrado')
                 else:
-                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,lista.identificador.id,buscar.tipo,tamanioD,buscar.referencia,buscar.tablaRef,buscar.listaCons)
-                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,lista.identificador.id)
+                    tipo = TC.Tipo(useCurrentDatabase,instr.identificador,lista.identificador.val,buscar.tipo,tamanioD,buscar.referencia,buscar.tablaRef,buscar.listaCons)
+                    tc.actualizar(tipo,useCurrentDatabase,instr.identificador,lista.identificador.val)
                     salida = "\nALTER TABLE"
     
     elif instr.etiqueta == TIPO_ALTER_TABLE.ALTER_COLUMN_NULL:
@@ -705,8 +705,8 @@ def procesar_altertable(instr,ts,tc):
         print(instr.identificador)
         if instr.lista_campos != []:
             for datos in instr.lista_campos:
-                print(datos.id)
-                ts.deleteConstraint(datos.id,instr.identificador)
+                print(datos.val)
+                ts.deleteConstraint(datos.val,instr.identificador)
             salida = "\nALTER TABLE" 
 
     elif instr.etiqueta ==  TIPO_ALTER_TABLE.RENAME_COLUMN:
@@ -720,17 +720,17 @@ def procesar_altertable(instr,ts,tc):
         #print('Tabla',instr.identificador)
         if instr.lista_campos != []:
             for datos in instr.lista_campos:
-                #print('Columna',datos.id)
+                #print('Columna',datos.val)
                 
-                pos = tc.getPos(useCurrentDatabase,instr.identificador,datos.id)
+                pos = tc.getPos(useCurrentDatabase,instr.identificador,datos.val)
                 print(pos)
                 #result = j.alterDropColumn('world','countries',1)
                 #print(result)
                 result = 0
                 if result == 0:
-                    tc.eliminarID(useCurrentDatabase,instr.identificador,datos.id)
+                    tc.eliminarID(useCurrentDatabase,instr.identificador,datos.val)
                     temp1 = ts.obtener(instr.identificador,useCurrentDatabase)
-                    temp2 = TS.Simbolo(temp1.id,temp1.tipo,temp1.valor-1,temp1.ambito)
+                    temp2 = TS.Simbolo(temp1.val,temp1.tipo,temp1.valor-1,temp1.ambito)
                     ts.actualizarDB(temp2,instr.identificador)
                     salida = "\nALTER TABLE"            
                     print(salida)
@@ -751,67 +751,67 @@ def procesar_altertable(instr,ts,tc):
     elif instr.etiqueta ==  TIPO_ALTER_TABLE.ADD_COLUMN:
         tipodatoo = TIPO_DE_DATOS.text_ 
         tamanioD = ""
-        if instr.lista_campos[0].tipo.id.upper() == 'TEXT':
+        if instr.lista_campos[0].tipo.val.upper() == 'TEXT':
             tipodatoo = TIPO_DE_DATOS.text_ 
             tamanioD = ""
-        elif instr.lista_campos[0].tipo.id.upper() == 'FLOAT':
+        elif instr.lista_campos[0].tipo.val.upper() == 'FLOAT':
             tipodatoo = TIPO_DE_DATOS.float_ 
-        elif instr.lista_campos[0].tipo.id.upper() == 'INTEGER':
+        elif instr.lista_campos[0].tipo.val.upper() == 'INTEGER':
             tipodatoo = TIPO_DE_DATOS.integer_ 
             tamanioD = ""
-        elif instr.lista_campos[0].tipo.id.upper() == 'SMALLINT':
+        elif instr.lista_campos[0].tipo.val.upper() == 'SMALLINT':
             tipodatoo = TIPO_DE_DATOS.smallint_ 
-        elif instr.lista_campos[0].tipo.id.upper() == 'MONEY':
+        elif instr.lista_campos[0].tipo.val.upper() == 'MONEY':
             tipodatoo = TIPO_DE_DATOS.money 
-        elif instr.lista_campos[0].tipo.id.upper() == 'BIGINT':
+        elif instr.lista_campos[0].tipo.val.upper() == 'BIGINT':
             tipodatoo = TIPO_DE_DATOS.bigint 
-        elif instr.lista_campos[0].tipo.id.upper() == 'REAL':
+        elif instr.lista_campos[0].tipo.val.upper() == 'REAL':
             tipodatoo = TIPO_DE_DATOS.real 
-        elif instr.lista_campos[0].tipo.id.upper() == 'DOUBLE':
+        elif instr.lista_campos[0].tipo.val.upper() == 'DOUBLE':
             tipodatoo = TIPO_DE_DATOS.double 
-        elif instr.lista_campos[0].tipo.id.upper() == 'INTERVAL':
+        elif instr.lista_campos[0].tipo.val.upper() == 'INTERVAL':
             tipodatoo = TIPO_DE_DATOS.interval 
             tamanioD = instr.lista_campos[0].par1
-        elif instr.lista_campos[0].tipo.id.upper() == 'TIME':
+        elif instr.lista_campos[0].tipo.val.upper() == 'TIME':
             tipodatoo = TIPO_DE_DATOS.time 
-        elif instr.lista_campos[0].tipo.id.upper() == 'TIMESTAMP':
+        elif instr.lista_campos[0].tipo.val.upper() == 'TIMESTAMP':
             tipodatoo = TIPO_DE_DATOS.timestamp 
-        elif instr.lista_campos[0].tipo.id.upper() == 'DATE':
+        elif instr.lista_campos[0].tipo.val.upper() == 'DATE':
             tipodatoo = TIPO_DE_DATOS.date 
-        elif instr.lista_campos[0].tipo.id.upper() == 'VARYING':
+        elif instr.lista_campos[0].tipo.val.upper() == 'VARYING':
             tipodatoo = TIPO_DE_DATOS.varying 
             tamanioD = instr.lista_campos[0].par1
-        elif instr.lista_campos[0].tipo.id.upper() == 'VARCHAR':
+        elif instr.lista_campos[0].tipo.val.upper() == 'VARCHAR':
             tipodatoo = TIPO_DE_DATOS.varchar 
             tamanioD = instr.lista_campos[0].par1
-        elif instr.lista_campos[0].tipo.id.upper() == 'CHAR':
+        elif instr.lista_campos[0].tipo.val.upper() == 'CHAR':
             tipodatoo = TIPO_DE_DATOS.char 
             tamanioD = instr.lista_campos[0].par1
-        elif instr.lista_campos[0].tipo.id.upper() == 'CHARACTER':
+        elif instr.lista_campos[0].tipo.val.upper() == 'CHARACTER':
             tipodatoo = TIPO_DE_DATOS.character 
             tamanioD = instr.lista_campos[0].par1
-        elif instr.lista_campos[0].tipo.id.upper() == 'DECIMAL':
+        elif instr.lista_campos[0].tipo.val.upper() == 'DECIMAL':
             tipodatoo = TIPO_DE_DATOS.decimal 
             tamanioD = instr.lista_campos[0].par1
-        elif instr.lista_campos[0].tipo.id.upper() == 'NUMERIC':
+        elif instr.lista_campos[0].tipo.val.upper() == 'NUMERIC':
             tipodatoo = TIPO_DE_DATOS.numeric           
             tamanioD = instr.lista_campos[0].par1 
-        elif instr.lista_campos[0].tipo.id.upper() == 'DOUBLE':
+        elif instr.lista_campos[0].tipo.val.upper() == 'DOUBLE':
             tipodatoo = TIPO_DE_DATOS.double_precision
         
         if instr.lista_campos != []:
             for datos in instr.lista_campos:
                 result = j.alterAddColumn(str(useCurrentDatabase),str(instr.identificador),1)
                 if result == 0:
-                    buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,datos.identificador.id)
+                    buscar = tc.obtenerReturn(useCurrentDatabase,instr.identificador,datos.identificador.val)
                     if buscar == False:
-                        tipo = TC.Tipo(useCurrentDatabase,instr.identificador,datos.identificador.id,tipodatoo,tamanioD,"","",[])
+                        tipo = TC.Tipo(useCurrentDatabase,instr.identificador,datos.identificador.val,tipodatoo,tamanioD,"","",[])
                         tc.agregar(tipo)
                     else:
                         print('New')
                     
                     temp1 = ts.obtener(instr.identificador,useCurrentDatabase)
-                    temp2 = TS.Simbolo(temp1.id,temp1.tipo,temp1.valor+1,temp1.ambito)
+                    temp2 = TS.Simbolo(temp1.val,temp1.tipo,temp1.valor+1,temp1.ambito)
                     ts.actualizarDB(temp2,instr.identificador)
                     salida = "\nALTER TABLE"            
 
@@ -827,10 +827,10 @@ def procesar_altertable(instr,ts,tc):
 
 #INSERT
 def procesar_insert(instr,ts,tc):
-    # tabla -> print(instr.id)
+    # tabla -> print(instr.val)
     
     global salida
-    columns = tc.obtenerColumns(useCurrentDatabase,instr.id)
+    columns = tc.obtenerColumns(useCurrentDatabase,instr.val)
     numC = len(columns)
     arrayInsert = []
     arrayInserteFinal = []
@@ -839,16 +839,16 @@ def procesar_insert(instr,ts,tc):
 
         if instr.lista_parametros != []:
             for parametros in instr.lista_parametros:
-                #print(parametros.id)
-                typeC = tc.obtenerReturn(useCurrentDatabase,instr.id,parametros.id)
-                #print('tc',typeC.id)
-                arrayParametros.append(typeC.id)
+                #print(parametros.val)
+                typeC = tc.obtenerReturn(useCurrentDatabase,instr.val,parametros.val)
+                #print('tc',typeC.val)
+                arrayParametros.append(typeC.val)
 
         if instr.lista_datos != []:
             for parametros in instr.lista_datos:
                 if isinstance(parametros, ExpresionIdentificador):
-                    #print(parametros.id)
-                    arrayInsert.append(parametros.id)
+                    #print(parametros.val)
+                    arrayInsert.append(parametros.val)
                 elif isinstance(parametros, ExpresionEntero):
                     #print(parametros.val) 
                     arrayInsert.append(parametros.val)
@@ -887,12 +887,12 @@ def procesar_insert(instr,ts,tc):
             while i < numC:
                 restricciones = []
                 it = 0
-                typeC = tc.obtenerReturn(useCurrentDatabase,instr.id,columns[i])
+                typeC = tc.obtenerReturn(useCurrentDatabase,instr.val,columns[i])
 
                 while it < len(typeC.listaCons):
                     restricciones.append(typeC.listaCons[it])
                     it+=1
-                #print(typeC.id,typeC.tamanio,restricciones)
+                #print(typeC.val,typeC.tamanio,restricciones)
 
                 insertBool = False
                 if restricciones != []:
@@ -940,7 +940,7 @@ def procesar_insert(instr,ts,tc):
             #print(numC)
             for parametros in instr.lista_datos:
                 if isinstance(parametros, ExpresionIdentificador):
-                    arrayInsert.append(parametros.id)
+                    arrayInsert.append(parametros.val)
                 elif isinstance(parametros, ExpresionEntero):
                     arrayInsert.append(parametros.val)
 
@@ -956,12 +956,12 @@ def procesar_insert(instr,ts,tc):
             while i < numC:
                 restricciones = []
                 it = 0
-                typeC = tc.obtenerReturn(useCurrentDatabase,instr.id,columns[i])
+                typeC = tc.obtenerReturn(useCurrentDatabase,instr.val,columns[i])
 
                 while it < len(typeC.listaCons):
                     restricciones.append(typeC.listaCons[it])
                     it+=1
-                #print(typeC.id,typeC.tamanio,restricciones)
+                #print(typeC.val,typeC.tamanio,restricciones)
 
                 insertBool = False
                 if restricciones != []:
@@ -1006,9 +1006,9 @@ def procesar_insert(instr,ts,tc):
 
     #FUNCION INSERTAR
     '''print(arrayInserteFinal)
-    print(str(useCurrentDatabase),str(instr.id), arrayInserteFinal)'''
+    print(str(useCurrentDatabase),str(instr.val), arrayInserteFinal)'''
 
-    result = j.insert(useCurrentDatabase,instr.id, arrayInserteFinal)
+    result = j.insert(useCurrentDatabase,instr.val, arrayInserteFinal)
 
     if result == 0:
         salida = "\nINSERT 0 1"            
@@ -1017,9 +1017,9 @@ def procesar_insert(instr,ts,tc):
     elif result == 2 :
         salida = "\nERROR:  database \"" + str(useCurrentDatabase) +"\" does not exist \nSQL state: 3D000"
     elif result == 3 :
-        salida = "\nERROR:  relation \"" + str(instr.id) +"\" does not exist\nSQL state: 42P01"
+        salida = "\nERROR:  relation \"" + str(instr.val) +"\" does not exist\nSQL state: 42P01"
     elif result == 4:
-        salida = "\nERROR:  duplicate key value violates unique constraint \"" + str(instr.id) + "_pkey\"\nSQL state: 23505"
+        salida = "\nERROR:  duplicate key value violates unique constraint \"" + str(instr.val) + "_pkey\"\nSQL state: 23505"
     elif result == 5:
         salida = "\nERROR:  INSERT has more expressions than target columns\nSQL state: 42601"
 
@@ -1034,7 +1034,7 @@ def procesar_insert(instr,ts,tc):
 def procesar_create_type(instr,ts,tc):
     
     print("TYPE------------------------------")
-    print(instr.identificador.id)
+    print(instr.identificador.val)
     if instr.lista_datos != []:
         for datos in instr.lista_datos:
             print(datos.val)
@@ -1042,10 +1042,10 @@ def procesar_create_type(instr,ts,tc):
 #delete
 def procesar_delete(instr,ts,tc):
     if instr.etiqueta == TIPO_DELETE.DELETE_NORMAL:
-        print(instr.id)
+        print(instr.val)
 
     elif instr.etiqueta == TIPO_DELETE.DELETE_RETURNING:
-        print(instr.id)
+        print(instr.val)
         if instr.returning != []:
             for retornos in instr.returning:
                 print(retornos.etiqueta)
@@ -1053,17 +1053,17 @@ def procesar_delete(instr,ts,tc):
     elif instr.etiqueta == TIPO_DELETE.DELETE_EXIST:    
         if instr.expresion.operador == OPERACION_RELACIONAL.MAYQUE:
             if instr.expresion.exp1.etiqueta == TIPO_VALOR.IDENTIFICADOR and instr.expresion.exp2.etiqueta ==  TIPO_VALOR.NUMERO:
-                print(instr.expresion.exp1.id)
+                print(instr.expresion.exp1.val)
                 print(instr.expresion.exp2.val)            
 
    
     elif instr.etiqueta == TIPO_DELETE.DELETE_EXIST_RETURNING:
         
-        print(instr.id)
+        print(instr.val)
 
         if instr.expresion.operador == OPERACION_RELACIONAL.MAYQUE:
             if instr.expresion.exp1.etiqueta == TIPO_VALOR.IDENTIFICADOR and instr.expresion.exp2.etiqueta ==  TIPO_VALOR.NUMERO:
-                print(instr.expresion.exp1.id)
+                print(instr.expresion.exp1.val)
                 print(instr.expresion.exp2.val)
 
         if instr.returning != []:
@@ -1072,20 +1072,20 @@ def procesar_delete(instr,ts,tc):
 
         
     elif instr.etiqueta == TIPO_DELETE.DELETE_CONDIFION:
-        print(instr.id, instr.expresion)
+        print(instr.val, instr.expresion)
     
     elif instr.etiqueta == TIPO_DELETE.DELETE_CONDICION_RETURNING:
         if instr.returning != []:
             for retornos in instr.returning:
-                print(instr.id,instr.expresion, retornos.id)
+                print(instr.val,instr.expresion, retornos.val)
 
     elif instr.etiqueta == TIPO_DELETE.DELETE_USING:
-        print(instr.id, instr.id_using, instr.expresion)
+        print(instr.val, instr.id_using, instr.expresion)
 
     elif instr.etiqueta == TIPO_DELETE.DELETE_USING_returnin:
         if instr.returning != []:
             for retornos in instr.returning:
-                print(instr.id,instr.id_using,instr.expresion)
+                print(instr.val,instr.id_using,instr.expresion)
 
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:

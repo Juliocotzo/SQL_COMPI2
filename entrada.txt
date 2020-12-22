@@ -19,3 +19,4 @@ INSERT INTO tbUSUARIO VALUES (1,'Juliocotzo','password',12345678,'Guatemala',20)
 INSERT INTO tbUSUARIO (id_ususario,usuario,telefono) VALUES (2,'Manuel',12345678);
 INSERT INTO tbUSAURIO_ADD VALUES (1,'Juliocotzo','password',12345678,'Guatemala',20);
 INSERT INTO tbUSAURIO_ADD VALUES (1,'Juliocotzo','password',12345678,'Guatemala',20,23);
+INSERT INTO tbUSAURIO_ADD VALUES (1,'Juliocotzo','password',12345678,'Guatemala',20,24);

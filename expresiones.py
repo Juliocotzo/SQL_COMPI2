@@ -299,15 +299,15 @@ class ExpresionBinaria(ExpresionNumerica) :
         self.operador = operador
 
 class ExpresionIdentificador(ExpresionNumerica) :
-    def __init__(self,etiqueta, id = "") :
+    def __init__(self,etiqueta, val = "") :
         self.etiqueta = etiqueta
-        self.id = id #Cambio
+        self.val = val ##Cambio
 
 class ExpresionIdentificadorDoble(ExpresionNumerica) :
-    def __init__(self,etiqueta, id = "", id1 = ""):
+    def __init__(self,etiqueta, val = "", val1 = ""):
         self.etiqueta = etiqueta
-        self.id = id #Cambio
-        self.id1 = id1 #Cambio
+        self.val = val ##Cambio
+        self.val1 = val1 ##Cambio
 
 
 class ExpresionNegativo(ExpresionNumerica) :
@@ -341,9 +341,9 @@ class ExpresionComillaSimple(ExpresionCadena) :
         Recibe como parámetro el valor del token procesado por el analizador léxico
     '''
 
-    def __init__(self,etiqueta, val) :
+    def __init__(self, operador,val):
         self.val = val
-        self.etiqueta = etiqueta #Cambio
+        self.operador = operador
 
 class ExpresionLogica() :
     '''
@@ -357,17 +357,17 @@ class ExpresionLogica() :
         self.operador = operador
 
 class Expresiondatos():
-    def init(self,etiqueta,val1,val2,val3,val4):
-        self.etiqueta = etiqueta #Cambio
-        self.val1 = val1 #Cambio
-        self.val2 = val2 #Cambio
-        self.val3 = val3 #Cambio
-        self.val4 = val4 #Cambio
+    def __init__(self,operador,exp1,exp2,exp3,exp4):
+        self.operador = operador
+        self.exp1 = exp1
+        self.exp2 = exp2
+        self.exp3 = exp3
+        self.exp4 = exp4
 
 class ExpresionBooleana():
-    def __init__(self, expresion):
-        self.expresion = expresion #Cambio
-                                    #Cambio
+    def init(self,etiqueta,val1):
+        self.etiqueta = etiqueta
+        self.val1 = val1
 
 class ExpresionNumero(ExpresionNumerica) :
     '''
