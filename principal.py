@@ -851,12 +851,8 @@ def procesar_insert(instr,ts,tc):
 
         if instr.lista_datos != []:
             for parametros in instr.lista_datos:
-                if isinstance(parametros, ExpresionIdentificador):
-                    #print(parametros.val)
-                    arrayInsert.append(parametros.val)
-                elif isinstance(parametros, ExpresionEntero):
-                    #print(parametros.val) 
-                    arrayInsert.append(parametros.val)
+                arrayInsert.append(parametros.val)
+
 
         arrayNew = []           
         ar = 0
@@ -944,10 +940,8 @@ def procesar_insert(instr,ts,tc):
             #print(columns)
             #print(numC)
             for parametros in instr.lista_datos:
-                if isinstance(parametros, ExpresionIdentificador):
-                    arrayInsert.append(parametros.val)
-                elif isinstance(parametros, ExpresionEntero):
-                    arrayInsert.append(parametros.val)
+                #print(parametros.val)
+                arrayInsert.append(parametros.val)
 
         # LLENAR CAMPOS CON None
         if len(arrayInsert) < numC:
@@ -1145,7 +1139,16 @@ def procesar_select1(instr,ts,tc):
 
 
 def procesar_select_general(instr,ts,tc):
+    global salida
+    columnsTable = []
+    arrayColumns = []
+    tables = []
+    arrayReturn = []
+    
     if  instr.instr1 != None and instr.instr2 == None and instr.instr3 == None and instr.listains == None and instr.listanombres != None:
+        global salida
+        
+        print('1')
         if instr.instr1.etiqueta == OPCIONES_SELECT.DISTINCT:
             for datos in instr.instr1.listac:
                 print(datos.val)
@@ -1156,7 +1159,9 @@ def procesar_select_general(instr,ts,tc):
                         print(objs.operador) #SOLO ETIQUETAS
                     print(datos.expresion.etiqueta)
                 elif datos.etiqueta == TIPO_VALOR.ASTERISCO:
-                    print(datos.val)
+                    arrayColumns.append(datos.val)
+                    print(datos.val) # * 
+
                 elif datos.etiqueta == TIPO_VALOR.ID_ASTERISCO:
                     print(datos.val+'.*')
                     return datos.val
@@ -1175,8 +1180,29 @@ def procesar_select_general(instr,ts,tc):
                     print(datos.val1)
                 elif datos.etiqueta == TIPO_VALOR.IDENTIFICADOR and datos.val1 == None:
                     print(datos.val)
+                    tables.append(datos.val)
+
+        #print(arrayColumns)
+        #print(tables)
+        
+        columnsTable = tc.obtenerColumns(useCurrentDatabase,tables[0])
+        resultArray = j.extractTable(str(useCurrentDatabase),str(tables[0]))
+        #print(resultArray)
+        #print(columnsTable)
+        arrayReturn.append(columnsTable)
+        for filas in resultArray:
+            #print(filas)
+            arrayReturn.append(filas)
+
+        salida = arrayReturn
+
+        
+
+    
+
     
     elif instr.instr1 != None and instr.instr2 != None and instr.instr3 == None and instr.listains == None and instr.listanombres != None:
+        print('2')
         if instr.instr1.etiqueta == OPCIONES_SELECT.DISTINCT:
             for datos in instr.instr1.listac:
                 print(datos.val)
@@ -1236,6 +1262,7 @@ def procesar_select_general(instr,ts,tc):
             print(instr.instr2.valor)
 
     elif instr.instr1 == None and instr.instr2 != None and instr.instr3 != None and instr.listains != None and instr.listanombres == None:
+        print('3')
         if instr.instr2.etiqueta == OPCIONES_SELECT.DISTINCT:
             for datos in instr.instr2.listac:
                 print(datos.val)
@@ -1294,6 +1321,7 @@ def procesar_select_general(instr,ts,tc):
                     print(objs.instr1.val)
 
     elif instr.instr1 != None and instr.instr2 == None and instr.instr3 != None and instr.listains != None and instr.listanombres == None:
+        print('4')
         if instr.instr1.etiqueta == OPCIONES_SELECT.DISTINCT:
             for datos in instr.instr1.listac:
                 print(datos.val)
@@ -1344,6 +1372,7 @@ def procesar_select_general(instr,ts,tc):
 
 
     elif instr.instr1 == None and instr.instr2 == None and instr.instr3 == None and instr.listains == None and instr.listanombres != None:
+        print('5')
         for datos in instr.listanombres:
             #CON IDENTIFICADOR 
             if datos.expresion != None and datos.asterisco != None:
@@ -1856,7 +1885,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
         return salida 
     except:
         pass
-
+'''
 f = open("./entrada.txt", "r")
 input = f.read()
 instrucciones = g.parse(input)
@@ -1876,4 +1905,4 @@ else:
     erroressss = ErrorHTML()
     erroressss.crearReporte()
     listaErrores = []
-
+'''
