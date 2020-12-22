@@ -1150,7 +1150,7 @@ f = open("./entrada.txt", "r")
 input = f.read()
 instrucciones = g.parse(input)
 
-'''if listaErrores == []:
+if listaErrores == []:
     instrucciones_Global = instrucciones
     ts_global = TS.TablaDeSimbolos()
     tc_global = TC.TablaDeTipos()
@@ -1165,4 +1165,4 @@ else:
     erroressss = ErrorHTML()
     erroressss.crearReporte()
     listaErrores = []
-'''
+
