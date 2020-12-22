@@ -283,8 +283,8 @@ class ExpresionEntero(ExpresionNumerica) :
     '''
 
     def __init__(self,etiqueta, val = 0) :
-        self.etiqueta = etiqueta
         self.val = val
+        self.etiqueta = etiqueta
 
 
 class ExpresionBinaria(ExpresionNumerica) :
@@ -301,13 +301,73 @@ class ExpresionBinaria(ExpresionNumerica) :
 class ExpresionIdentificador(ExpresionNumerica) :
     def __init__(self,etiqueta, id = "") :
         self.etiqueta = etiqueta
-        self.id = id
+        self.id = id #Cambio
 
 class ExpresionIdentificadorDoble(ExpresionNumerica) :
     def __init__(self,etiqueta, id = "", id1 = ""):
         self.etiqueta = etiqueta
-        self.id = id
-        self.id1 = id1
+        self.id = id #Cambio
+        self.id1 = id1 #Cambio
+
+
+class ExpresionNegativo(ExpresionNumerica) :
+    '''
+        Esta clase representa la Expresión Aritmética Negativa.
+        Esta clase recibe la expresion
+    '''
+    def __init__(self,etiqueta, exp) :
+        self.etiqueta = etiqueta
+        self.exp = exp
+
+class ExpresionRelacional() :
+    '''
+        Esta clase representa la expresión lógica.
+        Esta clase recibe los operandos y el operador
+    '''
+
+    def __init__(self, exp1, exp2, operador) :
+        self.exp1 = exp1
+        self.exp2 = exp2
+        self.operador = operador
+
+class ExpresionCadena :
+    '''
+        Esta clase representa una Expresión de tipo cadena.
+    '''
+
+class ExpresionComillaSimple(ExpresionCadena) :
+    '''
+        Esta clase representa una cadena entre comillas doble.
+        Recibe como parámetro el valor del token procesado por el analizador léxico
+    '''
+
+    def __init__(self,etiqueta, val) :
+        self.val = val
+        self.etiqueta = etiqueta #Cambio
+
+class ExpresionLogica() :
+    '''
+        Esta clase representa la expresión lógica.
+        Esta clase recibe los operandos y el operador
+    '''
+
+    def __init__(self, exp1, exp2, operador) :
+        self.exp1 = exp1
+        self.exp2 = exp2
+        self.operador = operador
+
+class Expresiondatos():
+    def init(self,etiqueta,val1,val2,val3,val4):
+        self.etiqueta = etiqueta #Cambio
+        self.val1 = val1 #Cambio
+        self.val2 = val2 #Cambio
+        self.val3 = val3 #Cambio
+        self.val4 = val4 #Cambio
+
+class ExpresionBooleana():
+    def __init__(self, expresion):
+        self.expresion = expresion #Cambio
+                                    #Cambio
 
 class ExpresionNumero(ExpresionNumerica) :
     '''
@@ -334,58 +394,9 @@ class Expresion_Caracter(ExpresionNumero):
         self.etiqueta = etiqueta
         self.val = val
 
-
-
-class ExpresionCadena :
-    '''
-        Esta clase representa una Expresión de tipo cadena.
-    '''
-
-class ExpresionComillaSimple(ExpresionCadena) :
-    '''
-        Esta clase representa una cadena entre comillas doble.
-        Recibe como parámetro el valor del token procesado por el analizador léxico
-    '''
-
-    def __init__(self,etiqueta, val) :
-        self.val = val
-        self.etiqueta = etiqueta
-
-class ExpresionRelacional() :
-    '''
-        Esta clase representa la expresión lógica.
-        Esta clase recibe los operandos y el operador
-    '''
-
-    def __init__(self, exp1, exp2, operador) :
-        self.exp1 = exp1
-        self.exp2 = exp2
-        self.operador = operador
-
-
-class ExpresionLogica() :
-    '''
-        Esta clase representa la expresión lógica.
-        Esta clase recibe los operandos y el operador
-    '''
-
-    def __init__(self, exp1, exp2, operador) :
-        self.exp1 = exp1
-        self.exp2 = exp2
-        self.operador = operador
-
 class ExpresionTiempo():
     def __init__(self, operador):
         self.operador = operador
 
-class ExpresionBooleana():
-    def __init__(self, expresion):
-        self.expresion = expresion
 
-class Expresiondatos():
-    def init(self,etiqueta,val1,val2,val3,val4):
-        self.etiqueta = etiqueta
-        self.val1 = val1
-        self.val2 = val2
-        self.val3 = val3
-        self.val4 = val4
+
