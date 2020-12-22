@@ -137,9 +137,45 @@ class Definicion_delete(Instruccion):
         self.id_using = id_using
         self.returning = returning
 
+
+class Create_select_time(Instruccion):
+    def __init__(self,etiqueta,val1,val2):
+        self.etiqueta = etiqueta
+        self.val1 = val1
+        self.val2 = val2
+
+class Create_select_uno(Instruccion):
+    def __init__(self,etiqueta,subconsulta,expresion,asterisco,lista_extras = [] , listac = [],listacase = []):
+        self.etiqueta = etiqueta
+        self.subconsulta = subconsulta
+        self.expresion = expresion
+        self.asterisco = asterisco
+        self.lista_extras = lista_extras
+        self.listac = listac
+        self.listacase = listacase
+
+class Create_select_general(Instruccion):
+    def __init__(self,etiqueta,instr1,instr2,instr3,listains = [],listanombres = []):
+        self.etiqueta = etiqueta
+        self.instr1 = instr1
+        self.instr2 = instr2
+        self.instr3 = instr3
+        self.listains = listains
+        self.listanombres = listanombres
+
+class Create_padre_select(Instruccion):
+    def __init__(self,expwhere,expgb,exphav,expob,exporden,explimit,expoffset,valor):
+        self.expwhere = expwhere
+        self.expgb = expgb
+        self.exphav = exphav
+        self.expob = expob
+        self.exporden = exporden
+        self.explimit = explimit
+        self.expoffset = expoffset
+        self.valor = valor
+
 class Create_hijo_select(Instruccion):
-    def init(self,etiqueta,expresion,expresion2, lista_objetos = []):
+    def __init__(self,etiqueta,expresion,expresion2):
         self.etiqueta = etiqueta
         self.expresion = expresion
         self.expresion2 = expresion2
-        self.lista_objetos = lista_objetos
