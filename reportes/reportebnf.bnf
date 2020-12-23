@@ -1,0 +1,39 @@
+<init> ::= <instrucciones>
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<instruccion> ::= <insert_insrt>
+ 
+<insert_insrt> ::= INSERT INTO ID VALUES PAR_A <lista_datos> PAR_C PTCOMA
+ 
+<lista_datos> ::= <lista_datos> COMA <expresion>
+ 
+<expresion> ::= FALSE
+ 
+<lista_datos> ::= <expresion>
+ 
+<expresion> ::= TRUE
+ 
+<instrucciones> ::= <instruccion>
+ 
+<instruccion> ::= <alterTable_insrt>
+ 
+<alterTable_insrt> ::= ALTER TABLE ID ADD COLUMN campos_add_Column PTCOMA
+ 
+<campos_add_Column> ::= <tipos_datos_columnas>
+ 
+<tipos_datos_columnas> ::= ID <TIPO_DATO>
+ 
+<TIPO_DATO> ::= BOOLEAN
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<instruccion> ::= <use_database_instr>
+ 
+<use_database_instr> ::= USE ID PTCOMA
+ 
+<instrucciones> ::= <instruccion>
+ 
+<instruccion> ::= <createDB_insrt>
+ 
+<createDB_insrt> ::= CREATE DATABASE ID PTCOMA
