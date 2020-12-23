@@ -2,28 +2,13 @@ CREATE DATABASE compiladores2;
 
 USE compiladores2;
 
-create table tbpuesto 
-( idpuesto smallint not null,
-  puesto character(25),
-  salariobase money,
- primary key (idpuesto)
+CREATE TABLE USUARIO(
+    estado BOOLEAN
 );
 
-insert into tbpuesto values (1,'Recepcionista','4,000');
+ALTER TABLE USUARIO ADD COLUMN estado2 BOOLEAN;
 
-insert into tbpuesto values (2,'Asistente Contable','4,500',false);
-insert into tbpuesto values(3,'Contador General','9000',false);
-insert into tbpuesto values(4,'Asistente de RRHH','4000',false);
-insert into tbpuesto values(5,'Recepcionista Gerencia','5000',false);
-insert into tbpuesto values(6,'Vendedor 1','2500',true);
-insert into tbpuesto values(7,'Vendedor 2','2750',true);
-insert into tbpuesto values(8,'Vendedor 3','3000',true);
-insert into tbpuesto values(9,'Jefe de Ventas','4000',true);
-insert into tbpuesto values(10,'Jefe de Ventas Regional','2500',true);
-
-
-
-
+INSERT INTO USUARIO VALUES (True,False);
 
 
 

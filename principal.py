@@ -636,6 +636,9 @@ def procesar_altertable(instr,ts,tc):
                 elif lista.tipo.val.upper() == 'INTEGER':
                     tipodatoo = TIPO_DE_DATOS.integer_ 
                     tamanioD = ""
+                elif lista.tipo.val.upper() == 'BOOLEAN':
+                    tipodatoo = TIPO_DE_DATOS.boolean 
+                    tamanioD = ""
                 elif lista.tipo.val.upper() == 'SMALLINT':
                     tipodatoo = TIPO_DE_DATOS.smallint_ 
                 elif lista.tipo.val.upper() == 'MONEY':
@@ -765,6 +768,9 @@ def procesar_altertable(instr,ts,tc):
             tipodatoo = TIPO_DE_DATOS.float_ 
         elif instr.lista_campos[0].tipo.val.upper() == 'INTEGER':
             tipodatoo = TIPO_DE_DATOS.integer_ 
+            tamanioD = ""
+        elif instr.lista_campos[0].tipo.val.upper() == 'BOOLEAN':
+            tipodatoo = TIPO_DE_DATOS.boolean
             tamanioD = ""
         elif instr.lista_campos[0].tipo.val.upper() == 'SMALLINT':
             tipodatoo = TIPO_DE_DATOS.smallint_ 
@@ -1132,29 +1138,23 @@ def procesar_select_time(instr,ts,tc):
             arrayReturn.append([segundo[0]])
 
     elif instr.etiqueta == SELECT_TIME.DATE_PART:
-        if instr.val1.upper() == 'YEAR':
-            year = re.findall('(\d{4})-\d{2}-\d{2}', instr.val2)
-            print(year[0]) 
+        if instr.val1.upper() == 'HOURS':
+            hour = re.findall('(\d+) hours', instr.val2)
+            print(hour[0]) 
+            arrayReturn.append(['date_part'])
+            arrayReturn.append([hour[0]])
 
-        elif instr.val1.upper() == 'MONTH':
-            month = re.findall('\d{4}-(\d{2})-\d{2}', instr.val2)
-            print(month[0])
+        elif instr.val1.upper() == 'MINUTES':
+            minutes = re.findall('(\d+) minutes', instr.val2)
+            print(minutes[0])
+            arrayReturn.append(['date_part'])
+            arrayReturn.append([minutes[0]])
 
-        elif instr.val1.upper() == 'DAY':
-            day = re.findall('\d{4}-\d{2}-(\d{2})', instr.val2)
-            print(day[0])
-
-        elif instr.val1.upper() == 'HOUR':
-            hora = re.findall('(\d{2}):\d{2}:\d{2}', instr.val2)
-            print(hora[0])
-
-        elif instr.val1.upper() == 'MINUTE':
-            minuto = re.findall('\d{2}:(\d{2}):\d{2}', instr.val2)
-            print(minuto[0])
-
-        elif instr.val1.upper() == 'SECOND':
-            segundo = re.findall('\d{2}:\d{2}:(\d{2})', instr.val2)
-            print(segundo[0])
+        elif instr.val1.upper() == 'SECONDS':
+            seconds = re.findall('(\d+) seconds', instr.val2)
+            print(seconds[0])
+            arrayReturn.append(['date_part'])
+            arrayReturn.append([seconds[0]])
 
     elif instr.etiqueta == SELECT_TIME.NOW:
         current_time = datetime.datetime.now() 

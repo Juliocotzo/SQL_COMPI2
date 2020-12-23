@@ -4,8 +4,8 @@
 
 from storageManager import jsonMode as j
 
-
-# create database
+print(j.extractTable('compiladores2','USUARIO'))
+'''# create database
 j.createDatabase('world')
 
 # create tables
@@ -18,7 +18,7 @@ j.alterAddPK('world', 'countries', [0])
 j.alterAddPK('world', 'cities',    [0])
 j.alterAddPK('world', 'languages', [0, 1])
 
-j.insert('compiladores2', 'tbUSUARIO' ,[1, 'Juliocotzo', 'password', 12345678, None, None])
+j.insert('compiladores2', 'tbUSUARIO' ,[1, 'Juliocotzo', 'password', 12345678, None, None])'''
 
 '''
 # insert data in cities

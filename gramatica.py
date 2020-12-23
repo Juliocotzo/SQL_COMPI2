@@ -18,6 +18,7 @@ reservadas = {
     'tables':'TABLES',
     'inherits': 'INHERITS',
     'integer': 'INTEGER',
+    'boolean': 'BOOLEAN',
     'show': 'SHOW',
     'databases': 'DATABASES',
     'default': 'DEFAULT',
@@ -1115,6 +1116,12 @@ def p_tipo_dato_integer(t):
     temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
     t[0] = temp
 
+def p_tipo_dato_BOOLEAN(t):
+    ' TIPO_DATO : BOOLEAN'
+    temp = []
+    temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
+    t[0] = temp
+
 def p_tipo_dato_smallint(t):
     ' TIPO_DATO : SMALLINT'
     temp = []
@@ -1263,6 +1270,10 @@ def p_tipo_dato_float_DEF(t):
 def p_tipo_dato_integer_DEF(t):
     ' TIPO_DATO_DEF : INTEGER'
     t[0] = Etiqueta_tipo(TIPO_DE_DATOS.integer_)
+
+def p_tipo_dato_boolean_DEF(t):
+    ' TIPO_DATO_DEF : BOOLEAN'
+    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.boolean)
 
 def p_tipo_dato_smallint_DEF(t):
     ' TIPO_DATO_DEF : SMALLINT'
@@ -1973,13 +1984,13 @@ def p_expresion3(t):
     ' expresion : PAR_A expresion_logica PAR_C '
     t[0] = t[2]
 
-def p_expresion_boolean(t):
-    ''' expresion :  TRUE
-                    | FALSE'''
-    if t[1].upper() == 'TRUE':
-        t[0] = ExpresionBooleana(OPERACION_LOGICA.TRUE,t[1])
-    elif t[1].upper() == 'FALSE':
-        t[0] = ExpresionBooleana(OPERACION_LOGICA.FALSE,t[1])
+def p_expresion_boolean_true(t):
+    ''' expresion :  TRUE'''
+    t[0] = ExpresionBooleana(OPERACION_LOGICA.TRUE,True)
+    
+def p_expresion_boolean_false(t):
+    ''' expresion :  FALSE'''
+    t[0] = ExpresionBooleana(OPERACION_LOGICA.FALSE,False)
 
 def p_sin_some_any(t):
     '''sin_some_any : SOME
