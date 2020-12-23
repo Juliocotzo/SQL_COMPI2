@@ -1956,11 +1956,11 @@ def resolver_expresion_relacional(expRel,ts):
             print('diferente')
             return exp1 != exp2
         if expRel.operador == OPCION_VERIFICAR.NULL or expRel.operador == OPCION_VERIFICAR.UNKNOWN:
-            return exp1 == ''
+            return exp1 == None
         if expRel.operador == OPCION_VERIFICAR.ISNULL:
-            return exp1 == ''
+            return exp1 == None
         if expRel.operador == OPCION_VERIFICAR.NOTNULL:
-            return exp1 != ''
+            return exp1 != None
         if expRel.operador == OPCION_VERIFICAR.TRUE:
             return exp1 == True
         if expRel.operador == OPCION_VERIFICAR.FALSE:
