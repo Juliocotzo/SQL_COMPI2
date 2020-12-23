@@ -186,7 +186,7 @@ class Select_Uniones(Instruccion):
         self.ins = ins
 
 class Funcion_Exclusivas_insert(Instruccion):
-    def init(self,operador,exp1,exp2,exp3):
+    def __init__(self,operador,exp1,exp2,exp3):
         self.operador = operador
         self.exp1 = exp1
         self.exp2 = exp2

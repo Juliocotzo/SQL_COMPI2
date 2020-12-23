@@ -694,12 +694,12 @@ def p_expresion_lista(t):
 def p_expresiones_excluva(t):
     ''' exclusiva_insert : SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
                         | MD5 PAR_A string_type PAR_C
-                        | TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
-                        | SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C
+                        | TRIM PAR_A string_type PAR_C
+                        | SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C
                         | NOW PAR_A PAR_C'''
     if t[1].upper() == 'SUBSTRING' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.SUBSTRING,t[3],t[5],t[7])
     elif t[1].upper() == 'MD5' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.MD5,t[3],None,None)
-    elif t[1].upper() == 'TRIM' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.MD5,t[3],t[7],None)
+    elif t[1].upper() == 'TRIM' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.TRIM,t[3],None,None)
     elif t[1].upper() == 'SUBSTR' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.SUBSTRING,t[3],t[5],t[7])
     elif t[1].upper() == 'NOW' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.NOW,None,None,None)
 

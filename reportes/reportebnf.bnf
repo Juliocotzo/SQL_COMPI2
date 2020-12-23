@@ -4,59 +4,21 @@
  
 <instruccion> ::= <insert_insrt>
  
-<insert_insrt> ::= INSERT INTO ID PAR_A <lista_parametros_lista> PAR_C  VALUES PAR_A <lista_datos> PAR_C PTCOMA
- 
-<lista_datos> ::= <exclusiva_insert>
- 
-<exclusiva_insert> ::= <expresion>
- 
-<expresion> ::= FALSE
- 
-<lista_parametros_lista> ::= ID
- 
-<instrucciones> ::= <instrucciones><instruccion>
- 
-<instruccion> ::= <insert_insrt>
- 
-<insert_insrt> ::= INSERT INTO ID PAR_A <lista_parametros_lista> PAR_C  VALUES PAR_A <lista_datos> PAR_C PTCOMA
- 
-<lista_datos> ::= <exclusiva_insert>
- 
-<exclusiva_insert> ::= <expresion>
- 
-<expresion> ::= TRUE
- 
-<lista_parametros_lista> ::= ID
- 
-<instrucciones> ::= <instrucciones><instruccion>
- 
-<instruccion> ::= <insert_insrt>
- 
-<insert_insrt> ::= INSERT INTO ID VALUES PAR_A <lista_datos> PAR_C PTCOMA
- 
-<lista_datos> ::= <exclusiva_insert>
- 
-<exclusiva_insert> ::= <expresion>
- 
-<expresion> ::= FALSE
- 
-<instrucciones> ::= <instrucciones><instruccion>
- 
-<instruccion> ::= <insert_insrt>
- 
 <insert_insrt> ::= INSERT INTO ID VALUES PAR_A <lista_datos> PAR_C PTCOMA
  
 <lista_datos> ::= <lista_datos> COMA <expresion>
  
-<exclusiva_insert> ::= <expresion>
- 
-<expresion> ::= FALSE
+<string_type> ::= CADENA
  
 <lista_datos> ::= <exclusiva_insert>
  
 <exclusiva_insert> ::= <expresion>
  
-<expresion> ::= TRUE
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <string_type>
+ 
+<string_type> ::= CADENA
  
 <instrucciones> ::= <instrucciones><instruccion>
  
@@ -68,7 +30,7 @@
  
 <tipos_datos_columnas> ::= ID <TIPO_DATO>
  
-<TIPO_DATO> ::= BOOLEAN
+<TIPO_DATO> ::= VARCHAR PAR_A ENTERO PAR_C
  
 <instrucciones> ::= <instrucciones><instruccion>
  
@@ -80,7 +42,7 @@
  
 <campos_c> ::= ID <TIPO_DATO_DEF>
  
-<TIPO_DATO_DEF> ::= BOOLEAN
+<TIPO_DATO_DEF> ::= VARCHAR PAR_A ENTERO PAR_C
  
 <instrucciones> ::= <instrucciones><instruccion>
  

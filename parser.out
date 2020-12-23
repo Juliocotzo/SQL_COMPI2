@@ -77,8 +77,8 @@ Rule 53    lista_datos -> exclusiva_insert
 Rule 54    exclusiva_insert -> expresion
 Rule 55    exclusiva_insert -> SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
 Rule 56    exclusiva_insert -> MD5 PAR_A string_type PAR_C
-Rule 57    exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
-Rule 58    exclusiva_insert -> SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C
+Rule 57    exclusiva_insert -> TRIM PAR_A string_type PAR_C
+Rule 58    exclusiva_insert -> SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C
 Rule 59    exclusiva_insert -> NOW PAR_A PAR_C
 Rule 60    Table_alter -> ALTER COLUMN ID TYPE TIPO_DATO
 Rule 61    alterTable_insrt -> ALTER TABLE ID DROP CONSTRAINT campos_c PTCOMA
@@ -544,7 +544,7 @@ BETWEEN              : 455 486 487 488
 BIGINT               : 168 196
 BOOLEAN              : 163 191
 BY                   : 326 328
-BYTEA                : 57 57 442 443 445 446 462 462
+BYTEA                : 442 443 445 446 462 462
 CADENA               : 45 46 96 153 243 247 248 248 252 362 491 492
 CASE                 : 335
 CBRT                 : 394 458
@@ -585,12 +585,12 @@ DIVISION             : 343
 DOBLEIG              : 368 479
 DOUBLE               : 170 198
 DROP                 : 61 62 78 98 99
-D_DOSPTS             : 57 57 442 443 445 446 462 462
+D_DOSPTS             : 442 443 445 446 462 462
 D_OR                 : 350
 ELSE                 : 335
 ENCODE               : 445
 END                  : 335
-ENTERO               : 58 58 86 89 112 113 118 119 120 121 122 123 124 125 154 166 166 167 167 176 177 178 179 194 194 195 195 204 205 206 207 255 330 331 413 441 441 442 443 443 463 463
+ENTERO               : 86 89 112 113 118 119 120 121 122 123 124 125 154 166 166 167 167 176 177 178 179 194 194 195 195 204 205 206 207 255 330 331 413 441 441 442 443 443 463 463
 ENUM                 : 44
 ESCAPE               : 448
 EXCEPT               : 215
@@ -603,7 +603,7 @@ FLOAT                : 161 189
 FLOOR                : 401
 FLOTANTE             : 90 155
 FOREIGN              : 69 72 128 152 157
-FROM                 : 31 32 33 34 35 36 37 38 39 40 41 57 221 222 225 228 247 462 465 489 490
+FROM                 : 31 32 33 34 35 36 37 38 39 40 41 221 222 225 228 247 462 465 489 490
 FULL                 : 
 GCD                  : 402
 GET_BYTE             : 442
@@ -780,7 +780,7 @@ drop_insrt           : 11 26
 estructura_when      : 336 337
 estructura_when_lista : 335 336
 exclusiva_insert     : 52 53
-expresion            : 54 55 55 84 335 338 339 340 340 341 341 342 342 343 343 344 344 345 345 346 346 347 348 348 349 350 351 351 352 353 354 364 364 365 365 366 366 367 367 368 368 369 369 370 370 371 371 372 385 393 394 395 396 397 398 398 399 400 401 402 402 403 404 405 405 407 407 408 409 410 411 412 412 412 412 413 414 416 417 418 418 419 419 420 421 422 423 424 425 426 427 428 429 430 431 432 433 434 435 436 437 439 439 456 458 459 460 461 461 466
+expresion            : 54 55 55 58 58 84 335 338 339 340 340 341 341 342 342 343 343 344 344 345 345 346 346 347 348 348 349 350 351 351 352 353 354 364 364 365 365 366 366 367 367 368 368 369 369 370 370 371 371 372 385 393 394 395 396 397 398 398 399 400 401 402 402 403 404 405 405 407 407 408 409 410 411 412 412 412 412 413 414 416 417 418 418 419 419 420 421 422 423 424 425 426 427 428 429 430 431 432 433 434 435 436 437 439 439 456 458 459 460 461 461 466
 expresion_dato       : 377 391 392 452 453 455 455 455 467 468 469 470 471 472 473 474 488 488 488 489 489 490 490 491 492
 expresion_dato_default : 144
 expresion_logica     : 34 35 36 37 39 40 41 68 70 126 149 150 327 338 357 373 374 375
@@ -827,7 +827,7 @@ select_uniones       : 17 211
 show_databases_instr : 6 20
 show_tables_instr    : 7 21
 sin_some_any         : 464
-string_type          : 55 56 57 57 58 85 110 111 118 119 120 121 122 123 438 439 440 441 442 443 444 445 446 447 457 461 462 462 463 465
+string_type          : 55 56 57 58 85 110 111 118 119 120 121 122 123 438 439 440 441 442 443 444 445 446 447 457 461 462 462 463 465
 sum_insrt            : 379
 tipo_union           : 211
 tipos_datos_columnas : 65 66
@@ -14164,8 +14164,8 @@ state 464
     (54) exclusiva_insert -> . expresion
     (55) exclusiva_insert -> . SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
     (56) exclusiva_insert -> . MD5 PAR_A string_type PAR_C
-    (57) exclusiva_insert -> . TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
-    (58) exclusiva_insert -> . SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C
+    (57) exclusiva_insert -> . TRIM PAR_A string_type PAR_C
+    (58) exclusiva_insert -> . SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C
     (59) exclusiva_insert -> . NOW PAR_A PAR_C
     (340) expresion -> . expresion SUMA expresion
     (341) expresion -> . expresion RESTA expresion
@@ -19881,14 +19881,14 @@ state 634
 
 state 635
 
-    (57) exclusiva_insert -> TRIM . PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
+    (57) exclusiva_insert -> TRIM . PAR_A string_type PAR_C
 
     PAR_A           shift and go to state 801
 
 
 state 636
 
-    (58) exclusiva_insert -> SUBSTR . PAR_A string_type COMA ENTERO COMA ENTERO PAR_C
+    (58) exclusiva_insert -> SUBSTR . PAR_A string_type COMA expresion COMA expresion PAR_C
 
     PAR_A           shift and go to state 802
 
@@ -23061,8 +23061,8 @@ state 796
     (54) exclusiva_insert -> . expresion
     (55) exclusiva_insert -> . SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
     (56) exclusiva_insert -> . MD5 PAR_A string_type PAR_C
-    (57) exclusiva_insert -> . TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
-    (58) exclusiva_insert -> . SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C
+    (57) exclusiva_insert -> . TRIM PAR_A string_type PAR_C
+    (58) exclusiva_insert -> . SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C
     (59) exclusiva_insert -> . NOW PAR_A PAR_C
     (340) expresion -> . expresion SUMA expresion
     (341) expresion -> . expresion RESTA expresion
@@ -23148,8 +23148,8 @@ state 798
     (54) exclusiva_insert -> . expresion
     (55) exclusiva_insert -> . SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
     (56) exclusiva_insert -> . MD5 PAR_A string_type PAR_C
-    (57) exclusiva_insert -> . TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
-    (58) exclusiva_insert -> . SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C
+    (57) exclusiva_insert -> . TRIM PAR_A string_type PAR_C
+    (58) exclusiva_insert -> . SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C
     (59) exclusiva_insert -> . NOW PAR_A PAR_C
     (340) expresion -> . expresion SUMA expresion
     (341) expresion -> . expresion RESTA expresion
@@ -23245,7 +23245,7 @@ state 800
 
 state 801
 
-    (57) exclusiva_insert -> TRIM PAR_A . string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
+    (57) exclusiva_insert -> TRIM PAR_A . string_type PAR_C
     (362) string_type -> . CADENA
     (363) string_type -> . ID
 
@@ -23256,7 +23256,7 @@ state 801
 
 state 802
 
-    (58) exclusiva_insert -> SUBSTR PAR_A . string_type COMA ENTERO COMA ENTERO PAR_C
+    (58) exclusiva_insert -> SUBSTR PAR_A . string_type COMA expresion COMA expresion PAR_C
     (362) string_type -> . CADENA
     (363) string_type -> . ID
 
@@ -27832,8 +27832,8 @@ state 938
     (54) exclusiva_insert -> . expresion
     (55) exclusiva_insert -> . SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
     (56) exclusiva_insert -> . MD5 PAR_A string_type PAR_C
-    (57) exclusiva_insert -> . TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
-    (58) exclusiva_insert -> . SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C
+    (57) exclusiva_insert -> . TRIM PAR_A string_type PAR_C
+    (58) exclusiva_insert -> . SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C
     (59) exclusiva_insert -> . NOW PAR_A PAR_C
     (340) expresion -> . expresion SUMA expresion
     (341) expresion -> . expresion RESTA expresion
@@ -27956,14 +27956,14 @@ state 943
 
 state 944
 
-    (57) exclusiva_insert -> TRIM PAR_A string_type . D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
+    (57) exclusiva_insert -> TRIM PAR_A string_type . PAR_C
 
-    D_DOSPTS        shift and go to state 1062
+    PAR_C           shift and go to state 1062
 
 
 state 945
 
-    (58) exclusiva_insert -> SUBSTR PAR_A string_type . COMA ENTERO COMA ENTERO PAR_C
+    (58) exclusiva_insert -> SUBSTR PAR_A string_type . COMA expresion COMA expresion PAR_C
 
     COMA            shift and go to state 1063
 
@@ -30702,17 +30702,78 @@ state 1061
 
 state 1062
 
-    (57) exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS . BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
+    (57) exclusiva_insert -> TRIM PAR_A string_type PAR_C .
 
-    BYTEA           shift and go to state 1136
+    PAR_C           reduce using rule 57 (exclusiva_insert -> TRIM PAR_A string_type PAR_C .)
+    COMA            reduce using rule 57 (exclusiva_insert -> TRIM PAR_A string_type PAR_C .)
 
 
 state 1063
 
-    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA . ENTERO COMA ENTERO PAR_C
+    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA . expresion COMA expresion PAR_C
+    (340) expresion -> . expresion SUMA expresion
+    (341) expresion -> . expresion RESTA expresion
+    (342) expresion -> . expresion ASTERISCO expresion
+    (343) expresion -> . expresion DIVISION expresion
+    (344) expresion -> . expresion MODULO expresion
+    (345) expresion -> . expresion MAYMAY expresion
+    (346) expresion -> . expresion MENMEN expresion
+    (347) expresion -> . CEJILLA expresion
+    (348) expresion -> . expresion HASHTAG expresion
+    (349) expresion -> . S_OR expresion
+    (350) expresion -> . D_OR expresion
+    (351) expresion -> . expresion Y expresion
+    (352) expresion -> . AVG PAR_A expresion PAR_C
+    (353) expresion -> . MAX PAR_A expresion PAR_C
+    (354) expresion -> . MIN PAR_A expresion PAR_C
+    (355) expresion -> . ALL PAR_A select_insrt PAR_C
+    (356) expresion -> . SOME PAR_A select_insrt PAR_C
+    (357) expresion -> . PAR_A expresion_logica PAR_C
+    (358) expresion -> . TRUE
+    (359) expresion -> . FALSE
+    (377) expresion -> . expresion_dato
+    (378) expresion -> . select_insrt
+    (379) expresion -> . sum_insrt
+    (380) expresion -> . count_insrt
+    (85) expresion_dato -> . string_type
+    (86) expresion_dato -> . RESTA ENTERO
+    (87) expresion_dato -> . ID PUNTO ID
+    (88) expresion_dato -> . expresion_numero
+    (210) select_insrt -> . SELECT opcion_select_tm
+    (381) sum_insrt -> . SUM agrupacion_expresion
+    (382) count_insrt -> . COUNT agrupacion_expresion
+    (362) string_type -> . CADENA
+    (363) string_type -> . ID
+    (89) expresion_numero -> . ENTERO
+    (90) expresion_numero -> . FLOTANTE
 
-    ENTERO          shift and go to state 1137
+    CEJILLA         shift and go to state 143
+    S_OR            shift and go to state 144
+    D_OR            shift and go to state 145
+    AVG             shift and go to state 146
+    MAX             shift and go to state 147
+    MIN             shift and go to state 148
+    ALL             shift and go to state 149
+    SOME            shift and go to state 150
+    PAR_A           shift and go to state 186
+    TRUE            shift and go to state 151
+    FALSE           shift and go to state 152
+    RESTA           shift and go to state 142
+    ID              shift and go to state 192
+    SELECT          shift and go to state 26
+    SUM             shift and go to state 157
+    COUNT           shift and go to state 158
+    CADENA          shift and go to state 68
+    ENTERO          shift and go to state 106
+    FLOTANTE        shift and go to state 159
 
+    string_type                    shift and go to state 131
+    expresion                      shift and go to state 1136
+    select_insrt                   shift and go to state 81
+    expresion_dato                 shift and go to state 153
+    sum_insrt                      shift and go to state 154
+    count_insrt                    shift and go to state 155
+    expresion_numero               shift and go to state 156
 
 state 1064
 
@@ -30759,7 +30820,7 @@ state 1066
     ASTERISCO       shift and go to state 468
     ID              shift and go to state 199
 
-    returning_exp                  shift and go to state 1138
+    returning_exp                  shift and go to state 1137
     campos_c                       shift and go to state 469
 
 state 1067
@@ -30813,7 +30874,7 @@ state 1067
 
   ! LIMIT           [ reduce using rule 301 (opcion_from -> cond_where cond_gb cond_having cond_ob orden .) ]
 
-    cond_limit                     shift and go to state 1139
+    cond_limit                     shift and go to state 1138
 
 state 1068
 
@@ -30863,7 +30924,7 @@ state 1068
     WHERE           reduce using rule 285 (opcion_from -> cond_where cond_gb cond_having cond_ob cond_limit .)
     OFFSET          shift and go to state 660
 
-    cond_offset                    shift and go to state 1140
+    cond_offset                    shift and go to state 1139
 
 state 1069
 
@@ -30959,7 +31020,7 @@ state 1070
     WHERE           reduce using rule 281 (opcion_from -> cond_where cond_gb cond_ob orden cond_limit .)
     OFFSET          shift and go to state 660
 
-    cond_offset                    shift and go to state 1141
+    cond_offset                    shift and go to state 1140
 
 state 1071
 
@@ -31012,7 +31073,7 @@ state 1072
     (255) opcion_from -> cond_where cond_having cond_ob orden cond_limit . OFFSET ENTERO
     (279) opcion_from -> cond_where cond_having cond_ob orden cond_limit .
 
-    OFFSET          shift and go to state 1142
+    OFFSET          shift and go to state 1141
     PTCOMA          reduce using rule 279 (opcion_from -> cond_where cond_having cond_ob orden cond_limit .)
     UNION           reduce using rule 279 (opcion_from -> cond_where cond_having cond_ob orden cond_limit .)
     INTERSECT       reduce using rule 279 (opcion_from -> cond_where cond_having cond_ob orden cond_limit .)
@@ -31195,7 +31256,7 @@ state 1075
     WHERE           reduce using rule 278 (opcion_from -> cond_gb cond_having cond_ob orden cond_limit .)
     OFFSET          shift and go to state 660
 
-    cond_offset                    shift and go to state 1143
+    cond_offset                    shift and go to state 1142
 
 state 1076
 
@@ -31346,7 +31407,7 @@ state 1079
 
     NULL            shift and go to state 980
     TRUE            shift and go to state 981
-    NOT             shift and go to state 1144
+    NOT             shift and go to state 1143
     FALSE           shift and go to state 982
     UNKNOWN         shift and go to state 983
 
@@ -31358,13 +31419,13 @@ state 1080
 
     SELECT          shift and go to state 26
 
-    select_insrt                   shift and go to state 1145
+    select_insrt                   shift and go to state 1144
 
 state 1081
 
     (488) expresion_logica_w -> expresion_dato NOT BETWEEN expresion_dato . AND expresion_dato
 
-    AND             shift and go to state 1146
+    AND             shift and go to state 1145
 
 
 state 1082
@@ -31385,7 +31446,7 @@ state 1082
     ENTERO          shift and go to state 106
     FLOTANTE        shift and go to state 159
 
-    expresion_dato                 shift and go to state 1147
+    expresion_dato                 shift and go to state 1146
     string_type                    shift and go to state 131
     expresion_numero               shift and go to state 156
 
@@ -31439,7 +31500,7 @@ state 1084
 
     (453) expresion_where -> expresion_dato IN PAR_A select_insrt . PAR_C
 
-    PAR_C           shift and go to state 1148
+    PAR_C           shift and go to state 1147
 
 
 state 1085
@@ -31460,7 +31521,7 @@ state 1085
     ENTERO          shift and go to state 106
     FLOTANTE        shift and go to state 159
 
-    expresion_dato                 shift and go to state 1149
+    expresion_dato                 shift and go to state 1148
     string_type                    shift and go to state 131
     expresion_numero               shift and go to state 156
 
@@ -31468,7 +31529,7 @@ state 1086
 
     (490) expresion_logica_w -> expresion_dato IS NOT DISTINCT . FROM expresion_dato
 
-    FROM            shift and go to state 1150
+    FROM            shift and go to state 1149
 
 
 state 1087
@@ -31567,7 +31628,7 @@ state 1089
 
     (454) expresion_where -> NOT EXISTS PAR_A select_insrt . PAR_C
 
-    PAR_C           shift and go to state 1151
+    PAR_C           shift and go to state 1150
 
 
 state 1090
@@ -31674,7 +31735,7 @@ state 1091
     ENTERO          shift and go to state 106
     FLOTANTE        shift and go to state 159
 
-    expresion_wherea               shift and go to state 1152
+    expresion_wherea               shift and go to state 1151
     expresion                      shift and go to state 669
     string_type                    shift and go to state 131
     sin_some_any                   shift and go to state 677
@@ -31974,7 +32035,7 @@ state 1097
     FLOTANTE        shift and go to state 159
 
     string_type                    shift and go to state 131
-    expresion                      shift and go to state 1153
+    expresion                      shift and go to state 1152
     select_insrt                   shift and go to state 81
     expresion_dato                 shift and go to state 153
     sum_insrt                      shift and go to state 154
@@ -31985,14 +32046,14 @@ state 1098
 
     (462) expresion_wherea -> TRIM PAR_A string_type D_DOSPTS . BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
 
-    BYTEA           shift and go to state 1154
+    BYTEA           shift and go to state 1153
 
 
 state 1099
 
     (463) expresion_wherea -> SUBSTR PAR_A string_type COMA . ENTERO COMA ENTERO PAR_C
 
-    ENTERO          shift and go to state 1155
+    ENTERO          shift and go to state 1154
 
 
 state 1100
@@ -32050,7 +32111,7 @@ state 1101
     CADENA          shift and go to state 68
     ID              shift and go to state 408
 
-    string_type                    shift and go to state 1156
+    string_type                    shift and go to state 1155
 
 state 1102
 
@@ -32111,7 +32172,7 @@ state 1102
     ENTERO          shift and go to state 106
     FLOTANTE        shift and go to state 159
 
-    expresion                      shift and go to state 1157
+    expresion                      shift and go to state 1156
     select_insrt                   shift and go to state 81
     expresion_dato                 shift and go to state 153
     sum_insrt                      shift and go to state 154
@@ -32261,7 +32322,7 @@ state 1106
 
     (443) funciones_select -> SET_BYTE PAR_A string_type D_DOSPTS BYTEA COMA ENTERO COMA . ENTERO PAR_C
 
-    ENTERO          shift and go to state 1158
+    ENTERO          shift and go to state 1157
 
 
 state 1107
@@ -32360,14 +32421,14 @@ state 1109
 
     (166) TIPO_DATO -> DECIMAL PAR_A ENTERO COMA . ENTERO PAR_C
 
-    ENTERO          shift and go to state 1159
+    ENTERO          shift and go to state 1158
 
 
 state 1110
 
     (167) TIPO_DATO -> NUMERIC PAR_A ENTERO COMA . ENTERO PAR_C
 
-    ENTERO          shift and go to state 1160
+    ENTERO          shift and go to state 1159
 
 
 state 1111
@@ -32383,7 +32444,7 @@ state 1112
 
     (176) TIPO_DATO -> CHARACTER VARYING PAR_A ENTERO . PAR_C
 
-    PAR_C           shift and go to state 1161
+    PAR_C           shift and go to state 1160
 
 
 state 1113
@@ -32520,7 +32581,7 @@ state 1118
     ENTERO          shift and go to state 106
     FLOTANTE        shift and go to state 159
 
-    expresion_logica               shift and go to state 1162
+    expresion_logica               shift and go to state 1161
     expresion_relacional           shift and go to state 189
     expresion                      shift and go to state 191
     select_insrt                   shift and go to state 81
@@ -32550,14 +32611,14 @@ state 1120
 
     (194) TIPO_DATO_DEF -> DECIMAL PAR_A ENTERO COMA ENTERO . PAR_C
 
-    PAR_C           shift and go to state 1163
+    PAR_C           shift and go to state 1162
 
 
 state 1121
 
     (195) TIPO_DATO_DEF -> NUMERIC PAR_A ENTERO COMA ENTERO . PAR_C
 
-    PAR_C           shift and go to state 1164
+    PAR_C           shift and go to state 1163
 
 
 state 1122
@@ -32580,14 +32641,14 @@ state 1123
 
     (132) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS PAR_A ID PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 1165
+    PTCOMA          shift and go to state 1164
 
 
 state 1124
 
     (157) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C
 
-    ID              shift and go to state 1166
+    ID              shift and go to state 1165
 
 
 state 1125
@@ -32610,7 +32671,7 @@ state 1127
 
     (128) constraint_esp -> FOREIGN KEY PAR_A ID . PAR_C REFERENCES ID PAR_A ID PAR_C
 
-    PAR_C           shift and go to state 1167
+    PAR_C           shift and go to state 1166
 
 
 state 1128
@@ -32634,35 +32695,35 @@ state 1129
 
     (69) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C PTCOMA
 
-    ID              shift and go to state 1168
+    ID              shift and go to state 1167
 
 
 state 1130
 
     (70) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 1169
+    PTCOMA          shift and go to state 1168
 
 
 state 1131
 
     (71) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 1170
+    PTCOMA          shift and go to state 1169
 
 
 state 1132
 
     (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID . PAR_C REFERENCES ID PAR_A ID PAR_C PTCOMA
 
-    PAR_C           shift and go to state 1171
+    PAR_C           shift and go to state 1170
 
 
 state 1133
 
     (47) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 1172
+    PTCOMA          shift and go to state 1171
 
 
 state 1134
@@ -32695,7 +32756,7 @@ state 1135
     (348) expresion -> expresion . HASHTAG expresion
     (351) expresion -> expresion . Y expresion
 
-    COMA            shift and go to state 1173
+    COMA            shift and go to state 1172
     SUMA            shift and go to state 202
     RESTA           shift and go to state 203
     ASTERISCO       shift and go to state 204
@@ -32709,26 +32770,37 @@ state 1135
 
 state 1136
 
-    (57) exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS BYTEA . FROM string_type D_DOSPTS BYTEA PAR_C
+    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA expresion . COMA expresion PAR_C
+    (340) expresion -> expresion . SUMA expresion
+    (341) expresion -> expresion . RESTA expresion
+    (342) expresion -> expresion . ASTERISCO expresion
+    (343) expresion -> expresion . DIVISION expresion
+    (344) expresion -> expresion . MODULO expresion
+    (345) expresion -> expresion . MAYMAY expresion
+    (346) expresion -> expresion . MENMEN expresion
+    (348) expresion -> expresion . HASHTAG expresion
+    (351) expresion -> expresion . Y expresion
 
-    FROM            shift and go to state 1174
+    COMA            shift and go to state 1173
+    SUMA            shift and go to state 202
+    RESTA           shift and go to state 203
+    ASTERISCO       shift and go to state 204
+    DIVISION        shift and go to state 205
+    MODULO          shift and go to state 206
+    MAYMAY          shift and go to state 207
+    MENMEN          shift and go to state 208
+    HASHTAG         shift and go to state 209
+    Y               shift and go to state 210
 
 
 state 1137
 
-    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA ENTERO . COMA ENTERO PAR_C
+    (40) delete_insrt -> DELETE FROM ID USING ID WHERE EXISTS expresion_logica RETURNING returning_exp . PTCOMA
 
-    COMA            shift and go to state 1175
+    PTCOMA          shift and go to state 1174
 
 
 state 1138
-
-    (40) delete_insrt -> DELETE FROM ID USING ID WHERE EXISTS expresion_logica RETURNING returning_exp . PTCOMA
-
-    PTCOMA          shift and go to state 1176
-
-
-state 1139
 
     (253) opcion_from -> cond_where cond_gb cond_having cond_ob orden cond_limit . cond_offset
     (277) opcion_from -> cond_where cond_gb cond_having cond_ob orden cond_limit .
@@ -32776,9 +32848,9 @@ state 1139
     WHERE           reduce using rule 277 (opcion_from -> cond_where cond_gb cond_having cond_ob orden cond_limit .)
     OFFSET          shift and go to state 660
 
-    cond_offset                    shift and go to state 1177
+    cond_offset                    shift and go to state 1175
 
-state 1140
+state 1139
 
     (261) opcion_from -> cond_where cond_gb cond_having cond_ob cond_limit cond_offset .
 
@@ -32824,7 +32896,7 @@ state 1140
     WHERE           reduce using rule 261 (opcion_from -> cond_where cond_gb cond_having cond_ob cond_limit cond_offset .)
 
 
-state 1141
+state 1140
 
     (257) opcion_from -> cond_where cond_gb cond_ob orden cond_limit cond_offset .
 
@@ -32870,14 +32942,14 @@ state 1141
     WHERE           reduce using rule 257 (opcion_from -> cond_where cond_gb cond_ob orden cond_limit cond_offset .)
 
 
-state 1142
+state 1141
 
     (255) opcion_from -> cond_where cond_having cond_ob orden cond_limit OFFSET . ENTERO
 
-    ENTERO          shift and go to state 1178
+    ENTERO          shift and go to state 1176
 
 
-state 1143
+state 1142
 
     (254) opcion_from -> cond_gb cond_having cond_ob orden cond_limit cond_offset .
 
@@ -32923,7 +32995,7 @@ state 1143
     WHERE           reduce using rule 254 (opcion_from -> cond_gb cond_having cond_ob orden cond_limit cond_offset .)
 
 
-state 1144
+state 1143
 
     (471) expresion_whereb -> expresion_dato IS NOT . TRUE
     (474) expresion_whereb -> expresion_dato IS NOT . UNKNOWN
@@ -32932,14 +33004,14 @@ state 1144
     UNKNOWN         shift and go to state 1088
 
 
-state 1145
+state 1144
 
     (452) expresion_where -> expresion_dato NOT IN PAR_A select_insrt . PAR_C
 
-    PAR_C           shift and go to state 1179
+    PAR_C           shift and go to state 1177
 
 
-state 1146
+state 1145
 
     (488) expresion_logica_w -> expresion_dato NOT BETWEEN expresion_dato AND . expresion_dato
     (85) expresion_dato -> . string_type
@@ -32957,18 +33029,18 @@ state 1146
     ENTERO          shift and go to state 106
     FLOTANTE        shift and go to state 159
 
-    expresion_dato                 shift and go to state 1180
+    expresion_dato                 shift and go to state 1178
     string_type                    shift and go to state 131
     expresion_numero               shift and go to state 156
 
-state 1147
+state 1146
 
     (455) expresion_where -> expresion_dato NOT BETWEEN SYMMETRIC expresion_dato . AND expresion_dato
 
-    AND             shift and go to state 1181
+    AND             shift and go to state 1179
 
 
-state 1148
+state 1147
 
     (453) expresion_where -> expresion_dato IN PAR_A select_insrt PAR_C .
 
@@ -33014,7 +33086,7 @@ state 1148
     WHERE           reduce using rule 453 (expresion_where -> expresion_dato IN PAR_A select_insrt PAR_C .)
 
 
-state 1149
+state 1148
 
     (489) expresion_logica_w -> expresion_dato IS DISTINCT FROM expresion_dato .
 
@@ -33060,7 +33132,7 @@ state 1149
     WHERE           reduce using rule 489 (expresion_logica_w -> expresion_dato IS DISTINCT FROM expresion_dato .)
 
 
-state 1150
+state 1149
 
     (490) expresion_logica_w -> expresion_dato IS NOT DISTINCT FROM . expresion_dato
     (85) expresion_dato -> . string_type
@@ -33078,11 +33150,11 @@ state 1150
     ENTERO          shift and go to state 106
     FLOTANTE        shift and go to state 159
 
-    expresion_dato                 shift and go to state 1182
+    expresion_dato                 shift and go to state 1180
     string_type                    shift and go to state 131
     expresion_numero               shift and go to state 156
 
-state 1151
+state 1150
 
     (454) expresion_where -> NOT EXISTS PAR_A select_insrt PAR_C .
 
@@ -33128,7 +33200,7 @@ state 1151
     WHERE           reduce using rule 454 (expresion_where -> NOT EXISTS PAR_A select_insrt PAR_C .)
 
 
-state 1152
+state 1151
 
     (487) expresion_logica_w -> expresion_wherea BETWEEN expresion_wherea AND expresion_wherea .
 
@@ -33174,7 +33246,7 @@ state 1152
     WHERE           reduce using rule 487 (expresion_logica_w -> expresion_wherea BETWEEN expresion_wherea AND expresion_wherea .)
 
 
-state 1153
+state 1152
 
     (461) expresion_wherea -> SUBSTRING PAR_A string_type COMA expresion . COMA expresion PAR_C
     (340) expresion -> expresion . SUMA expresion
@@ -33187,7 +33259,7 @@ state 1153
     (348) expresion -> expresion . HASHTAG expresion
     (351) expresion -> expresion . Y expresion
 
-    COMA            shift and go to state 1183
+    COMA            shift and go to state 1181
     SUMA            shift and go to state 202
     RESTA           shift and go to state 203
     ASTERISCO       shift and go to state 204
@@ -33199,28 +33271,28 @@ state 1153
     Y               shift and go to state 210
 
 
-state 1154
+state 1153
 
     (462) expresion_wherea -> TRIM PAR_A string_type D_DOSPTS BYTEA . FROM string_type D_DOSPTS BYTEA PAR_C
 
-    FROM            shift and go to state 1184
+    FROM            shift and go to state 1182
+
+
+state 1154
+
+    (463) expresion_wherea -> SUBSTR PAR_A string_type COMA ENTERO . COMA ENTERO PAR_C
+
+    COMA            shift and go to state 1183
 
 
 state 1155
 
-    (463) expresion_wherea -> SUBSTR PAR_A string_type COMA ENTERO . COMA ENTERO PAR_C
+    (465) expresion_wherea -> EXTRACT PAR_A extract_time FROM string_type . PAR_C
 
-    COMA            shift and go to state 1185
+    PAR_C           shift and go to state 1184
 
 
 state 1156
-
-    (465) expresion_wherea -> EXTRACT PAR_A extract_time FROM string_type . PAR_C
-
-    PAR_C           shift and go to state 1186
-
-
-state 1157
 
     (412) funciones_select -> WIDTH_BUCKET PAR_A expresion COMA expresion COMA expresion COMA expresion . PAR_C
     (340) expresion -> expresion . SUMA expresion
@@ -33233,7 +33305,7 @@ state 1157
     (348) expresion -> expresion . HASHTAG expresion
     (351) expresion -> expresion . Y expresion
 
-    PAR_C           shift and go to state 1187
+    PAR_C           shift and go to state 1185
     SUMA            shift and go to state 202
     RESTA           shift and go to state 203
     ASTERISCO       shift and go to state 204
@@ -33245,28 +33317,28 @@ state 1157
     Y               shift and go to state 210
 
 
-state 1158
+state 1157
 
     (443) funciones_select -> SET_BYTE PAR_A string_type D_DOSPTS BYTEA COMA ENTERO COMA ENTERO . PAR_C
 
-    PAR_C           shift and go to state 1188
+    PAR_C           shift and go to state 1186
+
+
+state 1158
+
+    (166) TIPO_DATO -> DECIMAL PAR_A ENTERO COMA ENTERO . PAR_C
+
+    PAR_C           shift and go to state 1187
 
 
 state 1159
 
-    (166) TIPO_DATO -> DECIMAL PAR_A ENTERO COMA ENTERO . PAR_C
+    (167) TIPO_DATO -> NUMERIC PAR_A ENTERO COMA ENTERO . PAR_C
 
-    PAR_C           shift and go to state 1189
+    PAR_C           shift and go to state 1188
 
 
 state 1160
-
-    (167) TIPO_DATO -> NUMERIC PAR_A ENTERO COMA ENTERO . PAR_C
-
-    PAR_C           shift and go to state 1190
-
-
-state 1161
 
     (176) TIPO_DATO -> CHARACTER VARYING PAR_A ENTERO PAR_C .
 
@@ -33275,14 +33347,14 @@ state 1161
     COMA            reduce using rule 176 (TIPO_DATO -> CHARACTER VARYING PAR_A ENTERO PAR_C .)
 
 
-state 1162
+state 1161
 
     (150) C_check -> CONSTRAINT ID CHECK PAR_A expresion_logica . PAR_C
 
-    PAR_C           shift and go to state 1191
+    PAR_C           shift and go to state 1189
 
 
-state 1163
+state 1162
 
     (194) TIPO_DATO_DEF -> DECIMAL PAR_A ENTERO COMA ENTERO PAR_C .
 
@@ -33298,7 +33370,7 @@ state 1163
     COMA            reduce using rule 194 (TIPO_DATO_DEF -> DECIMAL PAR_A ENTERO COMA ENTERO PAR_C .)
 
 
-state 1164
+state 1163
 
     (195) TIPO_DATO_DEF -> NUMERIC PAR_A ENTERO COMA ENTERO PAR_C .
 
@@ -33314,7 +33386,7 @@ state 1164
     COMA            reduce using rule 195 (TIPO_DATO_DEF -> NUMERIC PAR_A ENTERO COMA ENTERO PAR_C .)
 
 
-state 1165
+state 1164
 
     (132) create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS PAR_A ID PAR_C PTCOMA .
 
@@ -33331,28 +33403,28 @@ state 1165
     $end            reduce using rule 132 (create_Table_isnrt -> CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS PAR_A ID PAR_C PTCOMA .)
 
 
-state 1166
+state 1165
 
     (157) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C
 
-    PAR_A           shift and go to state 1192
+    PAR_A           shift and go to state 1190
+
+
+state 1166
+
+    (128) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C
+
+    REFERENCES      shift and go to state 1191
 
 
 state 1167
 
-    (128) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C
+    (69) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C PTCOMA
 
-    REFERENCES      shift and go to state 1193
+    PAR_A           shift and go to state 1192
 
 
 state 1168
-
-    (69) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C PTCOMA
-
-    PAR_A           shift and go to state 1194
-
-
-state 1169
 
     (70) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C PTCOMA .
 
@@ -33369,7 +33441,7 @@ state 1169
     $end            reduce using rule 70 (alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C PTCOMA .)
 
 
-state 1170
+state 1169
 
     (71) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C PTCOMA .
 
@@ -33386,14 +33458,14 @@ state 1170
     $end            reduce using rule 71 (alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C PTCOMA .)
 
 
-state 1171
+state 1170
 
     (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C . REFERENCES ID PAR_A ID PAR_C PTCOMA
 
-    REFERENCES      shift and go to state 1195
+    REFERENCES      shift and go to state 1193
 
 
-state 1172
+state 1171
 
     (47) insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .
 
@@ -33410,7 +33482,7 @@ state 1172
     $end            reduce using rule 47 (insert_insrt -> INSERT INTO ID PAR_A lista_parametros_lista PAR_C VALUES PAR_A lista_datos PAR_C PTCOMA .)
 
 
-state 1173
+state 1172
 
     (55) exclusiva_insert -> SUBSTRING PAR_A string_type COMA expresion COMA . expresion PAR_C
     (340) expresion -> . expresion SUMA expresion
@@ -33470,7 +33542,74 @@ state 1173
     FLOTANTE        shift and go to state 159
 
     string_type                    shift and go to state 131
-    expresion                      shift and go to state 1196
+    expresion                      shift and go to state 1194
+    select_insrt                   shift and go to state 81
+    expresion_dato                 shift and go to state 153
+    sum_insrt                      shift and go to state 154
+    count_insrt                    shift and go to state 155
+    expresion_numero               shift and go to state 156
+
+state 1173
+
+    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA expresion COMA . expresion PAR_C
+    (340) expresion -> . expresion SUMA expresion
+    (341) expresion -> . expresion RESTA expresion
+    (342) expresion -> . expresion ASTERISCO expresion
+    (343) expresion -> . expresion DIVISION expresion
+    (344) expresion -> . expresion MODULO expresion
+    (345) expresion -> . expresion MAYMAY expresion
+    (346) expresion -> . expresion MENMEN expresion
+    (347) expresion -> . CEJILLA expresion
+    (348) expresion -> . expresion HASHTAG expresion
+    (349) expresion -> . S_OR expresion
+    (350) expresion -> . D_OR expresion
+    (351) expresion -> . expresion Y expresion
+    (352) expresion -> . AVG PAR_A expresion PAR_C
+    (353) expresion -> . MAX PAR_A expresion PAR_C
+    (354) expresion -> . MIN PAR_A expresion PAR_C
+    (355) expresion -> . ALL PAR_A select_insrt PAR_C
+    (356) expresion -> . SOME PAR_A select_insrt PAR_C
+    (357) expresion -> . PAR_A expresion_logica PAR_C
+    (358) expresion -> . TRUE
+    (359) expresion -> . FALSE
+    (377) expresion -> . expresion_dato
+    (378) expresion -> . select_insrt
+    (379) expresion -> . sum_insrt
+    (380) expresion -> . count_insrt
+    (85) expresion_dato -> . string_type
+    (86) expresion_dato -> . RESTA ENTERO
+    (87) expresion_dato -> . ID PUNTO ID
+    (88) expresion_dato -> . expresion_numero
+    (210) select_insrt -> . SELECT opcion_select_tm
+    (381) sum_insrt -> . SUM agrupacion_expresion
+    (382) count_insrt -> . COUNT agrupacion_expresion
+    (362) string_type -> . CADENA
+    (363) string_type -> . ID
+    (89) expresion_numero -> . ENTERO
+    (90) expresion_numero -> . FLOTANTE
+
+    CEJILLA         shift and go to state 143
+    S_OR            shift and go to state 144
+    D_OR            shift and go to state 145
+    AVG             shift and go to state 146
+    MAX             shift and go to state 147
+    MIN             shift and go to state 148
+    ALL             shift and go to state 149
+    SOME            shift and go to state 150
+    PAR_A           shift and go to state 186
+    TRUE            shift and go to state 151
+    FALSE           shift and go to state 152
+    RESTA           shift and go to state 142
+    ID              shift and go to state 192
+    SELECT          shift and go to state 26
+    SUM             shift and go to state 157
+    COUNT           shift and go to state 158
+    CADENA          shift and go to state 68
+    ENTERO          shift and go to state 106
+    FLOTANTE        shift and go to state 159
+
+    string_type                    shift and go to state 131
+    expresion                      shift and go to state 1195
     select_insrt                   shift and go to state 81
     expresion_dato                 shift and go to state 153
     sum_insrt                      shift and go to state 154
@@ -33478,24 +33617,6 @@ state 1173
     expresion_numero               shift and go to state 156
 
 state 1174
-
-    (57) exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM . string_type D_DOSPTS BYTEA PAR_C
-    (362) string_type -> . CADENA
-    (363) string_type -> . ID
-
-    CADENA          shift and go to state 68
-    ID              shift and go to state 408
-
-    string_type                    shift and go to state 1197
-
-state 1175
-
-    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA ENTERO COMA . ENTERO PAR_C
-
-    ENTERO          shift and go to state 1198
-
-
-state 1176
 
     (40) delete_insrt -> DELETE FROM ID USING ID WHERE EXISTS expresion_logica RETURNING returning_exp PTCOMA .
 
@@ -33512,7 +33633,7 @@ state 1176
     $end            reduce using rule 40 (delete_insrt -> DELETE FROM ID USING ID WHERE EXISTS expresion_logica RETURNING returning_exp PTCOMA .)
 
 
-state 1177
+state 1175
 
     (253) opcion_from -> cond_where cond_gb cond_having cond_ob orden cond_limit cond_offset .
 
@@ -33558,7 +33679,7 @@ state 1177
     WHERE           reduce using rule 253 (opcion_from -> cond_where cond_gb cond_having cond_ob orden cond_limit cond_offset .)
 
 
-state 1178
+state 1176
 
     (255) opcion_from -> cond_where cond_having cond_ob orden cond_limit OFFSET ENTERO .
 
@@ -33604,7 +33725,7 @@ state 1178
     WHERE           reduce using rule 255 (opcion_from -> cond_where cond_having cond_ob orden cond_limit OFFSET ENTERO .)
 
 
-state 1179
+state 1177
 
     (452) expresion_where -> expresion_dato NOT IN PAR_A select_insrt PAR_C .
 
@@ -33650,7 +33771,7 @@ state 1179
     WHERE           reduce using rule 452 (expresion_where -> expresion_dato NOT IN PAR_A select_insrt PAR_C .)
 
 
-state 1180
+state 1178
 
     (488) expresion_logica_w -> expresion_dato NOT BETWEEN expresion_dato AND expresion_dato .
 
@@ -33696,7 +33817,7 @@ state 1180
     WHERE           reduce using rule 488 (expresion_logica_w -> expresion_dato NOT BETWEEN expresion_dato AND expresion_dato .)
 
 
-state 1181
+state 1179
 
     (455) expresion_where -> expresion_dato NOT BETWEEN SYMMETRIC expresion_dato AND . expresion_dato
     (85) expresion_dato -> . string_type
@@ -33714,11 +33835,11 @@ state 1181
     ENTERO          shift and go to state 106
     FLOTANTE        shift and go to state 159
 
-    expresion_dato                 shift and go to state 1199
+    expresion_dato                 shift and go to state 1196
     string_type                    shift and go to state 131
     expresion_numero               shift and go to state 156
 
-state 1182
+state 1180
 
     (490) expresion_logica_w -> expresion_dato IS NOT DISTINCT FROM expresion_dato .
 
@@ -33764,7 +33885,7 @@ state 1182
     WHERE           reduce using rule 490 (expresion_logica_w -> expresion_dato IS NOT DISTINCT FROM expresion_dato .)
 
 
-state 1183
+state 1181
 
     (461) expresion_wherea -> SUBSTRING PAR_A string_type COMA expresion COMA . expresion PAR_C
     (340) expresion -> . expresion SUMA expresion
@@ -33824,14 +33945,14 @@ state 1183
     FLOTANTE        shift and go to state 159
 
     string_type                    shift and go to state 131
-    expresion                      shift and go to state 1200
+    expresion                      shift and go to state 1197
     select_insrt                   shift and go to state 81
     expresion_dato                 shift and go to state 153
     sum_insrt                      shift and go to state 154
     count_insrt                    shift and go to state 155
     expresion_numero               shift and go to state 156
 
-state 1184
+state 1182
 
     (462) expresion_wherea -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM . string_type D_DOSPTS BYTEA PAR_C
     (362) string_type -> . CADENA
@@ -33840,16 +33961,16 @@ state 1184
     CADENA          shift and go to state 68
     ID              shift and go to state 408
 
-    string_type                    shift and go to state 1201
+    string_type                    shift and go to state 1198
 
-state 1185
+state 1183
 
     (463) expresion_wherea -> SUBSTR PAR_A string_type COMA ENTERO COMA . ENTERO PAR_C
 
-    ENTERO          shift and go to state 1202
+    ENTERO          shift and go to state 1199
 
 
-state 1186
+state 1184
 
     (465) expresion_wherea -> EXTRACT PAR_A extract_time FROM string_type PAR_C .
 
@@ -33895,7 +34016,7 @@ state 1186
     WHERE           reduce using rule 465 (expresion_wherea -> EXTRACT PAR_A extract_time FROM string_type PAR_C .)
 
 
-state 1187
+state 1185
 
     (412) funciones_select -> WIDTH_BUCKET PAR_A expresion COMA expresion COMA expresion COMA expresion PAR_C .
 
@@ -33941,7 +34062,7 @@ state 1187
     WHERE           reduce using rule 412 (funciones_select -> WIDTH_BUCKET PAR_A expresion COMA expresion COMA expresion COMA expresion PAR_C .)
 
 
-state 1188
+state 1186
 
     (443) funciones_select -> SET_BYTE PAR_A string_type D_DOSPTS BYTEA COMA ENTERO COMA ENTERO PAR_C .
 
@@ -33987,7 +34108,7 @@ state 1188
     WHERE           reduce using rule 443 (funciones_select -> SET_BYTE PAR_A string_type D_DOSPTS BYTEA COMA ENTERO COMA ENTERO PAR_C .)
 
 
-state 1189
+state 1187
 
     (166) TIPO_DATO -> DECIMAL PAR_A ENTERO COMA ENTERO PAR_C .
 
@@ -33996,7 +34117,7 @@ state 1189
     COMA            reduce using rule 166 (TIPO_DATO -> DECIMAL PAR_A ENTERO COMA ENTERO PAR_C .)
 
 
-state 1190
+state 1188
 
     (167) TIPO_DATO -> NUMERIC PAR_A ENTERO COMA ENTERO PAR_C .
 
@@ -34005,7 +34126,7 @@ state 1190
     COMA            reduce using rule 167 (TIPO_DATO -> NUMERIC PAR_A ENTERO COMA ENTERO PAR_C .)
 
 
-state 1191
+state 1189
 
     (150) C_check -> CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C .
 
@@ -34021,35 +34142,35 @@ state 1191
     COMA            reduce using rule 150 (C_check -> CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C .)
 
 
-state 1192
+state 1190
 
     (157) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C
 
-    ID              shift and go to state 1203
+    ID              shift and go to state 1200
+
+
+state 1191
+
+    (128) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C
+
+    ID              shift and go to state 1201
+
+
+state 1192
+
+    (69) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C PTCOMA
+
+    ID              shift and go to state 1202
 
 
 state 1193
 
-    (128) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C
+    (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C PTCOMA
 
-    ID              shift and go to state 1204
+    ID              shift and go to state 1203
 
 
 state 1194
-
-    (69) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C PTCOMA
-
-    ID              shift and go to state 1205
-
-
-state 1195
-
-    (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES . ID PAR_A ID PAR_C PTCOMA
-
-    ID              shift and go to state 1206
-
-
-state 1196
 
     (55) exclusiva_insert -> SUBSTRING PAR_A string_type COMA expresion COMA expresion . PAR_C
     (340) expresion -> expresion . SUMA expresion
@@ -34062,7 +34183,7 @@ state 1196
     (348) expresion -> expresion . HASHTAG expresion
     (351) expresion -> expresion . Y expresion
 
-    PAR_C           shift and go to state 1207
+    PAR_C           shift and go to state 1204
     SUMA            shift and go to state 202
     RESTA           shift and go to state 203
     ASTERISCO       shift and go to state 204
@@ -34074,21 +34195,32 @@ state 1196
     Y               shift and go to state 210
 
 
-state 1197
+state 1195
 
-    (57) exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type . D_DOSPTS BYTEA PAR_C
+    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA expresion COMA expresion . PAR_C
+    (340) expresion -> expresion . SUMA expresion
+    (341) expresion -> expresion . RESTA expresion
+    (342) expresion -> expresion . ASTERISCO expresion
+    (343) expresion -> expresion . DIVISION expresion
+    (344) expresion -> expresion . MODULO expresion
+    (345) expresion -> expresion . MAYMAY expresion
+    (346) expresion -> expresion . MENMEN expresion
+    (348) expresion -> expresion . HASHTAG expresion
+    (351) expresion -> expresion . Y expresion
 
-    D_DOSPTS        shift and go to state 1208
+    PAR_C           shift and go to state 1205
+    SUMA            shift and go to state 202
+    RESTA           shift and go to state 203
+    ASTERISCO       shift and go to state 204
+    DIVISION        shift and go to state 205
+    MODULO          shift and go to state 206
+    MAYMAY          shift and go to state 207
+    MENMEN          shift and go to state 208
+    HASHTAG         shift and go to state 209
+    Y               shift and go to state 210
 
 
-state 1198
-
-    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO . PAR_C
-
-    PAR_C           shift and go to state 1209
-
-
-state 1199
+state 1196
 
     (455) expresion_where -> expresion_dato NOT BETWEEN SYMMETRIC expresion_dato AND expresion_dato .
 
@@ -34134,7 +34266,7 @@ state 1199
     WHERE           reduce using rule 455 (expresion_where -> expresion_dato NOT BETWEEN SYMMETRIC expresion_dato AND expresion_dato .)
 
 
-state 1200
+state 1197
 
     (461) expresion_wherea -> SUBSTRING PAR_A string_type COMA expresion COMA expresion . PAR_C
     (340) expresion -> expresion . SUMA expresion
@@ -34147,7 +34279,7 @@ state 1200
     (348) expresion -> expresion . HASHTAG expresion
     (351) expresion -> expresion . Y expresion
 
-    PAR_C           shift and go to state 1210
+    PAR_C           shift and go to state 1206
     SUMA            shift and go to state 202
     RESTA           shift and go to state 203
     ASTERISCO       shift and go to state 204
@@ -34159,49 +34291,49 @@ state 1200
     Y               shift and go to state 210
 
 
-state 1201
+state 1198
 
     (462) expresion_wherea -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type . D_DOSPTS BYTEA PAR_C
 
-    D_DOSPTS        shift and go to state 1211
+    D_DOSPTS        shift and go to state 1207
+
+
+state 1199
+
+    (463) expresion_wherea -> SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO . PAR_C
+
+    PAR_C           shift and go to state 1208
+
+
+state 1200
+
+    (157) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C
+
+    PAR_C           shift and go to state 1209
+
+
+state 1201
+
+    (128) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C
+
+    PAR_A           shift and go to state 1210
 
 
 state 1202
 
-    (463) expresion_wherea -> SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO . PAR_C
+    (69) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C PTCOMA
 
-    PAR_C           shift and go to state 1212
+    PAR_C           shift and go to state 1211
 
 
 state 1203
 
-    (157) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C
+    (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C PTCOMA
 
-    PAR_C           shift and go to state 1213
+    PAR_A           shift and go to state 1212
 
 
 state 1204
-
-    (128) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C
-
-    PAR_A           shift and go to state 1214
-
-
-state 1205
-
-    (69) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C PTCOMA
-
-    PAR_C           shift and go to state 1215
-
-
-state 1206
-
-    (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID . PAR_A ID PAR_C PTCOMA
-
-    PAR_A           shift and go to state 1216
-
-
-state 1207
 
     (55) exclusiva_insert -> SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C .
 
@@ -34209,22 +34341,15 @@ state 1207
     COMA            reduce using rule 55 (exclusiva_insert -> SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C .)
 
 
-state 1208
+state 1205
 
-    (57) exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS . BYTEA PAR_C
+    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C .
 
-    BYTEA           shift and go to state 1217
-
-
-state 1209
-
-    (58) exclusiva_insert -> SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C .
-
-    PAR_C           reduce using rule 58 (exclusiva_insert -> SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C .)
-    COMA            reduce using rule 58 (exclusiva_insert -> SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C .)
+    PAR_C           reduce using rule 58 (exclusiva_insert -> SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C .)
+    COMA            reduce using rule 58 (exclusiva_insert -> SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C .)
 
 
-state 1210
+state 1206
 
     (461) expresion_wherea -> SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C .
 
@@ -34270,14 +34395,14 @@ state 1210
     WHERE           reduce using rule 461 (expresion_wherea -> SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C .)
 
 
-state 1211
+state 1207
 
     (462) expresion_wherea -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS . BYTEA PAR_C
 
-    BYTEA           shift and go to state 1218
+    BYTEA           shift and go to state 1213
 
 
-state 1212
+state 1208
 
     (463) expresion_wherea -> SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C .
 
@@ -34323,7 +34448,7 @@ state 1212
     WHERE           reduce using rule 463 (expresion_wherea -> SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C .)
 
 
-state 1213
+state 1209
 
     (157) cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .
 
@@ -34331,49 +34456,42 @@ state 1213
     COMA            reduce using rule 157 (cuerpo_createTable -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
 
 
-state 1214
+state 1210
 
     (128) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C
 
-    ID              shift and go to state 1219
+    ID              shift and go to state 1214
 
 
-state 1215
+state 1211
 
     (69) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 1220
+    PTCOMA          shift and go to state 1215
 
 
-state 1216
+state 1212
 
     (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A . ID PAR_C PTCOMA
 
-    ID              shift and go to state 1221
+    ID              shift and go to state 1216
 
 
-state 1217
-
-    (57) exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA . PAR_C
-
-    PAR_C           shift and go to state 1222
-
-
-state 1218
+state 1213
 
     (462) expresion_wherea -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA . PAR_C
 
-    PAR_C           shift and go to state 1223
+    PAR_C           shift and go to state 1217
 
 
-state 1219
+state 1214
 
     (128) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C
 
-    PAR_C           shift and go to state 1224
+    PAR_C           shift and go to state 1218
 
 
-state 1220
+state 1215
 
     (69) alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C PTCOMA .
 
@@ -34390,22 +34508,14 @@ state 1220
     $end            reduce using rule 69 (alterTable_insrt -> ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C PTCOMA .)
 
 
-state 1221
+state 1216
 
     (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID . PAR_C PTCOMA
 
-    PAR_C           shift and go to state 1225
+    PAR_C           shift and go to state 1219
 
 
-state 1222
-
-    (57) exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C .
-
-    PAR_C           reduce using rule 57 (exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C .)
-    COMA            reduce using rule 57 (exclusiva_insert -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C .)
-
-
-state 1223
+state 1217
 
     (462) expresion_wherea -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C .
 
@@ -34451,7 +34561,7 @@ state 1223
     WHERE           reduce using rule 462 (expresion_wherea -> TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C .)
 
 
-state 1224
+state 1218
 
     (128) constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .
 
@@ -34459,14 +34569,14 @@ state 1224
     COMA            reduce using rule 128 (constraint_esp -> FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C .)
 
 
-state 1225
+state 1219
 
     (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C . PTCOMA
 
-    PTCOMA          shift and go to state 1226
+    PTCOMA          shift and go to state 1220
 
 
-state 1226
+state 1220
 
     (72) alterTable_insrt -> ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C PTCOMA .
 

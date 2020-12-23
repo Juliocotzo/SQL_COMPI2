@@ -18,6 +18,7 @@ from operator import itemgetter
 import base64
 import binascii
 import re
+import hashlib
 
 from storageManager import jsonMode as j
 
@@ -855,7 +856,7 @@ def procesar_insert(instr,ts,tc):
     arrayInserteFinal = []
     arrayParametros = []
     if instr.etiqueta == TIPO_INSERT.CON_PARAMETROS:
-
+        print(instr)
         if instr.lista_parametros != []:
             for parametros in instr.lista_parametros:
                 #print(parametros.val)
@@ -865,7 +866,13 @@ def procesar_insert(instr,ts,tc):
 
         if instr.lista_datos != []:
             for parametros in instr.lista_datos:
-                arrayInsert.append(parametros.val)
+                if isinstance(parametros,Funcion_Exclusivas_insert):
+                    arrTC = []
+                    salidaR = resolver_expresion_aritmetica(parametros,arrTC)
+                    print(salidaR)
+                    arrayInsert.append(salidaR)
+                else:
+                    arrayInsert.append(parametros.val)
 
 
         arrayNew = []           
@@ -954,8 +961,15 @@ def procesar_insert(instr,ts,tc):
             #print(columns)
             #print(numC)
             for parametros in instr.lista_datos:
-                #print(parametros.val)
-                arrayInsert.append(parametros.val)
+                if isinstance(parametros,Funcion_Exclusivas_insert):
+                    arrTC = []
+                    salidaR = resolver_expresion_aritmetica(parametros,arrTC)
+                    print(salidaR)
+                    arrayInsert.append(salidaR)
+                else:
+                    arrayInsert.append(parametros.val)
+
+            
 
         # LLENAR CAMPOS CON None
         if len(arrayInsert) < numC:
@@ -963,6 +977,7 @@ def procesar_insert(instr,ts,tc):
             while i < numC:
                 arrayInsert.append(None)
                 i+=1
+
 
         if len(arrayInsert) == numC:
             i = 0
@@ -1022,7 +1037,7 @@ def procesar_insert(instr,ts,tc):
     print(str(useCurrentDatabase),str(instr.val), arrayInserteFinal)'''
 
     result = j.insert(useCurrentDatabase,instr.val, arrayInserteFinal)
-
+    print(result)
     if result == 0:
         salida = "\nINSERT 0 1"            
     elif result == 1 :
@@ -1885,6 +1900,36 @@ def resolver_expresion_aritmetica(expNum,ts):
                 return ascii_cadena
             else:
                 return exp
+
+    elif isinstance(expNum, Funcion_Exclusivas_insert):
+        exp = resolver_expresion_aritmetica(expNum.exp1,ts)
+        exp1 = resolver_expresion_aritmetica(expNum.exp2,ts)
+        exp2 = resolver_expresion_aritmetica(expNum.exp3,ts)
+        if expNum.operador == INSERT_EXCLUSIVA.SUBSTRING:
+            expCadena = resolver_expresion_aritmetica(expNum.exp1,ts)
+            expInicio = resolver_expresion_aritmetica(expNum.exp2,ts)
+            expFin = resolver_expresion_aritmetica(expNum.exp3,ts)            
+            return  expCadena[expInicio:expFin]
+
+        elif expNum.operador == INSERT_EXCLUSIVA.NOW:
+            current_time = datetime.datetime.now() 
+            noww = str(current_time.year)+ '-'+ str(current_time.month)+'-'+str(current_time.day)+' '+ str(current_time.hour)+':'+str(current_time.minute)+':'+str(current_time.second)
+            return noww
+
+        elif expNum.operador == INSERT_EXCLUSIVA.TRIM:
+            expCadena = resolver_expresion_aritmetica(expNum.exp1,ts)
+            return expCadena.strip()
+
+        elif expNum.operador == INSERT_EXCLUSIVA.MD5:
+            expCadena = resolver_expresion_aritmetica(expNum.exp1,ts)
+            hash_obj = hashlib.md5(expCadena.encode())
+            md5_to = hash_obj.hexdigest()
+            return md5_to
+
+        
+
+
+        
                 
 
 
