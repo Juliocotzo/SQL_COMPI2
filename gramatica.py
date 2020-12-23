@@ -662,26 +662,46 @@ def p_opcion_lista_parametros_vacios(t):
 
 def p_lista_parametros_lista(t):
     ' lista_parametros_lista : lista_parametros_lista COMA ID'
-    reporte_bnf.append("<lista_parametros_lista> ::= <lista_parametros_lista> COMA ID")    
+    reporte_bnf.append("<lista_parametros_lista> ::= <lista_parametros_lista> COMA ID")
     t[1].append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]))
     t[0] = t[1]
 
 def p_lista_parametros(t):
     ' lista_parametros_lista : ID'
-    reporte_bnf.append("<lista_parametros_lista> ::= ID")  
+    reporte_bnf.append("<lista_parametros_lista> ::= ID")
     t[0] = [ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])]
 
 
 def p_parametros_lista_datos(t):
-    ' lista_datos : lista_datos COMA expresion'
+    ' lista_datos : lista_datos COMA exclusiva_insert'
     reporte_bnf.append("<lista_datos> ::= <lista_datos> COMA <expresion>") 
     t[1].append(t[3])
     t[0] = t[1]
 
+
+def p_parametros_exclusiva(t):
+    ' lista_datos : exclusiva_insert'
+    reporte_bnf.append("<lista_datos> ::= <exclusiva_insert>")
+    t[0] = [t[1]] 
+
+
 def p_expresion_lista(t):
-    ' lista_datos : expresion'
-    reporte_bnf.append("<lista_datos> ::= <expresion>") 
-    t[0] = [t[1]]
+    ' exclusiva_insert : expresion'
+    reporte_bnf.append("<exclusiva_insert> ::= <expresion>") 
+    t[0] = t[1]
+
+
+def p_expresiones_excluva(t):
+    ''' exclusiva_insert : SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
+                        | MD5 PAR_A string_type PAR_C
+                        | TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
+                        | SUBSTR PAR_A string_type COMA ENTERO COMA ENTERO PAR_C
+                        | NOW PAR_A PAR_C'''
+    if t[1].upper() == 'SUBSTRING' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.SUBSTRING,t[3],t[5],t[7])
+    elif t[1].upper() == 'MD5' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.MD5,t[3],None,None)
+    elif t[1].upper() == 'TRIM' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.MD5,t[3],t[7],None)
+    elif t[1].upper() == 'SUBSTR' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.SUBSTRING,t[3],t[5],t[7])
+    elif t[1].upper() == 'NOW' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.NOW,None,None,None)
 
 #?######################################################
 # TODO        GRAMATICA ALTER TABLE
@@ -1567,6 +1587,11 @@ def p_tipo_dato_integer_DEF(t):
     ' TIPO_DATO_DEF : INTEGER'
     reporte_bnf.append("<TIPO_DATO_DEF> ::= INTEGER")
     t[0] = Etiqueta_tipo(TIPO_DE_DATOS.integer_)
+
+def p_tipo_dato_boolean_DEF(t):
+    ' TIPO_DATO_DEF : BOOLEAN'
+    reporte_bnf.append("<TIPO_DATO_DEF> ::= BOOLEAN")
+    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.boolean)
 
 def p_tipo_dato_smallint_DEF(t):
     ' TIPO_DATO_DEF : SMALLINT'

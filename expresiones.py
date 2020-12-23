@@ -273,6 +273,12 @@ class CADENA_BINARIA(Enum):
     DECODE = 9
     CONVERT = 10
 
+class INSERT_EXCLUSIVA(Enum):
+    SUBSTRING = 1
+    MD5 = 2
+    TRIM = 3
+    NOW = 5
+
 class ExpresionNumerica:
     '''
         Esta clase representa una expresión numérica

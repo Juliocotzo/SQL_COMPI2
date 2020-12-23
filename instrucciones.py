@@ -184,3 +184,10 @@ class Select_Uniones(Instruccion):
     def __init__(self,etiqueta,ins):
         self.etiqueta = etiqueta
         self.ins = ins
+
+class Funcion_Exclusivas_insert(Instruccion):
+    def init(self,operador,exp1,exp2,exp3):
+        self.operador = operador
+        self.exp1 = exp1
+        self.exp2 = exp2
+        self.exp3 = exp3

@@ -4,17 +4,61 @@
  
 <instruccion> ::= <insert_insrt>
  
+<insert_insrt> ::= INSERT INTO ID PAR_A <lista_parametros_lista> PAR_C  VALUES PAR_A <lista_datos> PAR_C PTCOMA
+ 
+<lista_datos> ::= <exclusiva_insert>
+ 
+<exclusiva_insert> ::= <expresion>
+ 
+<expresion> ::= FALSE
+ 
+<lista_parametros_lista> ::= ID
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<instruccion> ::= <insert_insrt>
+ 
+<insert_insrt> ::= INSERT INTO ID PAR_A <lista_parametros_lista> PAR_C  VALUES PAR_A <lista_datos> PAR_C PTCOMA
+ 
+<lista_datos> ::= <exclusiva_insert>
+ 
+<exclusiva_insert> ::= <expresion>
+ 
+<expresion> ::= TRUE
+ 
+<lista_parametros_lista> ::= ID
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<instruccion> ::= <insert_insrt>
+ 
+<insert_insrt> ::= INSERT INTO ID VALUES PAR_A <lista_datos> PAR_C PTCOMA
+ 
+<lista_datos> ::= <exclusiva_insert>
+ 
+<exclusiva_insert> ::= <expresion>
+ 
+<expresion> ::= FALSE
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<instruccion> ::= <insert_insrt>
+ 
 <insert_insrt> ::= INSERT INTO ID VALUES PAR_A <lista_datos> PAR_C PTCOMA
  
 <lista_datos> ::= <lista_datos> COMA <expresion>
  
+<exclusiva_insert> ::= <expresion>
+ 
 <expresion> ::= FALSE
  
-<lista_datos> ::= <expresion>
+<lista_datos> ::= <exclusiva_insert>
+ 
+<exclusiva_insert> ::= <expresion>
  
 <expresion> ::= TRUE
  
-<instrucciones> ::= <instruccion>
+<instrucciones> ::= <instrucciones><instruccion>
  
 <instruccion> ::= <alterTable_insrt>
  
@@ -25,6 +69,18 @@
 <tipos_datos_columnas> ::= ID <TIPO_DATO>
  
 <TIPO_DATO> ::= BOOLEAN
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<instruccion> ::= <create_Table_isnrt>
+ 
+<create_Table_isnrt> ::= CREATE TABLE ID PAR_A <cuerpo_createTable_lista> PAR_C PTCOMA 
+ 
+<cuerpo_createTable_lista> ::= <cuerpo_createTable>
+ 
+<campos_c> ::= ID <TIPO_DATO_DEF>
+ 
+<TIPO_DATO_DEF> ::= BOOLEAN
  
 <instrucciones> ::= <instrucciones><instruccion>
  
