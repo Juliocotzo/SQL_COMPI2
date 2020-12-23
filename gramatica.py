@@ -428,8 +428,8 @@ def p_instruccion_f_select(t):
     t[0] = t[1]
 
 def p_instruccion_f_select_union(t):
-    'instruccion : select_uniones PTCOMA'   
-    t[0] = t[1]  
+    'instruccion : select_uniones PTCOMA'  
+    t[0] = Select_Uniones(t[1][0],t[1][1])
 
 def p_instruccion_error(t) :
     '''instruccion      : createDB_insrt error

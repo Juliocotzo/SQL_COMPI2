@@ -179,3 +179,8 @@ class Create_hijo_select(Instruccion):
         self.etiqueta = etiqueta
         self.expresion = expresion
         self.expresion2 = expresion2
+
+class Select_Uniones(Instruccion):
+    def __init__(self,etiqueta,ins):
+        self.etiqueta = etiqueta
+        self.ins = ins
