@@ -2,31 +2,11 @@ CREATE DATABASE compiladores2;
 
 USE compiladores2;
 
-create table tbventa 
-(  idventa integer not null primary key,
-   idempleado integer,
-   fechaventa date,
-   montoventa money,
-   ventaregistrada boolean,
-   descripcion text
-);
+SELECT * FROM tbusuario,tbventa WHERE id_venta == password;
 
-insert into tbventa values(1,4,'2020-10-12',450,false,'Venta de bomba de agua para toyota');
-insert into tbventa values(2,4,'2020-10-13',250,false,'Tasa distribuidor Mazda 626');
-insert into tbventa values(3,4,'2020-10-13',650,false,'Radiador para Mazda 626');
-insert into tbventa values(4,4,'2020-10-13',125,false,'Filtro de aire volkswagen');
-insert into tbventa values(5,4,'2020-10-13',175,false,'Juego de Candelas volkswagen');
-insert into tbventa values(6,4,'2020-10-13',220,false,'Aceite 20w50');
-insert into tbventa values(7,5,'2020-10-13',1250,false,'Cremallera Mazda 3');
-insert into tbventa values(8,5,'2020-10-14',980,false,'Cremallera timon hidraulico mazda');
-insert into tbventa values(9,5,'2020-10-14',1200,false,'Lodera Universal para pickup');
-insert into tbventa values(10,5,'2020-10-14',475,false,'Sobre Lodera de Fibra de Carbon');
-insert into tbventa values(11,5,'2020-10-14',780,false,'Bomba Auxiliar de agua para volkswagen');
-insert into tbventa values(12,4,'2020-10-14',3500,false,'Bomba de agua para volkswagen');
-insert into tbventa values(13,5,'2020-10-14',200,false,'Compresor de aire acondicionado');
-insert into tbventa values(14,5,'2020-10-15',2000,false,'Bomba Auxiliar de agua para volkswagen');
-
-SELECT * FROM tbventa;
+select primernombre,primerapellido
+from tbventa V,tbempleado E
+where V.idempleado = E.idempleado;
 
 
 
