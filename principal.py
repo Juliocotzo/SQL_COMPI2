@@ -2106,7 +2106,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
     except:
         pass
 
-f = open("./entrada.txt", "r")
+'''f = open("./entrada.txt", "r")
 input = f.read()
 instrucciones = g.parse(input)
 
@@ -2124,5 +2124,5 @@ if listaErrores == []:
 else:
     erroressss = ErrorHTML()
     erroressss.crearReporte()
-    listaErrores = []
+    listaErrores = []'''
 
