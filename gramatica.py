@@ -354,7 +354,7 @@ def t_COMENTARIO_MULTILINEA(t):
 
 # Comentario simple // ...
 def t_COMENTARIO_SIMPLE(t):
-    r'//.*\n'
+    r'--.*\n'
     t.lexer.lineno += 1
 
 # Caracteres ignorados
