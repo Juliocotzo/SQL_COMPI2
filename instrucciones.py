@@ -194,7 +194,7 @@ class Funcion_Exclusivas_insert(Instruccion):
 
 class Funcion_Index(Instruccion):
 
-    def __init__(self, etiqueta, identificador, nombre_index, lista_index = [], lista_index2 = []):
+    def __init__(self, etiqueta, identificador, nombre_index, lista_index , lista_index2 ):
         self.etiqueta = etiqueta
         self.identificador = identificador
         self.nombre_index = nombre_index

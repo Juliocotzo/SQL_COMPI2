@@ -3327,7 +3327,7 @@ def p_createIndex2_3(t):
 
 def p_createIndex2_30(t):
     ' opc_index_par : LOWER PAR_A ID PAR_C '
-    t[0] = index_cuerpo(TIPO_INDEX.LOWER, t[3],None)
+    t[0] = index_cuerpo(TIPO_INDEX.LOWER,None,t[3])
 
 def p_createIndex_5(t):
     ' opc_index_par : ID PAR_A ID PAR_C '
