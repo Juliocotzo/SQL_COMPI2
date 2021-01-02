@@ -3271,36 +3271,36 @@ def p_ins_createIndex(t):
 
 def p_createIndex(t):
     ' createIndex : CREATE INDEX ID ON ID opc_index PTCOMA '
-    Funcion_Index(INDEX.INDEX,t[3],t[5],t[6],None)
+    t[0] = Funcion_Index(INDEX.INDEX,t[3],t[5],t[6],None)
     
 def p_createIndex1(t):
     ' createIndex : CREATE INDEX ID ON ID opc_index cond_where PTCOMA '
-    Funcion_Index(INDEX.INDEX_WHERE,t[3],t[5],t[6],t[7])
+    t[0] = Funcion_Index(INDEX.INDEX_WHERE,t[3],t[5],t[6],t[7])
 
 def p_createIndex2(t):
     ' createIndex : CREATE INDEX ID ON ID opc_index INCLUDE opc_index PTCOMA '
-    Funcion_Index(INDEX.INDEX_INCLUDE,t[3],t[5],t[6],t[8])
+    t[0] = Funcion_Index(INDEX.INDEX_INCLUDE,t[3],t[5],t[6],t[8])
 
 def p_createIndex3(t):
     ' createIndex : CREATE UNIQUE INDEX ID ON ID opc_index PTCOMA '
-    Funcion_Index(INDEX.INDEX_UNIQUE_WHERE,t[4],t[6],t[7],None)
+    t[0] = Funcion_Index(INDEX.INDEX_UNIQUE_WHERE,t[4],t[6],t[7],None)
 
 def p_createIndex4(t):
     ' createIndex : CREATE UNIQUE INDEX ID ON ID opc_index cond_where PTCOMA '
-    Funcion_Index(INDEX.INDEX_INCLUDE,t[4],t[6],t[7],t[8])
+    t[0] = Funcion_Index(INDEX.INDEX_INCLUDE,t[4],t[6],t[7],t[8])
 
 def p_createIndex5(t):
     ' createIndex : CREATE UNIQUE INDEX ID ON ID opc_index INCLUDE opc_index PTCOMA '
-    Funcion_Index(INDEX.INDEX_INCLUDE,t[4],t[6],t[7],t[9])
+    t[0] = Funcion_Index(INDEX.INDEX_INCLUDE,t[4],t[6],t[7],t[9])
 
 def p_otro_index(t):
     'createIndex : CREATE INDEX ID ON ID PAR_A ID opclass PAR_C PTCOMA'
-    Funcion_Index(INDEX.INDEX_CLASS,t[3],t[5],t[7],t[8])
+    t[0] = Funcion_Index(INDEX.INDEX_CLASS,t[3],t[5],t[7],t[8])
     
 
 def p_otro_index1(t):
     'createIndex : CREATE INDEX ID ON ID PAR_A ID opclass sortoptions PAR_C PTCOMA'
-    Funcion_Index(t[3],t[5],t[7],t[8],t[9])
+    t[0] = Funcion_Index(t[3],t[5],t[7],t[8],t[9])
 
 def p_createIndex6(t):
     '''opc_index :  USING HASH PAR_A ID PAR_C
