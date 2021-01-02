@@ -2748,6 +2748,12 @@ def procesar_select_for_UNIONES(instr,ts,tc):
 
         return arrayReturn
 
+def procesar_index(instr, ts, tc):
+    global salida
+    print('---------------- si entra al index ---------------------')
+    print(instr.identificador)
+    salida = 'hola'
+    
 
 def procesar_instrucciones(instrucciones,ts,tc) :
     try:
@@ -2766,6 +2772,8 @@ def procesar_instrucciones(instrucciones,ts,tc) :
                     salida = "\nSELECT DATABASE"
             elif isinstance(instr, ExpresionRelacional) : 
                 procesar_Expresion_Relacional(instr,ts,tc)
+            elif isinstance(instr, Funcion_Index) :
+                procesar_index(instr,ts,tc)
             elif isinstance(instr, ExpresionBinaria) : 
                 procesar_Expresion_Binaria(instr,ts,tc)
             elif isinstance(instr, ExpresionLogica) : 
@@ -2819,7 +2827,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
     except:
         pass
 
-'''f = open("./entrada.txt", "r")
+f = open("./entrada.txt", "r")
 input = f.read()
 instrucciones = g.parse(input)
 
@@ -2837,7 +2845,7 @@ if listaErrores == []:
 else:
     erroressss = ErrorHTML()
     erroressss.crearReporte()
-    listaErrores = []'''
+    listaErrores = []
 
 
 
