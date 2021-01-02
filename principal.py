@@ -1119,6 +1119,7 @@ def procesar_delete(instr,ts,tc):
 
 
 def procesar_select_time(instr,ts,tc):
+    global salida
     arrayReturn = []
     if instr.etiqueta == SELECT_TIME.EXTRACT:
         if instr.val1.val == 'YEAR':
@@ -1198,6 +1199,7 @@ def procesar_select_time(instr,ts,tc):
             arrayReturn.append(['now'])
             arrayReturn.append([noww])
     print(arrayReturn)
+    salida = arrayReturn
 
 def procesar_select1(instr,ts,tc):
     if instr.etiqueta == OPCIONES_SELECT.GREATEST:
