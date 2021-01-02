@@ -2828,7 +2828,7 @@ def obtener_indexbody(instr):
         print(instr.expresion)
 
     
-    salida = 'hola'
+    salida = '\nCREATE INDEX'
     
 
 def procesar_instrucciones(instrucciones,ts,tc) :
@@ -2903,7 +2903,7 @@ def procesar_instrucciones(instrucciones,ts,tc) :
     except:
         pass
 
-f = open("./entrada.txt", "r")
+'''f = open("./entrada.txt", "r")
 input = f.read()
 instrucciones = g.parse(input)
 
@@ -2922,7 +2922,7 @@ else:
     erroressss = ErrorHTML()
     erroressss.crearReporte()
     listaErrores = []
-
+'''
 
 
 

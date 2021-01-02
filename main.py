@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import random
+
 from gramatica import parse
 from principal import * 
 
@@ -11,6 +12,10 @@ from report_ast import *
 from report_tc import *
 from report_ts import *
 from report_errores import *
+
+import sys
+from io import StringIO
+import contextlib
 
 instrucciones_Global = []
 
@@ -30,7 +35,6 @@ selected = False
 
 # ACTIONS
 def analizar(txt):
-
     global instrucciones_Global,tc_global1,ts_global1,listaErrores
     instrucciones = g.parse(txt)
     if  erroressss.getList()== []:
@@ -47,7 +51,6 @@ def analizar(txt):
             salida_table(2,salida)
     else:
         salida_table(2,"PARSER ERROR")
-    #parse(txt)
 
 def analizar_select(e):
     global selected
@@ -91,29 +94,63 @@ def generarReporteTS():
     RTablaS = RTablaDeSimbolos()
     RTablaS.crearReporte(ts_global1)
 
+def traducir3D():
+    f = open("texto3D.py", "r")
+    texto3D = f.read()
+    my_text2.insert(1.0,texto3D)
+
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
+
+def compilar3D():
+    try:
+        cadena = my_text2.get("1.0",'end-1c')
+        with stdoutIO() as s:
+            exec(cadena,{})
+        salida_table(2,s.getvalue())
+
+
+    except:
+        print("NO SE PUDO :v")
+        pass
+
 toolbar_frame = Frame(root)
 toolbar_frame.pack(fill = X)
 
-text_frame = Frame(root)
-text_frame.pack(pady=5)
+text_frames = Frame(root)
+text_frames.pack(pady=5)
 
 
-
-# VERTICAL SCROLL BAR
+entrada_h = int(h * 0.038)
+entrada_w = int(w * 0.060)
+#VENTANA1
+text_frame = Frame(text_frames,width=entrada_w, height=entrada_h)
+text_frame.pack( side = LEFT,padx=5)
 text_scroll = Scrollbar(text_frame)
 text_scroll.pack(side = RIGHT, fill = Y)
-# HORIZONTAL SCROLL BAR
 hor_scroll = Scrollbar(text_frame, orient = 'horizontal')
 hor_scroll.pack(side = BOTTOM, fill = X)
-
-
-
-my_text_h = int(h * 0.028)
-my_text = Text(text_frame, width=w, height=my_text_h, selectforeground="black", undo=True, yscrollcommand=text_scroll.set, wrap = "none", xscrollcommand = hor_scroll.set)
+my_text = Text(text_frame, width=entrada_w, height=entrada_h, selectforeground="black", undo=True, yscrollcommand=text_scroll.set, wrap = "none", xscrollcommand = hor_scroll.set)
 my_text.pack()
-
 text_scroll.config(command = my_text.yview)
 hor_scroll.config(command = my_text.xview)
+#VENTANA 2
+text_frame2 = Frame(text_frames,width=entrada_w, height=entrada_h)
+text_frame2.pack( side = LEFT ,padx=5)
+text_scroll2 = Scrollbar(text_frame2)
+text_scroll2.pack(side = RIGHT, fill = Y)
+hor_scroll2 = Scrollbar(text_frame2, orient = 'horizontal')
+hor_scroll2.pack(side = BOTTOM, fill = X)
+my_text2 = Text(text_frame2, width=entrada_w, height=entrada_h, selectforeground="black", undo=True, yscrollcommand=text_scroll2.set, wrap = "none", xscrollcommand = hor_scroll2.set,background="black", foreground="lawn green")
+my_text2.pack()
+text_scroll2.config(command = my_text2.yview)
+hor_scroll2.config(command = my_text2.xview)
 
 #MENU
 my_menu = Menu(root)
@@ -142,6 +179,16 @@ analizar_step_step = Button(toolbar_frame)
 photoCompila1 = PhotoImage(file="iconos/select.png")
 analizar_step_step.config(image=photoCompila1, width="50", height="50", activebackground="black",command = lambda: analizar_select(False))
 analizar_step_step.grid(row = 0, column = 1, sticky = W)
+
+translate = Button(toolbar_frame)
+photoCompila2 = PhotoImage(file="iconos/translate.png")
+translate.config(image=photoCompila2, width="50", height="50", activebackground="black",command=traducir3D)
+translate.grid(row = 0, column = 2, sticky = W)
+
+python3d = Button(toolbar_frame)
+photoCompila3 = PhotoImage(file="iconos/python.png")
+python3d.config(image=photoCompila3, width="50", height="50", activebackground="black",command=compilar3D)
+python3d.grid(row = 0, column = 3, sticky = W)
 
 def salida_table(salida,textoSalida):
     if salida == 1:
