@@ -2759,15 +2759,20 @@ def procesar_index(instr, ts, tc):
     elif instr.etiqueta == INDEX.INDEX_WHERE:
         print(instr.identificador)
         print(instr.nombre_index)
+        for lis in instr.lista_index.identificador:
+            print(lis.val)
 
     elif instr.etiqueta == INDEX.INDEX_INCLUDE:
         print(instr.identificador)
         print(instr.nombre_index)
-        print(instr.lista_index)
+        for lis in instr.lista_index.identificador:
+            print(lis.val)
 
     elif instr.etiqueta == INDEX.INDEX_UNIQUE_WHERE:
         print(instr.identificador)
         print(instr.nombre_index)
+        for lis in instr.lista_index.identificador:
+            print(lis.val)
 
     elif instr.etiqueta == INDEX.INDEX_INCLUDE:
         print(instr.identificador)
@@ -2788,11 +2793,9 @@ def obtener_indexbody(instr):
         
         for datos in instr.identificador:
             print(datos.val)
-
         
     elif instr.etiqueta == TIPO_INDEX.NULLS:
         print(instr.identificador)
-        print(instr.expresion)
     elif instr.etiqueta == TIPO_INDEX.STATE:
         print(instr.identificador)
         print(instr.expresion)
