@@ -2750,37 +2750,59 @@ def procesar_select_for_UNIONES(instr,ts,tc):
 
 def procesar_index(instr, ts, tc):
     global salida
-    print('---------------- si entra al index ---------------------')
+    #print('---------------- si entra al index ---------------------')
     if instr.etiqueta == INDEX.INDEX:
-        print(instr.identificador)
-        print(instr.nombre_index)
-        obtener_indexbody(instr.lista_index)
+        #print(instr.identificador)
+        #print(instr.nombre_index)
+        if type(instr.lista_index.identificador) == type([]):
+            for lista in instr.lista_index.identificador:
+                print(lista.val)
+        else:
+            print(instr.lista_index.identificador)
+        
+        temp = TS.Simbolo(instr.identificador,'INDEX',0,instr.nombre_index)
+        ts.agregar(temp)
     
     elif instr.etiqueta == INDEX.INDEX_WHERE:
-        print(instr.identificador)
-        print(instr.nombre_index)
+        #print(instr.identificador)
+        #print(instr.nombre_index)
+        for lis in instr.lista_index.identificador:
+            print(lis.val)
+        
+        temp = TS.Simbolo(instr.identificador,'INDEX',0,instr.nombre_index)
+        ts.agregar(temp)
+
+    elif instr.etiqueta == INDEX.INDEX_INCLUDE:
+        #print(instr.identificador)
+        #print(instr.nombre_index)
         for lis in instr.lista_index.identificador:
             print(lis.val)
 
-    elif instr.etiqueta == INDEX.INDEX_INCLUDE:
-        print(instr.identificador)
-        print(instr.nombre_index)
-        for lis in instr.lista_index.identificador:
-            print(lis.val)
+        temp = TS.Simbolo(instr.identificador,'INDEX',0,instr.nombre_index)
+        ts.agregar(temp)
 
     elif instr.etiqueta == INDEX.INDEX_UNIQUE_WHERE:
-        print(instr.identificador)
-        print(instr.nombre_index)
+        #print(instr.identificador)
+        #print(instr.nombre_index)
         for lis in instr.lista_index.identificador:
             print(lis.val)
+        
+        temp = TS.Simbolo(instr.identificador,'INDEX',0,instr.nombre_index)
+        ts.agregar(temp)
 
     elif instr.etiqueta == INDEX.INDEX_INCLUDE:
-        print(instr.identificador)
-        print(instr.nombre_index)
+        #print(instr.identificador)
+        #print(instr.nombre_index)
+    
+        temp = TS.Simbolo(instr.identificador,'INDEX',0,instr.nombre_index)
+        ts.agregar(temp)
 
     elif instr.etiqueta == INDEX.INDEX_CLASS:
-        print(instr.identificador)
-        print(instr.nombre_index)
+        #print(instr.identificador)
+        #print(instr.nombre_index)
+
+        temp = TS.Simbolo(instr.identificador,'INDEX',0,instr.nombre_index)
+        ts.agregar(temp)
 
     
     
