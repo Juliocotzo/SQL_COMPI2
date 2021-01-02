@@ -2751,6 +2751,52 @@ def procesar_select_for_UNIONES(instr,ts,tc):
 def procesar_index(instr, ts, tc):
     global salida
     print('---------------- si entra al index ---------------------')
+    if instr != []:
+        for instruccion in instr:
+            if instr.etiqueta == INDEX.INDEX:
+                print('siii entra')
+                print(instr.etiqueta)
+                print(instr.identificador)
+                print(instr.identificadorTabla)
+                obtener_indexbody(instr.lista_index)
+            
+            elif instr.etiqueta == INDEX.INDEX_WHERE:
+                print('siii entra')
+                print(instr.etiqueta)
+                print(instr.identificador)
+                print(instr.identificadorTabla)
+                obtener_indexbody(instr.lista_index)
+
+            elif instr.etiqueta == INDEX.INDEX_INCLUDE:
+                print(instr.etiqueta)
+                print(instr.identificador)
+                print(instr.identificadorTabla)
+                obtener_indexbody(instr.lista_index)
+
+            elif instr.etiqueta == INDEX.INDEX_UNIQUE_WHERE:
+                print(instr.etiqueta)
+                print(instr.identificador)
+                print(instr.identificadorTabla)
+                obtener_indexbody(instr.lista_index)
+    
+def obtener_indexbody(instr):
+    if instr.etiqueta == TIPO_INDEX.USING_HASH:
+        print(instr.identificador)
+    elif instr.etiqueta == TIPO_INDEX.CAMPOS:
+        for datos in instr.identificador:
+            print(datos)
+    elif instr.etiqueta == TIPO_INDEX.NULLS:
+        print(instr.identificador)
+        print(instr.expresion)
+    elif instr.etiqueta == TIPO_INDEX.STATE:
+        print(instr.identificador)
+        print(instr.expresion)
+    elif instr.etiqueta == TIPO_INDEX.LOWER:
+        print(instr.expresion)
+    elif instr.etiqueta == TIPO_INDEX.WITH_IDS:
+        print(instr.identificador)
+        print(instr.expresion)
+
     print(instr.identificador)
     salida = 'hola'
     

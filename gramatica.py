@@ -3297,7 +3297,6 @@ def p_otro_index(t):
     'createIndex : CREATE INDEX ID ON ID PAR_A ID opclass PAR_C PTCOMA'
     t[0] = Funcion_Index(INDEX.INDEX_CLASS,t[3],t[5],t[7],t[8])
     
-
 def p_otro_index1(t):
     'createIndex : CREATE INDEX ID ON ID PAR_A ID opclass sortoptions PAR_C PTCOMA'
     t[0] = Funcion_Index(t[3],t[5],t[7],t[8],t[9])
@@ -3317,6 +3316,10 @@ def p_createIndex2_0(t):
 def p_createIndex2_1(t):
     ' opc_index_par : ID NULLS first_last'
     t[0] = index_cuerpo(TIPO_INDEX.NULLS,t[1],t[3])
+
+def p_createIndex2_1_1(t):
+    ' opc_index_par : ID orden NULLS first_last '
+    t[0] = index_cuerpo(TIPO_INDEX.NULLS,t[1], t[4])
 
 def p_createIndex2_3(t):
     ' opc_index_par : ID COLLATE string_type '   

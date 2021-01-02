@@ -2,6 +2,80 @@
  
 <instrucciones> ::= <instrucciones><instruccion>
  
+<cond_where> ::= WHERE <expresion_where>
+ 
+<expresion_where> ::= <expresion_logica_w>
+ 
+<expresion_logica_w> ::= NOT <expresion_logica_w>
+ 
+<expresion_logica_w> ::= <expresion_whereb>
+ 
+<expresion_whereb> ::= <expresion_wherea>
+ 
+<expresion_wherea> ::= <expresion>
+ 
+<expresion> ::= PAR_A <expresion_logica> PAR_C
+ 
+<expresion_logica> ::= <expresion_relacional> AND <expresion_logica>
+ 
+<expresion_logica> ::= <expresion_relacion>
+ 
+<expresion_relacional> ::= <expresion> MENQUE <expresion>
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <string_type>
+ 
+<string_type> ::= ID
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <string_type>
+ 
+<string_type> ::= ID
+ 
+<expresion_relacional> ::= <expresion> MAYQUE <expresion>
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <string_type>
+ 
+<string_type> ::= ID
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <string_type>
+ 
+<string_type> ::= ID
+ 
+<campos_c> ::= ID
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<campos_c> ::= <campos_c> COMA ID
+ 
+<campos_c> ::= <campos_c> COMA ID
+ 
+<campos_c> ::= ID
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<orden> ::= DESC
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<campos_c> ::= <campos_c> COMA ID
+ 
+<campos_c> ::= ID
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
+<instrucciones> ::= <instrucciones><instruccion>
+ 
 <campos_c> ::= ID
  
 <instrucciones> ::= <instrucciones><instruccion>
