@@ -1,0 +1,24 @@
+CREATE OR REPLACE FUNCTION createDB() RETURNS integer  AS $$
+DECLARE
+    a boolean := True;
+    b integer := 30;
+BEGIN
+    IF a==false THEN
+        RAISE 'ES MENOR A 20';
+    ELSE 
+        RAISE 'ES MAYOR A 20';
+    END IF; 
+
+    CASE '*'
+        WHEN '+' THEN
+            RAISE 'SUMA';
+         
+        WHEN '-' THEN
+            RAISE 'RESTA';
+        ELSE
+            RAISE 'NO ES SUMA NI RESTA';
+    END CASE;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT createDB();

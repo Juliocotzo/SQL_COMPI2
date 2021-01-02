@@ -13,14 +13,25 @@ from report_tc import *
 from report_ts import *
 from report_errores import *
 
+
+import tsPLSQL as TSPL
+import tfPLSQL as TFPL
+from instruccionesPLSQL import *
+from expresionesPLSQL import *
+import gramaticaPLSQL as gPL
+from traduccionPLSQL import * 
+
 import sys
 from io import StringIO
 import contextlib
 
 instrucciones_Global = []
+instrucciones_GlobalPL = []
 
 tc_global1 = []
 ts_global1 = []
+
+ts_globalPL = []
 
 erroressss = ErrorHTML()
 
@@ -35,22 +46,16 @@ selected = False
 
 # ACTIONS
 def analizar(txt):
-    global instrucciones_Global,tc_global1,ts_global1,listaErrores
-    instrucciones = g.parse(txt)
-    if  erroressss.getList()== []:
-        instrucciones_Global = instrucciones
-        ts_global = TS.TablaDeSimbolos()
-        tc_global = TC.TablaDeTipos()
-        tc_global1 = tc_global
-        ts_global1 = ts_global
-        salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
+    instruccionesPL = runC3D(txt)
+    instrucciones_GlobalPL = instruccionesPL
+    ts_globalPL = TSPL.TablaDeSimbolos()
+    codigo3D = ""
+    codigo3D = generarC3D(instruccionesPL, ts_globalPL)
+    salida3D = open("./salida3D.py", "w")
+    salida3D.write(codigo3D)
+    salida3D.close()
+    salida_table(2,'3D GENERADO CON EXITO')
 
-        if type(salida) == list:
-            salida_table(1,salida)
-        else:
-            salida_table(2,salida)
-    else:
-        salida_table(2,"PARSER ERROR")
 
 def analizar_select(e):
     global selected
@@ -95,8 +100,9 @@ def generarReporteTS():
     RTablaS.crearReporte(ts_global1)
 
 def traducir3D():
-    f = open("texto3D.py", "r")
+    f = open("salida3D.py", "r")
     texto3D = f.read()
+    my_text2.delete("1.0","end")
     my_text2.insert(1.0,texto3D)
 
 @contextlib.contextmanager
