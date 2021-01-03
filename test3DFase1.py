@@ -15,7 +15,7 @@ class Intermedio():
     ts_global1 = []
 
     def __init__(self):
-        print('HOLA')
+        ''' Funcion Intermedia '''
         
 
     def procesar_database1(self):
@@ -60,7 +60,7 @@ class Intermedio():
         typeC.crearReporte(tc_global1)
         RTablaS = RTablaDeSimbolos()
         RTablaS.crearReporte(ts_global1)
-        return 'Reportes'
+        return ''
 
 
 '''inter = Intermedio()

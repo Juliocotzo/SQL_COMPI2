@@ -37,7 +37,7 @@ def analizar(txt):
     ts_globalPL = TSPL.TablaDeSimbolos()
     codigo3D = ""
     codigo3D = TRADUC.generarC3D(instruccionesPL, ts_globalPL)
-    salida3D = open("PLSQL/salida3D.py", "w")
+    salida3D = open("./salida3D.py", "w")
     salida3D.write(codigo3D)
     salida3D.close()
     salida_table(2,'3D GENERADO CON EXITO')
@@ -90,7 +90,7 @@ def generarReporteTS():
     RTablaS.crearReporte(ts_global1)'''
 
 def traducir3D():
-    f = open("PLSQL/salida3D.py", "r")
+    f = open("./salida3D.py", "r")
     #f = open("texto3D.py", "r")
     texto3D = f.read()
     my_text2.delete("1.0","end")
