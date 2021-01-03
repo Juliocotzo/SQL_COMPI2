@@ -1,8 +1,8 @@
-import tsPLSQL as TS
-import tfPLSQL as TF
-from instruccionesPLSQL import *
-from expresionesPLSQL import *
-import gramaticaPLSQL as g
+import PLSQL.tsPLSQL as TS
+import PLSQL.tfPLSQL as TF
+from PLSQL.instruccionesPLSQL import *
+from PLSQL.expresionesPLSQL import *
+import PLSQL.gramaticaPLSQL as g
 
 temporalT = 0
 temporalA = 0

@@ -2,24 +2,10 @@ from tkinter import *
 from tkinter import ttk
 import random
 
-from gramatica import parse
-from principal import * 
-
-import ts as TS
-from expresiones import *
-from instrucciones import *
-from report_ast import *
-from report_tc import *
-from report_ts import *
-from report_errores import *
-
-
-import tsPLSQL as TSPL
-import tfPLSQL as TFPL
-from instruccionesPLSQL import *
-from expresionesPLSQL import *
-import gramaticaPLSQL as gPL
-from traduccionPLSQL import * 
+import PLSQL.tsPLSQL as TSPL
+import PLSQL.tfPLSQL as TFPL
+import PLSQL.gramaticaPLSQL as gPL
+import PLSQL.traduccionPLSQL as TRADUC
 
 import sys
 from io import StringIO
@@ -33,7 +19,7 @@ ts_global1 = []
 
 ts_globalPL = []
 
-erroressss = ErrorHTML()
+#erroressss = ErrorHTML()
 
 root = Tk() 
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
@@ -46,12 +32,12 @@ selected = False
 
 # ACTIONS
 def analizar(txt):
-    instruccionesPL = runC3D(txt)
+    instruccionesPL = TRADUC.runC3D(txt)
     instrucciones_GlobalPL = instruccionesPL
     ts_globalPL = TSPL.TablaDeSimbolos()
     codigo3D = ""
-    codigo3D = generarC3D(instruccionesPL, ts_globalPL)
-    salida3D = open("./salida3D.py", "w")
+    codigo3D = TRADUC.generarC3D(instruccionesPL, ts_globalPL)
+    salida3D = open("PLSQL/salida3D.py", "w")
     salida3D.write(codigo3D)
     salida3D.close()
     salida_table(2,'3D GENERADO CON EXITO')
@@ -59,7 +45,7 @@ def analizar(txt):
 
 def analizar_select(e):
     global selected
-    if my_text.selection_get():
+    '''if my_text.selection_get():
 
         global instrucciones_Global,tc_global1,ts_global1,listaErrores
         selected = my_text.selection_get()
@@ -78,29 +64,34 @@ def analizar_select(e):
             else:
                 salida_table(2,salida)
         else:
-            salida_table(2,"PARSER ERROR")
+            salida_table(2,"PARSER ERROR")'''
             
 
 def generarReporteAST():
-    global instrucciones_Global
+    print(':v')
+    '''global instrucciones_Global
     astGraph = AST()
-    astGraph.generarAST(instrucciones_Global)
+    astGraph.generarAST(instrucciones_Global)'''
 
 def generarReporteTC():
-    global tc_global1
+    print(':v')
+    '''global tc_global1
     typeC = TipeChecker()
-    typeC.crearReporte(tc_global1)
+    typeC.crearReporte(tc_global1)'''
 
 def generarReporteErrores():
-    erroressss.crearReporte()
+    print(':v')
+    '''erroressss.crearReporte()'''
 
 def generarReporteTS():
-    global ts_global1
+    print(':v')
+    '''global ts_global1
     RTablaS = RTablaDeSimbolos()
-    RTablaS.crearReporte(ts_global1)
+    RTablaS.crearReporte(ts_global1)'''
 
 def traducir3D():
-    f = open("salida3D.py", "r")
+    f = open("PLSQL/salida3D.py", "r")
+    #f = open("texto3D.py", "r")
     texto3D = f.read()
     my_text2.delete("1.0","end")
     my_text2.insert(1.0,texto3D)

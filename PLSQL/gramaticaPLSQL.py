@@ -37,6 +37,8 @@ reservadas = {
     'when' : 'WHEN',
     'create' :'CREATE',
     'function' : 'FUNCTION',
+    'procedure' : 'PROCEDURE',
+    'call' : 'CALL',
     'returns' : 'RETURNS',
     'as' : 'AS',
     'declare' : 'DECLARE',
@@ -205,8 +207,8 @@ precedence = (
 
 
 # Importacion de clases para la creación del AST
-from expresionesPLSQL import *
-from instruccionesPLSQL import *
+from PLSQL.expresionesPLSQL import *
+from PLSQL.instruccionesPLSQL import *
 
 # Definición de la gramática ---------------------------------------------------------------------------------------------------
 listaGramatica = []
@@ -285,8 +287,40 @@ def p_funcion2_r(t):
         instrucs.append(instru2)
     t[0] = Funcion(TIPO_DATO.INT, t[5], t[7], Principal(instrucs))
 
+#PROCEDURE
+def p_procedure(t):
+    'funcion    : CREATE PROCEDURE ID PARA parametros PARC RETURNS tipo AS DOLAR DOLAR BEGIN instrucciones_funct_list END PUNTOYCOMA DOLAR DOLAR LANGUAGE PLPGSQL PUNTOYCOMA'
+    t[0] = Funcion(TIPO_DATO.INT, t[3], t[5], Principal(t[13]))
+
+def p_procedure2(t):
+    'funcion    : CREATE PROCEDURE ID PARA parametros PARC RETURNS tipo AS DOLAR DOLAR DECLARE instrucciones_funct_list BEGIN instrucciones_funct_list END PUNTOYCOMA DOLAR DOLAR LANGUAGE PLPGSQL PUNTOYCOMA'
+    instrucs = []
+    for instru1 in t[13]:
+        instrucs.append(instru1)
+    for instru2 in t[15]:
+        instrucs.append(instru2)
+    t[0] = Funcion(TIPO_DATO.INT, t[3], t[5], Principal(instrucs))
+
+def p_procedure_r(t):
+    'funcion    : CREATE OR REPLACE PROCEDURE ID PARA parametros PARC RETURNS tipo AS DOLAR DOLAR BEGIN instrucciones_funct_list END PUNTOYCOMA DOLAR DOLAR LANGUAGE PLPGSQL PUNTOYCOMA'
+    t[0] = Funcion(TIPO_DATO.INT, t[5], t[7], Principal(t[15]))
+
+def p_procedure2_r(t):
+    'funcion    : CREATE OR REPLACE PROCEDURE ID PARA parametros PARC RETURNS tipo AS DOLAR DOLAR DECLARE instrucciones_funct_list BEGIN instrucciones_funct_list END PUNTOYCOMA DOLAR DOLAR LANGUAGE PLPGSQL PUNTOYCOMA'
+    instrucs = []
+    for instru1 in t[15]:
+        instrucs.append(instru1)
+    for instru2 in t[17]:
+        instrucs.append(instru2)
+    t[0] = Funcion(TIPO_DATO.INT, t[5], t[7], Principal(instrucs))
+    
+
 def p_llamada_funcion(t):
     'llamada_funcion    : SELECT ID PARA params PARC PUNTOYCOMA'
+    t[0] = LlamadaFuncion(t[2], t[4])
+
+def p_llamada_funcion1(t):
+    'llamada_funcion    : CALL ID PARA params PARC PUNTOYCOMA'
     t[0] = LlamadaFuncion(t[2], t[4])
 
 def p_params_list(t):
