@@ -96,9 +96,7 @@ reservadas = {
     'order' : 'ORDER',
     'asc' : 'ASC',
     'desc' : 'DESC',
-    'primary' : 'PRIMARY',
-    'key' : 'KEY',
-    'foreign' : 'FOREIGN',
+    
     'avg' : 'AVG',
     'min' : 'MIN',
     'max' : 'MAX',
@@ -752,25 +750,14 @@ def p_cons_campos_id(t):
 
 #FA:TA
 
-def p_cT_options1(t):
-    ' cT_options : C_unique'
-    reporte_bnf.append("<cT_options> ::= <C_unique>")
-    t[0] = t[1]
-
 def p_cT_options2(t):
     ' cT_options : C_check'
     reporte_bnf.append("<cT_options> ::= <C_check>")
     t[0] = t[1]
 
-def p_cT_options3(t):
-    ' cT_options : llave' 
-    reporte_bnf.append("<cT_options> ::= <llave>")
-    t[0] = t[1]
 
-def p_cT_options4(t):
-    ' cT_options : O_DEFAULT'
-    reporte_bnf.append("<cT_options> ::= <O_DEFAULT>")
-    t[0] = t[1]
+
+
 
 
 
@@ -784,16 +771,6 @@ def p_default(t):
 
 
 
-
-def p_C_unique(t):
-    ''' C_unique : UNIQUE
-                 | CONSTRAINT ID UNIQUE'''
-    if t[1].upper() == 'UNIQUE':
-        reporte_bnf.append("<C_unique> ::= UNIQUE")
-        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.UNIQUE,None,None,None)
-    else:
-        reporte_bnf.append("<C_unique> ::= CONSTRAINT ID UNIQUE")
-        t[0] =  definicion_constraint(t[2],OPCIONES_CONSTRAINT.UNIQUE,None,None,None)
         
             
 
@@ -808,31 +785,9 @@ def p_Ccheck(t):
         reporte_bnf.append("<C_check> ::= CONSTRAINT ID CHECK PAR_A <expresion_logica> PAR_C")
         t[0] =  definicion_constraint(t[2],OPCIONES_CONSTRAINT.CHECK,None,None,t[3])
 
-def p_llave(t):
-    ''' llave : PRIMARY KEY 
-            | FOREIGN KEY'''
-    if t[1].upper() == 'PRIMARY':
-        reporte_bnf.append("<llave> ::= PRIMARY KEY")
-        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.PRIMARY,None,None,None)
-    else:
-        reporte_bnf.append("<llave> ::= FOREIGN KEY")
-        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.FOREIGN,None,None,None)
-
-def p_expresion_cadena_DEFAULT(t):
-    'expresion_dato_default : CADENA'
-    reporte_bnf.append("<expresion_dato_default> ::= CADENA")
-    t[0] = ExpresionComillaSimple(TIPO_VALOR.CADENA,t[1])
 
 
-def p_expresion1_DEFAULT(t):
-    'expresion_dato_default : ENTERO'
-    reporte_bnf.append("<expresion_dato_default> ::= ENTERO")
-    t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1]) 
-
-def p_expresion1_DEFAULT1(t):
-    'expresion_dato_default : FLOTANTE'
-    reporte_bnf.append("<expresion_dato_default> ::= FLOTANTE")
-    t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1])     
+    
 ##########################################################
 ##########################################################
 ##########################################################
@@ -1751,31 +1706,6 @@ def p_ORDER2(t):
     t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
 
 
-#? ####################################################################
-# TODO              CASE 
-#? ####################################################################
-
-
-def p_case_insrt(t):
-    ' case_insrt : CASE estructura_when_lista ELSE expresion END '
-    reporte_bnf.append("<case_insrt> ::= CASE <estructura_when_lista> ELSE <expresion> END")
-    t[0] = Create_select_uno(OPCIONES_SELECT.CASE,None,t[4],None,None,None,t[2])
-
-def p_estructura_when_lista(t):
-    ' estructura_when_lista : estructura_when_lista estructura_when '
-    reporte_bnf.append("<estructura_when_lista> ::= <estructura_when_lista> <estructura_when>")
-    t[1].append(t[2])
-    t[0] = t[1]
-
-def p_opcion_estructura_when(t):
-    ' estructura_when_lista : estructura_when'
-    reporte_bnf.append("<estructura_when_lista> ::= <estructura_when>")
-    t[0] = t[1]
-
-def p_estructura_when(t):
-    ' estructura_when : WHEN expresion_logica THEN expresion'
-    reporte_bnf.append("<estructura_when> ::= WHEN <expresion_logica> THEN <expresion>")
-    t[0] =  [ExpresionRelacional(t[2],t[4],OPERACION_LOGICA.THEN)]
 
 
 

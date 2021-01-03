@@ -2,10 +2,174 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    ABS
+    ACOS
+    ACOSD
+    ACOSH
+    ADD
+    ALIAS
+    ALL
+    ALTER
+    AMPERMAY
+    AMPERMEN
+    AMPERSON_D
+    AMPMENOR
+    ANY
+    ARROBAMAY
+    ASC
+    ASIN
+    ASIND
+    ASINH
+    ATAN
+    ATAN2
+    ATAN2D
+    ATAND
+    ATANH
+    AVG
+    BETWEEN
+    BPCHAR_PATTERN_OPS
+    BY
+    BYTEA
+    CBRT
+    CEIL
+    CEILING
+    CEJILLAIGUAL
+    CHECK
+    COLLATE
+    COLUMN
+    CONSTANT
+    CONVERT
     CORCHETEA
     CORCHETEC
+    COS
+    COSD
+    COSH
+    COT
+    COTD
+    COUNT
+    CURRENT_DATE
+    CURRENT_TIME
+    CURRENT_USER
+    DATE_PART
+    DECODE
+    DEGREES
+    DELETE
+    DESC
+    DISTINCT
+    DIV
+    D_DOSPTS
+    D_OR
+    ENCODE
+    ENUM
+    EXCEPT
+    EXCEPTION
+    EXECUTE
+    EXIT
+    EXP
+    EXTRACT
+    FACTORIAL
+    FIRST
+    FLOOR
+    FOR
+    FROM
+    GCD
+    GET_BYTE
+    GREATEST
+    GROUP
+    HASH
+    HASHTAG
+    HAVING
+    IN
+    INCLUDE
+    INDEX
+    INNER
+    INSERT
+    INTERSECT
+    INTO
+    IS
+    ISNULL
+    JOIN
+    LAST
+    LCM
+    LEAST
+    LENGTH
+    LIKE
+    LIMIT
     LLAVEA
     LLAVEC
+    LN
+    LOG
+    LOG10
+    LOOP
+    LOWER
+    MAX
+    MAYPOT
+    MD5
+    MENARROBA
+    MENMENOR
+    MENPOT
+    MIN
+    MIN_SCALE
+    MOD
+    NEXT
+    NOIG
+    NOTICE
+    NOTNULL
+    NOW
+    NULLS
+    OFFSET
+    ON
+    ONLY
+    ORAMPMAY
+    ORDER
+    ORMAYMAY
+    PERFORM
+    PI
+    POWER
+    PREPARE
+    PUNTO
+    QUERY
+    RADIANS
+    RANDOM
+    RECORD
+    REFERENCES
+    RENAME
+    RETURN
+    RETURNING
+    ROUND
+    SCALE
+    SESSION_USER
+    SET
+    SETSEED
+    SET_BYTE
+    SHA256
+    SIGN
+    SIN
+    SIND
+    SINH
+    SOME
+    SQRT
+    SUBSTR
+    SUBSTRING
+    SUM
+    SYMMETRIC
+    TAN
+    TAND
+    TANH
+    TEXT_PATTERN_OPS
+    TRIM
+    TRIM_SCALE
+    TRUC
+    TRUNC
+    TYPE
+    UNION
+    UNKNOWN
+    UPDATE
+    USING
+    VALUES
+    VARCHAR_PATTERN_OPS
+    WHERE
+    WIDTH_BUCKET
 
 Grammar
 
@@ -182,10 +346,10 @@ Rule 169   rel -> arit IGUALIGUAL arit
 Rule 170   rel -> arit NOTIGUAL arit
 Rule 171   rel -> arit
 Rule 172   arit -> arit POR arit
-Rule 173   arit -> arit DIV arit
+Rule 173   arit -> arit DIVISION arit
 Rule 174   arit -> arit MAS arit
 Rule 175   arit -> arit MENOS arit
-Rule 176   arit -> arit MOD arit
+Rule 176   arit -> arit MODULO arit
 Rule 177   arit -> arit ANDB arit
 Rule 178   arit -> arit SHIFTI arit
 Rule 179   arit -> arit SHIFTD arit
@@ -205,107 +369,271 @@ Rule 192   empty -> <empty>
 
 Terminals, with rules where they appear
 
+ABS                  : 
+ACOS                 : 
+ACOSD                : 
+ACOSH                : 
+ADD                  : 
+ALIAS                : 
+ALL                  : 
+ALTER                : 
+AMPERMAY             : 
+AMPERMEN             : 
+AMPERSON_D           : 
+AMPMENOR             : 
 AND                  : 162
 ANDB                 : 177
+ANY                  : 
+ARROBAMAY            : 
 AS                   : 106 107 108 109 110 111 112 113
+ASC                  : 
+ASIN                 : 
+ASIND                : 
+ASINH                : 
+ATAN                 : 
+ATAN2                : 
+ATAN2D               : 
+ATAND                : 
+ATANH                : 
+AVG                  : 
 BEGIN                : 106 107 108 109 110 111 112 113
+BETWEEN              : 
 BIGINT               : 84 142
 BOOLEAN              : 79 151
+BPCHAR_PATTERN_OPS   : 
+BY                   : 
+BYTEA                : 
 CADENA               : 75 104 184
 CALL                 : 115
 CASE                 : 123 123
+CBRT                 : 
+CEIL                 : 
+CEILING              : 
+CEJILLAIGUAL         : 
 CHAR                 : 94 96 146 153
 CHARACTER            : 92 95 97 154 156
+CHECK                : 
+COLLATE              : 
+COLUMN               : 
 COMA                 : 56 82 83 116 119 133
+CONSTANT             : 
 CONSTRAINT           : 69
+CONVERT              : 
 CORCHETEA            : 
 CORCHETEC            : 
+COS                  : 
+COSD                 : 
+COSH                 : 
+COT                  : 
+COTD                 : 
+COUNT                : 
 CREATE               : 25 26 27 28 29 30 31 32 33 34 35 36 54 55 106 107 108 109 110 111 112 113
+CURRENT_DATE         : 
+CURRENT_TIME         : 
+CURRENT_USER         : 
 DATABASE             : 25 26 27 28 29 30 31 32 33 34 35 36 49 50
 DATABASES            : 51
 DATE                 : 91 160
+DATE_PART            : 
 DAY                  : 99
 DECIMAL              : 82 143
 DECLARE              : 107 109 111 113
+DECODE               : 
 DEFAULT              : 72 139
-DIV                  : 173
+DEGREES              : 
+DELETE               : 
+DESC                 : 
+DISTINCT             : 
+DIV                  : 
+DIVISION             : 173
 DOLAR                : 106 106 106 106 107 107 107 107 108 108 108 108 109 109 109 109 110 110 110 110 111 111 111 111 112 112 112 112 113 113 113 113
 DOSPUNTOS            : 136 137
 DOUBLE               : 86 147
 DROP                 : 49 50
+D_DOSPTS             : 
+D_OR                 : 
 ELSE                 : 127 129
 ELSEIF               : 130
+ENCODE               : 
 END                  : 106 107 108 109 110 111 112 113 123 128
 ENTERO               : 37 38 39 40 41 42 43 44 46 48 73 82 82 83 83 92 93 94 95 153 154 155 156 185
+ENUM                 : 
+EXCEPT               : 
+EXCEPTION            : 
+EXECUTE              : 
 EXISTS               : 27 28 31 32 35 36 49
+EXIT                 : 
+EXP                  : 
+EXTRACT              : 
+FACTORIAL            : 
 FALSE                : 191
+FIRST                : 
 FLOAT                : 77 150
+FLOOR                : 
 FLOTANTE             : 74 186
+FOR                  : 
 FOREIGN              : 71
+FROM                 : 
 FUNCTION             : 106 107 108 109
+GCD                  : 
+GET_BYTE             : 
+GREATEST             : 
+GROUP                : 
+HASH                 : 
+HASHTAG              : 
+HAVING               : 
 HOUR                 : 101
 ID                   : 25 26 27 28 29 30 31 32 33 34 35 36 42 44 49 50 53 54 55 55 58 59 69 105 106 107 108 109 110 111 112 113 114 115 121 136 137 138 139 183
 IF                   : 27 28 31 32 35 36 49 128 128
 IGUAL                : 39 40 41 42 43 43 44 44 45 46 136 137
 IGUALIGUAL           : 169
+IN                   : 
+INCLUDE              : 
+INDEX                : 
 INHERITS             : 55
+INNER                : 
+INSERT               : 
 INTEGER              : 78 140
+INTERSECT            : 
 INTERVAL             : 87 88
+INTO                 : 
+IS                   : 
+ISNULL               : 
+JOIN                 : 
 KEY                  : 70 71
 LANGUAGE             : 106 107 108 109 110 111 112 113
+LAST                 : 
+LCM                  : 
+LEAST                : 
+LENGTH               : 
+LIKE                 : 
+LIMIT                : 
 LLAVEA               : 
 LLAVEC               : 
+LN                   : 
+LOG                  : 
+LOG10                : 
+LOOP                 : 
+LOWER                : 
 MAS                  : 174
+MAX                  : 
 MAYOR                : 165
 MAYORIGUAL           : 167
+MAYPOT               : 
+MD5                  : 
+MENARROBA            : 
+MENMENOR             : 
 MENOR                : 166
 MENORIGUAL           : 168
 MENOS                : 175 187
+MENPOT               : 
+MIN                  : 
 MINUTE               : 102
-MOD                  : 176
+MIN_SCALE            : 
+MOD                  : 
 MODE                 : 37 38 39 40 41 42 43 44 46 48
+MODULO               : 176
 MONEY                : 81 149
 MONTH                : 100
+NEXT                 : 
+NOIG                 : 
 NOT                  : 27 28 31 32 35 36 66 189
 NOTB                 : 188
+NOTICE               : 
 NOTIGUAL             : 170
+NOTNULL              : 
+NOW                  : 
 NULL                 : 66 67
+NULLS                : 
 NUMERIC              : 83 144
+OFFSET               : 
+ON                   : 
+ONLY                 : 
 OR                   : 26 28 30 32 34 36 108 109 112 113 163
+ORAMPMAY             : 
 ORB                  : 181
+ORDER                : 
+ORMAYMAY             : 
 OWNER                : 37 38 39 40 41 42 43 44 45 47
 PARA                 : 54 55 55 82 83 92 93 94 95 96 97 106 107 108 109 110 111 112 113 114 115 153 154 155 156 182
 PARC                 : 54 55 55 82 83 92 93 94 95 96 97 106 107 108 109 110 111 112 113 114 115 153 154 155 156 182
+PERFORM              : 
+PI                   : 
 PLPGSQL              : 106 107 108 109 110 111 112 113
 POR                  : 172
+POWER                : 
 PRECISION            : 86 148
+PREPARE              : 
 PRIMARY              : 70
 PROCEDURE            : 110 111 112 113
 PTCOMA               : 21 25 26 27 28 29 30 31 32 33 34 35 36 49 50 51 52 53 54 55 106 106 107 107 108 108 109 109 110 110 111 111 112 112 113 113 114 115 123 128 132 136 137 138 139
+PUNTO                : 
+QUERY                : 
+RADIANS              : 
 RAISE                : 132
+RANDOM               : 
 REAL                 : 85 145
+RECORD               : 
+REFERENCES           : 
+RENAME               : 
 REPLACE              : 26 28 30 32 34 36 108 109 112 113
+RETURN               : 
+RETURNING            : 
 RETURNS              : 106 107 108 109 110 111 112 113
+ROUND                : 
+SCALE                : 
 SECOND               : 103
 SELECT               : 114
+SESSION_USER         : 
+SET                  : 
+SETSEED              : 
+SET_BYTE             : 
+SHA256               : 
 SHIFTD               : 179
 SHIFTI               : 178
 SHOW                 : 51 52
+SIGN                 : 
+SIN                  : 
+SIND                 : 
+SINH                 : 
 SMALLINT             : 80 141
+SOME                 : 
+SQRT                 : 
+SUBSTR               : 
+SUBSTRING            : 
+SUM                  : 
+SYMMETRIC            : 
 TABLE                : 54 55
 TABLES               : 52
+TAN                  : 
+TAND                 : 
+TANH                 : 
 TEXT                 : 76 157
+TEXT_PATTERN_OPS     : 
 THEN                 : 126 128 130
 TIME                 : 89 158
 TIMESTAMP            : 90 159
 TO                   : 87
+TRIM                 : 
+TRIM_SCALE           : 
+TRUC                 : 
 TRUE                 : 190
+TRUNC                : 
+TYPE                 : 
+UNION                : 
 UNIQUE               : 68 69
+UNKNOWN              : 
+UPDATE               : 
 USE                  : 53
+USING                : 
+VALUES               : 
 VARCHAR              : 93 155
+VARCHAR_PATTERN_OPS  : 
 VARYING              : 92 154
 VOID                 : 152
 WHEN                 : 126
+WHERE                : 
+WIDTH_BUCKET         : 
 XORB                 : 180
 YEAR                 : 98
 error                : 13 24
@@ -920,10 +1248,10 @@ state 38
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -979,10 +1307,10 @@ state 39
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -1232,10 +1560,10 @@ state 57
     IGUALIGUAL      reduce using rule 183 (arit -> ID .)
     NOTIGUAL        reduce using rule 183 (arit -> ID .)
     POR             reduce using rule 183 (arit -> ID .)
-    DIV             reduce using rule 183 (arit -> ID .)
+    DIVISION        reduce using rule 183 (arit -> ID .)
     MAS             reduce using rule 183 (arit -> ID .)
     MENOS           reduce using rule 183 (arit -> ID .)
-    MOD             reduce using rule 183 (arit -> ID .)
+    MODULO          reduce using rule 183 (arit -> ID .)
     ANDB            reduce using rule 183 (arit -> ID .)
     SHIFTI          reduce using rule 183 (arit -> ID .)
     SHIFTD          reduce using rule 183 (arit -> ID .)
@@ -1266,10 +1594,10 @@ state 58
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -1346,10 +1674,10 @@ state 62
     IGUALIGUAL      reduce using rule 161 (expresionPLSQL -> log .)
     NOTIGUAL        reduce using rule 161 (expresionPLSQL -> log .)
     POR             reduce using rule 161 (expresionPLSQL -> log .)
-    DIV             reduce using rule 161 (expresionPLSQL -> log .)
+    DIVISION        reduce using rule 161 (expresionPLSQL -> log .)
     MAS             reduce using rule 161 (expresionPLSQL -> log .)
     MENOS           reduce using rule 161 (expresionPLSQL -> log .)
-    MOD             reduce using rule 161 (expresionPLSQL -> log .)
+    MODULO          reduce using rule 161 (expresionPLSQL -> log .)
     ANDB            reduce using rule 161 (expresionPLSQL -> log .)
     SHIFTI          reduce using rule 161 (expresionPLSQL -> log .)
     SHIFTD          reduce using rule 161 (expresionPLSQL -> log .)
@@ -1376,10 +1704,10 @@ state 63
     IGUALIGUAL      reduce using rule 164 (log -> rel .)
     NOTIGUAL        reduce using rule 164 (log -> rel .)
     POR             reduce using rule 164 (log -> rel .)
-    DIV             reduce using rule 164 (log -> rel .)
+    DIVISION        reduce using rule 164 (log -> rel .)
     MAS             reduce using rule 164 (log -> rel .)
     MENOS           reduce using rule 164 (log -> rel .)
-    MOD             reduce using rule 164 (log -> rel .)
+    MODULO          reduce using rule 164 (log -> rel .)
     ANDB            reduce using rule 164 (log -> rel .)
     SHIFTI          reduce using rule 164 (log -> rel .)
     SHIFTD          reduce using rule 164 (log -> rel .)
@@ -1401,10 +1729,10 @@ state 64
     (170) rel -> arit . NOTIGUAL arit
     (171) rel -> arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -1418,10 +1746,10 @@ state 64
   ! shift/reduce conflict for IGUALIGUAL resolved as shift
   ! shift/reduce conflict for NOTIGUAL resolved as shift
   ! shift/reduce conflict for POR resolved as shift
-  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for DIVISION resolved as shift
   ! shift/reduce conflict for MAS resolved as shift
   ! shift/reduce conflict for MENOS resolved as shift
-  ! shift/reduce conflict for MOD resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
   ! shift/reduce conflict for ANDB resolved as shift
   ! shift/reduce conflict for SHIFTI resolved as shift
   ! shift/reduce conflict for SHIFTD resolved as shift
@@ -1442,10 +1770,10 @@ state 64
     WHEN            reduce using rule 171 (rel -> arit .)
     ELSE            reduce using rule 171 (rel -> arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     ANDB            shift and go to state 113
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
@@ -1459,10 +1787,10 @@ state 64
   ! IGUALIGUAL      [ reduce using rule 171 (rel -> arit .) ]
   ! NOTIGUAL        [ reduce using rule 171 (rel -> arit .) ]
   ! POR             [ reduce using rule 171 (rel -> arit .) ]
-  ! DIV             [ reduce using rule 171 (rel -> arit .) ]
+  ! DIVISION        [ reduce using rule 171 (rel -> arit .) ]
   ! MAS             [ reduce using rule 171 (rel -> arit .) ]
   ! MENOS           [ reduce using rule 171 (rel -> arit .) ]
-  ! MOD             [ reduce using rule 171 (rel -> arit .) ]
+  ! MODULO          [ reduce using rule 171 (rel -> arit .) ]
   ! ANDB            [ reduce using rule 171 (rel -> arit .) ]
   ! SHIFTI          [ reduce using rule 171 (rel -> arit .) ]
   ! SHIFTD          [ reduce using rule 171 (rel -> arit .) ]
@@ -1485,10 +1813,10 @@ state 65
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -1532,10 +1860,10 @@ state 66
     IGUALIGUAL      reduce using rule 184 (arit -> CADENA .)
     NOTIGUAL        reduce using rule 184 (arit -> CADENA .)
     POR             reduce using rule 184 (arit -> CADENA .)
-    DIV             reduce using rule 184 (arit -> CADENA .)
+    DIVISION        reduce using rule 184 (arit -> CADENA .)
     MAS             reduce using rule 184 (arit -> CADENA .)
     MENOS           reduce using rule 184 (arit -> CADENA .)
-    MOD             reduce using rule 184 (arit -> CADENA .)
+    MODULO          reduce using rule 184 (arit -> CADENA .)
     ANDB            reduce using rule 184 (arit -> CADENA .)
     SHIFTI          reduce using rule 184 (arit -> CADENA .)
     SHIFTD          reduce using rule 184 (arit -> CADENA .)
@@ -1562,10 +1890,10 @@ state 67
     IGUALIGUAL      reduce using rule 185 (arit -> ENTERO .)
     NOTIGUAL        reduce using rule 185 (arit -> ENTERO .)
     POR             reduce using rule 185 (arit -> ENTERO .)
-    DIV             reduce using rule 185 (arit -> ENTERO .)
+    DIVISION        reduce using rule 185 (arit -> ENTERO .)
     MAS             reduce using rule 185 (arit -> ENTERO .)
     MENOS           reduce using rule 185 (arit -> ENTERO .)
-    MOD             reduce using rule 185 (arit -> ENTERO .)
+    MODULO          reduce using rule 185 (arit -> ENTERO .)
     ANDB            reduce using rule 185 (arit -> ENTERO .)
     SHIFTI          reduce using rule 185 (arit -> ENTERO .)
     SHIFTD          reduce using rule 185 (arit -> ENTERO .)
@@ -1592,10 +1920,10 @@ state 68
     IGUALIGUAL      reduce using rule 186 (arit -> FLOTANTE .)
     NOTIGUAL        reduce using rule 186 (arit -> FLOTANTE .)
     POR             reduce using rule 186 (arit -> FLOTANTE .)
-    DIV             reduce using rule 186 (arit -> FLOTANTE .)
+    DIVISION        reduce using rule 186 (arit -> FLOTANTE .)
     MAS             reduce using rule 186 (arit -> FLOTANTE .)
     MENOS           reduce using rule 186 (arit -> FLOTANTE .)
-    MOD             reduce using rule 186 (arit -> FLOTANTE .)
+    MODULO          reduce using rule 186 (arit -> FLOTANTE .)
     ANDB            reduce using rule 186 (arit -> FLOTANTE .)
     SHIFTI          reduce using rule 186 (arit -> FLOTANTE .)
     SHIFTD          reduce using rule 186 (arit -> FLOTANTE .)
@@ -1626,10 +1954,10 @@ state 69
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -1677,10 +2005,10 @@ state 70
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -1724,10 +2052,10 @@ state 71
     IGUALIGUAL      reduce using rule 190 (arit -> TRUE .)
     NOTIGUAL        reduce using rule 190 (arit -> TRUE .)
     POR             reduce using rule 190 (arit -> TRUE .)
-    DIV             reduce using rule 190 (arit -> TRUE .)
+    DIVISION        reduce using rule 190 (arit -> TRUE .)
     MAS             reduce using rule 190 (arit -> TRUE .)
     MENOS           reduce using rule 190 (arit -> TRUE .)
-    MOD             reduce using rule 190 (arit -> TRUE .)
+    MODULO          reduce using rule 190 (arit -> TRUE .)
     ANDB            reduce using rule 190 (arit -> TRUE .)
     SHIFTI          reduce using rule 190 (arit -> TRUE .)
     SHIFTD          reduce using rule 190 (arit -> TRUE .)
@@ -1754,10 +2082,10 @@ state 72
     IGUALIGUAL      reduce using rule 191 (arit -> FALSE .)
     NOTIGUAL        reduce using rule 191 (arit -> FALSE .)
     POR             reduce using rule 191 (arit -> FALSE .)
-    DIV             reduce using rule 191 (arit -> FALSE .)
+    DIVISION        reduce using rule 191 (arit -> FALSE .)
     MAS             reduce using rule 191 (arit -> FALSE .)
     MENOS           reduce using rule 191 (arit -> FALSE .)
-    MOD             reduce using rule 191 (arit -> FALSE .)
+    MODULO          reduce using rule 191 (arit -> FALSE .)
     ANDB            reduce using rule 191 (arit -> FALSE .)
     SHIFTI          reduce using rule 191 (arit -> FALSE .)
     SHIFTD          reduce using rule 191 (arit -> FALSE .)
@@ -2130,10 +2458,10 @@ state 99
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2181,10 +2509,10 @@ state 100
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2232,10 +2560,10 @@ state 101
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2272,10 +2600,10 @@ state 102
 
     (165) rel -> arit MAYOR . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2309,10 +2637,10 @@ state 103
 
     (166) rel -> arit MENOR . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2346,10 +2674,10 @@ state 104
 
     (167) rel -> arit MAYORIGUAL . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2383,10 +2711,10 @@ state 105
 
     (168) rel -> arit MENORIGUAL . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2420,10 +2748,10 @@ state 106
 
     (169) rel -> arit IGUALIGUAL . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2457,10 +2785,10 @@ state 107
 
     (170) rel -> arit NOTIGUAL . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2494,10 +2822,10 @@ state 108
 
     (172) arit -> arit POR . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2529,12 +2857,12 @@ state 108
 
 state 109
 
-    (173) arit -> arit DIV . arit
+    (173) arit -> arit DIVISION . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2568,10 +2896,10 @@ state 110
 
     (174) arit -> arit MAS . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2605,10 +2933,10 @@ state 111
 
     (175) arit -> arit MENOS . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2640,12 +2968,12 @@ state 111
 
 state 112
 
-    (176) arit -> arit MOD . arit
+    (176) arit -> arit MODULO . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2679,10 +3007,10 @@ state 113
 
     (177) arit -> arit ANDB . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2716,10 +3044,10 @@ state 114
 
     (178) arit -> arit SHIFTI . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2753,10 +3081,10 @@ state 115
 
     (179) arit -> arit SHIFTD . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2790,10 +3118,10 @@ state 116
 
     (180) arit -> arit XORB . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2827,10 +3155,10 @@ state 117
 
     (181) arit -> arit ORB . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -2873,10 +3201,10 @@ state 118
     IGUALIGUAL      reduce using rule 187 (arit -> MENOS expresionPLSQL .)
     NOTIGUAL        reduce using rule 187 (arit -> MENOS expresionPLSQL .)
     POR             reduce using rule 187 (arit -> MENOS expresionPLSQL .)
-    DIV             reduce using rule 187 (arit -> MENOS expresionPLSQL .)
+    DIVISION        reduce using rule 187 (arit -> MENOS expresionPLSQL .)
     MAS             reduce using rule 187 (arit -> MENOS expresionPLSQL .)
     MENOS           reduce using rule 187 (arit -> MENOS expresionPLSQL .)
-    MOD             reduce using rule 187 (arit -> MENOS expresionPLSQL .)
+    MODULO          reduce using rule 187 (arit -> MENOS expresionPLSQL .)
     ANDB            reduce using rule 187 (arit -> MENOS expresionPLSQL .)
     SHIFTI          reduce using rule 187 (arit -> MENOS expresionPLSQL .)
     SHIFTD          reduce using rule 187 (arit -> MENOS expresionPLSQL .)
@@ -2908,10 +3236,10 @@ state 119
     IGUALIGUAL      reduce using rule 188 (arit -> NOTB expresionPLSQL .)
     NOTIGUAL        reduce using rule 188 (arit -> NOTB expresionPLSQL .)
     POR             reduce using rule 188 (arit -> NOTB expresionPLSQL .)
-    DIV             reduce using rule 188 (arit -> NOTB expresionPLSQL .)
+    DIVISION        reduce using rule 188 (arit -> NOTB expresionPLSQL .)
     MAS             reduce using rule 188 (arit -> NOTB expresionPLSQL .)
     MENOS           reduce using rule 188 (arit -> NOTB expresionPLSQL .)
-    MOD             reduce using rule 188 (arit -> NOTB expresionPLSQL .)
+    MODULO          reduce using rule 188 (arit -> NOTB expresionPLSQL .)
     ANDB            reduce using rule 188 (arit -> NOTB expresionPLSQL .)
     SHIFTI          reduce using rule 188 (arit -> NOTB expresionPLSQL .)
     SHIFTD          reduce using rule 188 (arit -> NOTB expresionPLSQL .)
@@ -2943,10 +3271,10 @@ state 120
     IGUALIGUAL      reduce using rule 189 (arit -> NOT expresionPLSQL .)
     NOTIGUAL        reduce using rule 189 (arit -> NOT expresionPLSQL .)
     POR             reduce using rule 189 (arit -> NOT expresionPLSQL .)
-    DIV             reduce using rule 189 (arit -> NOT expresionPLSQL .)
+    DIVISION        reduce using rule 189 (arit -> NOT expresionPLSQL .)
     MAS             reduce using rule 189 (arit -> NOT expresionPLSQL .)
     MENOS           reduce using rule 189 (arit -> NOT expresionPLSQL .)
-    MOD             reduce using rule 189 (arit -> NOT expresionPLSQL .)
+    MODULO          reduce using rule 189 (arit -> NOT expresionPLSQL .)
     ANDB            reduce using rule 189 (arit -> NOT expresionPLSQL .)
     SHIFTI          reduce using rule 189 (arit -> NOT expresionPLSQL .)
     SHIFTD          reduce using rule 189 (arit -> NOT expresionPLSQL .)
@@ -3684,10 +4012,10 @@ state 178
     IGUALIGUAL      reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
     NOTIGUAL        reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
     POR             reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
-    DIV             reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
+    DIVISION        reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
     MAS             reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
     MENOS           reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
-    MOD             reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
+    MODULO          reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
     ANDB            reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
     SHIFTI          reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
     SHIFTD          reduce using rule 182 (arit -> PARA expresionPLSQL PARC .)
@@ -3756,10 +4084,10 @@ state 181
     IGUALIGUAL      reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
     NOTIGUAL        reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
     POR             reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
-    DIV             reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
+    DIVISION        reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
     MAS             reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
     MENOS           reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
-    MOD             reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
+    MODULO          reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
     ANDB            reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
     SHIFTI          reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
     SHIFTD          reduce using rule 162 (log -> expresionPLSQL AND expresionPLSQL .)
@@ -3790,10 +4118,10 @@ state 182
     IGUALIGUAL      reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
     NOTIGUAL        reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
     POR             reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
-    DIV             reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
+    DIVISION        reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
     MAS             reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
     MENOS           reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
-    MOD             reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
+    MODULO          reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
     ANDB            reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
     SHIFTI          reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
     SHIFTD          reduce using rule 163 (log -> expresionPLSQL OR expresionPLSQL .)
@@ -3813,10 +4141,10 @@ state 183
 
     (165) rel -> arit MAYOR arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -3841,18 +4169,18 @@ state 183
     WHEN            reduce using rule 165 (rel -> arit MAYOR arit .)
     ELSE            reduce using rule 165 (rel -> arit MAYOR arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
 
   ! POR             [ reduce using rule 165 (rel -> arit MAYOR arit .) ]
-  ! DIV             [ reduce using rule 165 (rel -> arit MAYOR arit .) ]
+  ! DIVISION        [ reduce using rule 165 (rel -> arit MAYOR arit .) ]
   ! MAS             [ reduce using rule 165 (rel -> arit MAYOR arit .) ]
   ! MENOS           [ reduce using rule 165 (rel -> arit MAYOR arit .) ]
-  ! MOD             [ reduce using rule 165 (rel -> arit MAYOR arit .) ]
+  ! MODULO          [ reduce using rule 165 (rel -> arit MAYOR arit .) ]
   ! SHIFTI          [ reduce using rule 165 (rel -> arit MAYOR arit .) ]
   ! SHIFTD          [ reduce using rule 165 (rel -> arit MAYOR arit .) ]
   ! ANDB            [ shift and go to state 113 ]
@@ -3864,10 +4192,10 @@ state 184
 
     (166) rel -> arit MENOR arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -3892,18 +4220,18 @@ state 184
     WHEN            reduce using rule 166 (rel -> arit MENOR arit .)
     ELSE            reduce using rule 166 (rel -> arit MENOR arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
 
   ! POR             [ reduce using rule 166 (rel -> arit MENOR arit .) ]
-  ! DIV             [ reduce using rule 166 (rel -> arit MENOR arit .) ]
+  ! DIVISION        [ reduce using rule 166 (rel -> arit MENOR arit .) ]
   ! MAS             [ reduce using rule 166 (rel -> arit MENOR arit .) ]
   ! MENOS           [ reduce using rule 166 (rel -> arit MENOR arit .) ]
-  ! MOD             [ reduce using rule 166 (rel -> arit MENOR arit .) ]
+  ! MODULO          [ reduce using rule 166 (rel -> arit MENOR arit .) ]
   ! SHIFTI          [ reduce using rule 166 (rel -> arit MENOR arit .) ]
   ! SHIFTD          [ reduce using rule 166 (rel -> arit MENOR arit .) ]
   ! ANDB            [ shift and go to state 113 ]
@@ -3915,10 +4243,10 @@ state 185
 
     (167) rel -> arit MAYORIGUAL arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -3943,18 +4271,18 @@ state 185
     WHEN            reduce using rule 167 (rel -> arit MAYORIGUAL arit .)
     ELSE            reduce using rule 167 (rel -> arit MAYORIGUAL arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
 
   ! POR             [ reduce using rule 167 (rel -> arit MAYORIGUAL arit .) ]
-  ! DIV             [ reduce using rule 167 (rel -> arit MAYORIGUAL arit .) ]
+  ! DIVISION        [ reduce using rule 167 (rel -> arit MAYORIGUAL arit .) ]
   ! MAS             [ reduce using rule 167 (rel -> arit MAYORIGUAL arit .) ]
   ! MENOS           [ reduce using rule 167 (rel -> arit MAYORIGUAL arit .) ]
-  ! MOD             [ reduce using rule 167 (rel -> arit MAYORIGUAL arit .) ]
+  ! MODULO          [ reduce using rule 167 (rel -> arit MAYORIGUAL arit .) ]
   ! SHIFTI          [ reduce using rule 167 (rel -> arit MAYORIGUAL arit .) ]
   ! SHIFTD          [ reduce using rule 167 (rel -> arit MAYORIGUAL arit .) ]
   ! ANDB            [ shift and go to state 113 ]
@@ -3966,10 +4294,10 @@ state 186
 
     (168) rel -> arit MENORIGUAL arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -3994,18 +4322,18 @@ state 186
     WHEN            reduce using rule 168 (rel -> arit MENORIGUAL arit .)
     ELSE            reduce using rule 168 (rel -> arit MENORIGUAL arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
 
   ! POR             [ reduce using rule 168 (rel -> arit MENORIGUAL arit .) ]
-  ! DIV             [ reduce using rule 168 (rel -> arit MENORIGUAL arit .) ]
+  ! DIVISION        [ reduce using rule 168 (rel -> arit MENORIGUAL arit .) ]
   ! MAS             [ reduce using rule 168 (rel -> arit MENORIGUAL arit .) ]
   ! MENOS           [ reduce using rule 168 (rel -> arit MENORIGUAL arit .) ]
-  ! MOD             [ reduce using rule 168 (rel -> arit MENORIGUAL arit .) ]
+  ! MODULO          [ reduce using rule 168 (rel -> arit MENORIGUAL arit .) ]
   ! SHIFTI          [ reduce using rule 168 (rel -> arit MENORIGUAL arit .) ]
   ! SHIFTD          [ reduce using rule 168 (rel -> arit MENORIGUAL arit .) ]
   ! ANDB            [ shift and go to state 113 ]
@@ -4017,10 +4345,10 @@ state 187
 
     (169) rel -> arit IGUALIGUAL arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4045,18 +4373,18 @@ state 187
     WHEN            reduce using rule 169 (rel -> arit IGUALIGUAL arit .)
     ELSE            reduce using rule 169 (rel -> arit IGUALIGUAL arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
 
   ! POR             [ reduce using rule 169 (rel -> arit IGUALIGUAL arit .) ]
-  ! DIV             [ reduce using rule 169 (rel -> arit IGUALIGUAL arit .) ]
+  ! DIVISION        [ reduce using rule 169 (rel -> arit IGUALIGUAL arit .) ]
   ! MAS             [ reduce using rule 169 (rel -> arit IGUALIGUAL arit .) ]
   ! MENOS           [ reduce using rule 169 (rel -> arit IGUALIGUAL arit .) ]
-  ! MOD             [ reduce using rule 169 (rel -> arit IGUALIGUAL arit .) ]
+  ! MODULO          [ reduce using rule 169 (rel -> arit IGUALIGUAL arit .) ]
   ! SHIFTI          [ reduce using rule 169 (rel -> arit IGUALIGUAL arit .) ]
   ! SHIFTD          [ reduce using rule 169 (rel -> arit IGUALIGUAL arit .) ]
   ! ANDB            [ shift and go to state 113 ]
@@ -4068,10 +4396,10 @@ state 188
 
     (170) rel -> arit NOTIGUAL arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4096,18 +4424,18 @@ state 188
     WHEN            reduce using rule 170 (rel -> arit NOTIGUAL arit .)
     ELSE            reduce using rule 170 (rel -> arit NOTIGUAL arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
 
   ! POR             [ reduce using rule 170 (rel -> arit NOTIGUAL arit .) ]
-  ! DIV             [ reduce using rule 170 (rel -> arit NOTIGUAL arit .) ]
+  ! DIVISION        [ reduce using rule 170 (rel -> arit NOTIGUAL arit .) ]
   ! MAS             [ reduce using rule 170 (rel -> arit NOTIGUAL arit .) ]
   ! MENOS           [ reduce using rule 170 (rel -> arit NOTIGUAL arit .) ]
-  ! MOD             [ reduce using rule 170 (rel -> arit NOTIGUAL arit .) ]
+  ! MODULO          [ reduce using rule 170 (rel -> arit NOTIGUAL arit .) ]
   ! SHIFTI          [ reduce using rule 170 (rel -> arit NOTIGUAL arit .) ]
   ! SHIFTD          [ reduce using rule 170 (rel -> arit NOTIGUAL arit .) ]
   ! ANDB            [ shift and go to state 113 ]
@@ -4119,10 +4447,10 @@ state 189
 
     (172) arit -> arit POR arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4136,10 +4464,10 @@ state 189
     IGUALIGUAL      reduce using rule 172 (arit -> arit POR arit .)
     NOTIGUAL        reduce using rule 172 (arit -> arit POR arit .)
     POR             reduce using rule 172 (arit -> arit POR arit .)
-    DIV             reduce using rule 172 (arit -> arit POR arit .)
+    DIVISION        reduce using rule 172 (arit -> arit POR arit .)
     MAS             reduce using rule 172 (arit -> arit POR arit .)
     MENOS           reduce using rule 172 (arit -> arit POR arit .)
-    MOD             reduce using rule 172 (arit -> arit POR arit .)
+    MODULO          reduce using rule 172 (arit -> arit POR arit .)
     ANDB            reduce using rule 172 (arit -> arit POR arit .)
     SHIFTI          reduce using rule 172 (arit -> arit POR arit .)
     SHIFTD          reduce using rule 172 (arit -> arit POR arit .)
@@ -4155,10 +4483,10 @@ state 189
     ELSE            reduce using rule 172 (arit -> arit POR arit .)
 
   ! POR             [ shift and go to state 108 ]
-  ! DIV             [ shift and go to state 109 ]
+  ! DIVISION        [ shift and go to state 109 ]
   ! MAS             [ shift and go to state 110 ]
   ! MENOS           [ shift and go to state 111 ]
-  ! MOD             [ shift and go to state 112 ]
+  ! MODULO          [ shift and go to state 112 ]
   ! ANDB            [ shift and go to state 113 ]
   ! SHIFTI          [ shift and go to state 114 ]
   ! SHIFTD          [ shift and go to state 115 ]
@@ -4168,48 +4496,48 @@ state 189
 
 state 190
 
-    (173) arit -> arit DIV arit .
+    (173) arit -> arit DIVISION arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
     (180) arit -> arit . XORB arit
     (181) arit -> arit . ORB arit
 
-    MAYOR           reduce using rule 173 (arit -> arit DIV arit .)
-    MENOR           reduce using rule 173 (arit -> arit DIV arit .)
-    MAYORIGUAL      reduce using rule 173 (arit -> arit DIV arit .)
-    MENORIGUAL      reduce using rule 173 (arit -> arit DIV arit .)
-    IGUALIGUAL      reduce using rule 173 (arit -> arit DIV arit .)
-    NOTIGUAL        reduce using rule 173 (arit -> arit DIV arit .)
-    POR             reduce using rule 173 (arit -> arit DIV arit .)
-    DIV             reduce using rule 173 (arit -> arit DIV arit .)
-    MAS             reduce using rule 173 (arit -> arit DIV arit .)
-    MENOS           reduce using rule 173 (arit -> arit DIV arit .)
-    MOD             reduce using rule 173 (arit -> arit DIV arit .)
-    ANDB            reduce using rule 173 (arit -> arit DIV arit .)
-    SHIFTI          reduce using rule 173 (arit -> arit DIV arit .)
-    SHIFTD          reduce using rule 173 (arit -> arit DIV arit .)
-    XORB            reduce using rule 173 (arit -> arit DIV arit .)
-    ORB             reduce using rule 173 (arit -> arit DIV arit .)
-    AND             reduce using rule 173 (arit -> arit DIV arit .)
-    OR              reduce using rule 173 (arit -> arit DIV arit .)
-    PARC            reduce using rule 173 (arit -> arit DIV arit .)
-    COMA            reduce using rule 173 (arit -> arit DIV arit .)
-    PTCOMA          reduce using rule 173 (arit -> arit DIV arit .)
-    THEN            reduce using rule 173 (arit -> arit DIV arit .)
-    WHEN            reduce using rule 173 (arit -> arit DIV arit .)
-    ELSE            reduce using rule 173 (arit -> arit DIV arit .)
+    MAYOR           reduce using rule 173 (arit -> arit DIVISION arit .)
+    MENOR           reduce using rule 173 (arit -> arit DIVISION arit .)
+    MAYORIGUAL      reduce using rule 173 (arit -> arit DIVISION arit .)
+    MENORIGUAL      reduce using rule 173 (arit -> arit DIVISION arit .)
+    IGUALIGUAL      reduce using rule 173 (arit -> arit DIVISION arit .)
+    NOTIGUAL        reduce using rule 173 (arit -> arit DIVISION arit .)
+    POR             reduce using rule 173 (arit -> arit DIVISION arit .)
+    DIVISION        reduce using rule 173 (arit -> arit DIVISION arit .)
+    MAS             reduce using rule 173 (arit -> arit DIVISION arit .)
+    MENOS           reduce using rule 173 (arit -> arit DIVISION arit .)
+    MODULO          reduce using rule 173 (arit -> arit DIVISION arit .)
+    ANDB            reduce using rule 173 (arit -> arit DIVISION arit .)
+    SHIFTI          reduce using rule 173 (arit -> arit DIVISION arit .)
+    SHIFTD          reduce using rule 173 (arit -> arit DIVISION arit .)
+    XORB            reduce using rule 173 (arit -> arit DIVISION arit .)
+    ORB             reduce using rule 173 (arit -> arit DIVISION arit .)
+    AND             reduce using rule 173 (arit -> arit DIVISION arit .)
+    OR              reduce using rule 173 (arit -> arit DIVISION arit .)
+    PARC            reduce using rule 173 (arit -> arit DIVISION arit .)
+    COMA            reduce using rule 173 (arit -> arit DIVISION arit .)
+    PTCOMA          reduce using rule 173 (arit -> arit DIVISION arit .)
+    THEN            reduce using rule 173 (arit -> arit DIVISION arit .)
+    WHEN            reduce using rule 173 (arit -> arit DIVISION arit .)
+    ELSE            reduce using rule 173 (arit -> arit DIVISION arit .)
 
   ! POR             [ shift and go to state 108 ]
-  ! DIV             [ shift and go to state 109 ]
+  ! DIVISION        [ shift and go to state 109 ]
   ! MAS             [ shift and go to state 110 ]
   ! MENOS           [ shift and go to state 111 ]
-  ! MOD             [ shift and go to state 112 ]
+  ! MODULO          [ shift and go to state 112 ]
   ! ANDB            [ shift and go to state 113 ]
   ! SHIFTI          [ shift and go to state 114 ]
   ! SHIFTD          [ shift and go to state 115 ]
@@ -4221,10 +4549,10 @@ state 191
 
     (174) arit -> arit MAS arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4253,12 +4581,12 @@ state 191
     WHEN            reduce using rule 174 (arit -> arit MAS arit .)
     ELSE            reduce using rule 174 (arit -> arit MAS arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
-    MOD             shift and go to state 112
+    DIVISION        shift and go to state 109
+    MODULO          shift and go to state 112
 
   ! POR             [ reduce using rule 174 (arit -> arit MAS arit .) ]
-  ! DIV             [ reduce using rule 174 (arit -> arit MAS arit .) ]
-  ! MOD             [ reduce using rule 174 (arit -> arit MAS arit .) ]
+  ! DIVISION        [ reduce using rule 174 (arit -> arit MAS arit .) ]
+  ! MODULO          [ reduce using rule 174 (arit -> arit MAS arit .) ]
   ! MAS             [ shift and go to state 110 ]
   ! MENOS           [ shift and go to state 111 ]
   ! ANDB            [ shift and go to state 113 ]
@@ -4272,10 +4600,10 @@ state 192
 
     (175) arit -> arit MENOS arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4304,12 +4632,12 @@ state 192
     WHEN            reduce using rule 175 (arit -> arit MENOS arit .)
     ELSE            reduce using rule 175 (arit -> arit MENOS arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
-    MOD             shift and go to state 112
+    DIVISION        shift and go to state 109
+    MODULO          shift and go to state 112
 
   ! POR             [ reduce using rule 175 (arit -> arit MENOS arit .) ]
-  ! DIV             [ reduce using rule 175 (arit -> arit MENOS arit .) ]
-  ! MOD             [ reduce using rule 175 (arit -> arit MENOS arit .) ]
+  ! DIVISION        [ reduce using rule 175 (arit -> arit MENOS arit .) ]
+  ! MODULO          [ reduce using rule 175 (arit -> arit MENOS arit .) ]
   ! MAS             [ shift and go to state 110 ]
   ! MENOS           [ shift and go to state 111 ]
   ! ANDB            [ shift and go to state 113 ]
@@ -4321,48 +4649,48 @@ state 192
 
 state 193
 
-    (176) arit -> arit MOD arit .
+    (176) arit -> arit MODULO arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
     (180) arit -> arit . XORB arit
     (181) arit -> arit . ORB arit
 
-    MAYOR           reduce using rule 176 (arit -> arit MOD arit .)
-    MENOR           reduce using rule 176 (arit -> arit MOD arit .)
-    MAYORIGUAL      reduce using rule 176 (arit -> arit MOD arit .)
-    MENORIGUAL      reduce using rule 176 (arit -> arit MOD arit .)
-    IGUALIGUAL      reduce using rule 176 (arit -> arit MOD arit .)
-    NOTIGUAL        reduce using rule 176 (arit -> arit MOD arit .)
-    POR             reduce using rule 176 (arit -> arit MOD arit .)
-    DIV             reduce using rule 176 (arit -> arit MOD arit .)
-    MAS             reduce using rule 176 (arit -> arit MOD arit .)
-    MENOS           reduce using rule 176 (arit -> arit MOD arit .)
-    MOD             reduce using rule 176 (arit -> arit MOD arit .)
-    ANDB            reduce using rule 176 (arit -> arit MOD arit .)
-    SHIFTI          reduce using rule 176 (arit -> arit MOD arit .)
-    SHIFTD          reduce using rule 176 (arit -> arit MOD arit .)
-    XORB            reduce using rule 176 (arit -> arit MOD arit .)
-    ORB             reduce using rule 176 (arit -> arit MOD arit .)
-    AND             reduce using rule 176 (arit -> arit MOD arit .)
-    OR              reduce using rule 176 (arit -> arit MOD arit .)
-    PARC            reduce using rule 176 (arit -> arit MOD arit .)
-    COMA            reduce using rule 176 (arit -> arit MOD arit .)
-    PTCOMA          reduce using rule 176 (arit -> arit MOD arit .)
-    THEN            reduce using rule 176 (arit -> arit MOD arit .)
-    WHEN            reduce using rule 176 (arit -> arit MOD arit .)
-    ELSE            reduce using rule 176 (arit -> arit MOD arit .)
+    MAYOR           reduce using rule 176 (arit -> arit MODULO arit .)
+    MENOR           reduce using rule 176 (arit -> arit MODULO arit .)
+    MAYORIGUAL      reduce using rule 176 (arit -> arit MODULO arit .)
+    MENORIGUAL      reduce using rule 176 (arit -> arit MODULO arit .)
+    IGUALIGUAL      reduce using rule 176 (arit -> arit MODULO arit .)
+    NOTIGUAL        reduce using rule 176 (arit -> arit MODULO arit .)
+    POR             reduce using rule 176 (arit -> arit MODULO arit .)
+    DIVISION        reduce using rule 176 (arit -> arit MODULO arit .)
+    MAS             reduce using rule 176 (arit -> arit MODULO arit .)
+    MENOS           reduce using rule 176 (arit -> arit MODULO arit .)
+    MODULO          reduce using rule 176 (arit -> arit MODULO arit .)
+    ANDB            reduce using rule 176 (arit -> arit MODULO arit .)
+    SHIFTI          reduce using rule 176 (arit -> arit MODULO arit .)
+    SHIFTD          reduce using rule 176 (arit -> arit MODULO arit .)
+    XORB            reduce using rule 176 (arit -> arit MODULO arit .)
+    ORB             reduce using rule 176 (arit -> arit MODULO arit .)
+    AND             reduce using rule 176 (arit -> arit MODULO arit .)
+    OR              reduce using rule 176 (arit -> arit MODULO arit .)
+    PARC            reduce using rule 176 (arit -> arit MODULO arit .)
+    COMA            reduce using rule 176 (arit -> arit MODULO arit .)
+    PTCOMA          reduce using rule 176 (arit -> arit MODULO arit .)
+    THEN            reduce using rule 176 (arit -> arit MODULO arit .)
+    WHEN            reduce using rule 176 (arit -> arit MODULO arit .)
+    ELSE            reduce using rule 176 (arit -> arit MODULO arit .)
 
   ! POR             [ shift and go to state 108 ]
-  ! DIV             [ shift and go to state 109 ]
+  ! DIVISION        [ shift and go to state 109 ]
   ! MAS             [ shift and go to state 110 ]
   ! MENOS           [ shift and go to state 111 ]
-  ! MOD             [ shift and go to state 112 ]
+  ! MODULO          [ shift and go to state 112 ]
   ! ANDB            [ shift and go to state 113 ]
   ! SHIFTI          [ shift and go to state 114 ]
   ! SHIFTD          [ shift and go to state 115 ]
@@ -4374,10 +4702,10 @@ state 194
 
     (177) arit -> arit ANDB arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4402,18 +4730,18 @@ state 194
     WHEN            reduce using rule 177 (arit -> arit ANDB arit .)
     ELSE            reduce using rule 177 (arit -> arit ANDB arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
 
   ! POR             [ reduce using rule 177 (arit -> arit ANDB arit .) ]
-  ! DIV             [ reduce using rule 177 (arit -> arit ANDB arit .) ]
+  ! DIVISION        [ reduce using rule 177 (arit -> arit ANDB arit .) ]
   ! MAS             [ reduce using rule 177 (arit -> arit ANDB arit .) ]
   ! MENOS           [ reduce using rule 177 (arit -> arit ANDB arit .) ]
-  ! MOD             [ reduce using rule 177 (arit -> arit ANDB arit .) ]
+  ! MODULO          [ reduce using rule 177 (arit -> arit ANDB arit .) ]
   ! SHIFTI          [ reduce using rule 177 (arit -> arit ANDB arit .) ]
   ! SHIFTD          [ reduce using rule 177 (arit -> arit ANDB arit .) ]
   ! ANDB            [ shift and go to state 113 ]
@@ -4425,10 +4753,10 @@ state 195
 
     (178) arit -> arit SHIFTI arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4455,16 +4783,16 @@ state 195
     WHEN            reduce using rule 178 (arit -> arit SHIFTI arit .)
     ELSE            reduce using rule 178 (arit -> arit SHIFTI arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
 
   ! POR             [ reduce using rule 178 (arit -> arit SHIFTI arit .) ]
-  ! DIV             [ reduce using rule 178 (arit -> arit SHIFTI arit .) ]
+  ! DIVISION        [ reduce using rule 178 (arit -> arit SHIFTI arit .) ]
   ! MAS             [ reduce using rule 178 (arit -> arit SHIFTI arit .) ]
   ! MENOS           [ reduce using rule 178 (arit -> arit SHIFTI arit .) ]
-  ! MOD             [ reduce using rule 178 (arit -> arit SHIFTI arit .) ]
+  ! MODULO          [ reduce using rule 178 (arit -> arit SHIFTI arit .) ]
   ! ANDB            [ shift and go to state 113 ]
   ! SHIFTI          [ shift and go to state 114 ]
   ! SHIFTD          [ shift and go to state 115 ]
@@ -4476,10 +4804,10 @@ state 196
 
     (179) arit -> arit SHIFTD arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4506,16 +4834,16 @@ state 196
     WHEN            reduce using rule 179 (arit -> arit SHIFTD arit .)
     ELSE            reduce using rule 179 (arit -> arit SHIFTD arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
 
   ! POR             [ reduce using rule 179 (arit -> arit SHIFTD arit .) ]
-  ! DIV             [ reduce using rule 179 (arit -> arit SHIFTD arit .) ]
+  ! DIVISION        [ reduce using rule 179 (arit -> arit SHIFTD arit .) ]
   ! MAS             [ reduce using rule 179 (arit -> arit SHIFTD arit .) ]
   ! MENOS           [ reduce using rule 179 (arit -> arit SHIFTD arit .) ]
-  ! MOD             [ reduce using rule 179 (arit -> arit SHIFTD arit .) ]
+  ! MODULO          [ reduce using rule 179 (arit -> arit SHIFTD arit .) ]
   ! ANDB            [ shift and go to state 113 ]
   ! SHIFTI          [ shift and go to state 114 ]
   ! SHIFTD          [ shift and go to state 115 ]
@@ -4527,10 +4855,10 @@ state 197
 
     (180) arit -> arit XORB arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4553,20 +4881,20 @@ state 197
     WHEN            reduce using rule 180 (arit -> arit XORB arit .)
     ELSE            reduce using rule 180 (arit -> arit XORB arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     ANDB            shift and go to state 113
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
     ORB             shift and go to state 117
 
   ! POR             [ reduce using rule 180 (arit -> arit XORB arit .) ]
-  ! DIV             [ reduce using rule 180 (arit -> arit XORB arit .) ]
+  ! DIVISION        [ reduce using rule 180 (arit -> arit XORB arit .) ]
   ! MAS             [ reduce using rule 180 (arit -> arit XORB arit .) ]
   ! MENOS           [ reduce using rule 180 (arit -> arit XORB arit .) ]
-  ! MOD             [ reduce using rule 180 (arit -> arit XORB arit .) ]
+  ! MODULO          [ reduce using rule 180 (arit -> arit XORB arit .) ]
   ! ANDB            [ reduce using rule 180 (arit -> arit XORB arit .) ]
   ! SHIFTI          [ reduce using rule 180 (arit -> arit XORB arit .) ]
   ! SHIFTD          [ reduce using rule 180 (arit -> arit XORB arit .) ]
@@ -4578,10 +4906,10 @@ state 198
 
     (181) arit -> arit ORB arit .
     (172) arit -> arit . POR arit
-    (173) arit -> arit . DIV arit
+    (173) arit -> arit . DIVISION arit
     (174) arit -> arit . MAS arit
     (175) arit -> arit . MENOS arit
-    (176) arit -> arit . MOD arit
+    (176) arit -> arit . MODULO arit
     (177) arit -> arit . ANDB arit
     (178) arit -> arit . SHIFTI arit
     (179) arit -> arit . SHIFTD arit
@@ -4605,19 +4933,19 @@ state 198
     WHEN            reduce using rule 181 (arit -> arit ORB arit .)
     ELSE            reduce using rule 181 (arit -> arit ORB arit .)
     POR             shift and go to state 108
-    DIV             shift and go to state 109
+    DIVISION        shift and go to state 109
     MAS             shift and go to state 110
     MENOS           shift and go to state 111
-    MOD             shift and go to state 112
+    MODULO          shift and go to state 112
     ANDB            shift and go to state 113
     SHIFTI          shift and go to state 114
     SHIFTD          shift and go to state 115
 
   ! POR             [ reduce using rule 181 (arit -> arit ORB arit .) ]
-  ! DIV             [ reduce using rule 181 (arit -> arit ORB arit .) ]
+  ! DIVISION        [ reduce using rule 181 (arit -> arit ORB arit .) ]
   ! MAS             [ reduce using rule 181 (arit -> arit ORB arit .) ]
   ! MENOS           [ reduce using rule 181 (arit -> arit ORB arit .) ]
-  ! MOD             [ reduce using rule 181 (arit -> arit ORB arit .) ]
+  ! MODULO          [ reduce using rule 181 (arit -> arit ORB arit .) ]
   ! ANDB            [ reduce using rule 181 (arit -> arit ORB arit .) ]
   ! SHIFTI          [ reduce using rule 181 (arit -> arit ORB arit .) ]
   ! SHIFTD          [ reduce using rule 181 (arit -> arit ORB arit .) ]
@@ -6752,10 +7080,10 @@ state 346
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -6805,10 +7133,10 @@ state 347
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -6856,10 +7184,10 @@ state 348
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -7592,10 +7920,10 @@ state 370
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -7669,10 +7997,10 @@ state 373
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -7747,10 +8075,10 @@ state 376
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -7885,10 +8213,10 @@ state 380
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -8390,10 +8718,10 @@ state 390
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -8918,10 +9246,10 @@ state 412
     (170) rel -> . arit NOTIGUAL arit
     (171) rel -> . arit
     (172) arit -> . arit POR arit
-    (173) arit -> . arit DIV arit
+    (173) arit -> . arit DIVISION arit
     (174) arit -> . arit MAS arit
     (175) arit -> . arit MENOS arit
-    (176) arit -> . arit MOD arit
+    (176) arit -> . arit MODULO arit
     (177) arit -> . arit ANDB arit
     (178) arit -> . arit SHIFTI arit
     (179) arit -> . arit SHIFTD arit
@@ -9884,10 +10212,10 @@ WARNING: shift/reduce conflict for MENORIGUAL in state 64 resolved as shift
 WARNING: shift/reduce conflict for IGUALIGUAL in state 64 resolved as shift
 WARNING: shift/reduce conflict for NOTIGUAL in state 64 resolved as shift
 WARNING: shift/reduce conflict for POR in state 64 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 64 resolved as shift
+WARNING: shift/reduce conflict for DIVISION in state 64 resolved as shift
 WARNING: shift/reduce conflict for MAS in state 64 resolved as shift
 WARNING: shift/reduce conflict for MENOS in state 64 resolved as shift
-WARNING: shift/reduce conflict for MOD in state 64 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 64 resolved as shift
 WARNING: shift/reduce conflict for ANDB in state 64 resolved as shift
 WARNING: shift/reduce conflict for SHIFTI in state 64 resolved as shift
 WARNING: shift/reduce conflict for SHIFTD in state 64 resolved as shift

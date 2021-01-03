@@ -19,12 +19,14 @@ def main():
 	label. suma	
 	t0 = 10	
 	t1 = ta0 < 20	
-	if  not t1 : goto. L0	
+	t2 = t0 > 5	
+	t3 = t1 and t2	
+	if  t3 : goto. L0	
 	goto. L1	
 	label. L0	
 	print(ta0 )	
-	t2 = ta0 + 1	
-	ta0 = t2	
+	t4 = ta0 + 1	
+	ta0 = t4	
 	ta0 = ta0	
 	Sra = Sra + 1	
 	Ss0[Sra] = 2	

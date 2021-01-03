@@ -74,7 +74,223 @@ reservadas = {
     'inherits': 'INHERITS',
     'primary' : 'PRIMARY',
     'key' : 'KEY',
+    'check' : 'CHECK',
     'foreign' : 'FOREIGN',
+        'insert': 'INSERT',
+    'update': 'UPDATE',
+    'delete': 'DELETE',
+    'count': 'COUNT',
+    'from': 'FROM',
+    'into': 'INTO',
+    'values': 'VALUES',
+    'sum' : 'SUM',
+    'set': 'SET',
+    'inner': 'INNER',
+    'join': 'JOIN',
+    'on': 'ON',
+    'case': 'CASE',
+    'when': 'WHEN',
+    'then': 'THEN',
+    'end': 'END',
+    'and': 'AND',
+    'or': 'OR',
+    'else': 'ELSE',
+    'where': 'WHERE',
+    'as': 'AS',
+    'create': 'CREATE',
+    'table': 'TABLE',
+    'inherits': 'INHERITS',
+    'alter': 'ALTER',
+    'database': 'DATABASE',
+    'rename': 'RENAME',
+    'owner': 'OWNER',
+    'currUser' : 'CURRENT_USER',
+    'sessUser' : 'SESSION_USER',
+    'add' : 'ADD',
+    'column' : 'COLUMN',
+    'references' : 'REFERENCES',
+    'type' : 'TYPE',
+    'not' : 'NOT',
+    'like' : 'LIKE',
+    # ---- DATA TYPES AND SPECIFICATIONS--------
+    'text': 'TEXT',
+    'float': 'FLOAT',
+    'integer': 'INTEGER',
+    'char': 'CHAR',
+    'varchar' : 'VARCHAR',
+    'smallint':'SMALLINT',
+    'bigint' : 'BIGINT',
+    'decimal' : 'DECIMAL',
+    'numeric' : 'NUMERIC',
+    'real' : 'REAL',
+    'double' : 'DOUBLE',
+    'precision' : 'PRECISION',
+    'character' : 'CHARACTER',
+    'varying' : 'VARYING',
+    'timestamp' : 'TIMESTAMP',
+    'date' : 'DATE',
+    'time' : 'TIME',
+    'interval' : 'INTERVAL',
+    'extract' : 'EXTRACT',
+    
+    'now' : 'NOW',
+    'date_part' : 'DATE_PART',
+    'current_date': 'CURRENT_DATE',
+    'current_time' : 'CURRENT_TIME',
+    'enum' : 'ENUM',
+    'money' : 'MONEY',
+    # ---- DELETE --------
+    'only' : 'ONLY',
+    'in' :  'IN',
+    'returning' : 'RETURNING',
+    'using' : 'USING',
+    'exists' : 'EXISTS',
+    # ---- USE DATABASE --------
+    #----- SELECT-----------
+    'distinct' : 'DISTINCT',
+    'group' : 'GROUP',
+    'by' : 'BY',
+    'order' : 'ORDER',
+    'asc' : 'ASC',
+    'desc' : 'DESC',
+    
+    'avg' : 'AVG',
+    'min' : 'MIN',
+    'max' : 'MAX',
+    'between' : 'BETWEEN',
+    'having' : 'HAVING',
+    #----- FUNCIONES TRIGONOMETRICAS -----------
+    'acos' : 'ACOS',
+    'acosd' : 'ACOSD',
+    'asin' : 'ASIN',
+    'asind' : 'ASIND',
+    'atan' : 'ATAN',
+    'atand' : 'ATAND',
+    'atan2' : 'ATAN2',
+    'atan2d' : 'ATAN2D',
+    'cos' : 'COS',
+    'cosd' : 'COSD',
+    'cot' : 'COT',
+    'cotd' : 'COTD',
+    'sin' : 'SIN',
+    'sind' : 'SIND',
+    'tan' : 'TAN',
+    'tand' : 'TAND',
+    'sinh' : 'SINH',
+    'cosh' : 'COSH',
+    'tanh' : 'TANH',
+    'asinh' : 'ASINH',
+    'acosh' : 'ACOSH',
+    'atanh' : 'ATANH',
+    #----- FUNCIONES MATEMATICAS-----------
+    'abs' : 'ABS',
+    'cbrt' : 'CBRT',
+    'ceil' : 'CEIL',
+    'ceiling' : 'CEILING',
+    'degrees' : 'DEGREES',
+    'div' : 'DIV',
+    'exp' : 'EXP',
+    'factorial' : 'FACTORIAL',
+    'floor' : 'FLOOR',
+    'gcd' : 'GCD',
+    'lcm' : 'LCM',
+    'ln' : 'LN',
+    'log' : 'LOG',
+    'log10' : 'LOG10',
+    'min_scale' : 'MIN_SCALE',
+    'mod' : 'MOD',
+    'pi' : 'PI',
+    'power' : 'POWER',
+    'radians' : 'RADIANS',
+    'round' : 'ROUND',
+    'scale' : 'SCALE',
+    'sign' : 'SIGN',
+    'sqrt' : 'SQRT',
+    'trim_scale' : 'TRIM_SCALE',
+    'truc' : 'TRUC',
+    'width_bucket' : 'WIDTH_BUCKET',
+    'random' : 'RANDOM',
+    'setseed' : 'SETSEED',
+    #----- DATATYPES -----------
+    'symmetric' : 'SYMMETRIC',
+    'isnull' : 'ISNULL',
+    'true': 'TRUE',
+    'notnull' : 'NOTNULL',
+    'is' : 'IS',
+    'false' : 'FALSE',
+    'unknown' : 'UNKNOWN',
+    #----- BYNARY STRING FUNCTIONS -----------
+    'length' : 'LENGTH',
+    'substring' : 'SUBSTRING',
+    'trim' : 'TRIM',
+    'get_byte' : 'GET_BYTE',
+    'md5' : 'MD5',
+    'set_byte' : 'SET_BYTE',
+    'sha256' : 'SHA256',
+    'substr' : 'SUBSTR',
+    'convert' : 'CONVERT',
+    'encode' : 'ENCODE',
+    'decode' : 'DECODE',
+    #----- COMBINING QUERIES -----------
+    'union' : 'UNION',
+    'intersect' : 'INTERSECT',
+    'except' : 'EXCEPT',
+    'all' : 'ALL',
+    #----- LIMIT AND OFFSET -----------
+    'limit' : 'LIMIT',
+    'offset' : 'OFFSET',
+    'some' : 'SOME',
+    'any' : 'ANY',
+    ##----- COMBINING QUERIES -----------
+   # 'left' : 'LEFT',
+   # 'right' : 'RIGHT',
+   # 'full' : 'FULL',
+   # 'natural' : 'NATURAL',
+   # 'outer' : 'OUTER',
+    'bytea' : 'BYTEA',    
+    'trunc' : 'TRUNC',
+    'greatest' : 'GREATEST',
+    'least' : 'LEAST',
+    # ----- AGREGADOS INDEX -----------------
+    'index' : 'INDEX',
+    'hash' : 'HASH',
+    'nulls' : 'NULLS',
+    'first' : 'FIRST',
+    'last' : 'LAST',
+    'lower' : 'LOWER',
+    'include' : 'INCLUDE',
+    'collate' : 'COLLATE',
+    
+    ##--------------- PARTE DE LA SEGUNDA FASE --------
+    'function' : 'FUNCTION',
+    'returns' : 'RETURNS',
+    'declare' : 'DECLARE',
+    'begin' : 'BEGIN',
+    'raise' : 'RAISE',
+    'notice' : 'NOTICE',
+    'return' : 'RETURN',
+    'record' : 'RECORD',
+    'constant' : 'CONSTANT',
+    'alias' : 'ALIAS',
+    'for' : 'FOR',
+    'real' : 'REAL',
+
+#-------------Agregado por Dulce :D ---------------
+    'if' : 'IF',
+    'prepare' : 'PREPARE',
+    'perform' : 'PERFORM',
+
+# ANCHOR   ----------- NUEVOS----------------
+    'exception' : 'EXCEPTION',
+    'next' : 'NEXT',
+    'query' : 'QUERY',
+    'execute' : 'EXECUTE',
+    'call' : 'CALL',
+    'loop' : 'LOOP',
+    'exit' : 'EXIT',
+    'text_pattern_ops' : 'TEXT_PATTERN_OPS',
+    'varchar_pattern_ops' : 'VARCHAR_PATTERN_OPS',
+    'bpchar_pattern_ops' : 'BPCHAR_PATTERN_OPS'
 }
 
 # Declaracion tokens
@@ -96,8 +312,8 @@ tokens = [
     'MENOS',
     'MAS',
     'POR',
-    'DIV',
-    'MOD',
+    'DIVISION',
+    'MODULO',
     'NOTB',
     'ORB',
     'XORB',
@@ -110,10 +326,29 @@ tokens = [
     'MAYOR',
     'MENOR',
     'IGUAL',
-    'DOLAR'
+    'DOLAR',
+    'D_DOSPTS',
+    'NOIG',
+    'AMPERMEN',
+    'AMPERMAY',
+    'MENMENOR',
+    'AMPMENOR',
+    'ORAMPMAY',
+    'ORMAYMAY',
+    'ARROBAMAY',
+    'MENARROBA',
+    'CEJILLAIGUAL',
+    'AMPERSON_D',
+    'MENPOT',
+    'MAYPOT',
+    'PUNTO',
+    'D_OR',
+    'HASHTAG',
          ] + list(reservadas.values())
 
 # Tokens ER
+t_NOIG = r'<>'
+t_D_DOSPTS = r'::'
 t_DOSPUNTOS = r':'
 t_COMA = r','
 t_PTCOMA = r';'
@@ -127,10 +362,11 @@ t_ANDB = r'&'
 t_MENOS = r'-'
 t_MAS = r'\+'
 t_POR = r'\*'
-t_DIV = r'/'
-t_MOD = r'%'
+t_DIVISION = r'/'
+t_MODULO = r'%'
 t_NOTB = r'~'
 t_ORB = r'\|'
+t_D_OR = r'\|\|'
 t_XORB = r'\^'
 t_SHIFTI = r'<<'
 t_SHIFTD = r'>>'
@@ -142,7 +378,22 @@ t_NOTIGUAL = r'!='
 t_MAYOR = r'>'
 t_MENOR = r'<'
 t_DOLAR = r'\$'
+t_PUNTO = r'\.'
+t_HASHTAG = r'\#'
 
+# ANCHOR
+t_AMPERMEN = r'&<'
+t_AMPERMAY = r'&>'
+t_MENMENOR = r'<<\|'
+t_AMPMENOR = r'&<\|'
+t_ORAMPMAY = r'\|&>'
+t_ORMAYMAY = r'\|>>'
+t_ARROBAMAY = r'@>'
+t_MENARROBA = r'<@'
+t_CEJILLAIGUAL = r'~='
+t_AMPERSON_D = r'&&'
+t_MENPOT = r'<\^'
+t_MAYPOT = r'>\^'
 
 # Caracteres ignorados (espacio)
 t_ignore = " \t"
@@ -235,7 +486,7 @@ precedence = (
     ('left', 'MAYOR', 'MENOR', 'MAYORIGUAL', 'MENORIGUAL'),
     ('left', 'SHIFTD', 'SHIFTI'),
     ('left', 'MAS', 'MENOS'),
-    ('left', 'POR', 'DIV', 'MOD'),
+    ('left', 'POR', 'DIVISION', 'MODULO'),
     ('right', 'NOT', 'NOTB', 'UMENOS'),
     ('left', 'PARA', 'PARC')
     )
@@ -504,6 +755,8 @@ def p_cT_options4(t):
     ' cT_options : O_DEFAULT'
     t[0] = ' '+ t[1] + ' '
 
+
+
 #_--------------- 
 def p_N_null(t):
     ''' N_null : NOT NULL'''
@@ -529,6 +782,11 @@ def p_llave(t):
 def p_default(t):
     ' O_DEFAULT : DEFAULT expresion_dato_default '
     t[0] = ' '+ t[1] + ' '+ t[2] + ' '
+
+
+
+
+#_____
 
 def p_expresion_cadena_DEFAULT(t):
     '''expresion_dato_default : ENTERO
@@ -937,10 +1195,10 @@ def p_rel_arit(t):
 
 def p_arit(t):
     ''' arit    : arit POR arit
-                | arit DIV arit
+                | arit DIVISION arit
                 | arit MAS arit
                 | arit MENOS arit
-                | arit MOD arit
+                | arit MODULO arit
                 | arit ANDB arit
                 | arit SHIFTI arit
                 | arit SHIFTD arit
