@@ -20,6 +20,9 @@ tablaELexicos = []
 tablaESintacticos = []
 tablaOptimizacion = []
 
+cadenaFuncionIntermedia = ""
+numFuncionSQL = 0
+
 def getGramatica():
     global gram
     return gram
@@ -74,14 +77,36 @@ def resetTemporalA():
 def generarC3D(instrucciones, ts_global):
     global contadorLlamadas, tablaSimbolos, ts
     global cadenaTraduccion, tf, cadenaManejador
+    global cadenaFuncionIntermedia,numFuncionSQL
     cadenaTraduccion = ""
+    cadenaFuncionIntermedia = ""
     contadorLlamadas = 0
+    numFuncionSQL = 0
     cadenaManejador = ""
     resetTemporalA()
     resetTemporalT()
     resetTemporalEtiqueta()
     tf = TF.TablaDeFunciones()
+
+    cadenaFuncionIntermedia += "\nfrom gramatica import parse"
+    cadenaFuncionIntermedia += "\nfrom principal import * "
+    cadenaFuncionIntermedia += "\nimport ts as TS"
+    cadenaFuncionIntermedia += "\nfrom expresiones import *"
+    cadenaFuncionIntermedia += "\nfrom instrucciones import *"
+    cadenaFuncionIntermedia += "\nfrom report_ast import *"
+    cadenaFuncionIntermedia += "\nfrom report_tc import *"
+    cadenaFuncionIntermedia += "\nfrom report_ts import *"
+    cadenaFuncionIntermedia += "\nfrom report_errores import *\n\n"
+    cadenaFuncionIntermedia += "\nclass Intermedio():"
+    cadenaFuncionIntermedia += "\n\tinstrucciones_Global = []"
+    cadenaFuncionIntermedia += "\n\ttc_global1 = []"
+    cadenaFuncionIntermedia += "\n\tts_global1 = []\n"
+    cadenaFuncionIntermedia += "\n\tdef __init__(self):"
+    cadenaFuncionIntermedia += "\n\t\t''' Funcion Intermedia '''\n\n"
+
+    cadenaTraduccion += "from FuncionInter import * " + "\n"
     cadenaTraduccion += "from goto import with_goto" + "\n\n"
+    cadenaTraduccion += "inter = Intermedio()" + "\n\n"
     cadenaTraduccion += "@with_goto  # Decorador necesario." + "\n"
     cadenaTraduccion += "def main():" + "\n"
     cadenaTraduccion += "\tSra = -1" + "\n"
@@ -100,6 +125,23 @@ def generarC3D(instrucciones, ts_global):
             cadenaTraduccion += '\tgoto. end'
         elif isinstance(instruccion, Funcion):
             guardarFuncion(instruccion, ts)
+        elif isinstance(instruccion, CreateDatabase):
+            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaFuncionIntermedia += createDatabaseFuncion(instruccion, ts)
+        elif isinstance(instruccion, ShowDatabases):
+            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaFuncionIntermedia += createShowDatabasesFuncion(instruccion, ts)
+        elif isinstance(instruccion, UseDatabase):
+            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaFuncionIntermedia += createUseDatabaseFuncion(instruccion, ts)
+        elif isinstance(instruccion, ShowTables):
+            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaFuncionIntermedia += createShowTablesFuncion(instruccion, ts)
+        elif isinstance(instruccion, DropDatabase):
+            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaFuncionIntermedia += createDropDatabaseFuncion(instruccion, ts)
+            
+            
         indice = indice + 1
     tablaSimbolos = ts
     
@@ -110,6 +152,11 @@ def generarC3D(instrucciones, ts_global):
     cadenaTraduccion += "\n\n\tlabel .end" + "\n"
     cadenaTraduccion += "\treturn" + "\n"
     cadenaTraduccion += "\nmain()" + "\n"
+
+    salidaFuncionIntermedia = open("./FuncionInter.py", "w")
+    salidaFuncionIntermedia.write(cadenaFuncionIntermedia)
+    salidaFuncionIntermedia.close()
+
     return cadenaTraduccion
 
 def generarPrincipal(instruccion, ts):
@@ -519,6 +566,57 @@ def getOperador(operador):
         return "<"
     elif operador == OPERADOR.MOD:
         return "%"
+
+def createDatabaseFuncion(instruccion, ts):
+    global numFuncionSQL
+    print(instruccion.cadena)
+    cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
+    return cadenaSQL
+
+def createShowDatabasesFuncion(instruccion, ts):
+    global numFuncionSQL
+    print(instruccion.cadena)
+    cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
+    return cadenaSQL
+
+
+def createUseDatabaseFuncion(instruccion, ts):
+    global numFuncionSQL
+    print(instruccion.cadena)
+    cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
+    return cadenaSQL
+
+def createDropDatabaseFuncion(instruccion, ts):
+    global numFuncionSQL
+    print(instruccion.cadena)
+    cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
+    return cadenaSQL
+
+def createShowTablesFuncion(instruccion, ts):
+    global numFuncionSQL
+    print(instruccion.cadena)
+    cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
+    return cadenaSQL
+
+def generarFuncionesSQL(instruccionSQL,numero):
+    global numFuncionSQL
+    cadenaFuncionSQL = ""
+    cadenaFuncionSQL += "\n\tdef procesar_funcion"+str(numero)+"(self):"
+    cadenaFuncionSQL += "\n\t\tglobal instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss"
+    cadenaFuncionSQL += "\n\t\tinstrucciones = g.parse('"+instruccionSQL+"')"
+    cadenaFuncionSQL += "\n\t\terroressss = ErrorHTML()"
+    cadenaFuncionSQL += "\n\t\tif  erroressss.getList()== []:"
+    cadenaFuncionSQL += "\n\t\t\tinstrucciones_Global = instrucciones"
+    cadenaFuncionSQL += "\n\t\t\tts_global = TS.TablaDeSimbolos()"
+    cadenaFuncionSQL += "\n\t\t\ttc_global = TC.TablaDeTipos()"
+    cadenaFuncionSQL += "\n\t\t\ttc_global1 = tc_global"
+    cadenaFuncionSQL += "\n\t\t\tts_global1 = ts_global"
+    cadenaFuncionSQL += "\n\t\t\tsalida = procesar_instrucciones(instrucciones, ts_global,tc_global)"
+    cadenaFuncionSQL += "\n\t\t\treturn salida"
+    cadenaFuncionSQL += "\n\t\telse:"
+    cadenaFuncionSQL += "\n\t\t\treturn 'Parser Error'\n\n"
+    numFuncionSQL += 1
+    return cadenaFuncionSQL
 
 '''f = open("./entrada.txt", "r")
 input = f.read()

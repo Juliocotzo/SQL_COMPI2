@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import random
+import time
 
 import PLSQL.tsPLSQL as TSPL
 import PLSQL.tfPLSQL as TFPL

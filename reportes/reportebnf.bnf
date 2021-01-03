@@ -2,6 +2,30 @@
  
 <instrucciones> ::= <instruccion>
  
+<instruccion> ::= <show_databases_instr>
+ 
+<show_databases_instr> ::= SHOW DATABASES PTCOMA
+ 
+<init> ::= <instrucciones>
+ 
+<instrucciones> ::= <instruccion>
+ 
+<instruccion> ::= <drop_database_instr>
+ 
+<drop_database_instr> ::= DROP DATABASE ID PTCOMA
+ 
+<init> ::= <instrucciones>
+ 
+<instrucciones> ::= <instruccion>
+ 
+<instruccion> ::= <show_databases_instr>
+ 
+<show_databases_instr> ::= SHOW DATABASES PTCOMA
+ 
+<init> ::= <instrucciones>
+ 
+<instrucciones> ::= <instruccion>
+ 
 <instruccion> ::= <createDB_insrt>
  
 <createDB_insrt> ::= CREATE DATABASE ID PTCOMA
