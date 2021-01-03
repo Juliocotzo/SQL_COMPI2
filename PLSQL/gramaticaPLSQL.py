@@ -344,6 +344,9 @@ tokens = [
     'PUNTO',
     'D_OR',
     'HASHTAG',
+    'ESCAPE',
+    'HEX',
+    'BASE64',
          ] + list(reservadas.values())
 
 # Tokens ER
@@ -487,7 +490,7 @@ precedence = (
     ('left', 'SHIFTD', 'SHIFTI'),
     ('left', 'MAS', 'MENOS'),
     ('left', 'POR', 'DIVISION', 'MODULO'),
-    ('right', 'NOT', 'NOTB', 'UMENOS'),
+    ('right', 'NOT', 'NOTB', 'UMINUS'),
     ('left', 'PARA', 'PARC')
     )
 
@@ -1240,7 +1243,7 @@ def p_arit_cadena(t):
 def p_arit_numero(t):
     ''' arit    : ENTERO
                 | FLOTANTE
-                | MENOS expresionPLSQL %prec UMENOS
+                | MENOS expresionPLSQL %prec UMINUS
                 | NOTB expresionPLSQL
                 | NOT expresionPLSQL'''
     if t[1] == '-' :
