@@ -2,33 +2,55 @@
  
 <instrucciones> ::= <instruccion>
  
-<instruccion> ::= <show_databases_instr>
+<instruccion> ::= <create_Table_isnrt>
  
-<show_databases_instr> ::= SHOW DATABASES PTCOMA
+<create_Table_isnrt> ::= CREATE TABLE ID PAR_A <cuerpo_createTable_lista> PAR_C PTCOMA 
+ 
+<cuerpo_createTable_lista> ::= <cuerpo_createTable_lista> COMA <cuerpo_createTable>
+ 
+<cuerpo_createTable> ::= ID <TIPO_DATO_DEF> <createTable_options>
+ 
+<createTable_options> ::= <cT_options>
+ 
+<cT_options> ::= <O_DEFAULT>
+ 
+<O_DEFAULT> ::= DEFAULT <expresion_dato_default>
+ 
+<expresion_dato_default> ::= FLOTANTE
+ 
+<TIPO_DATO_DEF> ::= VARCHAR PAR_A ENTERO PAR_C
+ 
+<cuerpo_createTable_lista> ::= <cuerpo_createTable>
+ 
+<cuerpo_createTable> ::= ID <TIPO_DATO_DEF> <createTable_options>
+ 
+<createTable_options> ::= <createTable_options> <cT_options>
+ 
+<cT_options> ::= <llave>
+ 
+<llave> ::= PRIMARY KEY
+ 
+<createTable_options> ::= <createTable_options> <cT_options>
+ 
+<cT_options> ::= <N_null>
+ 
+<N_null> ::= NOT NULL
+ 
+<createTable_options> ::= <cT_options>
+ 
+<cT_options> ::= <N_null>
+ 
+<N_null> ::= NULL
+ 
+<TIPO_DATO_DEF> ::= INTEGER
  
 <init> ::= <instrucciones>
  
 <instrucciones> ::= <instruccion>
  
-<instruccion> ::= <drop_database_instr>
+<instruccion> ::= <use_database_instr>
  
-<drop_database_instr> ::= DROP DATABASE ID PTCOMA
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<instruccion> ::= <show_databases_instr>
- 
-<show_databases_instr> ::= SHOW DATABASES PTCOMA
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<instruccion> ::= <createDB_insrt>
- 
-<createDB_insrt> ::= CREATE DATABASE ID PTCOMA
+<use_database_instr> ::= USE ID PTCOMA
  
 <init> ::= <instrucciones>
  

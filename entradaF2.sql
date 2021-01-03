@@ -1,0 +1,6 @@
+CREATE DATABASE prueba1;
+USE prueba1;
+CREATE TABLE usuario(
+    id_usuario INTEGER NULL NOT NULL PRIMARY KEY,
+    apellido VARCHAR(50) DEFAULT 2.5
+);

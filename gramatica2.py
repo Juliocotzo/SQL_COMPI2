@@ -17,21 +17,7 @@ import ply.yacc as yacc
 entradaa = ""
 
 reservadas = {
-    'create' : 'CREATE',
-    'table':'TABLE',
-    'inherits': 'INHERITS',
-    'integer': 'INTEGER',
-    'boolean': 'BOOLEAN',
-    
-    'default': 'DEFAULT',
-    # CREATE DATABASE
-    'database': 'DATABASE',
-    'if' : 'IF',
-    'replace' : 'REPLACE',
-    'exists' : 'EXISTS',    
-    'or': 'OR',
-    'not' : 'NOT',
-    'select': 'SELECT',
+       
     'insert': 'INSERT',
     'update': 'UPDATE',
     'delete': 'DELETE',
@@ -64,14 +50,11 @@ reservadas = {
     'sessUser' : 'SESSION_USER',
     'add' : 'ADD',
     'check' : 'CHECK',
-    'constraint': 'CONSTRAINT',
     'column' : 'COLUMN',
-    'unique' : 'UNIQUE',
     'references' : 'REFERENCES',
     'type' : 'TYPE',
     'not' : 'NOT',
     'like' : 'LIKE',
-    'null' : 'NULL',
     # ---- DATA TYPES AND SPECIFICATIONS--------
     'text': 'TEXT',
     'float': 'FLOAT',
@@ -92,17 +75,11 @@ reservadas = {
     'time' : 'TIME',
     'interval' : 'INTERVAL',
     'extract' : 'EXTRACT',
-    'year' : 'YEAR',
-    'month' : 'MONTH',
-    'day' : 'DAY',
-    'hour' : 'HOUR',
-    'minute' : 'MINUTE',
-    'second' : 'SECOND',
+    
     'now' : 'NOW',
     'date_part' : 'DATE_PART',
     'current_date': 'CURRENT_DATE',
     'current_time' : 'CURRENT_TIME',
-    'to' : 'TO',
     'enum' : 'ENUM',
     'money' : 'MONEY',
     # ---- DELETE --------
@@ -362,88 +339,6 @@ t_CEJILLA       = r'\~'
 
 
 
-def t_FLOTANTE(t):
-    r'\d+\.\d+'
-    try:
-        t.value = float(t.value)
-    except ValueError:
-        print("Float value too large %d", t.value)
-        t.value = 0
-    return t
-
-def t_ENTERO(t):
-    r'\d+'
-    try:
-        t.value = int(t.value)
-    except ValueError:
-        print("Integer value too large %d", t.value)
-        t.value = 0
-    return t
-
-def t_ID(t):
-     r'[a-zA-Z_][a-zA-Z_0-9]*'
-     t.type = reservadas.get(t.value.lower(),'ID')    # Check for reserved words
-     return t
-
-
-def t_ESCAPE(t):
-    r'\'(?i)escape\'' #ignore case
-    t.value = t.value[1:-1] # remuevo las comillas
-    return t
-
-def t_BASE64(t):
-    r'\'(?i)base64\''
-    t.value = t.value[1:-1] # remuevo las comillas
-    return t  
-
-def t_HEX(t):
-    r'\'(?i)hex\''
-    t.value = t.value[1:-1] # remuevo las comillas
-    return t
-
-def t_CADENA(t):
-    r'\'.*?\''
-    t.value = t.value[1:-1] # remuevo las comillas
-    return t 
-
-
-
-
-
-# Comentario de múltiples líneas /* .. */
-def t_COMENTARIO_MULTILINEA(t):
-    r'/\*(.|\n)*?\*/'
-    t.lexer.lineno += t.value.count('\n')
-
-# Comentario simple // ...
-def t_COMENTARIO_SIMPLE(t):
-    r'--.*\n'
-    t.lexer.lineno += 1
-
-# Caracteres ignorados
-t_ignore = " \t"
-
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += t.value.count("\n")
-    
-def t_error(t):
-    #print("Illegal character '%s'" % t.value[0], t.lineno, t.lexpos)
-    errorLexico = Error(str(t.value[0]),int(t.lineno),int(t.lexpos), "Error Lexico")
-    listaErrores.append(errorLexico)
-    t.lexer.skip(1)
-# TOKENIZAR
-
-   
-
-# Construyendo el analizador léxico
-import ply.lex as lex
-lexer = lex.lex()
- 
-from instrucciones import *
-from expresiones import *
-
-
 # Asociación de operadores y precedencia
 precedence = (
     ('left','MAYQUE','MENQUE','MAYIGQUE','MENIGQUE'),
@@ -465,7 +360,6 @@ def p_init(t) :
     'init            : instrucciones'
     reporte_bnf.append("<init> ::= <instrucciones>")
    # print(reporte_bnf)
-    get_array(reporte_bnf)
     t[0] = t[1]
     
 
@@ -486,11 +380,6 @@ def p_instrucciones_instruccion(t) :
 # TODO        INSTRUCCIONES
 #?######################################################
 
-
-def p_instruccion1(t) :
-    'instruccion      : create_Table_isnrt'
-    reporte_bnf.append("<instruccion> ::= <create_Table_isnrt>")
-    t[0] = t[1]
     
 def p_instruccion6(t) :
     'instruccion      : alterDB_insrt'
@@ -567,7 +456,6 @@ def p_lista_parametros(t):
 
 def p_parametros_lista_datos(t):
     ' lista_datos : lista_datos COMA exclusiva_insert'
-    reporte_bnf.append("<lista_datos> ::= <lista_datos> COMA <expresion>") 
     t[1].append(t[3])
     t[0] = t[1]
 
@@ -862,63 +750,7 @@ def p_cons_campos_id(t):
     t[0] = [ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])]
 
 
-
-#?######################################################
-# TODO      INSTRUCCION CREATE TABLE
-#?######################################################
-
-
-def p_create_table(t):
-    ''' create_Table_isnrt : CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C PTCOMA 
-                            | CREATE TABLE ID PAR_A cuerpo_createTable_lista PAR_C INHERITS PAR_A ID PAR_C PTCOMA '''
-
-    if t[7] == ';' :
-        reporte_bnf.append("<create_Table_isnrt> ::= CREATE TABLE ID PAR_A <cuerpo_createTable_lista> PAR_C PTCOMA ")
-        t[0] = Create_Table(t[3], None , t[5])
-    else:
-        reporte_bnf.append("<create_Table_isnrt> ::= CREATE TABLE ID PAR_A <cuerpo_createTable_lista> PAR_C INHERITS PAR_A ID PAR_C PTCOMA")
-        t[0] = Create_Table(t[3], t[9], t[5])
-
-
-def p_cuerpo_createTable_lista(t):
-    ' cuerpo_createTable_lista : cuerpo_createTable_lista COMA cuerpo_createTable'
-    reporte_bnf.append("<cuerpo_createTable_lista> ::= <cuerpo_createTable_lista> COMA <cuerpo_createTable>")
-    t[1].append(t[3])
-    t[0] = t[1]
-
-
-def p_cuerpo_createTable(t):
-    ' cuerpo_createTable_lista : cuerpo_createTable'
-    reporte_bnf.append("<cuerpo_createTable_lista> ::= <cuerpo_createTable>")
-    t[0] = [t[1]]
-
-
-def p_createTable(t):
-    ' cuerpo_createTable :  ID TIPO_DATO_DEF '
-    reporte_bnf.append("<campos_c> ::= ID <TIPO_DATO_DEF>")
-    t[0] = Definicion_Columnas(t[1],t[2], None,None,None)
-
-
-def p_createTable_id_pk(t):
-    ' cuerpo_createTable : ID TIPO_DATO_DEF createTable_options'
-    reporte_bnf.append("<cuerpo_createTable> ::= ID <TIPO_DATO_DEF> <createTable_options>")
-    t[0] = Definicion_Columnas(t[1],t[2], None,None,t[3])
-# -------------------------------------------
-def p_createTable_combs1(t):
-    ' createTable_options : createTable_options cT_options' 
-    reporte_bnf.append("<createTable_options> ::= <createTable_options> <cT_options>")
-    t[1].append(t[2])
-    t[0] = t[1]
-
-def p_createTable_combs2(t):
-    ' createTable_options : cT_options'
-    reporte_bnf.append("<createTable_options> ::= <cT_options>")
-    t[0] = [t[1]]
-
-def p_cT_options(t):
-    ' cT_options : N_null'
-    reporte_bnf.append("<cT_options> ::= <N_null>")
-    t[0] = t[1]
+#FA:TA
 
 def p_cT_options1(t):
     ' cT_options : C_unique'
@@ -940,6 +772,9 @@ def p_cT_options4(t):
     reporte_bnf.append("<cT_options> ::= <O_DEFAULT>")
     t[0] = t[1]
 
+
+
+
     
     #--------------------------------------------------
 def p_default(t):
@@ -948,16 +783,7 @@ def p_default(t):
     t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.DEFAULT,None,None,t[2])
 
 
-def p_N_null(t):
-    ''' N_null : NULL
-                | NOT NULL'''
-    if t[1].upper() == 'NULL':
-        reporte_bnf.append("<N_null> ::= NULL")
-        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.NULL,None,None,None)
-    else: 
-        reporte_bnf.append("<N_null> ::= NOT NULL")
-        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.NOT_NULL,None,None,None)
-  
+
 
 def p_C_unique(t):
     ''' C_unique : UNIQUE
@@ -1206,147 +1032,9 @@ def p_tipo_dato_character_no_esp(t):
     temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
     t[0] = temp
 
-def p_extract_time(t):
-    ' extract_time : YEAR'
-    reporte_bnf.append("<extract_time> ::= YEAR")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
-
-def p_extract_time1(t):
-    ' extract_time : DAY'
-    reporte_bnf.append("<extract_time> ::= DAY")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
-
-def p_extract_time2(t):
-    ' extract_time : MONTH'
-    reporte_bnf.append("<extract_time> ::= MONTH")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
-
-def p_extract_time3(t):
-    ' extract_time : HOUR'
-    reporte_bnf.append("<extract_time> ::= HOUR")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
-
-def p_extract_time4(t):
-    ' extract_time : MINUTE'
-    reporte_bnf.append("<extract_time> ::= MINUTE")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
-
-def p_extract_time5(t):
-    ' extract_time : SECOND '
-    reporte_bnf.append("<extract_time> ::= SECOND")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
 
 
-def p_tipo_dato_text_DEF(t):
-    ' TIPO_DATO_DEF : TEXT'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= TEXT")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.text_)
 
-def p_tipo_dato_float_DEF(t):
-    ' TIPO_DATO_DEF : FLOAT'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= FLOAT")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.float_)
-
-def p_tipo_dato_integer_DEF(t):
-    ' TIPO_DATO_DEF : INTEGER'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= INTEGER")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.integer_)
-
-def p_tipo_dato_boolean_DEF(t):
-    ' TIPO_DATO_DEF : BOOLEAN'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= BOOLEAN")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.boolean)
-
-def p_tipo_dato_smallint_DEF(t):
-    ' TIPO_DATO_DEF : SMALLINT'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= SMALLINT")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.smallint_)
-
-def p_tipo_dato_money_DEF(t):
-    ' TIPO_DATO_DEF : MONEY'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= MONEY")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.money)
-
-def p_tipo_dato_decimal_DEF(t):
-    ' TIPO_DATO_DEF : DECIMAL PAR_A ENTERO COMA ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= DECIMAL PAR_A ENTERO COMA ENTERO PAR_C")
-    t[0] = ExpresionNumero(TIPO_DE_DATOS.decimal,t[3], t[5])
-
-def p_tipo_dato_numerico_DEF(t):
-    ' TIPO_DATO_DEF : NUMERIC PAR_A ENTERO COMA ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= NUMERIC PAR_A ENTERO COMA ENTERO PAR_C")
-    t[0] = ExpresionNumero(TIPO_DE_DATOS.numeric,t[3],t[5])
-
-def p_tipo_dato_bigint_DEF(t):
-    ' TIPO_DATO_DEF : BIGINT'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= BIGINT")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.bigint)
-
-def p_tipo_dato_real_DEF(t):
-    ' TIPO_DATO_DEF : REAL'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= REAL")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.real)
-
-def p_tipo_dato_double_precision_DEF(t):
-    ' TIPO_DATO_DEF : DOUBLE PRECISION'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= DOUBLE PRECISION")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.double_precision)
-
-def p_tipo_dato_interval_to_DEF(t):
-    ' TIPO_DATO_DEF :  INTERVAL extract_time TO extract_time'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= INTERVAL <extract_time> TO <extract_time>")
-    t[0] = Etiqueta_Interval(t[2],t[4], TIPO_DE_DATOS.interval)
-
-
-def p_tipo_dato_interval_DEF(t):
-    ' TIPO_DATO_DEF :  INTERVAL'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= INTERVAL")
-    t[0] = ExpresionTiempo(OPERACION_TIEMPO.YEAR)
-
-def p_tipo_dato_time_DEF(t):
-    ' TIPO_DATO_DEF :  TIME'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= TIME")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.time)
-
-def p_tipo_dato_interval_tsmp_DEF(t):
-    ' TIPO_DATO_DEF :  TIMESTAMP'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= TIMESTAMP")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.timestamp)
-
-def p_tipo_dato_DEF(t):
-    'TIPO_DATO_DEF : DATE'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= DATE")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.date)
-
-def p_tipo_dato_character_varying_DEF(t):
-    ' TIPO_DATO_DEF : CHARACTER VARYING PAR_A ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= CHARACTER VARYING PAR_A ENTERO PAR_C")
-    t[0] = Expresion_Caracter(TIPO_DE_DATOS.varying, t[4])
-
-def p_tipo_dato_varchar_DEF(t):
-    ' TIPO_DATO_DEF : VARCHAR PAR_A ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= VARCHAR PAR_A ENTERO PAR_C")
-    t[0] = Expresion_Caracter(TIPO_DE_DATOS.varchar,t[3])
-
-def p_tipo_dato_char_DEF(t):
-    ' TIPO_DATO_DEF : CHAR PAR_A ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= CHAR PAR_A ENTERO PAR_C")
-    t[0] = Expresion_Caracter(TIPO_DE_DATOS.char,t[3])
-
-def p_tipo_dato_character_DEF(t):
-    ' TIPO_DATO_DEF : CHARACTER PAR_A ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= CHARACTER PAR_A ENTERO PAR_C")
-    t[0] = Expresion_Caracter(TIPO_DE_DATOS.character,t[3])
-
-def p_tipo_dato_char_no_esp_DEF(t):
-    ' TIPO_DATO_DEF : CHAR PAR_A PAR_C'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= CHAR PAR_A PAR_C")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.char)
-
-def p_tipo_dato_character_no_esp_DEF(t):
-    ' TIPO_DATO_DEF : CHARACTER PAR_A PAR_C'
-    reporte_bnf.append("<TIPO_DATO_DEF> ::= CHARACTER PAR_A PAR_C")
-    t[0] = Etiqueta_tipo(TIPO_DE_DATOS.character)
 
 
 #?######################################################
@@ -2951,40 +2639,3 @@ def p_opclass(t):
                | BPCHAR_PATTERN_OPS '''
     t[0] = t[1]
 
-
-def p_error(t):
-    print("Error sintáctico en '%s'" % t.value, str(t.lineno),find_column(str(input), t))
-    global reporte_sintactico
-    reporte_sintactico += "<tr> <td> Sintactico </td> <td>" + t.value + "</td>" + "<td>" + str(t.lineno) + "</td> <td> "+ str(find_column(str(input),t))+"</td></th>"
-    
-
-def find_column(input, token):
-    line_start = input.rfind('\n', 0, token.lexpos) + 1
-    print((token.lexpos - line_start) + 1)
-    return (token.lexpos - line_start) + 1
-
-import ply.yacc as yacc
-parser = yacc.yacc()
-
-'''f = open("./entrada.txt", "r")
-input = f.read()
-print(input)'''
-
-def parse(input) :
-   global entradaa
-   entradaa = input
-   return parser.parse(input)
-  
-
-def get_array(lista):
-    lista_repo = lista
-    reverse_list = lista_repo[::-1]
-    w_jumps = '\n \n'.join(reverse_list)
-    f = open("reportes/reportebnf.bnf", "w")
-    
-    for items in w_jumps:
-        f.write(items)
-
-    f.close()
-
-'''parser.parse(input)'''

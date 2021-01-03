@@ -24,6 +24,13 @@ reservadas = {
     'timestamp' : 'TIMESTAMP',
     'date' : 'DATE',
     'time' : 'TIME',
+    'year' : 'YEAR',
+    'month' : 'MONTH',
+    'day' : 'DAY',
+    'hour' : 'HOUR',
+    'minute' : 'MINUTE',
+    'second' : 'SECOND',
+    'to' : 'TO',
     'interval' : 'INTERVAL',
     'boolean' : 'BOOLEAN',
     'if': 'IF',
@@ -46,6 +53,7 @@ reservadas = {
     'language' : 'LANGUAGE',
     'plpgsql' : 'PLPGSQL',
     'or' : 'OR',
+    'and' : 'AND',
     'replace' : 'REPLACE',
     'raise' : 'RAISE',
     'select' : 'SELECT',
@@ -59,6 +67,14 @@ reservadas = {
     'use' : 'USE',
     'drop': 'DROP',
     'databases': 'DATABASES',
+    'table':'TABLE',
+    'null' : 'NULL',
+    'constraint': 'CONSTRAINT',
+    'unique' : 'UNIQUE',
+    'inherits': 'INHERITS',
+    'primary' : 'PRIMARY',
+    'key' : 'KEY',
+    'foreign' : 'FOREIGN',
 }
 
 # Declaracion tokens
@@ -82,8 +98,6 @@ tokens = [
     'POR',
     'DIV',
     'MOD',
-    'AND',
-    'ORR',
     'NOTB',
     'ORB',
     'XORB',
@@ -93,7 +107,6 @@ tokens = [
     'MAYORIGUAL',
     'MENORIGUAL',
     'NOTIGUAL',
-    'NOTT',
     'MAYOR',
     'MENOR',
     'IGUAL',
@@ -116,8 +129,6 @@ t_MAS = r'\+'
 t_POR = r'\*'
 t_DIV = r'/'
 t_MOD = r'%'
-t_AND = r'&&'
-t_ORR = r'\|\|'
 t_NOTB = r'~'
 t_ORB = r'\|'
 t_XORB = r'\^'
@@ -128,7 +139,6 @@ t_IGUAL = r'='
 t_MAYORIGUAL = r'>='
 t_MENORIGUAL = r'<='
 t_NOTIGUAL = r'!='
-t_NOTT = r'!'
 t_MAYOR = r'>'
 t_MENOR = r'<'
 t_DOLAR = r'\$'
@@ -172,15 +182,30 @@ def t_ID(t):
     t.type = reservadas.get(t.value.lower(), 'ID')  # Check for reserved words
     return t
 
+def t_ESCAPE(t):
+    r'\'(?i)escape\'' #ignore case
+    t.value = t.value[1:-1] # remuevo las comillas
+    return t
 
-# Comentario multi linea
+def t_BASE64(t):
+    r'\'(?i)base64\''
+    t.value = t.value[1:-1] # remuevo las comillas
+    return t  
+
+def t_HEX(t):
+    r'\'(?i)hex\''
+    t.value = t.value[1:-1] # remuevo las comillas
+    return t
+
+
+# Comentario de múltiples líneas /* .. */
 def t_COMENTARIO_MULTILINEA(t):
     r'/\*(.|\n)*?\*/'
     t.lexer.lineno += t.value.count('\n')
 
-# Comentario simple
+# Comentario simple -- ...
 def t_COMENTARIO_SIMPLE(t):
-    r'//.*\n'
+    r'--.*\n'
     t.lexer.lineno += 1
 
 
@@ -201,7 +226,7 @@ def t_error(t):
 
 # Asociación de operadores y precedencia
 precedence = (
-    ('left', 'ORR'),
+    ('left', 'OR'),
     ('left', 'AND'),
     ('left', 'XORB'),
     ('left', 'ORB'),
@@ -211,7 +236,7 @@ precedence = (
     ('left', 'SHIFTD', 'SHIFTI'),
     ('left', 'MAS', 'MENOS'),
     ('left', 'POR', 'DIV', 'MOD'),
-    ('right', 'NOTT', 'NOTB', 'UMENOS'),
+    ('right', 'NOT', 'NOTB', 'UMENOS'),
     ('left', 'PARA', 'PARC')
     )
 
@@ -247,7 +272,8 @@ def p_instrucciones_global_sent(t):
                                     | show_databases_instr
                                     | show_tables_instr
                                     | use_database_instr
-                                    | drop_database_instr'''
+                                    | drop_database_instr
+                                    | create_Table_isnrt'''
     t[0] = t[1]
 
 def p_instrucciones_global_sent_error(t):
@@ -276,7 +302,7 @@ def p_instrucciones_funct_sent(t):
 def p_instrucciones_funct_sent_error(t):
     'instrucciones_funct_sent    : error'
 
-#CREATE TABLE 
+#CREATE DATABASE
 def p_createDB(t):
     'createDB_insrt : CREATE DATABASE ID PTCOMA'
     t[0] = CreateDatabase(t[1] + ' ' + t[2] + ' ' + t[3] + ';')
@@ -410,6 +436,232 @@ def p_instruccion_use_database(t):
     'use_database_instr : USE ID PTCOMA'
     t[0] = UseDatabase(t[1] + ' ' + t[2] +';')
 
+
+#?######################################################
+# TODO      INSTRUCCION CREATE TABLE
+#?######################################################
+
+def p_create_table(t):
+    ''' create_Table_isnrt : CREATE TABLE ID PARA cuerpo_createTable_lista PARC PTCOMA'''
+    cadena = ""
+    for i in t[5]:
+        cadena += str(i)
+    t[0] = CreateTable(t[1] + ' ' + t[2] + ' ' + t[3] + ' ' + t[4]+ ' ' + cadena+ ' ' + t[6]+ ';')
+
+
+def p_create_table1(t):
+    ''' create_Table_isnrt : CREATE TABLE ID PARA cuerpo_createTable_lista PARC INHERITS PARA ID PARC PTCOMA '''
+    cadena = ""
+    for i in t[5]:
+        cadena += str(i)
+    t[0] = CreateTable(t[1] + ' ' + t[2] + ' ' + t[3] + ' ' + t[4]+ ' ' + cadena+ ' ' + t[6]+ ' ' + t[7]+ ' ' + t[8]+ ' ' + t[9]+ ' ' + t[10]+ ';')
+
+def p_cuerpo_createTable_lista(t):
+    ' cuerpo_createTable_lista : cuerpo_createTable_lista COMA cuerpo_createTable'
+    t[1].append(t[2])
+    t[1].append(t[3])
+    t[0] = t[1]
+
+
+def p_cuerpo_createTable(t):
+    ' cuerpo_createTable_lista : cuerpo_createTable'
+    t[0] = [t[1]]
+
+def p_createTable(t):
+    ' cuerpo_createTable :  ID TIPO_DATO_DEF'
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '
+
+def p_createTable_id_pk(t):
+    ' cuerpo_createTable : ID TIPO_DATO_DEF createTable_options'
+    cadena = ""
+    for i in t[3]:
+        cadena += str(i)
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' ' + cadena + ' ' 
+
+# -------------------------------------------
+def p_createTable_combs1(t):
+    ' createTable_options : createTable_options cT_options' 
+    t[1].append(t[2])
+    t[0] = t[1]
+
+def p_createTable_combs2(t):
+    ' createTable_options : cT_options'
+    t[0] = [t[1]]
+
+def p_cT_options(t):
+    ' cT_options : N_null'
+    t[0] = ' '+ t[1] + ' '
+
+def p_cT_options1(t):
+    ' cT_options : C_unique'
+    t[0] = ' '+ t[1] + ' '
+
+def p_cT_options3(t):
+    ' cT_options : llave' 
+    t[0] = ' '+ t[1] + ' '
+
+def p_cT_options4(t):
+    ' cT_options : O_DEFAULT'
+    t[0] = ' '+ t[1] + ' '
+
+#_--------------- 
+def p_N_null(t):
+    ''' N_null : NOT NULL'''
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '
+
+def p_N_null2(t):
+    ''' N_null : NULL'''  
+    t[0] = ' '+ t[1] + ' '
+
+def p_C_unique(t):
+    ''' C_unique : UNIQUE'''
+    t[0] = ' '+ t[1] + ' '
+                
+def p_C_unique1(t):
+    ''' C_unique : CONSTRAINT ID UNIQUE'''
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3] + ' '
+
+def p_llave(t):
+    ''' llave : PRIMARY KEY 
+            | FOREIGN KEY'''
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '
+
+def p_default(t):
+    ' O_DEFAULT : DEFAULT expresion_dato_default '
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '
+
+def p_expresion_cadena_DEFAULT(t):
+    '''expresion_dato_default : ENTERO
+                                | FLOTANTE'''
+
+    t[0] = ' '+ str(t[1]) + ' '
+
+def p_expresion_cadena_DEFAULT1(t):
+    '''expresion_dato_default : CADENA'''
+    cadena = '\\\''+t[1]+'\\\''
+    t[0] = cadena
+    
+#TIPO DEF
+
+def p_tipo_dato_text_DEF(t):
+    ' TIPO_DATO_DEF : TEXT'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_float_DEF(t):
+    ' TIPO_DATO_DEF : FLOAT'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_integer_DEF(t):
+    ' TIPO_DATO_DEF : INTEGER'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_boolean_DEF(t):
+    ' TIPO_DATO_DEF : BOOLEAN'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_smallint_DEF(t):
+    ' TIPO_DATO_DEF : SMALLINT'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_money_DEF(t):
+    ' TIPO_DATO_DEF : MONEY'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_decimal_DEF(t):
+    ' TIPO_DATO_DEF : DECIMAL PARA ENTERO COMA ENTERO PARC'
+    t[0] = ' ' + t[1] + ' '+ t[2] + ' '+ str(t[3]) + ' '+ t[4] + ' '+ str(t[5]) + ' '+ t[6] + ' '
+
+def p_tipo_dato_numerico_DEF(t):
+    ' TIPO_DATO_DEF : NUMERIC PARA ENTERO COMA ENTERO PARC'
+    t[0] = ' ' + t[1] + ' '+ t[2] + ' '+ str(t[3]) + ' '+ t[4] + ' '+ str(t[5]) + ' '+ t[6] + ' '
+
+def p_tipo_dato_bigint_DEF(t):
+    ' TIPO_DATO_DEF : BIGINT'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_real_DEF(t):
+    ' TIPO_DATO_DEF : REAL'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_double_precision_DEF(t):
+    ' TIPO_DATO_DEF : DOUBLE PRECISION'
+    t[0] = ' ' + t[1] + ' '+ t[2] + ' '
+
+def p_tipo_dato_interval_to_DEF(t):
+    ' TIPO_DATO_DEF :  INTERVAL extract_time TO extract_time'
+    t[0] = ' ' + t[1] + ' '+ t[2] + ' '+ t[3] + ' '+ t[4] + ' '
+
+def p_tipo_dato_interval_DEF(t):
+    ' TIPO_DATO_DEF :  INTERVAL'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_time_DEF(t):
+    ' TIPO_DATO_DEF :  TIME'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_interval_tsmp_DEF(t):
+    ' TIPO_DATO_DEF :  TIMESTAMP'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_DEF(t):
+    'TIPO_DATO_DEF : DATE'
+    t[0] = ' ' + t[1] + ' '
+
+def p_tipo_dato_character_varying_DEF(t):
+    ' TIPO_DATO_DEF : CHARACTER VARYING PARA ENTERO PARC'
+    t[0] = ' ' + t[1] + ' '+ t[2] + ' '+ t[3] + ' '+ str(t[4]) + ' '+ t[5] + ' '
+
+def p_tipo_dato_varchar_DEF(t):
+    ' TIPO_DATO_DEF : VARCHAR PARA ENTERO PARC'
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ str(t[3]) + ' '+ t[4] + ' '
+
+def p_tipo_dato_char_DEF(t):
+    ' TIPO_DATO_DEF : CHAR PARA ENTERO PARC'
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ str(t[3]) + ' '+ t[4] + ' '
+
+def p_tipo_dato_character_DEF(t):
+    ' TIPO_DATO_DEF : CHARACTER PARA ENTERO PARC'
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ str(t[3]) + ' '+ t[4] + ' '
+
+def p_tipo_dato_char_no_esp_DEF(t):
+    ' TIPO_DATO_DEF : CHAR PARA PARC'
+    t[0] = ' ' + t[1] + ' '+t[2] + ' '+t[3] + ' '
+
+def p_tipo_dato_character_no_esp_DEF(t):
+    ' TIPO_DATO_DEF : CHARACTER PARA PARC'
+    t[0] = ' ' + t[1] + ' '+t[2] + ' '+t[3] + ' '
+
+#EXTRACT TIME
+def p_extract_time(t):
+    ' extract_time : YEAR'
+    t[0] = ' ' + t[1] + ' '
+
+def p_extract_time1(t):
+    ' extract_time : DAY'
+    t[0] = ' ' + t[1] + ' '
+
+def p_extract_time2(t):
+    ' extract_time : MONTH'
+    t[0] = ' ' + t[1] + ' '
+
+def p_extract_time3(t):
+    ' extract_time : HOUR'
+    t[0] = ' ' + t[1] + ' '
+
+def p_extract_time4(t):
+    ' extract_time : MINUTE'
+    t[0] = ' ' + t[1] + ' '
+
+def p_extract_time5(t):
+    ' extract_time : SECOND '
+    t[0] = ' ' + t[1] + ' '
+
+
+#?######################################################
+# TODO      STRING TYPE
+#?######################################################
+
+
 def p_string_type(t):
     ''' string_type : CADENA '''
     cadena = '\\\''+t[1]+'\\\''
@@ -485,12 +737,12 @@ def p_llamada_funcion1(t):
     t[0] = LlamadaFuncion(t[2], t[4])
 
 def p_params_list(t):
-    'params     : params COMA expresion'
+    'params     : params COMA expresionPLSQL'
     t[1].append(t[3])
     t[0] = t[1]
 
 def p_params_sent(t):
-    '''params   : expresion
+    '''params   : expresionPLSQL
                 | empty'''
     t[0] = [t[1]]
 
@@ -513,7 +765,7 @@ def p_parametro2(t):
     t[0] = None
 
 def p_sentencia_switch(t):
-    'sentencia_switch   : CASE expresion case_list END CASE PTCOMA'
+    'sentencia_switch   : CASE expresionPLSQL case_list END CASE PTCOMA'
     t[0] = SentenciaCase(t[2], t[3])
 
 def p_case_list_list(t):
@@ -526,7 +778,7 @@ def p_case_list_sent(t):
     t[0] = [t[1]]
 
 def  p_case(t):
-    '''case     : WHEN expresion THEN instrucciones_funct_list'''
+    '''case     : WHEN expresionPLSQL THEN instrucciones_funct_list'''
     t[0] = Caso(t[2], Principal(t[4]))
 
 def  p_case_default(t):
@@ -534,7 +786,7 @@ def  p_case_default(t):
     t[0] = Caso(None, Principal(t[2]))
 
 def p_sentencia_if(t):
-    'sentencia_if   : IF expresion THEN instrucciones_funct_list else END IF PTCOMA'
+    'sentencia_if   : IF expresionPLSQL THEN instrucciones_funct_list else END IF PTCOMA'
     t[0] = SentenciaIf(t[2], Principal(t[4]), t[5])
 
 def p_sentencia_if_else1(t):
@@ -542,7 +794,7 @@ def p_sentencia_if_else1(t):
     t[0] = Principal(t[2])
 
 def p_sentencia_if_else2(t):
-    'else     : ELSEIF expresion THEN instrucciones_funct_list else '
+    'else     : ELSEIF expresionPLSQL THEN instrucciones_funct_list else '
     t[0] = SentenciaIf(t[2], Principal(t[4]), t[5])
 
 def p_sentencia_if_else3(t):
@@ -563,15 +815,15 @@ def p_imprimir_lista_sent(t):
     t[0] = [t[1]]
 
 def p_imprimir_sent(t):
-    'sent_imprimir  : expresion'
+    'sent_imprimir  : expresionPLSQL'
     t[0] = t[1]
 
 def p_asignacion(t):
-    'asignacion    : ID DOSPUNTOS IGUAL expresion PTCOMA'
+    'asignacion    : ID DOSPUNTOS IGUAL expresionPLSQL PTCOMA'
     t[0] = Asignacion(t[1], t[4])
 
 def p_definicion(t):
-    'declaracion    :  ID tipo DOSPUNTOS IGUAL expresion PTCOMA'
+    'declaracion    :  ID tipo DOSPUNTOS IGUAL expresionPLSQL PTCOMA'
     t[0] = ListaDeclaraciones(t[2], [Declaracion(t[1], t[5])])
 
 def p_definicion_2(t):
@@ -579,7 +831,7 @@ def p_definicion_2(t):
     t[0] = ListaDeclaraciones(t[2], [Declaracion(t[1], None)])
 
 def p_definicion_3(t):
-    'declaracion    :  ID tipo DEFAULT expresion PTCOMA'
+    'declaracion    :  ID tipo DEFAULT expresionPLSQL PTCOMA'
     t[0] = ListaDeclaraciones(t[2], [Declaracion(t[1], t[4])])
 
 def p_tipo_dato(t):
@@ -643,15 +895,15 @@ def p_tipo_dato_tim3(t):
     t[0] = TIPO_DATO.STRING
 
 def p_expresion(t):
-    '''expresion    : log'''
+    '''expresionPLSQL    : log'''
     t[0] = t[1]
 
 def p_log(t):
-    '''log      : expresion AND expresion
-                | expresion ORR expresion'''
-    if t[2] == '&&':
+    '''log      : expresionPLSQL AND expresionPLSQL
+                | expresionPLSQL OR expresionPLSQL'''
+    if t[2] == 'AND':
         t[0] = ExpresionBinaria(t[1], t[3], OPERADOR.AND)
-    elif t[2] == '||':
+    elif t[2] == 'OR':
         t[0] = ExpresionBinaria(t[1], t[3], OPERADOR.OR)
 
 def p_log_uni(t):
@@ -716,7 +968,7 @@ def p_arit(t):
         t[0] = ExpresionBinaria(t[1], t[3], OPERADOR.XORB)
 
 def p_arit_parentecis(t):
-    ''' arit    : PARA expresion PARC'''
+    ''' arit    : PARA expresionPLSQL PARC'''
     t[0] = t[2]
 
 def p_arit_ID(t):
@@ -730,14 +982,14 @@ def p_arit_cadena(t):
 def p_arit_numero(t):
     ''' arit    : ENTERO
                 | FLOTANTE
-                | MENOS expresion %prec UMENOS
-                | NOTB expresion
-                | NOTT expresion'''
+                | MENOS expresionPLSQL %prec UMENOS
+                | NOTB expresionPLSQL
+                | NOT expresionPLSQL'''
     if t[1] == '-' :
         t[0] = ExpresionNegativo(t[2])
     elif t[1] == '~' :
         t[0] = ExpresionNOTBIN(t[2])
-    elif t[1] == '!':
+    elif t[1] == 'NOT':
         t[0] = ExpresionNOT(t[2])
     else:
         t[0] = ExpresionNumero(t[1])
