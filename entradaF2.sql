@@ -1,19 +1,11 @@
 CREATE DATABASE prueba1;
-CREATE DATABASE prueba2;
-CREATE DATABASE prueba3;
-CREATE DATABASE prueba4;
 USE prueba1;
-SHOW DATABASES;
-ALTER DATABASE prueba1 RENAME TO prueba5;
-SHOW DATABASES;
-ALTER DATABASE prueba4 OWNER TO julio1;
-SHOW DATABASES;
-ALTER DATABASE prueba4 OWNER TO CURRENT_USER;
-SHOW DATABASES;
-ALTER DATABASE prueba4 OWNER TO SESSION_USER;
-SHOW DATABASES;
-ALTER DATABASE prueba4 OWNER TO 'Julio2';
-SHOW DATABASES;
+CREATE TABLE usuario(
+    id_usuario INTEGER,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    fecha VARCHAR(50) 
+);
 
 
 
@@ -48,3 +40,11 @@ SELECT suma(17);
                      | SOME PARA select_insrt PARCn'''
                      
     #t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '+ str(t[3]) + ' '+ str(t[4]) + ' '
+
+ALTER TABLE usuario ADD COLUMN columna1 BOOLEAN,columna2 INTEGER,columna3 SMALLINT; 
+ALTER TABLE usuario ADD COLUMN columna4 MONEY,columna5 DECIMAL (5,2),columna6 NUMERIC (10,2); 
+ALTER TABLE usuario ADD COLUMN columna9 BIGINT,columna8 REAL,columna7 DOUBLE PRECISION; 
+ALTER TABLE usuario ADD COLUMN columna10 INTERVAL YEAR TO YEAR,columna11 INTERVAL,columna12 TIME; 
+ALTER TABLE usuario ADD COLUMN columna15 TIMESTAMP,columna14 DATE,columna13 CHARACTER VARYING (10); 
+ALTER TABLE usuario ADD COLUMN columna16 VARCHAR(50),columna18 CHAR(10),columns20 CHARACTER(9); 
+ALTER TABLE usuario ADD COLUMN columna17 CHAR(),columna19 CHARACTER(),columna21 SMALLINT; 
