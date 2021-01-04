@@ -2,12 +2,6 @@
 # TODO        INSTRUCCIONES
 #?######################################################
 
-    
-def p_instruccion9(t) :
-    'instruccion      : insert_insrt'
-    reporte_bnf.append("<instruccion> ::= <insert_insrt>")
-    t[0] = t[1]                     
-
 
 
 def p_instruccion_f_select(t):
@@ -28,68 +22,21 @@ def p_instruccion_f_select_union(t):
 # TODO        GRAMATICA INSTRUCCION INSERT
 #?######################################################
 
-def p_insert_insrt(t):
-    ' insert_insrt : INSERT INTO ID PARA lista_parametros_lista PARC  VALUES PARA lista_datos PARC PTCOMA '
-    reporte_bnf.append("<insert_insrt> ::= INSERT INTO ID PARA <lista_parametros_lista> PARC  VALUES PARA <lista_datos> PARC PTCOMA")
-    t[0] = Definicion_Insert(t[3], TIPO_INSERT.CON_PARAMETROS ,t[5], t[9])
-    
+  
 
-def p_opcion_lista_parametros_(t):
-    ' insert_insrt : INSERT INTO ID PARA  PARC  VALUES PARA lista_datos PARC PTCOMA '
-    reporte_bnf.append("<insert_insrt> ::= INSERT INTO ID PARA  PARC  VALUES PARA <lista_datos> PARC PTCOMA")
-    t[0] = Definicion_Insert(t[3], TIPO_INSERT.SIN_PARAMETROS ,None, t[8])
 
-def p_opcion_lista_parametros_vacios(t):
-    ' insert_insrt : INSERT INTO ID VALUES PARA lista_datos PARC PTCOMA '
-    reporte_bnf.append("<insert_insrt> ::= INSERT INTO ID VALUES PARA <lista_datos> PARC PTCOMA")
-    t[0] = Definicion_Insert(t[3], TIPO_INSERT.SIN_PARAMETROS ,None, t[6])
+
+
 
 
 #?######################################################
 # TODO        GRAMATICA INSTRUCCION LISTA INSERT
 #?######################################################
 
-def p_lista_parametros_lista(t):
-    ' lista_parametros_lista : lista_parametros_lista COMA ID'
-    reporte_bnf.append("<lista_parametros_lista> ::= <lista_parametros_lista> COMA ID")
-    t[1].append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]))
-    t[0] = t[1]
-
-def p_lista_parametros(t):
-    ' lista_parametros_lista : ID'
-    reporte_bnf.append("<lista_parametros_lista> ::= ID")
-    t[0] = [ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])]
 
 
-def p_parametros_lista_datos(t):
-    ' lista_datos : lista_datos COMA exclusiva_insert'
-    t[1].append(t[3])
-    t[0] = t[1]
 
 
-def p_parametros_exclusiva(t):
-    ' lista_datos : exclusiva_insert'
-    reporte_bnf.append("<lista_datos> ::= <exclusiva_insert>")
-    t[0] = [t[1]] 
-
-
-def p_expresion_lista(t):
-    ' exclusiva_insert : expresion'
-    reporte_bnf.append("<exclusiva_insert> ::= <expresion>") 
-    t[0] = t[1]
-
-
-def p_expresiones_excluva(t):
-    ''' exclusiva_insert : SUBSTRING PARA string_type COMA expresion COMA expresion PARC
-                        | MD5 PARA string_type PARC
-                        | TRIM PARA string_type PARC
-                        | SUBSTR PARA string_type COMA expresion COMA expresion PARC
-                        | NOW PARA PARC'''
-    if t[1].upper() == 'SUBSTRING' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.SUBSTRING,t[3],t[5],t[7])
-    elif t[1].upper() == 'MD5' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.MD5,t[3],None,None)
-    elif t[1].upper() == 'TRIM' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.TRIM,t[3],None,None)
-    elif t[1].upper() == 'SUBSTR' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.SUBSTRING,t[3],t[5],t[7])
-    elif t[1].upper() == 'NOW' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.NOW,None,None,None)
 
 #?######################################################
 # TODO        GRAMATICA ALTER TABLE
