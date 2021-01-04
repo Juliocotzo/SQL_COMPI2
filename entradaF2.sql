@@ -12,21 +12,20 @@ CREATE TABLE usuario1(
     apellido VARCHAR(50)
 );
 
-INSERT INTO usuario VALUES (1,'Julio','Cotzo');
-INSERT INTO usuario VALUES (2,'Monica','Sian');
-INSERT INTO usuario VALUES (3,'Diego','Berrios');
+CREATE INDEX test1_id_index ON tbUSUARIO (id_usuario);
+CREATE INDEX name ON tbUSUARIO USING HASH (id_usuario);
+CREATE INDEX test2_mm_idx ON tbUSUARIO (id_usuario, id_usuario);
+CREATE INDEX test2_info_nulls_low ON tbUSUARIO (id_usuario NULLS FIRST);
+CREATE INDEX test3_desc_index ON tbUSUARIO (id_usuario DESC NULLS LAST);
+CREATE UNIQUE INDEX name ON tbUSUARIO (id_usuario , id_usuario, id_usuario);
+CREATE INDEX test1_lower_col1_idx ON tbUSUARIO (lower(id_usuario));
+CREATE INDEX access_log_client_ip_ix ON tbUSUARIO (id_usuario)
+     WHERE NOT (id_usuario > inet  AND
+     id_usuario < inet );
 
-INSERT INTO usuario1 VALUES (1,'Julio','Cotzo');
-INSERT INTO usuario1 VALUES (2,'Monica2','Sian2');
-INSERT INTO usuario1 VALUES (3,'Diego2','Berrios2');
-
-SELECT * FROM usuario;
-SELECT * FROM usuario1;
-
-SELECT * FROM usuario
-UNION
-SELECT * FROM usuario1;
-
+CREATE INDEX mytable_cat_1 ON tbUSUARIO (id_usuario) WHERE category = 1;
+CREATE INDEX mytable_cat_2 ON tbUSUARIO (id_usuario) WHERE category = 2;
+CREATE INDEX mytable_cat_3 ON tbUSUARIO (id_usuario) WHERE category = 3;
 
 
 
