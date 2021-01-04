@@ -49,7 +49,6 @@ reservadas = {
     'currUser' : 'CURRENT_USER',
     'sessUser' : 'SESSION_USER',
     'add' : 'ADD',
-    'check' : 'CHECK',
     'column' : 'COLUMN',
     'references' : 'REFERENCES',
     'type' : 'TYPE',
@@ -239,10 +238,10 @@ reservadas = {
 
 tokens = [
     'PTCOMA',
-    'ASTERISCO',
+    'POR',
     'COMA',
-    'PAR_A',
-    'PAR_C',
+    'PARA',
+    'PARC',
     'FLOTANTE',
     'ESCAPE',
     'HEX',
@@ -251,37 +250,26 @@ tokens = [
     'CADENA',
     'ID',
     'PUNTO',
-    'MENIGQUE',
+    'MENORIGUAL',
     'NOIG',
-    'MAYIGQUE',
-    'MAYMAY',
-    'MENMEN',
-    'AMPERMEN',
-    'AMPERMAY',
-    'MENMENOR',
-    'AMPMENOR',
-    'ORAMPMAY',
-    'ORMAYMAY',
-    'ARROBAMAY',
-    'MENARROBA',
-    'CEJILLAIGUAL',
-    'AMPERSON_D',
-    'MENPOT',
-    'MAYPOT',
+    'MAYORIGUAL',
+    'SHIFTD',
+    'SHIFTI',
+    
 
-    'MENQUE',
-    'MAYQUE',
-    'DOBLEIG',
+    'MENOR',
+    'MAYOR',
+    'IGUALIGUAL',
     'NOIGUAL',
     'IGUAL',
-    'SUMA',
+    'MAS',
     'RESTA',
-    'DIVISION',
+    'DIV',
     'MODULO',
-    'Y',
-    'S_OR',
+    'ANDB',
+    'ORB',
     'HASHTAG',
-    'CEJILLA',
+    'NOTB',
     'D_DOSPTS',
     'D_OR',
     'DOSPUNTOS'
@@ -290,48 +278,11 @@ tokens = [
 ] + list(reservadas.values())
 
 #tokens
-t_D_DOSPTS      = r'::'
-t_PTCOMA        = r';'
-t_COMA          = r','
-t_MENIGQUE      = r'<='
-t_MAYIGQUE      = r'>='
-t_MAYMAY        = r'>>'
-t_MENMEN        = r'<<'
-t_NOIG          = r'<>'
-t_NOIGUAL       = r'!='
-t_DOBLEIG       = r'=='
 
-# ANCHOR
-t_AMPERMEN      = r'&<'
-t_AMPERMAY      = r'&>'
-t_MENMENOR      = r'<<\|'
-t_AMPMENOR      = r'&<\|'
-t_ORAMPMAY      = r'\|&>'
-t_ORMAYMAY      = r'\|>>'
-t_ARROBAMAY     = r'@>'
-t_MENARROBA     = r'<@'
-t_CEJILLAIGUAL  = r'~='
-t_AMPERSON_D    = r'&&'
-t_MENPOT        = r'<\^'
-t_MAYPOT        = r'>\^'
 
-t_DOSPUNTOS     = r'\:'
-t_SUMA          = r'\+'
-t_RESTA         = r'\-'
-t_DIVISION      = r'\\'
-t_ASTERISCO     = r'\*'
-t_MODULO        = r'\%'
-t_PAR_A         = r'\('
-t_PAR_C         = r'\)'
-t_PUNTO         = r'\.'
-t_MENQUE        = r'\<'
-t_MAYQUE        = r'\>'
-t_IGUAL         = r'\='
-t_D_OR          = r'\|\|'
-t_Y             = r'\&'
-t_S_OR          = r'\|'
-t_HASHTAG       = r'\#'
-t_CEJILLA       = r'\~'
+
+
+t_NOTB       = r'\~'
 
 
 
@@ -339,11 +290,11 @@ t_CEJILLA       = r'\~'
 
 # Asociación de operadores y precedencia
 precedence = (
-    ('left','MAYQUE','MENQUE','MAYIGQUE','MENIGQUE'),
+    ('left','MAYOR','MENOR','MAYORIGUAL','MENORIGUAL'),
     ('left','IGUAL','NOIG','NOIGUAL'),
     ('left','AND','OR'),
-    ('left','SUMA','RESTA'),
-    ('left','ASTERISCO','DIVISION'),
+    ('left','MAS','RESTA'),
+    ('left','POR','DIV'),
     ('nonassoc', 'IS'),
     ('right','UMINUS'),
     )
@@ -379,16 +330,6 @@ def p_instrucciones_instruccion(t) :
 #?######################################################
 
     
-def p_instruccion6(t) :
-    'instruccion      : alterDB_insrt'
-    reporte_bnf.append("<instruccion> ::= <alterDB_insrt>")
-    t[0] = t[1] 
-
-def p_instruccion7(t) :
-    'instruccion      : drop_insrt'
-    reporte_bnf.append("<instruccion> ::= <drop_insrt>")
-    t[0] = t[1] 
-    
 def p_instruccion8(t) :
     'instruccion      : alterTable_insrt'
     reporte_bnf.append("<instruccion> ::= <alterTable_insrt>")
@@ -420,19 +361,19 @@ def p_instruccion_f_select_union(t):
 #?######################################################
 
 def p_insert_insrt(t):
-    ' insert_insrt : INSERT INTO ID PAR_A lista_parametros_lista PAR_C  VALUES PAR_A lista_datos PAR_C PTCOMA '
-    reporte_bnf.append("<insert_insrt> ::= INSERT INTO ID PAR_A <lista_parametros_lista> PAR_C  VALUES PAR_A <lista_datos> PAR_C PTCOMA")
+    ' insert_insrt : INSERT INTO ID PARA lista_parametros_lista PARC  VALUES PARA lista_datos PARC PTCOMA '
+    reporte_bnf.append("<insert_insrt> ::= INSERT INTO ID PARA <lista_parametros_lista> PARC  VALUES PARA <lista_datos> PARC PTCOMA")
     t[0] = Definicion_Insert(t[3], TIPO_INSERT.CON_PARAMETROS ,t[5], t[9])
     
 
 def p_opcion_lista_parametros_(t):
-    ' insert_insrt : INSERT INTO ID PAR_A  PAR_C  VALUES PAR_A lista_datos PAR_C PTCOMA '
-    reporte_bnf.append("<insert_insrt> ::= INSERT INTO ID PAR_A  PAR_C  VALUES PAR_A <lista_datos> PAR_C PTCOMA")
+    ' insert_insrt : INSERT INTO ID PARA  PARC  VALUES PARA lista_datos PARC PTCOMA '
+    reporte_bnf.append("<insert_insrt> ::= INSERT INTO ID PARA  PARC  VALUES PARA <lista_datos> PARC PTCOMA")
     t[0] = Definicion_Insert(t[3], TIPO_INSERT.SIN_PARAMETROS ,None, t[8])
 
 def p_opcion_lista_parametros_vacios(t):
-    ' insert_insrt : INSERT INTO ID VALUES PAR_A lista_datos PAR_C PTCOMA '
-    reporte_bnf.append("<insert_insrt> ::= INSERT INTO ID VALUES PAR_A <lista_datos> PAR_C PTCOMA")
+    ' insert_insrt : INSERT INTO ID VALUES PARA lista_datos PARC PTCOMA '
+    reporte_bnf.append("<insert_insrt> ::= INSERT INTO ID VALUES PARA <lista_datos> PARC PTCOMA")
     t[0] = Definicion_Insert(t[3], TIPO_INSERT.SIN_PARAMETROS ,None, t[6])
 
 
@@ -471,11 +412,11 @@ def p_expresion_lista(t):
 
 
 def p_expresiones_excluva(t):
-    ''' exclusiva_insert : SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
-                        | MD5 PAR_A string_type PAR_C
-                        | TRIM PAR_A string_type PAR_C
-                        | SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C
-                        | NOW PAR_A PAR_C'''
+    ''' exclusiva_insert : SUBSTRING PARA string_type COMA expresion COMA expresion PARC
+                        | MD5 PARA string_type PARC
+                        | TRIM PARA string_type PARC
+                        | SUBSTR PARA string_type COMA expresion COMA expresion PARC
+                        | NOW PARA PARC'''
     if t[1].upper() == 'SUBSTRING' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.SUBSTRING,t[3],t[5],t[7])
     elif t[1].upper() == 'MD5' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.MD5,t[3],None,None)
     elif t[1].upper() == 'TRIM' : t[0] = Funcion_Exclusivas_insert(INSERT_EXCLUSIVA.TRIM,t[3],None,None)
@@ -559,28 +500,28 @@ def p_alterTable_add_tipodato(t):
         t[0] = Crear_tipodato(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]),t[2][0],None,None)
 
 def p_alterTable6(t):
-    'alterTable_insrt : ALTER TABLE ID ADD CHECK PAR_A expresion_logica PAR_C PTCOMA' 
-    reporte_bnf.append("<alterTable_insrt> ::= ALTER TABLE ID ADD CHECK PAR_A <expresion_logica> PAR_C PTCOMA")
+    'alterTable_insrt : ALTER TABLE ID ADD CHECK PARA expresion_logica PARC PTCOMA' 
+    reporte_bnf.append("<alterTable_insrt> ::= ALTER TABLE ID ADD CHECK PARA <expresion_logica> PARC PTCOMA")
     t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CHECK,t[3],None,None,t[7],None,None)
 
 def p_alterTable8(t):
-    'alterTable_insrt : ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C PTCOMA' 
-    reporte_bnf.append("<alterTable_insrt> ::= ALTER TABLE ID ADD FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C PTCOMA")
+    'alterTable_insrt : ALTER TABLE ID ADD FOREIGN KEY PARA ID PARC REFERENCES ID PARA ID PARC PTCOMA' 
+    reporte_bnf.append("<alterTable_insrt> ::= ALTER TABLE ID ADD FOREIGN KEY PARA ID PARC REFERENCES ID PARA ID PARC PTCOMA")
     t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_FOREIGN,t[3],t[8],t[11],None,t[13],None)
      
 def p_alterTable7(t):
-    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C PTCOMA' 
-    reporte_bnf.append("<alterTable_insrt> ::= ER TABLE ID ADD CONSTRAINT ID CHECK PAR_A <expresion_logica> PAR_C PTCOMA")
+    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID CHECK PARA expresion_logica PARC PTCOMA' 
+    reporte_bnf.append("<alterTable_insrt> ::= ER TABLE ID ADD CONSTRAINT ID CHECK PARA <expresion_logica> PARC PTCOMA")
     t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CONSTRAINT_CHECK,t[3],t[6],None,t[9],None,None)
 
 def p_constraint_esp(t):
-    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A campos_c PAR_C PTCOMA'
-    reporte_bnf.append("<alterTable_insrt> ::= ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PAR_A <campos_c> PAR_C PTCOMA")
+    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PARA campos_c PARC PTCOMA'
+    reporte_bnf.append("<alterTable_insrt> ::= ALTER TABLE ID ADD CONSTRAINT ID UNIQUE PARA <campos_c> PARC PTCOMA")
     t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CONSTRAINT_UNIQUE,t[3],t[6],None,None,t[9],None)
 
 def p_constraint_esp_1(t):
-    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C  PTCOMA'
-    reporte_bnf.append("<alterTable_insrt> ::= ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C  PTCOMA")
+    'alterTable_insrt : ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PARA ID PARC REFERENCES ID PARA ID PARC  PTCOMA'
+    reporte_bnf.append("<alterTable_insrt> ::= ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PARA ID PARC REFERENCES ID PARA ID PARC  PTCOMA")
     t[0] = Crear_altertable(TIPO_ALTER_TABLE.ADD_CONSTRAINT_FOREIGN,t[3],t[6],t[10],None,t[13],t[15])
 
 def p_constraint_esp_null(t):
@@ -610,150 +551,11 @@ def p_alerTable_alter_1(t):
     t[0] = [t[1]]
 
 
-# DROP
-#?######################################################
-# TODO        GRAMATICA DROP TABLE
-#?######################################################
 
 
-def p_dropTable(t):
-    ' drop_insrt : DROP TABLE lista_drop_id PTCOMA'
-    reporte_bnf.append("<drop_insrt> ::= DROP TABLE <lista_drop_id> PTCOMA")
-    t[0] = Crear_Drop(t[3])
-
-def p_lista_tabla_lista(t):
-    ' lista_drop_id :   lista_drop_id COMA ID '
-    reporte_bnf.append("<lista_drop_id> ::= <lista_drop_id> COMA ID")
-    t[1].append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]))
-    t[0] = t[1]
-
-def p_lista_tabla_lista2(t):
-    ' lista_drop_id : ID '
-    reporte_bnf.append("<lista_drop_id> ::= ID")
-    t[0] = [ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])]
 
 
-##########################################
-
-
-def p_expresion_dato(t):
-    ''' expresion_dato : string_type '''
-    reporte_bnf.append("<expresion_dato> ::= <string_type>")
-    t[0] = t[1]
-
-def p_expresion_dato2(t):
-    ' expresion_dato : RESTA ENTERO %prec UMINUS '
-    reporte_bnf.append("<expresion_dato> ::= RESTA ENTERO %prec UMINUS")
-    t[0] = ExpresionNegativo(TIPO_VALOR.NEGATIVO,-t[2])
-
-def p_expresion_dato3(t):
-    ' expresion_dato : ID PUNTO ID'
-    reporte_bnf.append("<expresion_dato> ::= ID PUNTO ID")
-    t[0] = ExpresionIdentificadorDoble(TIPO_VALOR.DOBLE,t[1],t[3])
-
-def p_expresion_dato_numero(t):
-    'expresion_dato : expresion_numero'
-    reporte_bnf.append("<expresion_dato> ::= <expresion_numero>")
-    t[0] = t[1]
-
-def p_expresion_numero(t):
-    'expresion_numero :  ENTERO'
-    reporte_bnf.append("<expresion_numero> ::= ENTERO")
-    t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1])
-
-def p_expresion_numero1(t):
-    'expresion_numero : FLOTANTE'
-    reporte_bnf.append("<expresion_numero> ::= FLOTANTE")
-    t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1])
-    
    
-#?######################################################
-# TODO        GRAMATICA ALTER DATABASE
-#?######################################################
-
-
-def p_AlterDB_opc1(t):
-    ' alterDB_insrt : ALTER DATABASE ID RENAME TO ID PTCOMA'
-    reporte_bnf.append("<alterDB_insrt> ::= ALTER DATABASE ID RENAME TO ID PTCOMA")
-    t[0] = Create_Alterdatabase(t[3],t[6])
-def p_AlterDB_opc2(t):
-    ' alterDB_insrt : ALTER DATABASE ID OWNER TO usuariosDB PTCOMA'
-    reporte_bnf.append("<alterDB_insrt> ::= ALTER DATABASE ID OWNER TO <usuariosDB> PTCOMA")
-    t[0] = Create_Alterdatabase(t[3],t[6]) 
-def p_usuarioDB(t):
-    ' usuariosDB :  ID '
-    reporte_bnf.append("<usuariosDB> ::= ID")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
-def p_usuarioDB2(t):
-    ' usuariosDB : CURRENT_USER '
-    reporte_bnf.append("<usuariosDB> ::= CURRENT_USER")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
-def p_usuarioDB3(t):
-    ' usuariosDB : SESSION_USER '
-    reporte_bnf.append("<usuariosDB> ::= SESSION_USER")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
-def p_usuarioDB4(t):
-    ' usuariosDB : CADENA '
-    reporte_bnf.append("<usuariosDB> ::= CADENA")
-    t[0] = ExpresionComillaSimple(TIPO_VALOR.CADENA,t[1])
-
-
-
-
-
-
-#?######################################################
-# TODO        ADD PRODUCCIONES
-#?######################################################
-
-def p_constraint_esp_(t):
-    'constraint_esp : CHECK PAR_A expresion_logica PAR_C '
-    reporte_bnf.append("<constraint_esp> ::= CHECK PAR_A <expresion_logica> PAR_C")
-    temp = [] 
-    temp.append(t[1].upper())
-    temp.append([t[3]])
-    t[0] = temp
-
-
-
-def p_constraint_esp1(t):
-    'constraint_esp :  UNIQUE PAR_A campos_c PAR_C '
-    reporte_bnf.append("<constraint_esp> ::= UNIQUE PAR_A <campos_c> PAR_C")
-    temp = [] 
-    temp.append(t[1].upper())
-    temp.append(t[3])
-    t[0] = temp
-
-def p_constraint_esp2(t):
-    'constraint_esp : FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C '
-    reporte_bnf.append("<constraint_esp> ::= FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C")
-    temp = []
-    temp.append(t[1].upper())
-    temp.append(t[4])
-    temp.append(t[7])
-    temp.append([t[9]])
-    t[0] = temp
-
-
-#YA ESTA
-def p_cons_campos(t):
-    'campos_c : campos_c COMA ID '
-    reporte_bnf.append("<campos_c> ::= <campos_c> COMA ID")
-    t[1].append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[3]))
-    t[0] = t[1]
-
-def p_cons_campos_id(t):
-    ' campos_c : ID'
-    reporte_bnf.append("<campos_c> ::= ID")
-    t[0] = [ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])]
-
-
-#FA:TA
-
-def p_cT_options2(t):
-    ' cT_options : C_check'
-    reporte_bnf.append("<cT_options> ::= <C_check>")
-    t[0] = t[1]
 
 
 
@@ -762,61 +564,6 @@ def p_cT_options2(t):
 
 
 
-    
-    #--------------------------------------------------
-def p_default(t):
-    ' O_DEFAULT : DEFAULT expresion_dato_default '
-    reporte_bnf.append("<O_DEFAULT> ::= DEFAULT <expresion_dato_default>")    
-    t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.DEFAULT,None,None,t[2])
-
-
-
-        
-            
-
-def p_Ccheck(t):
-    ''' C_check : CHECK PAR_A expresion_logica PAR_C
-                | CONSTRAINT ID CHECK PAR_A expresion_logica PAR_C '''
-
-    if t[1].upper() == 'CHECK':
-        reporte_bnf.append("<C_check> ::= CHECK PAR_A <expresion_logica> PAR_C")
-        t[0] =  definicion_constraint(None,OPCIONES_CONSTRAINT.CHECK,None,None,t[3])
-    else:
-        reporte_bnf.append("<C_check> ::= CONSTRAINT ID CHECK PAR_A <expresion_logica> PAR_C")
-        t[0] =  definicion_constraint(t[2],OPCIONES_CONSTRAINT.CHECK,None,None,t[3])
-
-
-
-    
-##########################################################
-##########################################################
-##########################################################
-####################################
-
-def p_createTable_pk(t):
-    ' cuerpo_createTable :  PRIMARY KEY PAR_A campos_c PAR_C'
-    reporte_bnf.append("<cuerpo_createTable> ::= PRIMARY KEY PAR_A <campos_c> PAR_C")
-    t[0] = LLave_Primaria(t[4])
-
-def p_createTable_fk(t):
-    ' cuerpo_createTable : FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C'
-    reporte_bnf.append("<cuerpo_createTable> ::= FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C")
-    t[0] = Definicon_Foranea(t[4], t[7], t[9])
-
-def p_createTable_unique(t):
-    ' cuerpo_createTable : UNIQUE PAR_A campos_c PAR_C '
-    reporte_bnf.append("<cuerpo_createTable> ::= UNIQUE PAR_A <campos_c> PAR_C")
-    t[0] = Lista_Parametros(t[3])
-
-def p_createTable_constraint(t):
-    ' cuerpo_createTable : CONSTRAINT ID constraint_esp '
-    reporte_bnf.append("<cuerpo_createTable> ::= CONSTRAINT ID <constraint_esp>")
-    if t[3][0] == 'CHECK':
-        t[0] = definicion_constraint(t[2], t[3][0], None, None ,t[3][1])
-    elif t[3][0] == 'UNIQUE':
-        t[0] = definicion_constraint(t[2], t[3][0], None, None ,t[3][1])
-    elif t[3][0] == 'FOREIGN':
-        t[0] = definicion_constraint(t[2], t[3][0], t[3][2], t[3][1] ,t[3][3])
 
 #?######################################################
 # TODO      TIPO DE DATO
@@ -865,8 +612,8 @@ def p_tipo_dato_money(t):
     t[0] = temp
 
 def p_tipo_dato_decimal(t):
-    ' TIPO_DATO : DECIMAL PAR_A ENTERO COMA ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO> ::= DECIMAL PAR_A ENTERO COMA ENTERO PAR_C")
+    ' TIPO_DATO : DECIMAL PARA ENTERO COMA ENTERO PARC'
+    reporte_bnf.append("<TIPO_DATO> ::= DECIMAL PARA ENTERO COMA ENTERO PARC")
     temp = []
     temp.append(t[1].upper())
     temp.append(t[3])
@@ -874,8 +621,8 @@ def p_tipo_dato_decimal(t):
     t[0] = temp
 
 def p_tipo_dato_numerico(t):
-    ' TIPO_DATO : NUMERIC PAR_A ENTERO COMA ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO> ::= NUMERIC PAR_A ENTERO COMA ENTERO PAR_C")
+    ' TIPO_DATO : NUMERIC PARA ENTERO COMA ENTERO PARC'
+    reporte_bnf.append("<TIPO_DATO> ::= NUMERIC PARA ENTERO COMA ENTERO PARC")
     temp = []
     temp.append(t[1].upper())
     temp.append(t[3])
@@ -942,47 +689,47 @@ def p_tipo_dato(t):
     t[0] = temp
 
 def p_tipo_dato_character_varying(t):
-    ' TIPO_DATO : CHARACTER VARYING PAR_A ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO> ::= CHARACTER VARYING PAR_A ENTERO PAR_C")
+    ' TIPO_DATO : CHARACTER VARYING PARA ENTERO PARC'
+    reporte_bnf.append("<TIPO_DATO> ::= CHARACTER VARYING PARA ENTERO PARC")
     temp = []
     temp.append(t[2].upper())
     temp.append(t[3])
     t[0] = temp
 
 def p_tipo_dato_varchar(t):
-    ' TIPO_DATO : VARCHAR PAR_A ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO> ::= VARCHAR PAR_A ENTERO PAR_C")
+    ' TIPO_DATO : VARCHAR PARA ENTERO PARC'
+    reporte_bnf.append("<TIPO_DATO> ::= VARCHAR PARA ENTERO PARC")
     temp = []
     temp.append(t[1].upper())
     temp.append(t[3])
     t[0] = temp
 
 def p_tipo_dato_char(t):
-    ' TIPO_DATO : CHAR PAR_A ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO> ::= CHAR PAR_A ENTERO PAR_C")
+    ' TIPO_DATO : CHAR PARA ENTERO PARC'
+    reporte_bnf.append("<TIPO_DATO> ::= CHAR PARA ENTERO PARC")
     temp = []
     temp.append(t[1].upper())
     temp.append(t[3])
     t[0] = temp
 
 def p_tipo_dato_character(t):
-    ' TIPO_DATO : CHARACTER PAR_A ENTERO PAR_C'
-    reporte_bnf.append("<TIPO_DATO> ::= CHARACTER PAR_A ENTERO PAR_C")
+    ' TIPO_DATO : CHARACTER PARA ENTERO PARC'
+    reporte_bnf.append("<TIPO_DATO> ::= CHARACTER PARA ENTERO PARC")
     temp = []
     temp.append(t[1].upper())
     temp.append(t[3])
     t[0] = temp
 
 def p_tipo_dato_char_no_esp(t):
-    ' TIPO_DATO : CHAR PAR_A PAR_C'
-    reporte_bnf.append("<TIPO_DATO> ::= CHAR PAR_A PAR_C")
+    ' TIPO_DATO : CHAR PARA PARC'
+    reporte_bnf.append("<TIPO_DATO> ::= CHAR PARA PARC")
     temp = []
     temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
     t[0] = temp
 
 def p_tipo_dato_character_no_esp(t):
-    ' TIPO_DATO : CHARACTER PAR_A PAR_C'
-    reporte_bnf.append("<TIPO_DATO> ::= CHARACTER PAR_A PAR_C")
+    ' TIPO_DATO : CHARACTER PARA PARC'
+    reporte_bnf.append("<TIPO_DATO> ::= CHARACTER PARA PARC")
     temp = []
     temp.append(ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1]))
     t[0] = temp
@@ -1180,8 +927,8 @@ def p_opcion_s(t):
     t[0] = ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])
 
 def p_opcion_s2(t):
-    ' from_s : PAR_A'
-    reporte_bnf.append("<from_s> ::= PAR_A")
+    ' from_s : PARA'
+    reporte_bnf.append("<from_s> ::= PARA")
     t[0] = t[1]
 
 def p_sobre_Nombre(t):
@@ -1232,18 +979,18 @@ def p_alias3(t):
     t[0] = temp
 
 def p_opcion_select_tm_extract(t):
-    'opcion_select_tm : EXTRACT PAR_A extract_time FROM TIMESTAMP CADENA  PAR_C '
-    reporte_bnf.append("<opcion_select_tm> ::= EXTRACT PAR_A <extract_time> FROM TIMESTAMP CADENA  PAR_C")
+    'opcion_select_tm : EXTRACT PARA extract_time FROM TIMESTAMP CADENA  PARC '
+    reporte_bnf.append("<opcion_select_tm> ::= EXTRACT PARA <extract_time> FROM TIMESTAMP CADENA  PARC")
     t[0] = Create_select_time(SELECT_TIME.EXTRACT,t[3],t[6])
 
 def p_opcion_select_tm_date(t):
-    'opcion_select_tm : DATE_PART PAR_A CADENA COMA INTERVAL CADENA PAR_C  '
-    reporte_bnf.append("<opcion_select_tm> ::= DATE_PART PAR_A CADENA COMA INTERVAL CADENA PAR_C")
+    'opcion_select_tm : DATE_PART PARA CADENA COMA INTERVAL CADENA PARC  '
+    reporte_bnf.append("<opcion_select_tm> ::= DATE_PART PARA CADENA COMA INTERVAL CADENA PARC")
     t[0] = Create_select_time(SELECT_TIME.DATE_PART,t[3],t[6])
 
 def p_opcion_select_tm_now(t):
-    'opcion_select_tm : NOW PAR_A PAR_C '
-    reporte_bnf.append("<opcion_select_tm> ::= NOW PAR_A PAR_C")
+    'opcion_select_tm : NOW PARA PARC '
+    reporte_bnf.append("<opcion_select_tm> ::= NOW PARA PARC")
     t[0] = Create_select_time(SELECT_TIME.NOW,None,None)
 
 def p_opcion_select_tm_current(t):
@@ -1266,9 +1013,9 @@ def p_opcion_select_tm_timestamp(t):
 #    t[0] = t[1]
     
 #def p_tiempo(t):
-#    '''tiempo : EXTRACT PAR_A extract_time FROM string_type  PAR_C 
-#              | DATE_PART PAR_A CADENA COMA INTERVAL CADENA PAR_C  
-#              | NOW PAR_A PAR_C 
+#    '''tiempo : EXTRACT PARA extract_time FROM string_type  PARC 
+#              | DATE_PART PARA CADENA COMA INTERVAL CADENA PARC  
+#              | NOW PARA PARC 
 #              | CURRENT_DATE 
 #              | CURRENT_TIME 
 #              | TIMESTAMP CADENA '''
@@ -1642,13 +1389,13 @@ def p_opcion_from_0_0_1_0_0_0_0_0(t):
 #? ####################################################################
 
 def p_opcion_from_2(t):
-    'opcion_from :   select_insrt PAR_C ID '
-    reporte_bnf.append("<opcion_from> ::= <select_insrt> PAR_C ID")
+    'opcion_from :   select_insrt PARC ID '
+    reporte_bnf.append("<opcion_from> ::= <select_insrt> PARC ID")
     t[0] = Create_hijo_select(OPCIONES_SELECT.SUBCONSULTA,t[1],t[3])
 
 def p_opcion_from_3(t):
-    'opcion_from :   select_insrt PAR_C'
-    reporte_bnf.append("<opcion_from> ::= <select_insrt> PAR_C")
+    'opcion_from :   select_insrt PARC'
+    reporte_bnf.append("<opcion_from> ::= <select_insrt> PARC")
     t[0] = Create_hijo_select(OPCIONES_SELECT.SUBCONSULTA,t[1],None)
 
 def p_cond_where(t):
@@ -1691,9 +1438,9 @@ def p_opc_lim(t):
     t[0] = ExpresionEntero(TIPO_VALOR.NUMERO,t[1])
 
 def p_opc_lim2(t):
-    ' opc_lim : ASTERISCO '
-    reporte_bnf.append("<opc_lim> ::= ASTERISCO")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.ASTERISCO,t[1])
+    ' opc_lim : POR '
+    reporte_bnf.append("<opc_lim> ::= POR")
+    t[0] = ExpresionIdentificador(TIPO_VALOR.POR,t[1])
 
 def p_ORDER(t):
     ''' orden : DESC '''
@@ -1709,107 +1456,12 @@ def p_ORDER2(t):
 
 
 
-#? ####################################################################
-# TODO               EXPRESION 
-#? ####################################################################
 
-
-def p_agrupacion_expresion(t):
-    ' agrupacion_expresion : PAR_A expresion PAR_C'
-    reporte_bnf.append("<agrupacion_expresion> ::= PAR_A <expresion> PAR_C")
-    t[0] = t[2]
-      
-#! modificaciones 
-def p_expresion(t):
-    ''' expresion :    expresion SUMA expresion
-                     | expresion RESTA expresion
-                     | expresion ASTERISCO expresion
-                     | expresion DIVISION expresion
-                     | expresion MODULO expresion
-                     | expresion MAYMAY expresion
-                     | expresion MENMEN expresion
-                     | CEJILLA expresion
-                     | expresion HASHTAG expresion
-                     | S_OR expresion
-                     | D_OR expresion
-                     | expresion Y expresion           
-                     | AVG PAR_A expresion PAR_C 
-                     | MAX PAR_A expresion PAR_C
-                     | MIN PAR_A expresion PAR_C             
-                     | ALL PAR_A select_insrt PAR_C
-                     | SOME PAR_A select_insrt PAR_C 
-                     | expresion D_OR expresion'''
-
-    if t[2] == '+':
-        reporte_bnf.append("<expresion> ::= <expresion> SUMA <expresion>")
-        t[0] = ExpresionBinaria(t[1],t[3],OPERACION_ARITMETICA.MAS)
-    elif t[2] == '-':
-        reporte_bnf.append("<expresion> ::= <expresion> RESTA <expresion>")
-        t[0] = ExpresionBinaria(t[1],t[3],OPERACION_ARITMETICA.MENOS)
-    elif t[2] == '*':
-        reporte_bnf.append("<expresion> ::= <expresion> ASTERISCO <expresion>")
-        t[0] = ExpresionBinaria(t[1],t[3],OPERACION_ARITMETICA.ASTERISCO)
-    elif t[2] == '/':
-        reporte_bnf.append("<expresion> ::= <expresion> DIVISION <expresion>")
-        t[0] = ExpresionBinaria(t[1],t[3],OPERACION_ARITMETICA.DIVIDIDO)
-    elif t[2] == '%':
-        reporte_bnf.append("<expresion> ::= <expresion> MODULO <expresion>")
-        t[0] = ExpresionBinaria(t[1],t[3],OPERACION_ARITMETICA.MODULO)
-    elif t[2] == '>>':
-        reporte_bnf.append("<expresion> ::= <expresion> MAYMAY <expresion>")
-        t[0] = ExpresionBinaria(t[1],t[3],OPERACION_ARITMETICA.MAYMAY)
-    elif t[2] == '<<':
-        reporte_bnf.append("<expresion> ::= <expresion> MENMEN <expresion>")
-        t[0] = ExpresionBinaria(t[1],t[3],OPERACION_ARITMETICA.MENMEN)
-    elif t[1] == '~':
-        reporte_bnf.append("<expresion> ::= CEJILLA <expresion>")
-        t[0] = ExpresionBinaria(t[2],None,OPERACION_ARITMETICA.CEJILLA)
-    elif t[2] == '#':
-        reporte_bnf.append("<expresion> ::= <expresion> HASHTAG <expresion>")
-        t[0] = ExpresionBinaria(t[1],t[3],OPERACION_ARITMETICA.HASTAG)
-    elif t[1] == '|':
-        reporte_bnf.append("<expresion> ::= S_OR <expresion>")
-        t[0] = ExpresionBinaria(t[2],None,OPERACION_ARITMETICA.S_OR)
-    elif t[1] == '||':
-        reporte_bnf.append("<expresion> ::= D_OR <expresion>")
-        t[0] = ExpresionBinaria(t[2],None,OPERACION_ARITMETICA.D_OR)
-    elif t[2] == '&':
-        reporte_bnf.append("<expresion> ::= <expresion> Y <expresion>")
-        t[0] = ExpresionBinaria(t[1],t[3],OPERACION_ARITMETICA.AMPERSON)
-    elif t[1] == 'AVG':
-        reporte_bnf.append("<expresion> ::= AVG PAR_A <expresion> PAR_C")
-        t[0] = ExpresionBinaria(t[3],None,OPERACION_ARITMETICA.AVG)
-    elif t[1] == 'MAX':
-        reporte_bnf.append("<expresion> ::= MAX PAR_A <expresion> PAR_C")
-        t[0] = ExpresionBinaria(t[3],None,OPERACION_ARITMETICA.MAX)
-    elif t[1] == 'MIN':
-        reporte_bnf.append("<expresion> ::= MIN PAR_A <expresion> PAR_C")
-        t[0] = ExpresionBinaria(t[3],None,OPERACION_ARITMETICA.MIN)
-    elif t[1] == 'ALL':
-        reporte_bnf.append("<expresion> ::= ALL PAR_A <expresion> PAR_C")
-        t[0] = ExpresionBinaria(t[3],None,OPERACION_ARITMETICA.ALL)
-    elif t[1] == 'SOME':
-        reporte_bnf.append("<expresion> ::= SOME PAR_A <select_insrt> PAR_C")
-        t[0] = ExpresionBinaria(t[3],None,OPERACION_ARITMETICA.SOME)
  
 #? ####################################################################
-# TODO          EXPRESION DATOS
+# TODO          EXPRESION DATOS - FALTA
 #? ####################################################################
-   
-def p_expresion3(t):
-    ' expresion : PAR_A expresion_logica PAR_C '
-    reporte_bnf.append("<expresion> ::= PAR_A <expresion_logica> PAR_C")
-    t[0] = t[2]
 
-def p_expresion_boolean_true(t):
-    ''' expresion :  TRUE'''
-    reporte_bnf.append("<expresion> ::= TRUE")
-    t[0] = ExpresionBooleana(OPERACION_LOGICA.TRUE,True)
-    
-def p_expresion_boolean_false(t):
-    ''' expresion :  FALSE'''
-    reporte_bnf.append("<expresion> ::= FALSE")
-    t[0] = ExpresionBooleana(OPERACION_LOGICA.FALSE,False)
 
 def p_sin_some_any(t):
     '''sin_some_any : SOME '''
@@ -1824,105 +1476,9 @@ def p_sin_some_any2(t):
 
 
 
-#? ####################################################################
-# TODO          GRAMATICA PARA EXPRESION
-#? ####################################################################
-
-def p_expresion_relacional(t):
-    ''' expresion_relacional : expresion MAYQUE expresion
-                             | expresion MENQUE expresion
-                             | expresion MAYIGQUE expresion
-                             | expresion MENIGQUE expresion
-                             | expresion DOBLEIG expresion
-                             | expresion IGUAL expresion
-                             | expresion NOIG expresion
-                             | expresion NOIGUAL expresion'''
-
-    if t[2] == '>':
-        reporte_bnf.append("<expresion_relacional> ::= <expresion> MAYQUE <expresion>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYQUE)
-    elif t[2] == '<':
-        reporte_bnf.append("<expresion_relacional> ::= <expresion> MENQUE <expresion>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MENQUE)
-    elif t[2] == '>=':
-        reporte_bnf.append("<expresion_relacional> ::= <expresion> MAYIGQUE <expresion>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYIGQUE)
-    elif t[2] == '<=':
-        reporte_bnf.append("<expresion_relacional> ::= <expresion> MENIGQUE <expresion>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MENIGQUE)
-    elif t[2] == '==':
-        reporte_bnf.append("<expresion_relacional> ::= <expresion> DOBLEIG <expresion>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.DOBLEIGUAL)
-    elif t[2] == '=':
-        reporte_bnf.append("<expresion_relacional> ::= <expresion> IGUAL <expresion>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.IGUAL)
-    elif t[2] == '<>':
-        reporte_bnf.append("<expresion_relacional> ::= <expresion> NOIG <expresion>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.NOIG)
-    elif t[2] == '!=':
-        reporte_bnf.append("<expresion_relacional> ::= <expresion> NOIGUAL <expresion>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.DIFERENTE)    
-
-def p_expresion_relacional_exp(t):
-    ' expresion_relacional : expresion '
-    reporte_bnf.append("<expresion_relacional> ::= <expresion>")
-    t[0] = t[1]
-
-def p_expresion_logica(t):
-    ''' expresion_logica : expresion_relacional AND expresion_logica
-                        |  expresion_relacional OR expresion_logica'''
-    if t[2].upper() == 'AND':
-        reporte_bnf.append("<expresion_logica> ::= <expresion_relacional> AND <expresion_logica>")
-        t[0] = ExpresionLogica(t[1],t[3],OPERACION_LOGICA.AND)
-    elif t[2].upper() == 'OR':
-        reporte_bnf.append("<expresion_logica> ::= <expresion_relacional> OR <expresion_logica>")
-        t[0] == ExpresionLogica(t[1],t[3],OPERACION_LOGICA.OR)
-
-def p_expresion_logica_not(t):
-    ''' expresion_logica : NOT expresion_logica'''
-    reporte_bnf.append("<expresion_logica> ::= NOT <expresion_logica>")
-    t[0] = ExpresionLogica(t[2],None,OPERACION_LOGICA.NOT)
-
-def p_expresion_logica_rel(t):
-    ''' expresion_logica : expresion_relacional''' 
-    reporte_bnf.append("<expresion_logica> ::= <expresion_relacion>")
-    t[0] = t[1]
-
-def p_expresion2(t):
-    ''' expresion :   expresion_dato '''
-    reporte_bnf.append("<expresion> ::= <expresion_dato>")
-    t[0] = t[1]
-
-def p_expresion31(t):
-    ''' expresion : select_insrt '''
-    reporte_bnf.append("<expresion> ::= <select_insrt>")
-    t[0] = t[1]
-
-def p_expresion4(t):
-    ''' expresion : sum_insrt '''
-    reporte_bnf.append("<expresion> ::= <sum_insrt>")
-    t[0] = t[1]
-
-def p_expresion5(t):
-    ''' expresion : count_insrt '''
-    reporte_bnf.append("<expresion> ::= <count_insrt>")
-    t[0] = t[1]
 
 
-#? ####################################################################
-# TODO          GRAMATICA PARA LA INSTRUCCION DE SUM ----------
-#? ####################################################################
-def p_sum_insert(t):
-    ' sum_insrt : SUM agrupacion_expresion'
-    reporte_bnf.append("<sum_insrt> ::= SUM <agrupacion_expresion>")
 
-#? ####################################################################
-# TODO         GRAMATICA PAR LA INSTRUCCIONN DE COUNT ---------
-#? ####################################################################
-
-def p_count_insrt(t):
-    ' count_insrt : COUNT agrupacion_expresion '
-    reporte_bnf.append("<count_insrt> ::= COUNT <agrupacion_expresion>")
 
 
 #? ####################################################################
@@ -1930,14 +1486,9 @@ def p_count_insrt(t):
 #? ####################################################################
 
 
-def p_opcion_select(t):
-    ' opcion_select : case_insrt '
-    reporte_bnf.append("<opcion_select> ::= <case_insrt>")
-    t[0] = t[1]
-
 def p_opcion_select1(t):
-    ' opcion_select :  PAR_A select_insrt PAR_C '
-    reporte_bnf.append("<opcion_select> ::= PAR_A <select_insrt> PAR_C")
+    ' opcion_select :  PARA select_insrt PARC '
+    reporte_bnf.append("<opcion_select> ::= PARA <select_insrt> PARC")
     t[0] = t[2]
 
 def p_opcion_select2(t):
@@ -1951,23 +1502,23 @@ def p_opcion_select3(t):
     t[0] = t[1]
 
 def p_opcion_select4(t):
-    'opcion_select :  ASTERISCO '
-    reporte_bnf.append("<opcion_select> ::= ASTERISCO")
-    t[0] = ExpresionIdentificador(TIPO_VALOR.ASTERISCO,t[1])
+    'opcion_select :  POR '
+    reporte_bnf.append("<opcion_select> ::= POR")
+    t[0] = ExpresionIdentificador(TIPO_VALOR.POR,t[1])
 
 def p_opcion_select5(t):
-    ' opcion_select : ID PUNTO ASTERISCO '
-    reporte_bnf.append("<opcion_select> ::= ID PUNTO ASTERISCO")
+    ' opcion_select : ID PUNTO POR '
+    reporte_bnf.append("<opcion_select> ::= ID PUNTO POR")
     t[0] = ExpresionIdentificadorDoble(TIPO_VALOR.ID_ASTERISCO,t[1],t[3])
 
 def p_greatest_insrt(t):
-    ''' greatest_insrt : GREATEST PAR_A greatest_val PAR_C
-                        | LEAST PAR_A greatest_val PAR_C'''
+    ''' greatest_insrt : GREATEST PARA greatest_val PARC
+                        | LEAST PARA greatest_val PARC'''
     if t[1].upper() == 'GREATEST':
-        reporte_bnf.append("<greates_insrt> ::=  GREATEST PAR_A <greatest_val> PAR_C")
+        reporte_bnf.append("<greates_insrt> ::=  GREATEST PARA <greatest_val> PARC")
         t[0] = Create_select_uno(OPCIONES_SELECT.GREATEST,None,None,None,t[3],None,None)
     elif t[1].upper() == 'LEAST':
-        reporte_bnf.append("<greates_insrt> ::= LEAST PAR_A <greatest_val> PAR_C")
+        reporte_bnf.append("<greates_insrt> ::= LEAST PARA <greatest_val> PARC")
         t[0] = Create_select_uno(OPCIONES_SELECT.LEAST,None,None,None,t[3],None,None)
 
 def p_greatest_insrt1(t):
@@ -1983,227 +1534,227 @@ def p_greatest_insrt2(t):
 
 ##################################EXPRESIONES#####################################
 def p_funciones_select(t):
-    ''' funciones_select : ABS PAR_A expresion PAR_C
-                        | CBRT PAR_A expresion PAR_C
-                        | CEIL PAR_A expresion PAR_C 
-                        | CEILING PAR_A expresion PAR_C 
-                        | DEGREES PAR_A expresion PAR_C 
-                        | DIV PAR_A expresion COMA expresion PAR_C 
-                        | EXP PAR_A expresion PAR_C 
-                        | FACTORIAL PAR_A expresion PAR_C 
-                        | FLOOR PAR_A expresion PAR_C 
-                        | GCD PAR_A expresion COMA expresion PAR_C
-                        | LN PAR_A expresion PAR_C 
-                        | LOG PAR_A expresion PAR_C 
-                        | MOD PAR_A expresion COMA expresion PAR_C 
-                        | PI PAR_A PAR_C 
-                        | POWER PAR_A expresion COMA expresion PAR_C 
-                        | RADIANS PAR_A expresion PAR_C 
-                        | ROUND PAR_A expresion PAR_C 
-                        | SIGN PAR_A expresion PAR_C 
-                        | SQRT PAR_A expresion PAR_C
-                        | WIDTH_BUCKET PAR_A expresion COMA expresion COMA expresion COMA expresion PAR_C 
-                        | TRUNC PAR_A expresion COMA ENTERO PAR_C
-                        | TRUNC PAR_A expresion PAR_C 
-                        | RANDOM PAR_A PAR_C 
-                        | ACOS PAR_A expresion PAR_C
-                        | ASIND PAR_A expresion PAR_C
-                        | ATAN2 PAR_A expresion COMA expresion PAR_C
-                        | ATAN2D PAR_A expresion COMA expresion PAR_C
-                        | ATAN PAR_A expresion PAR_C
-                        | ATAND PAR_A expresion PAR_C
-                        | COS PAR_A expresion PAR_C
-                        | COT PAR_A expresion PAR_C 
-                        | COTD PAR_A expresion PAR_C 
-                        | SIN PAR_A expresion PAR_C 
-                        | SIND PAR_A expresion PAR_C 
-                        | TAN PAR_A expresion PAR_C 
-                        | TAND PAR_A expresion PAR_C 
-                        | SINH PAR_A expresion PAR_C 
-                        | COSH PAR_A expresion PAR_C
-                        | TANH PAR_A expresion PAR_C 
-                        | ASINH PAR_A expresion PAR_C
-                        | ATANH PAR_A expresion PAR_C
-                        | COSD PAR_A expresion PAR_C
-                        | ACOSH PAR_A expresion PAR_C  
-                        | ASIN PAR_A expresion PAR_C
-                        | ACOSD PAR_A expresion PAR_C
-                        | LENGTH PAR_A string_type PAR_C
-                        | SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
-                        | TRIM PAR_A string_type PAR_C
-                        | SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C
-                        | GET_BYTE PAR_A string_type D_DOSPTS BYTEA COMA ENTERO PAR_C
-                        | SET_BYTE PAR_A string_type D_DOSPTS BYTEA COMA ENTERO COMA ENTERO PAR_C
-                        | SHA256 PAR_A string_type PAR_C
-                        | ENCODE PAR_A string_type D_DOSPTS BYTEA COMA formato_texto PAR_C
-                        | DECODE PAR_A string_type D_DOSPTS BYTEA COMA formato_texto PAR_C
-                        | CONVERT PAR_A string_type AS TIPO_DATO PAR_C 
+    ''' funciones_select : ABS PARA expresion PARC
+                        | CBRT PARA expresion PARC
+                        | CEIL PARA expresion PARC 
+                        | CEILING PARA expresion PARC 
+                        | DEGREES PARA expresion PARC 
+                        | DIV PARA expresion COMA expresion PARC 
+                        | EXP PARA expresion PARC 
+                        | FACTORIAL PARA expresion PARC 
+                        | FLOOR PARA expresion PARC 
+                        | GCD PARA expresion COMA expresion PARC
+                        | LN PARA expresion PARC 
+                        | LOG PARA expresion PARC 
+                        | MOD PARA expresion COMA expresion PARC 
+                        | PI PARA PARC 
+                        | POWER PARA expresion COMA expresion PARC 
+                        | RADIANS PARA expresion PARC 
+                        | ROUND PARA expresion PARC 
+                        | SIGN PARA expresion PARC 
+                        | SQRT PARA expresion PARC
+                        | WIDTH_BUCKET PARA expresion COMA expresion COMA expresion COMA expresion PARC 
+                        | TRUNC PARA expresion COMA ENTERO PARC
+                        | TRUNC PARA expresion PARC 
+                        | RANDOM PARA PARC 
+                        | ACOS PARA expresion PARC
+                        | ASIND PARA expresion PARC
+                        | ATAN2 PARA expresion COMA expresion PARC
+                        | ATAN2D PARA expresion COMA expresion PARC
+                        | ATAN PARA expresion PARC
+                        | ATAND PARA expresion PARC
+                        | COS PARA expresion PARC
+                        | COT PARA expresion PARC 
+                        | COTD PARA expresion PARC 
+                        | SIN PARA expresion PARC 
+                        | SIND PARA expresion PARC 
+                        | TAN PARA expresion PARC 
+                        | TAND PARA expresion PARC 
+                        | SINH PARA expresion PARC 
+                        | COSH PARA expresion PARC
+                        | TANH PARA expresion PARC 
+                        | ASINH PARA expresion PARC
+                        | ATANH PARA expresion PARC
+                        | COSD PARA expresion PARC
+                        | ACOSH PARA expresion PARC  
+                        | ASIN PARA expresion PARC
+                        | ACOSD PARA expresion PARC
+                        | LENGTH PARA string_type PARC
+                        | SUBSTRING PARA string_type COMA expresion COMA expresion PARC
+                        | TRIM PARA string_type PARC
+                        | SUBSTR PARA string_type COMA expresion COMA expresion PARC
+                        | GET_BYTE PARA string_type D_DOSPTS BYTEA COMA ENTERO PARC
+                        | SET_BYTE PARA string_type D_DOSPTS BYTEA COMA ENTERO COMA ENTERO PARC
+                        | SHA256 PARA string_type PARC
+                        | ENCODE PARA string_type D_DOSPTS BYTEA COMA formato_texto PARC
+                        | DECODE PARA string_type D_DOSPTS BYTEA COMA formato_texto PARC
+                        | CONVERT PARA string_type AS TIPO_DATO PARC 
                         '''
     
     if t[1].upper() == 'ABS':
-        reporte_bnf.append("<funciones_select> ::= ABS PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ABS PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ABS, t[3],None,None,None)
     elif t[1].upper() == 'CBRT':
-        reporte_bnf.append("<funciones_select> ::= CBRT PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= CBRT PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.CBRT, t[3],None,None,None)
     elif t[1].upper() == 'CEIL':
-        reporte_bnf.append("<funciones_select> ::= CEIL PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= CEIL PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.CEIL, t[3],None,None,None)
     elif t[1].upper() == 'CEILING':
-        reporte_bnf.append("<funciones_select> ::= CEILING PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= CEILING PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.CEILING, t[3],None,None,None)
     elif t[1].upper() == 'DEGREES':
-        reporte_bnf.append("<funciones_select> ::= DEGREES PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= DEGREES PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.DEGREES, t[3],None,None,None)
     elif t[1].upper() == 'DIV':
-        reporte_bnf.append("<funciones_select> ::= DIV PAR_A <expresion> COMA <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= DIV PARA <expresion> COMA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.E_DIV, t[3],t[5],None,None)
     elif t[1].upper() == 'EXP':
-        reporte_bnf.append("<funciones_select> ::= EXP PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= EXP PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.EXP, t[3],None,None,None)
     elif t[1].upper() == 'FACTORIAL':
-        reporte_bnf.append("<funciones_select> ::= FACTORIAL PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= FACTORIAL PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.FACTORIAL, t[3],None,None,None)
     elif t[1].upper() == 'FLOOR':
-        reporte_bnf.append("<funciones_select> ::= FLOOR PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= FLOOR PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.FLOOR, t[3],None,None,None)
     elif t[1].upper() == 'GCD':
-        reporte_bnf.append("<funciones_select> ::= GCD PAR_A <expresion> COMA <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= GCD PARA <expresion> COMA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.GCD, t[3],t[5],None,None)
     elif t[1].upper() == 'LN':
-        reporte_bnf.append("<funciones_select> ::= LN PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= LN PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.LN, t[3],None,None,None)
     elif t[1].upper() == 'LOG':
-        reporte_bnf.append("<funciones_select> ::= LOG PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= LOG PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.LOG, t[3],None,None,None)
     elif t[1].upper() == 'MOD':
-        reporte_bnf.append("<funciones_select> ::= MOD PAR_A <expresion> COMA <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= MOD PARA <expresion> COMA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.MOD, t[3],t[5],None,None)
     elif t[1].upper() == 'PI':
-        reporte_bnf.append("<funciones_select> ::= PI PAR_A PAR_C")
+        reporte_bnf.append("<funciones_select> ::= PI PARA PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.PI, None,None,None,None)
     elif t[1].upper() == 'POWER':
-        reporte_bnf.append("<funciones_select> ::= POWER PAR_A <expresion> COMA <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= POWER PARA <expresion> COMA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.POWER, t[3],t[5],None,None)
     elif t[1].upper() == 'RADIANS':
-        reporte_bnf.append("<funciones_select> ::= RADIANS PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= RADIANS PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.RADIANS, t[3],None,None,None)
     elif t[1].upper() == 'ROUND':
-        reporte_bnf.append("<funciones_select> ::= ROUND PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ROUND PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ROUND, t[3],None,None,None)
     elif t[1].upper() == 'SIGN':
-        reporte_bnf.append("<funciones_select> ::= SIGN PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= SIGN PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.SIGN, t[3],None,None,None)
     elif t[1].upper() == 'SQRT':
-        reporte_bnf.append("<funciones_select> ::= SQRT PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= SQRT PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.SQRT, t[3],None,None,None)
     elif t[1].upper() == 'WIDTH_BUCKET':
-        reporte_bnf.append("<funciones_select> ::= WIDTH_BUCKET PAR_A <expresion> COMA <expresion> COMA <expresion> COMA <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= WIDTH_BUCKET PARA <expresion> COMA <expresion> COMA <expresion> COMA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.WIDTH_BUCKET, t[3],t[5],t[7],t[9])
     elif t[1].upper() == 'TRUNC' and t[4] == ',':
-        reporte_bnf.append("<funciones_select> ::= TRUNC PAR_A <expresion> COMA ENTERO PAR_C ")
+        reporte_bnf.append("<funciones_select> ::= TRUNC PARA <expresion> COMA ENTERO PARC ")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.TRUNC, t[3],ExpresionEntero(TIPO_VALOR.NUMERO,t[5]),None,None)
     elif t[1].upper() == 'TRUNC':
-        reporte_bnf.append("<funciones_select> ::= TRUNC PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= TRUNC PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.S_TRUNC, t[3],None,None,None) 
     elif t[1].upper() == 'RANDOM':
-        reporte_bnf.append("<funciones_select> ::= RANDOM PAR_A PAR_C")
+        reporte_bnf.append("<funciones_select> ::= RANDOM PARA PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.RANDOM, t[3],None,None,None)
     elif t[1].upper() == 'ACOS':
-        reporte_bnf.append("<funciones_select> ::= ACOS PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ACOS PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ACOS, t[3],None,None,None)
     elif t[1].upper() == 'ASIND':
-        reporte_bnf.append("<funciones_select> ::= ASIND PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ASIND PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ASIND, t[3],None,None,None)
     elif t[1].upper() == 'ATAN2':
-        reporte_bnf.append("<funciones_select> ::= ATAN2 PAR_A <expresion> COMA <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ATAN2 PARA <expresion> COMA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ATAN2, t[3],t[5],None,None)
     elif t[1].upper() == 'ATAN2D':
-        reporte_bnf.append("<funciones_select> ::= ATAN2D PAR_A <expresion> COMA <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ATAN2D PARA <expresion> COMA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ATAN2D, t[3],t[5],None,None)
     elif t[1].upper() == 'ATAN':
-        reporte_bnf.append("<funciones_select> ::= ATAN PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ATAN PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ATAN, t[3],None,None,None)
     elif t[1].upper() == 'ATAND':
-        reporte_bnf.append("<funciones_select> ::= ATAND PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ATAND PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ATAND, t[3],None,None,None)
     elif t[1].upper() == 'COS':
-        reporte_bnf.append("<funciones_select> ::= COS PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= COS PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.COS, t[3],None,None,None)
     elif t[1].upper() == 'COT':
-        reporte_bnf.append("<funciones_select> ::= COT PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= COT PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.COT, t[3],None,None,None)
     elif t[1].upper() == 'COTD':
-        reporte_bnf.append("<funciones_select> ::= COTD PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= COTD PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.COTD, t[3],None,None,None)
     elif t[1].upper() == 'SIN':
-        reporte_bnf.append("<funciones_select> ::= SIN PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= SIN PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.SIN, t[3],None,None,None)
     elif t[1].upper() == 'SIND':
-        reporte_bnf.append("<funciones_select> ::= SIND PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= SIND PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.SIND, t[3],None,None,None)
     elif t[1].upper() == 'TAN':
-        reporte_bnf.append("<funciones_select> ::= TAN PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= TAN PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.TAN, t[3],None,None,None)
     elif t[1].upper() == 'TAND':
-        reporte_bnf.append("<funciones_select> ::= TAND PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= TAND PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.TAND, t[3],None,None,None)
     elif t[1].upper() == 'SINH':
-        reporte_bnf.append("<funciones_select> ::= SINH PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= SINH PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.SINH, t[3],None,None,None)
     elif t[1].upper() == 'COSH':
-        reporte_bnf.append("<funciones_select> ::= COSH PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= COSH PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.COSH, t[3],None,None,None)
     elif t[1].upper() == 'TANH':
-        reporte_bnf.append("<funciones_select> ::= TANH PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= TANH PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.TANH, t[3],None,None,None)
     elif t[1].upper() == 'ASINH':
-        reporte_bnf.append("<funciones_select> ::= ASINH PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ASINH PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ASINH, t[3],None,None,None)
     elif t[1].upper() == 'ATANH':
-        reporte_bnf.append("<funciones_select> ::= ATANH PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ATANH PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ATANH, t[3],None,None,None)
     elif t[1].upper() == 'COSD':
-        reporte_bnf.append("<funciones_select> ::= COSD PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= COSD PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.COSD, t[3],None,None,None)
     elif t[1].upper() == 'ACOSH':
-        reporte_bnf.append("<funciones_select> ::= ACOSH PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ACOSH PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ACOSH, t[3],None,None,None)
     elif t[1].upper() == 'ASIN':
-        reporte_bnf.append("<funciones_select> ::= ASIN PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ASIN PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ASIN, t[3],None,None,None)
     elif t[1].upper() == 'ACOSD':
-        reporte_bnf.append("<funciones_select> ::= ACOSD PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= ACOSD PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ACOSD, t[3],None,None,None)
     elif t[1].upper() == 'LENGTH':
-        reporte_bnf.append("<funciones_select> ::= LENGTH PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= LENGTH PARA <expresion> PARC")
         t[0] = Expresiondatos(CADENA_BINARIA.LENGTH, t[3],None,None,None)
     elif t[1].upper() == 'SUBSTRING':
-        reporte_bnf.append("<funciones_select> ::= SUBSTRING PAR_A <string_type> COMA <expresion> COMA <expresion> PAR_C")
+        reporte_bnf.append("<funciones_select> ::= SUBSTRING PARA <string_type> COMA <expresion> COMA <expresion> PARC")
         t[0] = Expresiondatos(CADENA_BINARIA.SUBSTRING, t[3],t[5],t[7],None)
     elif t[1].upper() == 'TRIM':
-        reporte_bnf.append("<funciones_select> :: TRIM PAR_A <string_type> PAR_C")
+        reporte_bnf.append("<funciones_select> :: TRIM PARA <string_type> PARC")
         t[0] = Expresiondatos(CADENA_BINARIA.TRIM, t[3],None,None,None) 
     elif t[1].upper() == 'SUBSTR':
-        reporte_bnf.append("<funciones_select> :: SUBSTR PAR_A <string_type> COMA ENTERO COMA ENTERO PAR_C")
+        reporte_bnf.append("<funciones_select> :: SUBSTR PARA <string_type> COMA ENTERO COMA ENTERO PARC")
         t[0] = Expresiondatos(CADENA_BINARIA.SUBSTR, t[3],t[5],t[7],None) 
     elif t[1].upper() == 'GET_BYTE':
-        reporte_bnf.append("<funciones_select> :: GET_BYTE PAR_A <string_type> D_DOSPTS BYTEA COMA ENTERO PAR_C")
+        reporte_bnf.append("<funciones_select> :: GET_BYTE PARA <string_type> D_DOSPTS BYTEA COMA ENTERO PARC")
         t[0] = Expresiondatos(CADENA_BINARIA.GET_BYTE, t[3],ExpresionEntero(TIPO_VALOR.NUMERO,t[7]),None,None)
     elif t[1].upper() == 'SET_BYTE':
-        reporte_bnf.append("<funciones_select> :: SET_BYTE PAR_A <string_type> D_DOSPTS BYTEA COMA ENTERO COMA ENTERO PAR_C")
+        reporte_bnf.append("<funciones_select> :: SET_BYTE PARA <string_type> D_DOSPTS BYTEA COMA ENTERO COMA ENTERO PARC")
         t[0] = Expresiondatos(CADENA_BINARIA.SET_BYTE, t[3],ExpresionEntero(TIPO_VALOR.NUMERO,t[7]),ExpresionEntero(TIPO_VALOR,t[9]),None)
     elif t[1].upper() == 'SHA256':
-        reporte_bnf.append("<funciones_select> :: SHA256 PAR_A <string_typ>e PAR_C")
+        reporte_bnf.append("<funciones_select> :: SHA256 PARA <string_typ>e PARC")
         t[0] = Expresiondatos(CADENA_BINARIA.SHA256, t[3],None,None,None)
     elif t[1].upper() == 'ENCODE':
-        reporte_bnf.append("<funciones_select> :: ENCODE PAR_A <string_type> D_DOSPTS BYTEA COMA formato_texto PAR_C")
+        reporte_bnf.append("<funciones_select> :: ENCODE PARA <string_type> D_DOSPTS BYTEA COMA formato_texto PARC")
         t[0] = Expresiondatos(CADENA_BINARIA.ENCODE, t[3],t[7],None,None)
     elif t[1].upper() == 'DECODE':
-        reporte_bnf.append("<funciones_select> :: DECODE PAR_A <string_type> D_DOSPTS BYTEA COMA formato_texto PAR_C")
+        reporte_bnf.append("<funciones_select> :: DECODE PARA <string_type> D_DOSPTS BYTEA COMA formato_texto PARC")
         t[0] = Expresiondatos(CADENA_BINARIA.DECODE, t[3],t[7],None,None)
     elif t[1].upper() == 'CONVERT':
-        reporte_bnf.append("<funciones_select> :: CONVERT PAR_A <string_type> AS TIPO_DATO PAR_C ")
+        reporte_bnf.append("<funciones_select> :: CONVERT PARA <string_type> AS TIPO_DATO PARC ")
         t[0] = Expresiondatos(CADENA_BINARIA.CONVERT, t[3],t[5],None,None)
 
 def p_formato_texto(t):
@@ -2233,19 +1784,19 @@ def p_expresion_where2(t):
     t[0] = t[1]
 
 def p_expresion_where(t):
-    ''' expresion_where : expresion_dato NOT IN PAR_A select_insrt PAR_C
-                        | expresion_dato IN PAR_A select_insrt PAR_C
-                        | NOT EXISTS PAR_A select_insrt PAR_C
+    ''' expresion_where : expresion_dato NOT IN PARA select_insrt PARC
+                        | expresion_dato IN PARA select_insrt PARC
+                        | NOT EXISTS PARA select_insrt PARC
                         '''
 
     if t[2].upper() == 'NOT' and t[3].upper() == 'IN':
-        reporte_bnf.append("<expresion_where> ::= <expresion_dato> NOT IN PAR_A <select_insrt> PAR_C")
+        reporte_bnf.append("<expresion_where> ::= <expresion_dato> NOT IN PARA <select_insrt> PARC")
         t[0] = Expresiondatos(OPCION_VERIFICAR.NOT_IN, t[1],t[5],None,None)
     elif t[2].upper() == 'IN':
-        reporte_bnf.append("<expresion_where> ::= <expresion_dato> IN PAR_A <select_insrt> PAR_C")
+        reporte_bnf.append("<expresion_where> ::= <expresion_dato> IN PARA <select_insrt> PARC")
         t[0] = Expresiondatos(OPCION_VERIFICAR.INN,t[1],t[4],None,None)
     elif t[1].upper() == 'NOT' and t[2].upper() == 'EXISTS':
-        reporte_bnf.append("<expresion_where> ::= NOT EXISTS PAR_A <select_insrt> PAR_C")
+        reporte_bnf.append("<expresion_where> ::= NOT EXISTS PARA <select_insrt> PARC")
         t[0] = Expresiondatos(OPCION_VERIFICAR.NOT_EXISTS,t[4],None,None,None)
 
 
@@ -2257,46 +1808,46 @@ def p_expresion_where_3(t):
 
 
 def p_expresion_wherea(t):
-    '''expresion_wherea :  ABS PAR_A expresion PAR_C
-                        | LENGTH PAR_A string_type PAR_C
-                        | CBRT PAR_A expresion PAR_C
-                        | CEIL PAR_A expresion PAR_C 
-                        | CEILING PAR_A expresion PAR_C 
-                        | SUBSTRING PAR_A string_type COMA expresion COMA expresion PAR_C
-                        | TRIM PAR_A string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PAR_C
-                        | SUBSTR PAR_A string_type COMA expresion COMA expresion PAR_C
-                        | sin_some_any PAR_A select_insrt PAR_C
-                        | EXTRACT PAR_A extract_time FROM string_type PAR_C '''
+    '''expresion_wherea :  ABS PARA expresion PARC
+                        | LENGTH PARA string_type PARC
+                        | CBRT PARA expresion PARC
+                        | CEIL PARA expresion PARC 
+                        | CEILING PARA expresion PARC 
+                        | SUBSTRING PARA string_type COMA expresion COMA expresion PARC
+                        | TRIM PARA string_type D_DOSPTS BYTEA FROM string_type D_DOSPTS BYTEA PARC
+                        | SUBSTR PARA string_type COMA expresion COMA expresion PARC
+                        | sin_some_any PARA select_insrt PARC
+                        | EXTRACT PARA extract_time FROM string_type PARC '''
 
     if t[1].upper() == 'ABS':
-        reporte_bnf.append("<expresion_wherea> ::= ABS PAR_A expresion PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= ABS PARA expresion PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.ABS, t[3],None,None,None)
     elif t[1].upper() == 'LENGTH':
-        reporte_bnf.append("<expresion_wherea> ::= LENGTH PAR_A <string_type> PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= LENGTH PARA <string_type> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.LENGTH, t[3],None,None,None)
     elif t[1].upper() == 'CBRT':
-        reporte_bnf.append("<expresion_wherea> ::= CBRT PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= CBRT PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.CBRT, t[3],None,None,None)
     elif t[1].upper() == 'CEIL':
-        reporte_bnf.append("<expresion_wherea> ::= CEIL PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= CEIL PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.CEIL, t[3],None,None,None)
     elif t[1].upper() == 'CEILING':
-        reporte_bnf.append("<expresion_wherea> ::= CEILING PAR_A <expresion> PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= CEILING PARA <expresion> PARC")
         t[0] = Expresiondatos(OPERACION_ARITMETICA.CEILING, t[3],None,None,None)
     elif t[1].upper() == 'SUBSTRING':
-        reporte_bnf.append("<expresion_wherea> ::= SUBSTRING PAR_A <string_type> COMA <expresion> COMA <expresion> PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= SUBSTRING PARA <string_type> COMA <expresion> COMA <expresion> PARC")
         t[0] = Expresiondatos(OPCIONES_DATOS.SUBSTRING, t[3],t[5],t[7],None)
     elif t[1].upper() == 'TRIM':
-        reporte_bnf.append("<expresion_wherea> ::= TRIM PAR_A <string_type> D_DOSPTS BYTEA FROM <string_type> D_DOSPTS BYTEA PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= TRIM PARA <string_type> D_DOSPTS BYTEA FROM <string_type> D_DOSPTS BYTEA PARC")
         t[0] = Expresiondatos(OPCIONES_DATOS.TRIM, t[3],t[7],None,None)
     elif t[1].upper() == 'SUBSTR':
-        reporte_bnf.append("<expresion_wherea> ::= SUBSTR PAR_A <string_type> COMA ENTERO COMA ENTERO PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= SUBSTR PARA <string_type> COMA ENTERO COMA ENTERO PARC")
         t[0] = Expresiondatos(OPCIONES_DATOS.SUBSTR, t[3],t[5],t[7],None)
     elif t[1].upper() == 'EXTRACT':
-        reporte_bnf.append("<expresion_wherea> ::= EXTRACT PAR_A <expresion_time> FROM <string_type> PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= EXTRACT PARA <expresion_time> FROM <string_type> PARC")
         t[0] = Expresiondatos(OPCIONES_DATOS.EXTRACT, t[3],t[5],None,None)
     else:
-        reporte_bnf.append("<expresion_wherea> ::= <sin_some_any> PAR_A <select_insrt> PAR_C")
+        reporte_bnf.append("<expresion_wherea> ::= <sin_some_any> PARA <select_insrt> PARC")
         t[0] = Expresiondatos(OPCIONES_DATOS.SOME, t[3],None,None,None)
 
 def p_expresion_wherea2(t):
@@ -2308,10 +1859,10 @@ def p_expresion_wherea2(t):
 #ANCHOR       EXPRESIONES AGREGADAS AL WHERE
 #? ##################################################
 def p_expresion_wherea3(t):
-    ''' expresion_wherea : LOWER PAR_A string_type PAR_C '''
+    ''' expresion_wherea : LOWER PARA string_type PARC '''
 
 def p_expresion_wherea4(t):
-    ''' expresion_wherea : ID PAR_A ID PAR_C'''
+    ''' expresion_wherea : ID PARA ID PARC'''
 
 
 
@@ -2357,29 +1908,29 @@ def p_expresion_UNKNOWN_(t):
 
 
 def p_expresion_whereb(t):
-    '''expresion_whereb :     expresion_wherea MAYQUE expresion_wherea
-                             | expresion_wherea MENQUE expresion_wherea
-                             | expresion_wherea MAYIGQUE expresion_wherea
-                             | expresion_wherea MENIGQUE expresion_wherea
-                             | expresion_wherea DOBLEIG expresion_wherea
+    '''expresion_whereb :     expresion_wherea MAYOR expresion_wherea
+                             | expresion_wherea MENOR expresion_wherea
+                             | expresion_wherea MAYORIGUAL expresion_wherea
+                             | expresion_wherea MENORIGUAL expresion_wherea
+                             | expresion_wherea IGUALIGUAL expresion_wherea
                              | expresion_wherea IGUAL expresion_wherea
                              | expresion_wherea NOIG expresion_wherea
                              | expresion_wherea NOIGUAL expresion_wherea '''
 
     if t[2] == '>':
-        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> MAYQUE <expresion_wherea>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYQUE)
+        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> MAYOR <expresion_wherea>")
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYOR)
     elif t[2] == '<':
-        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> MENQUE <expresion_wherea>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MENQUE)
+        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> MENOR <expresion_wherea>")
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MENOR)
     elif t[2] == '>=':
-        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> MAYIGQUE <expresion_wherea>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYIGQUE)
+        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> MAYORIGUAL <expresion_wherea>")
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYORIGUAL)
     elif t[2] == '<=':
-        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> MENIGQUE <expresion_wherea>")
-        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MENIGQUE)
+        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> MENORIGUAL <expresion_wherea>")
+        t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MENORIGUAL)
     elif t[2] == '==':
-        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> DOBLEIG <expresion_wherea>")
+        reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> IGUALIGUAL <expresion_wherea>")
         t[0] = ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.DOBLEIGUAL)
     elif t[2] == '=':
         reporte_bnf.append("<expresion_whereb> ::= <expresion_wherea> IGUAL <expresion_wherea>")
@@ -2416,13 +1967,13 @@ def p_expresion_logica_between(t):
 def p_expresion_logica_between_1(t):
     ' expresion_logica_w :  expresion_wherea BETWEEN expresion_wherea AND expresion_wherea'
     reporte_bnf.append("<expresion_logica_w> ::= <expresion_wherea> BETWEEN <expresion_wherea> AND <expresion_wherea>")
-    if t[2].upper() == 'BETWEEN' and t[4].upper() == 'AND' : t[0] = ExpresionLogica(ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYQUE),ExpresionRelacional(t[1],t[5],OPERACION_RELACIONAL.MENQUE),OPCION_VERIFICAR.BETWEEN_1)
+    if t[2].upper() == 'BETWEEN' and t[4].upper() == 'AND' : t[0] = ExpresionLogica(ExpresionRelacional(t[1],t[3],OPERACION_RELACIONAL.MAYOR),ExpresionRelacional(t[1],t[5],OPERACION_RELACIONAL.MENOR),OPCION_VERIFICAR.BETWEEN_1)
 
 
 def p_expresion_logica_between_NOT(t):
     ' expresion_logica_w : expresion_dato NOT BETWEEN expresion_dato AND expresion_dato'
     reporte_bnf.append("<expresion_logica_w> ::= <expresion_dato> NOT BETWEEN <expresion_dato> AND <expresion_dato>")
-    if t[3].upper() == 'BETWEEN' and t[2].upper() == 'NOT' : t[0] = ExpresionLogica(ExpresionRelacional(t[1],t[4],OPERACION_RELACIONAL.MAYQUE),ExpresionRelacional(t[1],t[6],OPERACION_RELACIONAL.MENQUE),OPCION_VERIFICAR.N_BETWEEN)
+    if t[3].upper() == 'BETWEEN' and t[2].upper() == 'NOT' : t[0] = ExpresionLogica(ExpresionRelacional(t[1],t[4],OPERACION_RELACIONAL.MAYOR),ExpresionRelacional(t[1],t[6],OPERACION_RELACIONAL.MENOR),OPCION_VERIFICAR.N_BETWEEN)
 
 def p_expresion_logica_between_distict(t):
     ' expresion_logica_w : expresion_dato IS DISTINCT FROM expresion_dato'
@@ -2496,16 +2047,16 @@ def p_createIndex5(t):
     t[0] = Funcion_Index(INDEX.INDEX_INCLUDE,t[4],t[6],t[7],t[9])
 
 def p_otro_index(t):
-    'createIndex : CREATE INDEX ID ON ID PAR_A ID opclass PAR_C PTCOMA'
+    'createIndex : CREATE INDEX ID ON ID PARA ID opclass PARC PTCOMA'
     t[0] = Funcion_Index(INDEX.INDEX_CLASS,t[3],t[5],t[7],t[8])
     
 def p_otro_index1(t):
-    'createIndex : CREATE INDEX ID ON ID PAR_A ID opclass sortoptions PAR_C PTCOMA'
+    'createIndex : CREATE INDEX ID ON ID PARA ID opclass sortoptions PARC PTCOMA'
     t[0] = Funcion_Index(t[3],t[5],t[7],t[8],t[9])
 
 def p_createIndex6(t):
-    '''opc_index :  USING HASH PAR_A ID PAR_C
-                  | PAR_A opc_index_par PAR_C'''
+    '''opc_index :  USING HASH PARA ID PARC
+                  | PARA opc_index_par PARC'''
     if t[1].upper() == 'USING':
         t[0] = index_cuerpo(TIPO_INDEX.USING_HASH,t[4],None)
     else:
@@ -2528,11 +2079,11 @@ def p_createIndex2_3(t):
     t[0] = index_cuerpo(TIPO_INDEX.COLLATE,t[1],t[3])
 
 def p_createIndex2_30(t):
-    ' opc_index_par : LOWER PAR_A ID PAR_C '
+    ' opc_index_par : LOWER PARA ID PARC '
     t[0] = index_cuerpo(TIPO_INDEX.LOWER,t[3],None)
 
 def p_createIndex_5(t):
-    ' opc_index_par : ID PAR_A ID PAR_C '
+    ' opc_index_par : ID PARA ID PARC '
     t[0] = index_cuerpo(TIPO_INDEX.WITH_IDS,t[1],t[3])
 
 def p_first_last(t):

@@ -76,7 +76,7 @@ reservadas = {
     'key' : 'KEY',
     'check' : 'CHECK',
     'foreign' : 'FOREIGN',
-        'insert': 'INSERT',
+    'insert': 'INSERT',
     'update': 'UPDATE',
     'delete': 'DELETE',
     'count': 'COUNT',
@@ -527,7 +527,9 @@ def p_instrucciones_global_sent(t):
                                     | show_tables_instr
                                     | use_database_instr
                                     | drop_database_instr
-                                    | create_Table_isnrt'''
+                                    | create_Table_isnrt
+                                    | drop_insrt
+                                    | alterDB_insrt'''
     t[0] = t[1]
 
 def p_instrucciones_global_sent_error(t):
@@ -732,6 +734,60 @@ def p_createTable_id_pk(t):
         cadena += str(i)
     t[0] = ' '+ t[1] + ' '+ t[2] + ' ' + cadena + ' ' 
 
+def p_createTable_pk(t):
+    ' cuerpo_createTable :  PRIMARY KEY PARA campos_c PARC'
+    cadena = ""
+    for i in t[4]:
+        cadena += str(i)
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3] + ' '+ cadena + ' '+ t[5] + ' '
+
+def p_createTable_fk(t):
+    ' cuerpo_createTable : FOREIGN KEY PARA ID PARC REFERENCES ID PARA ID PARC'
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3]+ ' '+ t[4] + ' '+ ' '+ t[5] + ' '+ ' '+ t[6] + ' '+ ' '+ t[7] + ' '+ ' '+ t[8] + ' '+ ' '+ t[9] + ' '+ ' '+ t[10] + ' '
+
+def p_createTable_unique(t):
+    ' cuerpo_createTable : UNIQUE PARA campos_c PARC '
+    cadena = ""
+    for i in t[3]:
+        cadena += str(i)
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ cadena + ' '+ t[4] + ' '
+
+def p_createTable_constraint(t):
+    ' cuerpo_createTable : CONSTRAINT ID constraint_esp '
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3] + ' '
+
+def p_cons_campos(t):
+    'campos_c : campos_c COMA ID '
+    t[1].append(t[2])
+    t[1].append(t[3])
+    t[0] = t[1]
+
+def p_cons_campos_id(t):
+    ' campos_c : ID'
+    t[0] = [t[1]]
+
+#?######################################################
+# TODO        ADD PRODUCCIONES
+#?######################################################
+
+def p_constraint_esp_(t):
+    'constraint_esp : CHECK PARA expresion_logica PARC '
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3] + ' '+ t[4] + ' '
+
+def p_constraint_esp1(t):
+    'constraint_esp :  UNIQUE PARA campos_c PARC '
+    cadena = ""
+    for i in t[3]:
+        cadena += str(i)
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ cadena + ' '+ t[4] + ' '
+
+
+def p_constraint_esp2(t):
+    'constraint_esp : FOREIGN KEY PARA ID PARC REFERENCES ID PARA ID PARC '
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3] + ' '+ t[4] + ' '+ t[5] + ' '+ t[6] + ' '+ t[7] + ' '+ t[8] + ' '+ t[9] + ' '+ t[10] + ' '
+    
+
+
 # -------------------------------------------
 def p_createTable_combs1(t):
     ' createTable_options : createTable_options cT_options' 
@@ -758,7 +814,9 @@ def p_cT_options4(t):
     ' cT_options : O_DEFAULT'
     t[0] = ' '+ t[1] + ' '
 
-
+def p_cT_options2(t):
+    ' cT_options : C_check'
+    t[0] = ' '+ t[1]+ ' '
 
 #_--------------- 
 def p_N_null(t):
@@ -786,7 +844,14 @@ def p_default(t):
     ' O_DEFAULT : DEFAULT expresion_dato_default '
     t[0] = ' '+ t[1] + ' '+ t[2] + ' '
 
+def p_Ccheck(t):
+    ''' C_check : CONSTRAINT ID CHECK PARA expresion_logica PARC '''
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3] + ' '+ t[4] + ' '+ t[5] + ' '+ t[6] + ' '
+    
 
+def p_Ccheck1(t):
+    ''' C_check : CHECK PARA expresion_logica PARC'''
+    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3] + ' '+ t[4] + ' '
 
 
 #_____
@@ -916,6 +981,60 @@ def p_extract_time4(t):
 def p_extract_time5(t):
     ' extract_time : SECOND '
     t[0] = ' ' + t[1] + ' '
+
+# DROP
+#?######################################################
+# TODO        GRAMATICA DROP TABLE
+#?######################################################
+
+
+def p_dropTable(t):
+    ' drop_insrt : DROP TABLE lista_drop_id PTCOMA'
+    cadena = ""
+    for i in t[3]:
+        cadena += str(i)
+    t[0] = DropTable(t[1] + ' ' +t[2] + ' ' + cadena + ';')
+
+def p_lista_tabla_lista(t):
+    ' lista_drop_id :   lista_drop_id COMA ID '
+    t[1].append(t[2])
+    t[1].append(t[3])
+    t[0] = t[1]
+
+def p_lista_tabla_lista2(t):
+    ' lista_drop_id : ID '
+    t[0] = [t[1]]
+
+#?######################################################
+# TODO        GRAMATICA ALTER DATABASE
+#?######################################################
+
+
+def p_AlterDB_opc1(t):
+    ' alterDB_insrt : ALTER DATABASE ID RENAME TO ID PTCOMA'
+    t[0] = AlterDatabase(t[1] + ' ' + t[2] + ' ' + t[3]+ ' ' + t[4]+ ' ' + t[5]+ ' ' + t[6] + ';')
+
+def p_AlterDB_opc2(t):
+    ' alterDB_insrt : ALTER DATABASE ID OWNER TO usuariosDB PTCOMA'
+    t[0] = AlterDatabase(t[1] + ' ' + t[2] + ' ' + t[3]+ ' ' + t[4]+ ' ' + t[5]+ ' ' + t[6] + ';')
+
+def p_usuarioDB(t):
+    ' usuariosDB :  ID '
+    t[0] = ' ' + t[1] + ' '
+
+def p_usuarioDB2(t):
+    ' usuariosDB : CURRENT_USER '
+    t[0] = ' ' + t[1] + ' '
+
+def p_usuarioDB3(t):
+    ' usuariosDB : SESSION_USER '
+    t[0] = ' ' + t[1] + ' '
+
+def p_usuarioDB4(t):
+    ' usuariosDB : CADENA '
+    cadena = '\\\''+t[1]+'\\\''
+    t[0] = ' ' + cadena + ' '
+
 
 
 #?######################################################
@@ -1155,7 +1274,7 @@ def p_tipo_dato_tim3(t):
     'tipo : DATE'
     t[0] = TIPO_DATO.STRING
 
-def p_expresion(t):
+def p_expresionPLSQL(t):
     '''expresionPLSQL    : log'''
     t[0] = t[1]
 
@@ -1267,6 +1386,147 @@ def p_arit_numero2(t):
 def p_empty(t):
     'empty :'
     pass
+
+#? ####################################################################
+# TODO               EXPRESION 
+#? ####################################################################
+def p_agrupacion_expresion(t):
+    ' agrupacion_expresion : PARA expresion PARC'
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '+ str(t[3]) + ' '
+
+def p_expresion(t):
+    ''' expresion :    expresion MAS expresion
+                     | expresion MENOS expresion
+                     | expresion POR expresion
+                     | expresion DIV expresion
+                     | expresion MODULO expresion
+                     | expresion SHIFTD expresion
+                     | expresion SHIFTI expresion
+                     | expresion HASHTAG expresion
+                     | expresion ANDB expresion    
+                     | expresion D_OR expresion'''
+
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '+ str(t[3]) + ' '
+
+def p_expresion1(t):
+    ''' expresion :   NOTB expresion
+                     | ORB expresion
+                     | D_OR expresion'''
+                     
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '
+
+
+
+#? ####################################################################
+# TODO          EXPRESION DATOS - FALTA
+#? ####################################################################
+   
+def p_expresion3(t):
+    ' expresion : PARA expresion_logica PARC '
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '+ str(t[3]) + ' '
+
+def p_expresion_boolean_true(t):
+    ''' expresion :  TRUE'''
+    t[0] = ' '+ str(t[1]) + ' '
+   
+def p_expresion_boolean_false(t):
+    ''' expresion :  FALSE'''
+    t[0] = ' '+ str(t[1]) + ' '
+
+
+#? ####################################################################
+# TODO          GRAMATICA PARA EXPRESION
+#? ####################################################################
+def p_expresion_relacional(t):
+    ''' expresion_relacional : expresion MAYOR expresion
+                             | expresion MENOR expresion
+                             | expresion MAYORIGUAL expresion
+                             | expresion MENORIGUAL expresion
+                             | expresion IGUALIGUAL expresion
+                             | expresion IGUAL expresion
+                             | expresion NOIG expresion
+                             | expresion NOTIGUAL expresion'''
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '+ str(t[3]) + ' '
+
+def p_expresion_relacional_exp(t):
+    ' expresion_relacional : expresion '
+    t[0] = ' '+ str(t[1]) + ' '
+
+
+def p_expresion_logica(t):
+    ''' expresion_logica : expresion_relacional AND expresion_logica
+                        |  expresion_relacional OR expresion_logica'''
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '+ str(t[3]) + ' '
+
+
+def p_expresion_logica_not(t):
+    ''' expresion_logica : NOT expresion_logica'''
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '
+
+
+def p_expresion_logica_rel(t):
+    ''' expresion_logica : expresion_relacional''' 
+    t[0] = ' '+ str(t[1]) + ' '
+
+def p_expresion2_g(t):
+    ''' expresion :   expresion_dato '''
+    t[0] = ' '+ str(t[1]) + ' '
+
+
+def p_expresion4_g(t):
+    ''' expresion : sum_insrt '''
+    t[0] = ' '+ str(t[1]) + ' '
+
+def p_expresion5_g(t):
+    ''' expresion : count_insrt '''
+    t[0] = ' '+ str(t[1]) + ' '
+
+##########################################
+
+
+def p_expresion_dato(t):
+    ''' expresion_dato : string_type '''
+    t[0] = ' '+ str(t[1]) + ' '
+
+def p_expresion_dato2(t):
+    ' expresion_dato : MENOS ENTERO %prec UMINUS '
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '
+
+
+def p_expresion_dato3(t):
+    ' expresion_dato : ID PUNTO ID'
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '+ str(t[3]) + ' '
+
+def p_expresion_dato_numero(t):
+    'expresion_dato : expresion_numero'
+    t[0] = ' '+ str(t[1]) + ' '
+
+def p_expresion_numero(t):
+    'expresion_numero :  ENTERO'
+    t[0] = ' '+ str(t[1]) + ' '
+
+def p_expresion_numero1(t):
+    'expresion_numero : FLOTANTE'
+    t[0] = ' '+ str(t[1]) + ' '
+
+    
+
+
+#? ####################################################################
+# TODO          GRAMATICA PARA LA INSTRUCCION DE SUM ----------
+#? ####################################################################
+def p_sum_insert(t):
+    ' sum_insrt : SUM agrupacion_expresion'
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '
+
+#? ####################################################################
+# TODO         GRAMATICA PAR LA INSTRUCCIONN DE COUNT ---------
+#? ####################################################################
+
+def p_count_insrt(t):
+    ' count_insrt : COUNT agrupacion_expresion '
+    t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '
+
 
 # Errores Sintacticos
 def p_error(t):

@@ -1,9 +1,21 @@
 CREATE DATABASE prueba1;
+CREATE DATABASE prueba2;
+CREATE DATABASE prueba3;
+CREATE DATABASE prueba4;
 USE prueba1;
-CREATE TABLE usuario(
-    id_usuario INTEGER NULL NOT NULL PRIMARY KEY,
-    apellido VARCHAR(50) DEFAULT 2.5
-);
+SHOW DATABASES;
+ALTER DATABASE prueba1 RENAME TO prueba5;
+SHOW DATABASES;
+ALTER DATABASE prueba4 OWNER TO julio1;
+SHOW DATABASES;
+ALTER DATABASE prueba4 OWNER TO CURRENT_USER;
+SHOW DATABASES;
+ALTER DATABASE prueba4 OWNER TO SESSION_USER;
+SHOW DATABASES;
+ALTER DATABASE prueba4 OWNER TO 'Julio2';
+SHOW DATABASES;
+
+
 
 CREATE OR REPLACE FUNCTION suma(a integer) RETURNS integer  AS $$
 DECLARE
@@ -21,15 +33,18 @@ $$ LANGUAGE plpgsql;
 
 SELECT suma(17);
 
-def p_Ccheck(t):
-    ''' C_check : CONSTRAINT ID CHECK PARA expresion_logica PARC '''
-    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3] + ' '+ t[4] + ' '+ t[5] + ' '+ t[6] + ' '
+1371
 
+'''def p_expresion31_g(t):
+    expresion : select_insrt '''
+    #t[0] = ' '+ str(t[1]) + ' '
 
-def p_Ccheck1(t):
-    ''' C_check : CHECK PARA expresion_logica PARC'''
-    t[0] = ' '+ t[1] + ' '+ t[2] + ' '+ t[3] + ' '+ t[4] + ' '
-
-def p_cT_options2(t):
-    ' cT_options : C_check'
-    t[0] = ' '+ t[1] + ' '
+1308
+''' def p_expresion2(t):
+     expresion :   AVG PARA expresion PARC 
+                     | MAX PARA expresion PARC
+                     | MIN PARA expresion PARC             
+                     | ALL PARA select_insrt PARC
+                     | SOME PARA select_insrt PARCn'''
+                     
+    #t[0] = ' '+ str(t[1]) + ' '+ str(t[2]) + ' '+ str(t[3]) + ' '+ str(t[4]) + ' '
