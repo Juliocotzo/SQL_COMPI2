@@ -3,6 +3,7 @@ import PLSQL.tfPLSQL as TF
 from PLSQL.instruccionesPLSQL import *
 from PLSQL.expresionesPLSQL import *
 import PLSQL.gramaticaPLSQL as g
+from PLSQL.report_astPLSQL import *
 
 temporalT = 0
 temporalA = 0
@@ -716,10 +717,11 @@ instrucciones = runC3D(input)
 instrucciones_Global = instrucciones
 ts_global = TS.TablaDeSimbolos()
 codigo3D = generarC3D(instrucciones, ts_global)
+
 salida = open("./salida3D.py", "w")
 salida.write(codigo3D)
-salida.close()'''
-
+salida.close()
+'''
 '''if len(ts.simbolos) > 0:
     for simb in ts_global.simbolos.values():
         print(simb.id,simb.tipo,simb.valor,simb.temporal)

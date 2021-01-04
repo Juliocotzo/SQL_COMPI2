@@ -46,6 +46,7 @@ reservadas = {
     'function' : 'FUNCTION',
     'procedure' : 'PROCEDURE',
     'call' : 'CALL',
+    'execute' : 'EXECUTE',
     'returns' : 'RETURNS',
     'as' : 'AS',
     'declare' : 'DECLARE',
@@ -2302,7 +2303,7 @@ def p_llamada_funcion(t):
     t[0] = LlamadaFuncion(t[2], t[4])
 
 def p_llamada_funcion1(t):
-    'llamada_funcion    : CALL ID PARA params PARC PTCOMA'
+    'llamada_funcion    : EXECUTE ID PARA params PARC PTCOMA'
     t[0] = LlamadaFuncion(t[2], t[4])
 
 def p_params_list(t):
