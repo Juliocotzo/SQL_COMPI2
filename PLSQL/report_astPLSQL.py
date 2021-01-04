@@ -23,7 +23,9 @@ class AST:
         indice = 0
         while indice < len(instrucciones_Global) :
             instruccion = instrucciones_Global[indice]
-            if isinstance(instruccion, CreateDatabase):
+            if isinstance(instruccion, Funcion):
+                self.crearNodoFuncion("node2", instruccion)
+            elif isinstance(instruccion, CreateDatabase):
                 self.crearNodoCreateDatabase("node2", instruccion)
             indice = indice +1
         dot.view('reportes/ASTPLSQL', cleanup=True)
@@ -52,6 +54,21 @@ class AST:
         global  contadorNodos, dot
         contadorNodos = contadorNodos + 1
         dot.node("node" + str(contadorNodos), 'CREATE DATABASE')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+    
+    def crearNodoFuncion(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), 'FUNCION')
+        dot.edge(padre, "node" + str(contadorNodos))
+        temp1 = "node" + str(contadorNodos)
+        self.crearNodoFuncionTipo(temp1,instruccion)
+
+    def crearNodoFuncionTipo(self, padre, instruccion):
+        global  contadorNodos, dot
+        contadorNodos = contadorNodos + 1
+        dot.node("node" + str(contadorNodos), str(instruccion.tipo))
         dot.edge(padre, "node" + str(contadorNodos))
         temp1 = "node" + str(contadorNodos)
         
