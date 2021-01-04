@@ -7,42 +7,28 @@ inter = Intermedio()
 def main():
 	Sra = -1
 	Ss0 = [0] * 10000
-	
-	ta0 = 17	
-	Sra = Sra + 1	
-	Ss0[Sra] = 1	
-	goto. suma	
-	label. retorno1
+
+	print(inter.procesar_funcion0())
+	print(inter.procesar_funcion1())
+	print(inter.procesar_funcion2())
+	print(inter.procesar_funcion3())
+	print(inter.procesar_funcion4())
+	print(inter.procesar_funcion5())
+	print(inter.procesar_funcion6())
+	print(inter.procesar_funcion7())
+	print(inter.procesar_funcion8())
+	print(inter.procesar_funcion9())
+	print(inter.procesar_funcion10())
+	print(inter.procesar_funcion11())
+	print(inter.procesar_funcion12())
+	print(inter.procesar_funcion13())
+	print(inter.procesar_funcion14())
 	print(inter.Reportes())	
 	goto. end	
 	
-	label. suma	
-	t0 = 10	
-	t1 = ta0 < 20	
-	t2 = t0 > 5	
-	t3 = t1 and t2	
-	if  t3 : goto. L0	
-	goto. L1	
-	label. L0	
-	print(ta0 )	
-	t4 = ta0 + 1	
-	ta0 = t4	
-	ta0 = ta0	
-	Sra = Sra + 1	
-	Ss0[Sra] = 2	
-	goto. suma	
-	label. retorno2	
-	goto. L2	
-	label. L1	
-	print('ES MAYOR A 20  ')	
-	label. L2	
-	goto. retorno	
-	
 	label. retorno	
 	Ssp = Ss0[Sra]	
-	Sra = Sra - 1	
-	if Ssp == 1: goto. retorno1	
-	if Ssp == 2: goto. retorno2
+	Sra = Sra - 1
 
 	label .end
 	return
