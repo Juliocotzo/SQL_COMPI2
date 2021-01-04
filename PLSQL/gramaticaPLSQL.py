@@ -1,6 +1,8 @@
+from PLSQL.report_erroresPLSQL import *
 # Global Variables
 listaErroresLexicos = []
 listaErroresSintacticos = []
+entradaa = ""
 
 # Declaracion palabras reservadas
 reservadas = {
@@ -472,8 +474,10 @@ def t_newline(t):
 
 # Error Lexico
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    listaErroresLexicos.append(ErrorLexico(t.value[0], t.lexer.lineno, t.lexpos))
+    errorLexico = Error(str(t.value[0]),int(t.lineno),int(t.lexpos), "Error Lexico")
+    listaErrores.append(errorLexico)
+    #print("Illegal character '%s'" % t.value[0])
+    #listaErroresLexicos.append(ErrorLexico(t.value[0], t.lexer.lineno, t.lexpos))
     t.lexer.skip(1)
 
 # Construyendo el analizador léxico
@@ -2848,12 +2852,20 @@ def p_opclass(t):
 
 # Errores Sintacticos
 def p_error(t):
-    print("Error sintáctico en '%s'" % t.value)
-    listaErroresSintacticos.append(ErrorLexico(t.value, t.lineno, t.lexpos))
+    #print("Error sintáctico en '%s'" % t.value)
+    #listaErroresSintacticos.append(ErrorLexico(t.value, t.lineno, t.lexpos))
+    errorSintactico = Error(str(t.value),int(t.lineno),int(find_column(str(entradaa),t)), "Error Sintactico")
+    listaErrores.append(errorSintactico)
 
+def find_column(input, token):
+    line_start = input.rfind('\n', 0, token.lexpos) + 1
+    print((token.lexpos - line_start) + 1)
+    return (token.lexpos - line_start) + 1
 
 # Función para realizar analisis
 def parse(input):
+    global entradaa
+    entradaa = input
     import ply.yacc as yacc
     parser = yacc.yacc()
     import ply.lex as lex

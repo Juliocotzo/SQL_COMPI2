@@ -8,6 +8,7 @@ import PLSQL.tfPLSQL as TFPL
 import PLSQL.gramaticaPLSQL as gPL
 import PLSQL.traduccionPLSQL as TRADUC
 import PLSQL.report_astPLSQL as AST3D
+import PLSQL.report_erroresPLSQL as ERRORES_G
 
 import sys
 from io import StringIO
@@ -28,7 +29,8 @@ ts_global1 = []
 
 ts_globalPL = []
 
-#erroressss = ErrorHTML()
+
+erroressss = ERRORES_G.ErrorHTML()
 
 root = Tk() 
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
@@ -43,14 +45,19 @@ selected = False
 def analizar(txt):
     global instrucciones_GlobalPL
     instruccionesPL = TRADUC.runC3D(txt)
-    instrucciones_GlobalPL = instruccionesPL
-    ts_globalPL = TSPL.TablaDeSimbolos()
-    codigo3D = ""
-    codigo3D = TRADUC.generarC3D(instruccionesPL, ts_globalPL)
-    salida3D = open("./salida3D.py", "w")
-    salida3D.write(codigo3D)
-    salida3D.close()
-    salida_table(2,'3D GENERADO CON EXITO')
+    
+
+    if erroressss.getList() == []:
+        instrucciones_GlobalPL = instruccionesPL
+        ts_globalPL = TSPL.TablaDeSimbolos()
+        codigo3D = ""
+        codigo3D = TRADUC.generarC3D(instruccionesPL, ts_globalPL)
+        salida3D = open("./salida3D.py", "w")
+        salida3D.write(codigo3D)
+        salida3D.close()
+        salida_table(2,'3D GENERADO CON EXITO')
+    else:
+        salida_table(2,"PARSER ERROR")
     
 
 
@@ -95,7 +102,7 @@ def generarReporteTC():
 
 def generarReporteErrores():
     print(':v')
-    '''erroressss.crearReporte()'''
+    erroressss.crearReporte()
 
 def generarReporteTS():
     print(':v')
