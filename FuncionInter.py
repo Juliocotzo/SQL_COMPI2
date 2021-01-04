@@ -115,6 +115,22 @@ class Intermedio():
 			return 'Parser Error'
 
 
+	def procesar_funcion6(self):
+		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss
+		instrucciones = g.parse('  SELECT      id_usuario   ,   nombre     FROM  usuario   ;')
+		erroressss = ErrorHTML()
+		if  erroressss.getList()== []:
+			instrucciones_Global = instrucciones
+			ts_global = TS.TablaDeSimbolos()
+			tc_global = TC.TablaDeTipos()
+			tc_global1 = tc_global
+			ts_global1 = ts_global
+			salida = procesar_instrucciones(instrucciones, ts_global,tc_global)
+			return salida
+		else:
+			return 'Parser Error'
+
+
 	def Reportes(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores
 		#astGraph = AST()

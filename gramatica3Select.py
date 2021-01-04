@@ -1,77 +1,3 @@
-#?######################################################
-# TODO        INSTRUCCIONES
-#?######################################################
-
-
-
-def p_instruccion_f_select(t):
-    'instruccion : select_insrt PTCOMA'
-    reporte_bnf.append("<instruccion> ::= <select_insrt> PTCOMA")
-    t[0] = t[1]
-
-def p_instruccion_f_select_union(t):
-    'instruccion : select_uniones PTCOMA'  
-    reporte_bnf.append("<instruccion> ::= <select_uniones> PTOCOMA") 
-    t[0] = Select_Uniones(t[1][0],t[1][1])
-
-
-
-
-
-
-def p_instruccion_select_insrt_union(t):
-    ''' select_uniones : select_uniones tipo_union select_insrt'''
-    temp = []
-    if t[2].upper() == 'UNION':
-        temp.append(OPCIONES_UNIONES.UNION)
-        t[1].append(t[3])
-        temp.append(t[1])
-    elif t[2].upper() == 'INTERSECT':
-        temp.append(OPCIONES_UNIONES.INTERSECT)
-        t[1].append(t[3])
-        temp.append(t[1])
-    elif t[2].upper() == 'EXCEPT':
-        temp.append(OPCIONES_UNIONES.EXCEPTS)
-        t[1].append(t[3])
-        temp.append(t[1])
-    t[0] = temp
-
-def p_instruccion_select_insrt_union_ALL(t):
-    ''' select_uniones : select_uniones tipo_union ALL select_insrt'''
-    temp = []
-    if t[2].upper() == 'UNION':
-        temp.append(OPCIONES_UNIONES.UNION_ALL)
-        t[1].append(t[4])
-        temp.append(t[1])
-    elif t[2].upper() == 'INTERSECT':
-        temp.append(OPCIONES_UNIONES.INTERSECT_ALL)
-        t[1].append(t[4])
-        temp.append(t[1])
-    elif t[2].upper() == 'EXCEPT':
-        temp.append(OPCIONES_UNIONES.EXCEPTS_ALL)
-        t[1].append(t[4])
-        temp.append(t[1])
-    t[0] = temp
-
-def p_instruccion_select_insrt_union2(t):
-    ' select_uniones : select_insrt '
-    t[0] = [t[1]]
-
-def p_instruccion_select_uniones(t):
-    ' tipo_union : UNION'
-    t[0] = t[1]
-
-def p_instruccion_select_uniones1(t):
-    ' tipo_union : INTERSECT'
-    t[0] = t[1]    
-
-def p_instruccion_select_uniones2(t):
-    ' tipo_union :  EXCEPT'
-    t[0] = t[1]
-
-
-
-
 
 #?######################################################
 # TODO      INSTRUCCION SELECT
@@ -88,14 +14,17 @@ def p_opcion_select_tm3(t):
 
 def p_select_lista(t):
     ' opcion_select_lista : DISTINCT campos_c '
+    # ES UNA LISTA t[2]
     t[0] = Create_select_uno(OPCIONES_SELECT.DISTINCT,None,None,None,None,t[2],None) #YA ESTA
 
 def p_select_lista2(t):
     ' opcion_select_lista : opciones_select_lista'
+    #LISTA t[1]
     t[0] = Create_select_uno(OPCIONES_SELECT.SUBCONSULTA,None,None,None,t[1],None,None)
 
 def p_opciones_select_lista(t):
     ''' opciones_select_lista : opciones_select_lista COMA opcion_select '''
+    t[1].append(t[2])
     t[1].append(t[3])
     t[0] = t[1]
 
@@ -105,14 +34,17 @@ def p_opciones_select_lista2(t):
 
 def p_opcion_select_tm1(t):
     'opcion_select_tm :  opcion_select_lista  FROM opciones_sobrenombres '
+    # ES UNA LISTA t[3]
     t[0] = Create_select_general(OPCIONES_SELECT.SELECT,t[1],None,None,None,t[3])
 
 def p_opcion_select_tm2(t):
     'opcion_select_tm :  opcion_select_lista  FROM opciones_sobrenombres opcion_from '
+    # ES UNA LISTA t[3]
     t[0] = Create_select_general(OPCIONES_SELECT.SELECT,t[1],t[4],None,None,t[3])
 
 def p_opciones_sobrenombre(t):
     '''opciones_sobrenombres : opciones_sobrenombres COMA opcion_sobrenombre '''
+    t[1].append(t[2])
     t[1].append(t[3])
     t[0] = t[1]
 
@@ -122,10 +54,12 @@ def p_opciones_sobrenombre2(t):
 
 def p_opcion_select_tm_op1(t):
     'opcion_select_tm : opcion_select_lista seguir_sobrenombre FROM otros_froms '
+    # ES UNA LISTA t[4]
     t[0] = Create_select_general(OPCIONES_SELECT,None,t[1],t[2],t[4],None)
 
 def p_otros_from(t):
     'otros_froms : otros_froms COMA otro_from'
+    t[1].append(t[2])
     t[1].append(t[3])
     t[0] = t[1]
 
@@ -135,10 +69,12 @@ def p_otros_from2(t):
 
 def p_opcion_select_tm(t):
     'opcion_select_tm :  opcion_select_lista  FROM opciones_from opcion_from'
+    # ES UNA LISTA t[3]
     t[0] = Create_select_general(OPCIONES_SELECT.SELECT,t[1],None,t[4],t[3],None)
 
 def p_opciones_from(t):
     '''opciones_from : opciones_from COMA from_s'''
+    t[1].append(t[2])
     t[1].append(t[3])
     t[0] = t[1]
 
@@ -148,10 +84,12 @@ def p_opciones_from2(t):
 
 def p_ins_1(t):
     'opcion_select_tm : varias_funciones'
+    # ES UNA LISTA t[1]
     t[0] = Create_select_general(OPCIONES_SELECT.SELECT,None,None,None,None,t[1])
 
 def p_varias_funciones(t):
     'varias_funciones : varias_funciones COMA funcion'
+    t[1].append(t[2])
     t[1].append(t[3])
     t[0] = t[1]
 
@@ -202,14 +140,13 @@ def p_as_ID(t):
 
 def p_as_ID2(t):
     'as_ID : CADENA'
+    cadena = '\\\''+t[1]+'\\\''
     t[0] = ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[1])
 #---------------------------------------------------------
 
 def p_alias(t):
     ''' seguir_sobrenombre : AS as_ID'''
     temp = []
-    temp.append(TIPO_VALOR.AS_ID)
-    temp.append(t[2])
     t[0] = temp
 
 def p_alias2(t):
@@ -219,16 +156,17 @@ def p_alias2(t):
 def p_alias3(t):
     'seguir_sobrenombre : PUNTO ID'
     temp = []
-    temp.append(TIPO_VALOR.DOBLE)
-    temp.append(t[2])
     t[0] = temp
 
 def p_opcion_select_tm_extract(t):
     'opcion_select_tm : EXTRACT PARA extract_time FROM TIMESTAMP CADENA  PARC '
+    cadena = '\\\''+t[6]+'\\\''
     t[0] = Create_select_time(SELECT_TIME.EXTRACT,t[3],t[6])
 
 def p_opcion_select_tm_date(t):
     'opcion_select_tm : DATE_PART PARA CADENA COMA INTERVAL CADENA PARC  '
+    cadena = '\\\''+t[3]+'\\\''
+    cadena1 = '\\\''+t[6]+'\\\''
     t[0] = Create_select_time(SELECT_TIME.DATE_PART,t[3],t[6])
 
 def p_opcion_select_tm_now(t):
@@ -245,6 +183,7 @@ def p_opcion_select_tm_crtm(t):
 
 def p_opcion_select_tm_timestamp(t):
     'opcion_select_tm : TIMESTAMP CADENA '
+    cadena = '\\\''+t[2]+'\\\''
     t[0] = Create_select_time(SELECT_TIME.TIMESTAMP,t[2],None)
 
 
@@ -556,6 +495,8 @@ def p_cond_where(t):
 
 def p_cond_GB(t):
     'cond_gb : GROUP BY campos_c '
+    # ES UNA LISTA t[3]
+
     t[0] = Create_hijo_select(OPCIONES_SELECT.GROUP_BY,t[3],None)
 
 def p_cond_Having(t):
@@ -564,6 +505,8 @@ def p_cond_Having(t):
 
 def p_cond_OB(t):
     'cond_ob : ORDER BY campos_c'  #######
+    # ES UNA LISTA t[3]
+
     t[0] = Create_hijo_select(OPCIONES_SELECT.ORDER_BY,t[3],None)
 
 def p_cond_limit(t):
@@ -649,6 +592,7 @@ def p_opcion_select5(t):
 def p_greatest_insrt(t):
     ''' greatest_insrt : GREATEST PARA greatest_val PARC
                         | LEAST PARA greatest_val PARC'''
+    # ES UNA LISTA t[3]
     if t[1].upper() == 'GREATEST':
         t[0] = Create_select_uno(OPCIONES_SELECT.GREATEST,None,None,None,t[3],None,None)
     elif t[1].upper() == 'LEAST':
@@ -656,6 +600,7 @@ def p_greatest_insrt(t):
 
 def p_greatest_insrt1(t):
     ' greatest_val : greatest_val COMA expresion_dato '
+    t[1].append(t[2])
     t[1].append(t[3])
     t[0] = t[1]
 
@@ -1023,10 +968,12 @@ def p_expresion_logica_between_notdistict(t):
 
 def p_expresion_logica_between_like(t):
     'expresion_logica_w : expresion_dato LIKE CADENA'
+    cadena = '\\\''+t[3]+'\\\''
     if t[2].upper() == 'LIKE' : t[0] = ExpresionLogica(ExpresionRelacional(t[1],ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[3]),OPERACION_RELACIONAL.DOBLEIGUAL), ExpresionRelacional(t[1],ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[3]),OPERACION_RELACIONAL.DOBLEIGUAL), OPCION_VERIFICAR.LIKE)
 
 def p_expresion_logica_between_NOTLIKE(t):
     'expresion_logica_w : expresion_dato NOT LIKE CADENA'
+    cadena = '\\\''+t[4]+'\\\''
     if t[3].upper() == 'LIKE' and t[2].upper() == 'NOT' : t[0] = ExpresionLogica(ExpresionRelacional(t[1],ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[4]),OPERACION_RELACIONAL.DIFERENTE), ExpresionRelacional(t[1],ExpresionComillaSimple(TIPO_VALOR.NUMERO,t[4]),OPERACION_RELACIONAL.DIFERENTE), OPCION_VERIFICAR.NOT_LIKE)
 
 def p_expresion_logica_w2(t):
@@ -1035,117 +982,4 @@ def p_expresion_logica_w2(t):
 
 def p_expresion_logica_w3(t):
     ' expresion_logica_w : expresion_whereb '
-    t[0] = t[1]
-
-
-
-
-#? ###################################################################
-# SECTION             AGREGADOS CAPITULO 11
-#? ###################################################################
-
-
-#? ###################################################################
-# TODO                         INDEX
-#? ###################################################################
-def p_ins_createIndex(t):
-    'instruccion : createIndex'
-    t[0] = t[1]
-
-def p_createIndex(t):
-    ' createIndex : CREATE INDEX ID ON ID opc_index PTCOMA '
-    t[0] = Funcion_Index(INDEX.INDEX,t[3],t[5],t[6],None)
-    
-def p_createIndex1(t):
-    ' createIndex : CREATE INDEX ID ON ID opc_index cond_where PTCOMA '
-    t[0] = Funcion_Index(INDEX.INDEX_WHERE,t[3],t[5],t[6],t[7])
-
-def p_createIndex2(t):
-    ' createIndex : CREATE INDEX ID ON ID opc_index INCLUDE opc_index PTCOMA '
-    t[0] = Funcion_Index(INDEX.INDEX_INCLUDE,t[3],t[5],t[6],t[8])
-
-def p_createIndex3(t):
-    ' createIndex : CREATE UNIQUE INDEX ID ON ID opc_index PTCOMA '
-    t[0] = Funcion_Index(INDEX.INDEX_UNIQUE_WHERE,t[4],t[6],t[7],None)
-
-def p_createIndex4(t):
-    ' createIndex : CREATE UNIQUE INDEX ID ON ID opc_index cond_where PTCOMA '
-    t[0] = Funcion_Index(INDEX.INDEX_INCLUDE,t[4],t[6],t[7],t[8])
-
-def p_createIndex5(t):
-    ' createIndex : CREATE UNIQUE INDEX ID ON ID opc_index INCLUDE opc_index PTCOMA '
-    t[0] = Funcion_Index(INDEX.INDEX_INCLUDE,t[4],t[6],t[7],t[9])
-
-def p_otro_index(t):
-    'createIndex : CREATE INDEX ID ON ID PARA ID opclass PARC PTCOMA'
-    t[0] = Funcion_Index(INDEX.INDEX_CLASS,t[3],t[5],t[7],t[8])
-    
-def p_otro_index1(t):
-    'createIndex : CREATE INDEX ID ON ID PARA ID opclass sortoptions PARC PTCOMA'
-    t[0] = Funcion_Index(t[3],t[5],t[7],t[8],t[9])
-
-def p_createIndex6(t):
-    '''opc_index :  USING HASH PARA ID PARC
-                  | PARA opc_index_par PARC'''
-    if t[1].upper() == 'USING':
-        t[0] = index_cuerpo(TIPO_INDEX.USING_HASH,t[4],None)
-    else:
-        t[0]= t[2]
-
-def p_createIndex2_0(t):
-    ' opc_index_par : campos_c '
-    t[0] = index_cuerpo(TIPO_INDEX.CAMPOS,t[1],None)
-
-def p_createIndex2_1(t):
-    ' opc_index_par : ID NULLS first_last'
-    t[0] = index_cuerpo(TIPO_INDEX.NULLS,t[1],t[3])
-
-def p_createIndex2_1_1(t):
-    ' opc_index_par : ID orden NULLS first_last '
-    t[0] = index_cuerpo(TIPO_INDEX.NULLS,t[1], t[4])
-
-def p_createIndex2_3(t):
-    ' opc_index_par : ID COLLATE string_type '   
-    t[0] = index_cuerpo(TIPO_INDEX.COLLATE,t[1],t[3])
-
-def p_createIndex2_30(t):
-    ' opc_index_par : LOWER PARA ID PARC '
-    t[0] = index_cuerpo(TIPO_INDEX.LOWER,t[3],None)
-
-def p_createIndex_5(t):
-    ' opc_index_par : ID PARA ID PARC '
-    t[0] = index_cuerpo(TIPO_INDEX.WITH_IDS,t[1],t[3])
-
-def p_first_last(t):
-    ''' first_last : FIRST
-                   | LAST'''
-    t[0] = t[1]
-
-
-def p_sortoptions(t):
-    'sortoptions : sortoptions sortoption'
-    t[1].append(t[2])
-    t[0] = t[1]
-
-def p_sortoptions0(t):
-    'sortoptions : sortoption'
-    t[0] = t[1]
-
-def p_sortoptions1(t):
-    '''sortoption : COLLATE
-                    | ASC
-                    | DESC '''
-    t[0] = t[1]
-
-
- 
-def p_sortoptions2(t):
-    '''sortoption :  NULLS FIRST
-                    | NULLS LAST '''
-    t[0] = t[2]
-
-def p_opclass(t):
-    '''opclass : TEXT_PATTERN_OPS
-               | VARCHAR_PATTERN_OPS
-               | BPCHAR_PATTERN_OPS '''
     t[0] = t[1]
