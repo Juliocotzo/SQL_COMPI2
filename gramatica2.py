@@ -4,11 +4,6 @@
 
 
 
-def p_instruccion_f_select(t):
-    'instruccion : select_insrt PTCOMA'
-    reporte_bnf.append("<instruccion> ::= <select_insrt> PTCOMA")
-    t[0] = t[1]
-
 def p_instruccion_f_select_union(t):
     'instruccion : select_uniones PTCOMA'  
     reporte_bnf.append("<instruccion> ::= <select_uniones> PTOCOMA") 

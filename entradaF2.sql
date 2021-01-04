@@ -3,14 +3,33 @@ USE prueba1;
 CREATE TABLE usuario(
     id_usuario INTEGER,
     nombre VARCHAR(50),
-    apellido VARCHAR(50),
-    fecha VARCHAR(50) 
+    apellido VARCHAR(50)
 );
 
-INSERT INTO usuario VALUES (1,SUBSTR('julio',0,2),SUBSTRING('cotzo',0,2),NOW());
-INSERT INTO usuario (id_usuario,nombre,apellido) VALUES (2,MD5('julio1'),TRIM('             cotzo2'));
-INSERT INTO usuario (id_usuario,nombre,apellido) VALUES (3,MD5('julio2'),'             cotzo2');
-SELECT id_usuario,nombre FROM usuario;
+CREATE TABLE usuario1(
+    id_usuario INTEGER,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50)
+);
+
+INSERT INTO usuario VALUES (1,'Julio','Cotzo');
+INSERT INTO usuario VALUES (2,'Monica','Sian');
+INSERT INTO usuario VALUES (3,'Diego','Berrios');
+
+INSERT INTO usuario1 VALUES (1,'Julio','Cotzo');
+INSERT INTO usuario1 VALUES (2,'Monica2','Sian2');
+INSERT INTO usuario1 VALUES (3,'Diego2','Berrios2');
+
+SELECT * FROM usuario;
+SELECT * FROM usuario1;
+
+SELECT * FROM usuario
+UNION
+SELECT * FROM usuario1;
+
+
+
+
 
 
 CREATE OR REPLACE FUNCTION suma(a integer) RETURNS integer  AS $$

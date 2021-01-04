@@ -538,6 +538,13 @@ def p_instrucciones_global_sent1(t):
     '''instrucciones_global_sent    : select_insrt PTCOMA'''
     t[0] = SelectTable(' ' + str(t[1]) + ';')
 
+def p_instrucciones_global_sent2(t):
+    '''instrucciones_global_sent    : select_uniones PTCOMA'''
+    cadena = ""
+    for i in t[1]:
+        cadena += ' ' + str(i) + ' '
+    t[0] = SelectUniones(' ' + str(cadena) + ';')
+
 def p_instrucciones_global_sent_error(t):
     'instrucciones_global_sent    : error'
 
@@ -1215,8 +1222,38 @@ def p_expresiones_excluva2(t):
     
 
 #?######################################################
-# TODO      INSTRUCCION SELECT
+# TODO      INSTRUCCION SELECT UNIONES
 #?######################################################
+
+def p_instruccion_select_insrt_union(t):
+    ''' select_uniones : select_uniones tipo_union select_insrt'''
+    t[1].append(t[2])
+    t[1].append(t[3])
+    t[0] = t[1]
+
+def p_instruccion_select_insrt_union_ALL(t):
+    ''' select_uniones : select_uniones tipo_union ALL select_insrt'''
+    t[1].append(t[2])
+    t[1].append(t[3])
+    t[1].append(t[4])
+    t[0] = t[1]
+
+def p_instruccion_select_insrt_union2(t):
+    ' select_uniones : select_insrt '
+    t[0] = [t[1]]
+
+def p_instruccion_select_uniones(t):
+    ' tipo_union : UNION'
+    t[0] = ' ' + str(t[1]) + ' '
+
+def p_instruccion_select_uniones1(t):
+    ' tipo_union : INTERSECT'
+    t[0] = ' ' + str(t[1]) + ' '
+
+def p_instruccion_select_uniones2(t):
+    ' tipo_union :  EXCEPT'
+    t[0] = ' ' + str(t[1]) + ' '
+
 
 
 #?######################################################
@@ -1338,7 +1375,7 @@ def p_varias_funciones1(t):
     'varias_funciones : funcion'
     t[0] = [t[1]]
 
-def p_funcion(t):
+def p_funcionSobre(t):
     'funcion : funciones_select seguir_sobrenombre'
     t[0] = ' ' + str(t[1]) + ' '+ str(t[2]) + ' '
 
