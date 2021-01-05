@@ -2276,11 +2276,11 @@ def p_funcion2_r(t):
 
 #PROCEDURE
 def p_procedure(t):
-    'funciones    : CREATE PROCEDURE ID PARA parametros PARC RETURNS tipo AS DOLAR DOLAR BEGIN instrucciones_funct_list END PTCOMA DOLAR DOLAR LANGUAGE PLPGSQL PTCOMA'
+    'funciones    : CREATE PROCEDURE ID PARA parametros PARC RETURNS tipo LANGUAGE PLPGSQL DOLAR BEGIN instrucciones_funct_list END PTCOMA DOLAR DOLAR'
     t[0] = Funcion(TIPO_DATO.INT, t[3], t[5], Principal(t[13]))
 
 def p_procedure2(t):
-    'funciones    : CREATE PROCEDURE ID PARA parametros PARC RETURNS tipo AS DOLAR DOLAR instrucciones_funct_list BEGIN instrucciones_funct_list END PTCOMA DOLAR DOLAR LANGUAGE PLPGSQL PTCOMA'
+    'funciones    : CREATE PROCEDURE ID PARA parametros PARC LANGUAGE PLPGSQL AS DOLAR DOLAR instrucciones_funct_list BEGIN instrucciones_funct_list END PTCOMA DOLAR DOLAR '
     instrucs = []
     for instru1 in t[12]:
         instrucs.append(instru1)
@@ -2289,16 +2289,16 @@ def p_procedure2(t):
     t[0] = Funcion(TIPO_DATO.INT, t[3], t[5], Principal(instrucs))
 
 def p_procedure_r(t):
-    'funciones    : CREATE OR REPLACE PROCEDURE ID PARA parametros PARC RETURNS tipo AS DOLAR DOLAR BEGIN instrucciones_funct_list END PTCOMA DOLAR DOLAR LANGUAGE PLPGSQL PTCOMA'
+    'funciones    : CREATE OR REPLACE PROCEDURE ID PARA parametros PARC LANGUAGE PLPGSQL AS DOLAR DOLAR BEGIN instrucciones_funct_list END PTCOMA DOLAR DOLAR '
     t[0] = Funcion(TIPO_DATO.INT, t[5], t[7], Principal(t[15]))
 
 def p_procedure2_r(t):
-    'funciones    : CREATE OR REPLACE PROCEDURE ID PARA parametros PARC RETURNS tipo AS DOLAR DOLAR instrucciones_funct_list BEGIN instrucciones_funct_list END PTCOMA DOLAR DOLAR LANGUAGE PLPGSQL PTCOMA'
+    'funciones    : CREATE OR REPLACE PROCEDURE ID PARA parametros PARC LANGUAGE PLPGSQL AS DOLAR DOLAR instrucciones_funct_list BEGIN instrucciones_funct_list END PTCOMA DOLAR DOLAR'
     instrucs = []
-    for instru1 in t[14]:
+    for instru1 in t[14]: 
         instrucs.append(instru1)
     for instru2 in t[16]:
-        instrucs.append(instru2)
+        instrucs.append(instru2)  
     t[0] = Funcion(TIPO_DATO.INT, t[5], t[7], Principal(instrucs))
     
 
