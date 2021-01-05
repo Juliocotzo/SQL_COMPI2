@@ -2988,6 +2988,28 @@ def procesar_dropIndex(instr,ts,tc,tsIndex):
                 salida = "\nDROP INDEX"
             elif result == 1 :
                 salida = "\nERROR:  index  \"" + str(datos.val) +"\" does not exist \nSQL state: 42704"
+
+def procesar_AlterIndex(instr,ts,tc,tsIndex):
+    global salida
+    arrayList = tsIndex.getIds()
+    if arrayList != []:
+        bandera1 = False
+        bandera2 = False
+        if instr.oldName in arrayList:
+            bandera1 = True
+        else:
+            bandera1 = False
+            salida = "\nERROR:  relation \"" + str(instr.oldName) +"\" does not exist\nSQL state: 42P01"
+
+        if instr.newName in arrayList:
+            bandera2 = False
+            salida = "\nERROR:  relation \"" + str(instr.newName) +"\" already exists\nSQL state: 42P07"
+        else:
+            bandera2 = True
+        
+        if bandera1 and bandera2:
+            tsIndex.actualizarIndex(str(instr.oldName),str(instr.newName))
+            salida = "\nALTER INDEX"
     
 
 def procesar_instrucciones(instrucciones,ts,tc,tsIndex) :
@@ -3011,6 +3033,8 @@ def procesar_instrucciones(instrucciones,ts,tc,tsIndex) :
                 procesar_index(instr,ts,tc,tsIndex)
             elif isinstance(instr, Crear_Drop_INDEX) :
                 procesar_dropIndex(instr,ts,tc,tsIndex)
+            elif isinstance(instr, Create_AlterIndex) :
+                procesar_AlterIndex(instr,ts,tc,tsIndex)
             elif isinstance(instr, ExpresionBinaria) : 
                 procesar_Expresion_Binaria(instr,ts,tc)
             elif isinstance(instr, ExpresionLogica) : 

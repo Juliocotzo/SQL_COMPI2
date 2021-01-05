@@ -2,33 +2,7 @@
  
 <instrucciones> ::= <instruccion>
  
-<instruccion> ::= <drop_insrt_index>
- 
-<drop_insrt> ::= DROP TABLE <lista_drop_id> PTCOMA
- 
-<lista_drop_id> ::= <lista_drop_id> COMA ID
- 
-<lista_drop_id> ::= ID
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<instruccion> ::= <drop_insrt_index>
- 
-<drop_insrt> ::= DROP TABLE <lista_drop_id> PTCOMA
- 
-<lista_drop_id> ::= ID
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<instruccion> ::= <drop_insrt_index>
- 
-<drop_insrt> ::= DROP TABLE <lista_drop_id> PTCOMA
- 
-<lista_drop_id> ::= ID
+<instruccion> ::= <alterindex_insrt>
  
 <init> ::= <instrucciones>
  

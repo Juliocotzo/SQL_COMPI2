@@ -539,7 +539,8 @@ def p_instrucciones_global_sent(t):
                                     | insert_insrt
                                     | update_insrt
                                     | createIndex
-                                    | drop_insrt_index'''
+                                    | drop_insrt_index
+                                    | alterindex_insrt'''
     t[0] = t[1]
 
 def p_instrucciones_global_sent1(t):
@@ -2911,6 +2912,15 @@ def p_lista_tabla_lista_index(t):
 def p_lista_tabla_lista_index2(t):
     ' lista_drop_id_index : ID '
     t[0] = [t[1]]
+
+#?######################################################
+# TODO        GRAMATICA ALTER INDEX
+#?######################################################
+
+
+def p_AlterIndex(t):
+    ' alterindex_insrt : ALTER INDEX ID RENAME TO ID PTCOMA'
+    t[0] = AlterIndex(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+';')
 
 
 

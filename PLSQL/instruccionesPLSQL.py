@@ -126,5 +126,9 @@ class DropIndex(Instruccion):
     def __init__(self, cadena):
         self.cadena = cadena
 
+class AlterIndex(Instruccion):
+    def __init__(self, cadena):
+        self.cadena = cadena
+
 
 

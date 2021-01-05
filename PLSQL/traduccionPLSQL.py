@@ -175,6 +175,9 @@ def generarC3D(instrucciones, ts_global):
         elif isinstance(instruccion, DropIndex):
             cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
             cadenaFuncionIntermedia += createDropIndexFuncion(instruccion, ts) 
+        elif isinstance(instruccion, AlterIndex):
+            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaFuncionIntermedia += createAlterIndexFuncion(instruccion, ts)
             
         indice = indice + 1
     tablaSimbolos = ts
@@ -695,6 +698,12 @@ def createUpdateTableFuncion(instruccion, ts):
     return cadenaSQL
 
 def createDropIndexFuncion(instruccion, ts):
+    global numFuncionSQL
+    print(instruccion.cadena)
+    cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
+    return cadenaSQL
+
+def createAlterIndexFuncion(instruccion, ts):
     global numFuncionSQL
     print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)

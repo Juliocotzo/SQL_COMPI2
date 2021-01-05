@@ -149,43 +149,7 @@ class Intermedio():
 
 	def procesar_funcion7(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse(' DROP INDEX  mytable_cat_1;')
-		erroressss = ErrorHTML()
-		if  erroressss.getList()== []:
-			instrucciones_Global = instrucciones
-			ts_global = TS.TablaDeSimbolos()
-			ts_globalIndex = TSINDEX.TablaDeSimbolos()
-			tc_global = TC.TablaDeTipos()
-			tc_global1 = tc_global
-			ts_global1 = ts_global
-			ts_globalIndex1 = ts_globalIndex
-			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
-		else:
-			return 'Parser Error'
-
-
-	def procesar_funcion8(self):
-		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse(' DROP INDEX  mytable_cat_1;')
-		erroressss = ErrorHTML()
-		if  erroressss.getList()== []:
-			instrucciones_Global = instrucciones
-			ts_global = TS.TablaDeSimbolos()
-			ts_globalIndex = TSINDEX.TablaDeSimbolos()
-			tc_global = TC.TablaDeTipos()
-			tc_global1 = tc_global
-			ts_global1 = ts_global
-			ts_globalIndex1 = ts_globalIndex
-			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
-		else:
-			return 'Parser Error'
-
-
-	def procesar_funcion9(self):
-		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse(' DROP INDEX  mytable_cat_2 , mytable_cat_3;')
+		instrucciones = g.parse(' ALTER INDEX mytable_cat_1 RENAME TO mytable_cat_3;')
 		erroressss = ErrorHTML()
 		if  erroressss.getList()== []:
 			instrucciones_Global = instrucciones

@@ -210,3 +210,8 @@ class index_cuerpo(Instruccion):
 class Crear_Drop_INDEX(Instruccion):
     def __init__(self, lista_ids = []):
         self.lista_ids = lista_ids
+    
+class Create_AlterIndex(Instruccion):
+    def __init__(self,oldName, newName):
+        self.oldName = oldName
+        self.newName = newName

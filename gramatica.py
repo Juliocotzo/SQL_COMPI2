@@ -527,6 +527,11 @@ def p_instruccion6(t) :
     reporte_bnf.append("<instruccion> ::= <alterDB_insrt>")
     t[0] = t[1] 
 
+def p_instruccion66(t) :
+    'instruccion      : alterindex_insrt'
+    reporte_bnf.append("<instruccion> ::= <alterindex_insrt>")
+    t[0] = t[1] 
+
 def p_instruccion7(t) :
     'instruccion      : drop_insrt'
     reporte_bnf.append("<instruccion> ::= <drop_insrt>")
@@ -3343,6 +3348,15 @@ def p_lista_tabla_lista_index2(t):
     ' lista_drop_id_index : ID '
     reporte_bnf.append("<lista_drop_id> ::= ID")
     t[0] = [ExpresionIdentificador(TIPO_VALOR.IDENTIFICADOR,t[1])]
+
+#?######################################################
+# TODO        GRAMATICA ALTER INDEX
+#?######################################################
+
+
+def p_AlterIndex(t):
+    ' alterindex_insrt : ALTER INDEX ID RENAME TO ID PTCOMA'
+    t[0] = Create_AlterIndex(t[3],t[6])
 
 def p_error(t):
     #print("Error sintáctico en '%s'" % t.value, str(t.lineno),find_column(str(input), t))
