@@ -571,6 +571,7 @@ def p_instrucciones_funct_sent(t):
                                     | sentencia_switch
                                     | PTCOMA
                                     | llamada_funcion
+                                    | insert_insrt
                                     | empty'''
     t[0] = t[1]
 
