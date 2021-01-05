@@ -60,6 +60,50 @@
  
 <instrucciones> ::= <instruccion>
  
+<instruccion> ::= <update_insrt>
+ 
+<update_insrt> ::= UPDATE ID SET <lista_update> <cond_where> PTCOMA
+ 
+<cond_where> ::= WHERE <expresion_where>
+ 
+<expresion_where> ::= <expresion_logica_w>
+ 
+<expresion_logica_w> ::= <expresion_whereb>
+ 
+<expresion_whereb> ::= <expresion_wherea> IGUAL <expresion_wherea>
+ 
+<expresion_wherea> ::= <expresion>
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <expresion_numero>
+ 
+<expresion_numero> ::= ENTERO
+ 
+<expresion_wherea> ::= <expresion>
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <string_type>
+ 
+<string_type> ::= ID
+ 
+<lista_update> ::= <parametro_update>
+ 
+<parametro_update> ::= ID IGUAL <expresion>
+ 
+<exclusiva_insert> ::= <expresion>
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <string_type>
+ 
+<string_type> ::= CADENA
+ 
+<init> ::= <instrucciones>
+ 
+<instrucciones> ::= <instruccion>
+ 
 <instruccion> ::= <insert_insrt>
  
 <insert_insrt> ::= INSERT INTO ID VALUES PAR_A <lista_datos> PAR_C PTCOMA
@@ -411,6 +455,50 @@
 <string_type> ::= CADENA
  
 <lista_datos> ::= <exclusiva_insert>
+ 
+<exclusiva_insert> ::= <expresion>
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <expresion_numero>
+ 
+<expresion_numero> ::= ENTERO
+ 
+<init> ::= <instrucciones>
+ 
+<instrucciones> ::= <instruccion>
+ 
+<instruccion> ::= <update_insrt>
+ 
+<update_insrt> ::= UPDATE ID SET <lista_update> <cond_where> PTCOMA
+ 
+<cond_where> ::= WHERE <expresion_where>
+ 
+<expresion_where> ::= <expresion_logica_w>
+ 
+<expresion_logica_w> ::= <expresion_whereb>
+ 
+<expresion_whereb> ::= <expresion_wherea> IGUAL <expresion_wherea>
+ 
+<expresion_wherea> ::= <expresion>
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <expresion_numero>
+ 
+<expresion_numero> ::= ENTERO
+ 
+<expresion_wherea> ::= <expresion>
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <string_type>
+ 
+<string_type> ::= ID
+ 
+<lista_update> ::= <parametro_update>
+ 
+<parametro_update> ::= ID IGUAL <expresion>
  
 <exclusiva_insert> ::= <expresion>
  

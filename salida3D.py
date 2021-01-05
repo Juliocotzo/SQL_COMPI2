@@ -33,21 +33,22 @@ def main():
 	Ss0[Sra] = 2	
 	goto. ValidaRegistros	
 	label. retorno2
-	print(inter.procesar_funcion14())	
+	print(inter.procesar_funcion14())
+	print(inter.procesar_funcion15())	
 	ta1 = 'tbProductoUp'	
 	ta2 = 8	
 	Sra = Sra + 1	
 	Ss0[Sra] = 3	
 	goto. ValidaRegistros	
 	label. retorno3
-	print(inter.procesar_funcion15())	
+	print(inter.procesar_funcion16())	
 	Sra = Sra + 1	
 	Ss0[Sra] = 4	
 	goto. CALCULOS	
 	label. retorno4
-	print(inter.procesar_funcion16())
 	print(inter.procesar_funcion17())
-	print(inter.procesar_funcion18())	
+	print(inter.procesar_funcion18())
+	print(inter.procesar_funcion19())	
 	Sra = Sra + 1	
 	Ss0[Sra] = 5	
 	goto. sp_validainsert	
@@ -58,7 +59,7 @@ def main():
 	Ss0[Sra] = 6	
 	goto. ValidaRegistros	
 	label. retorno6
-	print(inter.procesar_funcion19())	
+	print(inter.procesar_funcion20())	
 	Sra = Sra + 1	
 	Ss0[Sra] = 7	
 	goto. sp_validaupdate	
@@ -69,8 +70,8 @@ def main():
 	Ss0[Sra] = 8	
 	goto. ValidaRegistros	
 	label. retorno8
-	print(inter.procesar_funcion20())
 	print(inter.procesar_funcion21())
+	print(inter.procesar_funcion22())
 	print(inter.Reportes())	
 	goto. end	
 	
@@ -157,16 +158,17 @@ def main():
 	goto. retorno	
 	
 	label. sp_validainsert
-	print(inter.procesar_funcion22())
 	print(inter.procesar_funcion23())
 	print(inter.procesar_funcion24())
 	print(inter.procesar_funcion25())
-	print(inter.procesar_funcion26())	
+	print(inter.procesar_funcion26())
+	print(inter.procesar_funcion27())	
 	print('INSERT  ')	
 	goto. retorno	
 	
 	label. sp_validaupdate	
-	print('UPDATE  ')	
+	print('UPDATE  ')
+	print(inter.procesar_funcion28())	
 	goto. retorno	
 	
 	label. retorno	

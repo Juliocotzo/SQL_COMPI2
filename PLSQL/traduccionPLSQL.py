@@ -169,7 +169,9 @@ def generarC3D(instrucciones, ts_global):
         elif isinstance(instruccion, FuncionIndex):
             cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
             cadenaFuncionIntermedia += createIndexFuncion(instruccion, ts)
-            
+        elif isinstance(instruccion, UpdateTable):
+            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaFuncionIntermedia += createUpdateTableFuncion(instruccion, ts)   
             
         indice = indice + 1
     tablaSimbolos = ts
@@ -221,6 +223,9 @@ def generarPrincipal(instruccion, ts):
         elif isinstance(instruccion, InsertTable):
             cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
             cadenaFuncionIntermedia += createInsertTableFuncion(instruccion, ts)
+        elif isinstance(instruccion, UpdateTable):
+            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaFuncionIntermedia += createUpdateTableFuncion(instruccion, ts)
         indice = indice + 1
 
 def generarEtiqueta(instruccion, ts):
@@ -679,6 +684,13 @@ def createIndexFuncion(instruccion, ts):
     print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
+
+def createUpdateTableFuncion(instruccion, ts):
+    global numFuncionSQL
+    print(instruccion.cadena)
+    cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
+    return cadenaSQL
+
 
 def generarFuncionesSQL(instruccionSQL,numero):
     global numFuncionSQL
