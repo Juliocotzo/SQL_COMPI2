@@ -69,7 +69,7 @@ $$ LANGUAGE plpgsql;
 SELECT ValidaRegistros('tbProducto',8);
 insert into tbCalificacion values(1,'Create Table and Insert',2);
 
---update tbProducto set estado = 2 where estado = 1;
+update tbProducto set estado = 2 where estado = 1;
 SELECT ValidaRegistros('tbProductoUp',8);
 insert into tbCalificacion values(2,'Update',2);
 
@@ -127,7 +127,7 @@ language plpgsql
 as $$
 begin
 	RAISE 'UPDATE';
-	--update tbbodega set bodega = 'bodega zona 9' where idbodega = 4; 
+	update tbbodega set bodega = 'bodega zona 9' where idbodega = 4; 
 end; $$
 
 EXECUTE sp_validaupdate();
