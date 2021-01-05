@@ -549,6 +549,8 @@ def getEmpty(tipo):
         return "\'\'"
     elif tipo == TIPO_DATO.BOOLEAN:
         return False
+    else:
+        return 0
 
 def getOperador(operador):
     if operador == OPERADOR.MAS:
