@@ -1,0 +1,59 @@
+CREATE OR REPLACE FUNCTION suma(a integer) RETURNS integer  AS $$
+DECLARE
+    b integer := 10;
+BEGIN
+    IF NOT a<20THEN
+        IF NOT a<20THEN
+        RAISE a;
+        a := a +1;
+        SELECT suma(a);
+        ELSE 
+            RAISE 'ES MAYOR A 20';
+        END IF;
+    ELSE 
+        RAISE 'ES MAYOR A 20';
+    END IF; 
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION resta(a integer) RETURNS integer  AS $$
+DECLARE
+    b integer := 10;
+BEGIN
+    IF NOT a<20THEN
+        IF NOT a<20THEN
+        RAISE a;
+        a := a +1;
+        SELECT suma(a);
+        ELSE 
+            RAISE 'ES MAYOR A 20';
+        END IF;
+    ELSE 
+        RAISE 'ES MAYOR A 20';
+    END IF; 
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT suma(17);
+
+CREATE DATABASE Prueba1;
+USE Prueba1;
+CREATE TABLE tbUSUARIO(
+     id_usuario INTEGER
+);
+ALTER TABLE tbUSUARIO ADD CONSTRAINT fk_id_usuario FOREIGN KEY (id_usuario) REFERENCES tbESTUDIANTE(id_usuario);
+
+CREATE INDEX test1_id_index ON tbUSUARIO (id_usuario);
+CREATE INDEX name ON tbUSUARIO USING HASH (id_usuario);
+CREATE INDEX test2_mm_idx ON tbUSUARIO (id_usuario, id_usuario);
+CREATE INDEX test2_info_nulls_low ON tbUSUARIO (id_usuario NULLS FIRST);
+CREATE INDEX test3_desc_index ON tbUSUARIO (id_usuario DESC NULLS LAST);
+CREATE UNIQUE INDEX name ON tbUSUARIO (id_usuario , id_usuario, id_usuario);
+CREATE INDEX test1_lower_col1_idx ON tbUSUARIO (lower(id_usuario));
+CREATE INDEX access_log_client_ip_ix ON tbUSUARIO (id_usuario)
+     WHERE NOT (id_usuario > inet  AND
+     id_usuario < inet );
+
+CREATE INDEX mytable_cat_1 ON tbUSUARIO (id_usuario) WHERE category = 1;
+CREATE INDEX mytable_cat_2 ON tbUSUARIO (id_usuario) WHERE category = 2;
+CREATE INDEX mytable_cat_3 ON tbUSUARIO (id_usuario) WHERE category = 3;
