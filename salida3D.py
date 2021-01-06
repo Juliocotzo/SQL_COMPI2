@@ -15,6 +15,8 @@ def main():
 	Ss0[Sra] = 1	
 	goto. myFuncion	
 	label. retorno1
+	print(inter.procesar_funcion2())
+	print(inter.procesar_funcion3())
 	print(inter.Reportes())	
 	goto. end	
 	
