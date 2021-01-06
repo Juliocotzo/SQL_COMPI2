@@ -2,21 +2,17 @@
  
 <instrucciones> ::= <instruccion>
  
-<instruccion> ::= <alterindex_insrt>
+<instruccion> ::= <select_insrt> PTCOMA
  
-<init> ::= <instrucciones>
+<select_insrt> ::= SELECT <opcion_select_tm>
  
-<instrucciones> ::= <instruccion>
+<opcion_select_tm> ::= <varias_funciones>
  
-<cond_where> ::= WHERE <expresion_where>
+<varias_funciones> ::= <varias_funciones> COMA <funcion>
  
-<expresion_where> ::= <expresion_logica_w>
+<funcion> ::= <funciones_select>
  
-<expresion_logica_w> ::= <expresion_whereb>
- 
-<expresion_whereb> ::= <expresion_wherea> IGUAL <expresion_wherea>
- 
-<expresion_wherea> ::= <expresion>
+<funciones_select> ::= ABS PAR_A <expresion> PAR_C
  
 <expresion> ::= <expresion_dato>
  
@@ -24,110 +20,14 @@
  
 <expresion_numero> ::= ENTERO
  
-<expresion_wherea> ::= <expresion>
+<varias_funciones> ::= <funcion>
  
-<expresion> ::= <expresion_dato>
+<funcion> ::= <funciones_select>
  
-<expresion_dato> ::= <string_type>
- 
-<string_type> ::= ID
- 
-<campos_c> ::= ID
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<cond_where> ::= WHERE <expresion_where>
- 
-<expresion_where> ::= <expresion_logica_w>
- 
-<expresion_logica_w> ::= <expresion_whereb>
- 
-<expresion_whereb> ::= <expresion_wherea> IGUAL <expresion_wherea>
- 
-<expresion_wherea> ::= <expresion>
+<funciones_select> ::= ABS PAR_A <expresion> PAR_C
  
 <expresion> ::= <expresion_dato>
  
 <expresion_dato> ::= <expresion_numero>
  
 <expresion_numero> ::= ENTERO
- 
-<expresion_wherea> ::= <expresion>
- 
-<expresion> ::= <expresion_dato>
- 
-<expresion_dato> ::= <string_type>
- 
-<string_type> ::= ID
- 
-<campos_c> ::= ID
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<cond_where> ::= WHERE <expresion_where>
- 
-<expresion_where> ::= <expresion_logica_w>
- 
-<expresion_logica_w> ::= <expresion_whereb>
- 
-<expresion_whereb> ::= <expresion_wherea> IGUAL <expresion_wherea>
- 
-<expresion_wherea> ::= <expresion>
- 
-<expresion> ::= <expresion_dato>
- 
-<expresion_dato> ::= <expresion_numero>
- 
-<expresion_numero> ::= ENTERO
- 
-<expresion_wherea> ::= <expresion>
- 
-<expresion> ::= <expresion_dato>
- 
-<expresion_dato> ::= <string_type>
- 
-<string_type> ::= ID
- 
-<campos_c> ::= ID
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<instruccion> ::= <alterTable_insrt>
- 
-<alterTable_insrt> ::= ALTER TABLE ID ADD CONSTRAINT ID FOREIGN KEY PAR_A ID PAR_C REFERENCES ID PAR_A ID PAR_C  PTCOMA
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<instruccion> ::= <create_Table_isnrt>
- 
-<create_Table_isnrt> ::= CREATE TABLE ID PAR_A <cuerpo_createTable_lista> PAR_C PTCOMA 
- 
-<cuerpo_createTable_lista> ::= <cuerpo_createTable>
- 
-<campos_c> ::= ID <TIPO_DATO_DEF>
- 
-<TIPO_DATO_DEF> ::= INTEGER
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<instruccion> ::= <use_database_instr>
- 
-<use_database_instr> ::= USE ID PTCOMA
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
-<instruccion> ::= <createDB_insrt>
- 
-<createDB_insrt> ::= CREATE DATABASE ID PTCOMA
