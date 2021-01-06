@@ -2826,21 +2826,16 @@ def procesar_index(instr, ts, tc,tsIndex):
     else:
         #print('---------------- si entra al index ---------------------')
         if instr.etiqueta == INDEX.INDEX:
-            
+            columsAr = []
             colums = ""
             if type(instr.lista_index.identificador) == type([]):
                 for lista in instr.lista_index.identificador:
-                    colums += ' '
-                    colums += str(lista.val)
-                    colums += ' '
-                    '''print(lista.val)'''
+                    columsAr.append(lista.val)
 
             else:
-                colums += ' '
-                colums += str(instr.lista_index.identificador)
-                colums += ' '
+                columsAr.append(instr.lista_index.identificador)
             
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,colums,instr.etiqueta)
+            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,columsAr,instr.etiqueta)
             tsIndex.agregar(temp)
             salida = '\nCREATE INDEX'
 
@@ -2848,63 +2843,39 @@ def procesar_index(instr, ts, tc,tsIndex):
         elif instr.etiqueta == INDEX.INDEX_WHERE:
             #print(instr.identificador)
             #print(instr.nombre_index)
-            colums = ""
-            for lis in instr.lista_index.identificador:
-                colums += ' '
-                colums += str(lis.val)
-                colums += ' '
             
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,colums,instr.etiqueta)
+            
+            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
             tsIndex.agregar(temp)
             salida = '\nCREATE INDEX'
 
         elif instr.etiqueta == INDEX.INDEX_INCLUDE:
             #print(instr.identificador)
             #print(instr.nombre_index)
-            colums = ""
-            for lis in instr.lista_index.identificador:
-                colums += ' '
-                colums += str(lis.val)
-                colums += ' '
 
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,colums,instr.etiqueta)
+            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
             tsIndex.agregar(temp)
             salida = '\nCREATE INDEX'
 
         elif instr.etiqueta == INDEX.INDEX_UNIQUE_WHERE:
             #print(instr.identificador)
             #print(instr.nombre_index)
-            colums = ""
-            for lis in instr.lista_index.identificador:
-                colums += ' '
-                colums += str(lis.val)
-                colums += ' '
             
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,colums,instr.etiqueta)
+            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
             tsIndex.agregar(temp)
             salida = '\nCREATE INDEX'
 
         elif instr.etiqueta == INDEX.INDEX_INCLUDE:
             #print(instr.identificador)
             #print(instr.nombre_index)
-            colums = ""
-            for lis in instr.lista_index.identificador:
-                colums += ' '
-                colums += str(lis.val)
-                colums += ' '
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,colums,instr.etiqueta)
+            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
             tsIndex.agregar(temp)
             salida = '\nCREATE INDEX'
 
         elif instr.etiqueta == INDEX.INDEX_CLASS:
             #print(instr.identificador)
             #print(instr.nombre_index)
-            colums = ""
-            for lis in instr.lista_index.identificador:
-                colums += ' '
-                colums += str(lis.val)
-                colums += ' '
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,colums,instr.etiqueta)
+            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
             tsIndex.agregar(temp)
             salida = '\nCREATE INDEX'
     
@@ -2964,6 +2935,44 @@ def procesar_AlterIndex(instr,ts,tc,tsIndex):
         if bandera1 and bandera2:
             tsIndex.actualizarIndex(str(instr.oldName),str(instr.newName))
             salida = "\nALTER INDEX"
+
+def procesar_AlterIndexColumn(instr,ts,tc,tsIndex):
+    global salida
+    arrayList = tsIndex.getIds()
+    if arrayList != []:
+        global salida
+
+        bandera1 = False
+        if instr.idIndex in arrayList:
+            bandera1 = True
+        else:
+            bandera1 = False
+            salida = "\nERROR:  relation \"" + str(instr.idIndex) +"\" does not exist\nSQL state: 42P01"
+    
+        if bandera1:
+            indexId = tsIndex.obtenerIndex(instr.idIndex)
+            arrayColumns = tc.obtenerColumns(useCurrentDatabase,indexId.tabla)
+            columnaNew = None
+            if (isinstance(instr.newColum,ExpresionIdentificador)):
+                columnaNew = instr.newColum.val
+            elif (isinstance(instr.newColum,ExpresionEntero)):
+                numPos = instr.newColum.val - 1
+                iPos = 0
+                while iPos < len(arrayColumns):
+                    if iPos == numPos:
+                        columnaNew = arrayColumns[iPos]
+                    iPos += 1
+
+            tempcolumnas = indexId.columnas
+            itmp = 0
+            while itmp < len(tempcolumnas):
+                if tempcolumnas[itmp] == instr.oldColumn:
+                    tempcolumnas[itmp] = columnaNew
+                itmp += 1
+            
+            newIndex = TSINDEX.Simbolo(indexId.id,indexId.tipo,indexId.tabla,tempcolumnas,indexId.restriccion)
+            tsIndex.actualizarINDEXCOLUMN(newIndex,instr.idIndex)
+            salida = "\nALTER INDEX"
     
 
 def procesar_instrucciones(instrucciones,ts,tc,tsIndex) :
@@ -2987,6 +2996,8 @@ def procesar_instrucciones(instrucciones,ts,tc,tsIndex) :
                 procesar_index(instr,ts,tc,tsIndex)
             elif isinstance(instr, Crear_Drop_INDEX) :
                 procesar_dropIndex(instr,ts,tc,tsIndex)
+            elif isinstance(instr, Create_AlterIndexColumn) :
+                procesar_AlterIndexColumn(instr,ts,tc,tsIndex)
             elif isinstance(instr, Create_AlterIndex) :
                 procesar_AlterIndex(instr,ts,tc,tsIndex)
             elif isinstance(instr, ExpresionBinaria) : 

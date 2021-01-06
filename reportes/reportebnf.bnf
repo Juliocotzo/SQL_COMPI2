@@ -2,66 +2,56 @@
  
 <instrucciones> ::= <instruccion>
  
-<instruccion> ::= <select_insrt> PTCOMA
- 
-<select_insrt> ::= SELECT <opcion_select_tm>
- 
-<opcion_select_tm> ::= <varias_funciones>
- 
-<varias_funciones> ::= <varias_funciones> COMA <funcion>
- 
-<funcion> ::= <funciones_select>
- 
-<funciones_select> ::= ACOSD PAR_A <expresion> PAR_C
- 
-<expresion> ::= <expresion_dato>
- 
-<expresion_dato> ::= <expresion_numero>
- 
-<expresion_numero> ::= ENTERO
- 
-<varias_funciones> ::= <funcion>
- 
-<funcion> ::= <funciones_select>
- 
-<funciones_select> ::= ABS PAR_A <expresion> PAR_C
- 
-<expresion> ::= <expresion_dato>
- 
-<expresion_dato> ::= <expresion_numero>
- 
-<expresion_numero> ::= ENTERO
+<campos_c> ::= ID
  
 <init> ::= <instrucciones>
  
 <instrucciones> ::= <instruccion>
  
-<instruccion> ::= <select_insrt> PTCOMA
+<campos_c> ::= <campos_c> COMA ID
  
-<select_insrt> ::= SELECT <opcion_select_tm>
+<campos_c> ::= <campos_c> COMA ID
  
-<opcion_select_tm> ::= <varias_funciones>
+<campos_c> ::= ID
  
-<varias_funciones> ::= <varias_funciones> COMA <funcion>
+<init> ::= <instrucciones>
  
-<funcion> ::= <funciones_select>
+<instrucciones> ::= <instruccion>
  
-<funciones_select> ::= ACOSD PAR_A <expresion> PAR_C
+<instruccion> ::= <create_Table_isnrt>
  
-<expresion> ::= <expresion_dato>
+<create_Table_isnrt> ::= CREATE TABLE ID PAR_A <cuerpo_createTable_lista> PAR_C PTCOMA 
  
-<expresion_dato> ::= <expresion_numero>
+<cuerpo_createTable_lista> ::= <cuerpo_createTable_lista> COMA <cuerpo_createTable>
  
-<expresion_numero> ::= ENTERO
+<campos_c> ::= ID <TIPO_DATO_DEF>
  
-<varias_funciones> ::= <funcion>
+<TIPO_DATO_DEF> ::= INTEGER
  
-<funcion> ::= <funciones_select>
+<cuerpo_createTable_lista> ::= <cuerpo_createTable_lista> COMA <cuerpo_createTable>
  
-<funciones_select> ::= ABS PAR_A <expresion> PAR_C
+<campos_c> ::= ID <TIPO_DATO_DEF>
  
-<expresion> ::= <expresion_dato>
+<TIPO_DATO_DEF> ::= INTEGER
  
-<expresion_dato> ::= <expresion_numero>
+<cuerpo_createTable_lista> ::= <cuerpo_createTable>
  
-<expresion_numero> ::= ENTERO
+<campos_c> ::= ID <TIPO_DATO_DEF>
+ 
+<TIPO_DATO_DEF> ::= INTEGER
+ 
+<init> ::= <instrucciones>
+ 
+<instrucciones> ::= <instruccion>
+ 
+<instruccion> ::= <use_database_instr>
+ 
+<use_database_instr> ::= USE ID PTCOMA
+ 
+<init> ::= <instrucciones>
+ 
+<instrucciones> ::= <instruccion>
+ 
+<instruccion> ::= <createDB_insrt>
+ 
+<createDB_insrt> ::= CREATE DATABASE ID PTCOMA

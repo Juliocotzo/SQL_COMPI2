@@ -2922,6 +2922,21 @@ def p_AlterIndex(t):
     ' alterindex_insrt : ALTER INDEX ID RENAME TO ID PTCOMA'
     t[0] = AlterIndex(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+';')
 
+def p_Alter_Index_Column(t):
+    'alterindex_insrt : ALTER INDEX ID ALTER ID opcionIndex PTCOMA'
+    t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+';')
+
+def p_Alter_Index_Column2(t):
+    'alterindex_insrt : ALTER INDEX IF EXISTS ID ALTER ID opcionIndex PTCOMA'
+    t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+' ' + t[7]+' ' + t[8]+';')
+
+def p_Alter_Index_Column_Opciones(t):
+    '''opcionIndex : ENTERO'''
+    t[0] = ' ' + str(t[1]) + ' '
+
+def p_Alter_Index_Column_Opciones2(t):
+    '''opcionIndex : ID'''
+    t[0] = ' ' + str(t[1]) + ' '
 
 
 # Errores Sintacticos

@@ -112,6 +112,20 @@ class TablaDeSimbolos() :
             if self.simbolos[i].id == oldid:
                 self.simbolos[i].id = newId
             i += 1
+    
+    def obtenerIndex(self, id) :
+        i = 0
+        while i < len(self.simbolos):
+            if self.simbolos[i].id == id:
+                return self.simbolos[i]
+            i += 1
+
+    def actualizarINDEXCOLUMN(self, simbolo, id) :
+        i = 0
+        while i < len(self.simbolos):
+            if self.simbolos[i].id == id:
+                self.simbolos[i] = simbolo
+            i += 1
 
 
     def clear(self):

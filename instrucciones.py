@@ -215,3 +215,9 @@ class Create_AlterIndex(Instruccion):
     def __init__(self,oldName, newName):
         self.oldName = oldName
         self.newName = newName
+
+class Create_AlterIndexColumn(Instruccion):
+    def __init__(self,idIndex,oldColumn, newColum):
+        self.idIndex = idIndex
+        self.oldColumn = oldColumn
+        self.newColum = newColum
