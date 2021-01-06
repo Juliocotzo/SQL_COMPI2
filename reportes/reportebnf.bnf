@@ -12,7 +12,41 @@
  
 <funcion> ::= <funciones_select>
  
+<funciones_select> ::= ACOSD PAR_A <expresion> PAR_C
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <expresion_numero>
+ 
+<expresion_numero> ::= ENTERO
+ 
+<varias_funciones> ::= <funcion>
+ 
+<funcion> ::= <funciones_select>
+ 
 <funciones_select> ::= ABS PAR_A <expresion> PAR_C
+ 
+<expresion> ::= <expresion_dato>
+ 
+<expresion_dato> ::= <expresion_numero>
+ 
+<expresion_numero> ::= ENTERO
+ 
+<init> ::= <instrucciones>
+ 
+<instrucciones> ::= <instruccion>
+ 
+<instruccion> ::= <select_insrt> PTCOMA
+ 
+<select_insrt> ::= SELECT <opcion_select_tm>
+ 
+<opcion_select_tm> ::= <varias_funciones>
+ 
+<varias_funciones> ::= <varias_funciones> COMA <funcion>
+ 
+<funcion> ::= <funciones_select>
+ 
+<funciones_select> ::= ACOSD PAR_A <expresion> PAR_C
  
 <expresion> ::= <expresion_dato>
  

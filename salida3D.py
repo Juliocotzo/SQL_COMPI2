@@ -9,6 +9,7 @@ def main():
 	Ss0 = [0] * 10000
 
 	print(inter.procesar_funcion0())
+	print(inter.procesar_funcion1())
 	print(inter.Reportes())	
 	goto. end	
 	
