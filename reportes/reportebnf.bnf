@@ -2,14 +2,6 @@
  
 <instrucciones> ::= <instruccion>
  
-<instruccion> ::= <createDB_insrt>
- 
-<createDB_insrt> ::= CREATE DATABASE ID PTCOMA
- 
-<init> ::= <instrucciones>
- 
-<instrucciones> ::= <instruccion>
- 
 <instruccion> ::= <select_insrt> PTCOMA
  
 <select_insrt> ::= SELECT <opcion_select_tm>
@@ -918,8 +910,6 @@
  
 <instrucciones> ::= <instruccion>
  
-<campos_c> ::= ID
- 
 <init> ::= <instrucciones>
  
 <instrucciones> ::= <instruccion>
@@ -973,8 +963,6 @@
 <init> ::= <instrucciones>
  
 <instrucciones> ::= <instruccion>
- 
-<campos_c> ::= ID
  
 <init> ::= <instrucciones>
  

@@ -2907,8 +2907,6 @@ def procesar_index(instr, ts, tc,tsIndex):
             elif instr.etiqueta == INDEX.INDEX_WHERE:
                 #print(instr.identificador)
                 #print(instr.nombre_index)
-                
-                
                 temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
                 tsIndex.agregar(temp)
                 salida = '\nCREATE INDEX'
@@ -2924,7 +2922,7 @@ def procesar_index(instr, ts, tc,tsIndex):
             elif instr.etiqueta == INDEX.INDEX_UNIQUE_WHERE:
                 #print(instr.identificador)
                 #print(instr.nombre_index)
-                
+
                 temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
                 tsIndex.agregar(temp)
                 salida = '\nCREATE INDEX'
@@ -2945,7 +2943,30 @@ def procesar_index(instr, ts, tc,tsIndex):
         
         
     
-
+def procesar_indexNew(instr, ts, tc,tsIndex):
+    global salida
+    arrayList = tsIndex.getIds()
+    if instr.id_index in arrayList:
+        salida = "\nERROR:  relation \"" + str(instr.id_index) +"\" already exists\nSQL state: 42P07"
+    else: 
+        buscar = tc.obtenerReturnTabla(useCurrentDatabase,instr.id_tabla)
+        if buscar == False:
+            salida = "\nERROR:  relation \"" + str(instr.id_tabla) +"\" does not exist\nSQL state: 42P01"
+        else:
+            varr = True
+            columnasT = tc.obtenerColumns(useCurrentDatabase,instr.id_tabla)
+            for inn in instr.ids:
+                if inn in columnasT:
+                    varr = True
+                else:
+                    varr = False
+                    salida = "\nERROR:  column \"" + str(inn) +"\" does not exist\nSQL state: 42703"
+                    
+            
+            if varr:
+                temp = TSINDEX.Simbolo(instr.id_index,'INDEX',instr.id_tabla,instr.ids,instr.restriccion)
+                tsIndex.agregar(temp)
+                salida = '\nCREATE INDEX'
     
     
     
@@ -3110,6 +3131,8 @@ def procesar_instrucciones(instrucciones,ts,tc,tsIndex) :
                 procesar_select_general(instr,ts,tc)
             elif isinstance(instr, Select_Uniones) : 
                 procesar_select_uniones(instr,ts,tc)
+            elif isinstance(instr, CreateIndexNew) : 
+                procesar_indexNew(instr,ts,tc,tsIndex) 
         
             #SELECT 
             

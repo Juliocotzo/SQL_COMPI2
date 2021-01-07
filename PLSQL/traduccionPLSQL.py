@@ -114,8 +114,8 @@ def generarC3D(instrucciones, ts_global):
     cadenaTraduccion += "inter = Intermedio()" + "\n\n"
     cadenaTraduccion += "@with_goto  # Decorador necesario." + "\n"
     cadenaTraduccion += "def main():" + "\n"
-    cadenaTraduccion += "\tSra = -1" + "\n"
-    cadenaTraduccion += "\tSs0 = [0] * 10000" + "\n"
+    cadenaTraduccion += "\tpos = -1" + "\n"
+    cadenaTraduccion += "\tarr = [0] * 10000" + "\n"
     indice = 0
     ts = ts_global
     while indice < len(instrucciones):
@@ -184,6 +184,10 @@ def generarC3D(instrucciones, ts_global):
         elif isinstance(instruccion, DeleteTable):
             cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createDeleteTableFuncion(instruccion, ts)
+        elif isinstance(instruccion, CreateIndexNewNew):
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
+            cadenaFuncionIntermedia += createCreateIndexFuncion(instruccion, ts)
+            
             
         indice = indice + 1
     tablaSimbolos = ts
@@ -283,9 +287,9 @@ def agregarRetorno():
     cadenaTraduccion += '\t\n'
     cadenaTraduccion += '\tlabel. retorno'
     cadenaTraduccion += '\t\n'
-    cadenaTraduccion += '\tSsp = Ss0[Sra]'
+    cadenaTraduccion += '\tposR = arr[pos]'
     cadenaTraduccion += '\t\n'
-    cadenaTraduccion += '\tSra = Sra - 1'
+    cadenaTraduccion += '\tpos = pos - 1'
     cadenaTraduccion += cadenaManejador
 
 def guardarFuncion(instruccion, ts):
@@ -304,9 +308,9 @@ def generarLlamadaFuncion(instruccion, ts):
     contadorLlamadas = contadorLlamadas + 1
     if instruccion.parametros[0] is None:
         cadenaTraduccion += '\t\n'
-        cadenaTraduccion += '\tSra = Sra + 1'
+        cadenaTraduccion += '\tpos = pos + 1'
         cadenaTraduccion += '\t\n'
-        cadenaTraduccion += '\tSs0[Sra] = ' + str(contadorLlamadas) + ''
+        cadenaTraduccion += '\tarr[pos] = ' + str(contadorLlamadas) + ''
         cadenaTraduccion += '\t\n'
         cadenaTraduccion += '\tgoto. ' + instruccion.id + ''
         cadenaTraduccion += '\t\n'
@@ -320,15 +324,15 @@ def generarLlamadaFuncion(instruccion, ts):
             cadenaTraduccion += '\t' + str(funcion.temporales[contador]) + ' = ' + str(exp) + ''
             contador = contador + 1
         cadenaTraduccion += '\t\n'
-        cadenaTraduccion += '\tSra = Sra + 1'
+        cadenaTraduccion += '\tpos = pos + 1'
         cadenaTraduccion += '\t\n'
-        cadenaTraduccion += '\tSs0[Sra] = ' + str(contadorLlamadas) + ''
+        cadenaTraduccion += '\tarr[pos] = ' + str(contadorLlamadas) + ''
         cadenaTraduccion += '\t\n'
         cadenaTraduccion += '\tgoto. ' + instruccion.id + ''
         cadenaTraduccion += '\t\n'
         cadenaTraduccion += '\tlabel. retorno' + str(contadorLlamadas)
     cadenaManejador += '\t\n'
-    cadenaManejador += '\tif Ssp == '+ str(contadorLlamadas) + ': goto. retorno' + str(contadorLlamadas) + ''
+    cadenaManejador += '\tif posR == '+ str(contadorLlamadas) + ': goto. retorno' + str(contadorLlamadas) + ''
 
 def generarListaDeclaraciones(instruccion, ts):
     global cadenaTraduccion
@@ -731,6 +735,12 @@ def createAlterIndexColumnFuncion(instruccion, ts):
     return cadenaSQL
 
 def createDeleteTableFuncion(instruccion, ts):
+    global numFuncionSQL
+    #print(instruccion.cadena)
+    cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
+    return cadenaSQL
+
+def createCreateIndexFuncion(instruccion, ts):
     global numFuncionSQL
     #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)

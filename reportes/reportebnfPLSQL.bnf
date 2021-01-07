@@ -2,34 +2,6 @@
  
 <codigo> ::= <instrucciones_globales_list>
  
-<instrucciones_globales_list> ::= <instrucciones_global_sent>
- 
-<instrucciones_global_sent> ::= <select_insrt> PTCOMA
- 
-<select_insrt> ::= SELECT <opcion_select_tm>
- 
-<opcion_select_tm> ::= <opcion_select_lista> FROM <opciones_sobrenombres> 
- 
-<opciones_sobrenombres> ::= <opcion_sobrenombre>
- 
-<opcion_sobrenombre> ::= ID 
- 
-<opcion_select_lista> ::= <opciones_select_lista>
- 
-<opciones_select_lista> ::= <opcion_select>
- 
-<opcion_select> ::= <expresion>
- 
-<expresion ::= <expresion_dato>
- 
-<expresion_dato> ::= <string_type>
- 
-<string_type> ::= ID
- 
-<inicio> ::= <codigo>
- 
-<codigo> ::= <instrucciones_globales_list>
- 
 <instrucciones_globales_list> ::= <instrucciones_globales_list><instrucciones_global_sent>
  
 <instrucciones_global_sent> ::= <select_insrt> PTCOMA
@@ -534,9 +506,13 @@
  
 <createIndex> ::= CREATE INDEX ID ON ID <opc_index> PTCOMA
  
-<opc_index> ::= PARA <opc_index_par> PARC
+<empty> ::= 
  
-<opc_index_par> ::= LOWER PARA ID PARC 
+<empty> ::= 
+ 
+<empty> ::= 
+ 
+<empty> ::= 
  
 <instrucciones_globales_list> ::= <instrucciones_globales_list><instrucciones_global_sent>
  
@@ -1638,13 +1614,13 @@
  
 <instrucciones_global_sent> ::= <funciones> | <llamada_funcion> | <createDB_insrt> | <show_databases_instr> 
  
-<createIndex> ::= CREATE UNIQUE INDEX ID ON ID <opc_index> PTCOMA
+<createIndex> ::= CREATE INDEX ID ON ID <opc_index> PTCOMA
  
-<opc_index> ::= PARA <opc_index_par> PARC
+<empty> ::= 
  
-<opc_index_par> ::= <campos_c> 
+<empty> ::= 
  
-<campos_c> ::= ID
+<empty> ::= 
  
 <instrucciones_globales_list> ::= <instrucciones_globales_list><instrucciones_global_sent>
  
@@ -1698,13 +1674,13 @@
  
 <instrucciones_global_sent> ::= <funciones> | <llamada_funcion> | <createDB_insrt> | <show_databases_instr> 
  
-<createIndex> ::= CREATE UNIQUE INDEX ID ON ID <opc_index> PTCOMA
+<createIndex> ::= CREATE INDEX ID ON ID <opc_index> PTCOMA
  
-<opc_index> ::= PARA <opc_index_par> PARC
+<empty> ::= 
  
-<opc_index_par> ::= <campos_c> 
+<empty> ::= 
  
-<campos_c> ::= ID
+<empty> ::= 
  
 <instrucciones_globales_list> ::= <instrucciones_globales_list><instrucciones_global_sent>
  
