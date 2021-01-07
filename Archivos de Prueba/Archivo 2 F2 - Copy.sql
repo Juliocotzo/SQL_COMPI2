@@ -132,7 +132,7 @@ end; $$
 
 EXECUTE sp_validaupdate();
 
---delete from tbbodega where idbodega = 4;
+delete from tbbodega where idbodega = 4;
 SELECT ValidaRegistros('tbbodega',4);
 insert into tbCalificacion values(5,'Valida Delete',2);
 select * from tbbodega;
