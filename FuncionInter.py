@@ -23,7 +23,7 @@ class Intermedio():
 
 	def procesar_funcion0(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse('CREATE DATABASE compiladores2;')
+		instrucciones = g.parse('  select      bodega     from  tbbodega   ;')
 		erroressss = ErrorHTML()
 		if  erroressss.getList()== []:
 			instrucciones_Global = instrucciones
@@ -34,135 +34,9 @@ class Intermedio():
 			ts_global1 = ts_global
 			ts_globalIndex1 = ts_globalIndex
 			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
+			print(salida)
 		else:
-			return 'Parser Error'
-
-
-	def procesar_funcion1(self):
-		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse('USE compiladores2;')
-		erroressss = ErrorHTML()
-		if  erroressss.getList()== []:
-			instrucciones_Global = instrucciones
-			ts_global = TS.TablaDeSimbolos()
-			ts_globalIndex = TSINDEX.TablaDeSimbolos()
-			tc_global = TC.TablaDeTipos()
-			tc_global1 = tc_global
-			ts_global1 = ts_global
-			ts_globalIndex1 = ts_globalIndex
-			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
-		else:
-			return 'Parser Error'
-
-
-	def procesar_funcion2(self):
-		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse('CREATE TABLE tbUSUARIO (  id_usuario  INTEGER  , usuario  VARCHAR ( 50 )  , password  VARCHAR ( 50 )   );')
-		erroressss = ErrorHTML()
-		if  erroressss.getList()== []:
-			instrucciones_Global = instrucciones
-			ts_global = TS.TablaDeSimbolos()
-			ts_globalIndex = TSINDEX.TablaDeSimbolos()
-			tc_global = TC.TablaDeTipos()
-			tc_global1 = tc_global
-			ts_global1 = ts_global
-			ts_globalIndex1 = ts_globalIndex
-			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
-		else:
-			return 'Parser Error'
-
-
-	def procesar_funcion3(self):
-		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse(' CREATE INDEX test1_id_index ON tbUSUARIO  (  id_usuario  ) ;')
-		erroressss = ErrorHTML()
-		if  erroressss.getList()== []:
-			instrucciones_Global = instrucciones
-			ts_global = TS.TablaDeSimbolos()
-			ts_globalIndex = TSINDEX.TablaDeSimbolos()
-			tc_global = TC.TablaDeTipos()
-			tc_global1 = tc_global
-			ts_global1 = ts_global
-			ts_globalIndex1 = ts_globalIndex
-			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
-		else:
-			return 'Parser Error'
-
-
-	def procesar_funcion4(self):
-		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse(' CREATE INDEX test1_id_index2 ON tbUSUARIO  (  id_usuario,usuario  ) ;')
-		erroressss = ErrorHTML()
-		if  erroressss.getList()== []:
-			instrucciones_Global = instrucciones
-			ts_global = TS.TablaDeSimbolos()
-			ts_globalIndex = TSINDEX.TablaDeSimbolos()
-			tc_global = TC.TablaDeTipos()
-			tc_global1 = tc_global
-			ts_global1 = ts_global
-			ts_globalIndex1 = ts_globalIndex
-			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
-		else:
-			return 'Parser Error'
-
-
-	def procesar_funcion5(self):
-		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse(' CREATE INDEX test1_id_index3 ON tbUSUARIO  (  id_usuario,usuario  ) ;')
-		erroressss = ErrorHTML()
-		if  erroressss.getList()== []:
-			instrucciones_Global = instrucciones
-			ts_global = TS.TablaDeSimbolos()
-			ts_globalIndex = TSINDEX.TablaDeSimbolos()
-			tc_global = TC.TablaDeTipos()
-			tc_global1 = tc_global
-			ts_global1 = ts_global
-			ts_globalIndex1 = ts_globalIndex
-			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
-		else:
-			return 'Parser Error'
-
-
-	def procesar_funcion6(self):
-		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse(' ALTER INDEX test1_id_index2 ALTER COLUMN id_usuario  password ;')
-		erroressss = ErrorHTML()
-		if  erroressss.getList()== []:
-			instrucciones_Global = instrucciones
-			ts_global = TS.TablaDeSimbolos()
-			ts_globalIndex = TSINDEX.TablaDeSimbolos()
-			tc_global = TC.TablaDeTipos()
-			tc_global1 = tc_global
-			ts_global1 = ts_global
-			ts_globalIndex1 = ts_globalIndex
-			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
-		else:
-			return 'Parser Error'
-
-
-	def procesar_funcion7(self):
-		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
-		instrucciones = g.parse(' ALTER INDEX test1_id_index3 ALTER COLUMN usuario  3 ;')
-		erroressss = ErrorHTML()
-		if  erroressss.getList()== []:
-			instrucciones_Global = instrucciones
-			ts_global = TS.TablaDeSimbolos()
-			ts_globalIndex = TSINDEX.TablaDeSimbolos()
-			tc_global = TC.TablaDeTipos()
-			tc_global1 = tc_global
-			ts_global1 = ts_global
-			ts_globalIndex1 = ts_globalIndex
-			salida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)
-			return salida
-		else:
-			return 'Parser Error'
+			print('Parser Error')
 
 
 	def Reportes(self):
@@ -174,5 +48,5 @@ class Intermedio():
 		RTablaS = RTablaDeSimbolos()
 		RTablaS.crearReporte(ts_global1,ts_globalIndex1)
 		RTablaS.crearReporte1(ts_global1,ts_globalIndex1)
-		return ''
+		''
 

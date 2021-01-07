@@ -131,65 +131,65 @@ def generarC3D(instrucciones, ts_global):
         elif isinstance(instruccion, Funcion):
             guardarFuncion(instruccion, ts)
         elif isinstance(instruccion, CreateDatabase):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createDatabaseFuncion(instruccion, ts)
         elif isinstance(instruccion, ShowDatabases):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createShowDatabasesFuncion(instruccion, ts)
         elif isinstance(instruccion, UseDatabase):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createUseDatabaseFuncion(instruccion, ts)
         elif isinstance(instruccion, ShowTables):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createShowTablesFuncion(instruccion, ts)
         elif isinstance(instruccion, DropDatabase):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createDropDatabaseFuncion(instruccion, ts)
         elif isinstance(instruccion, CreateTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createCreateTableFuncion(instruccion, ts)
         elif isinstance(instruccion, DropTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createDropTablesFuncion(instruccion, ts)
         elif isinstance(instruccion, AlterDatabase):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createAlterDatabaseFuncion(instruccion, ts)
         elif isinstance(instruccion, AlterTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createAlterTableFuncion(instruccion, ts)
         elif isinstance(instruccion, InsertTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createInsertTableFuncion(instruccion, ts)
         elif isinstance(instruccion, SelectTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createSelectTableFuncion(instruccion, ts)
         elif isinstance(instruccion, SelectUniones):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createSelectUnionesTableFuncion(instruccion, ts)
         elif isinstance(instruccion, FuncionIndex):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createIndexFuncion(instruccion, ts)
         elif isinstance(instruccion, UpdateTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createUpdateTableFuncion(instruccion, ts)   
         elif isinstance(instruccion, DropIndex):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createDropIndexFuncion(instruccion, ts) 
         elif isinstance(instruccion, AlterIndex):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createAlterIndexFuncion(instruccion, ts)
         elif isinstance(instruccion, AlterIndexColumn):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createAlterIndexColumnFuncion(instruccion, ts)
         elif isinstance(instruccion, DeleteTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createDeleteTableFuncion(instruccion, ts)
             
         indice = indice + 1
     tablaSimbolos = ts
     
     if numFuncionSQL > 0:
-        cadenaTraduccion += "\n\tprint(inter.Reportes())"
+        cadenaTraduccion += "\n\tinter.Reportes()"
 
     cadenaTraduccion += '\t\n'
     cadenaTraduccion += '\tgoto. end'
@@ -233,19 +233,19 @@ def generarPrincipal(instruccion, ts):
         elif isinstance(instruccion, Salto):
             generarSalto(instruccion,ts)
         elif isinstance(instruccion, InsertTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createInsertTableFuncion(instruccion, ts)
         elif isinstance(instruccion, UpdateTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createUpdateTableFuncion(instruccion, ts)
         elif isinstance(instruccion, DeleteTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createDeleteTableFuncion(instruccion, ts)
         elif isinstance(instruccion, SelectTable):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createSelectTableFuncion(instruccion, ts)
         elif isinstance(instruccion, SelectUniones):
-            cadenaTraduccion += "\n\tprint(inter.procesar_funcion"+str(numFuncionSQL)+"())"
+            cadenaTraduccion += "\n\tinter.procesar_funcion"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createSelectUnionesTableFuncion(instruccion, ts)
         indice = indice + 1
 
@@ -629,110 +629,110 @@ def getOperador(operador):
 
 def createDatabaseFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createShowDatabasesFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 
 def createUseDatabaseFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createDropDatabaseFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createCreateTableFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createShowTablesFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createDropTablesFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createAlterDatabaseFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createAlterTableFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createInsertTableFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createSelectTableFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createSelectUnionesTableFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createIndexFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createUpdateTableFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createDropIndexFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createAlterIndexFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createAlterIndexColumnFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
 def createDeleteTableFuncion(instruccion, ts):
     global numFuncionSQL
-    print(instruccion.cadena)
+    #print(instruccion.cadena)
     cadenaSQL = generarFuncionesSQL(instruccion.cadena,numFuncionSQL)
     return cadenaSQL
 
@@ -753,9 +753,9 @@ def generarFuncionesSQL(instruccionSQL,numero):
     cadenaFuncionSQL += "\n\t\t\tts_global1 = ts_global"
     cadenaFuncionSQL += "\n\t\t\tts_globalIndex1 = ts_globalIndex"
     cadenaFuncionSQL += "\n\t\t\tsalida = procesar_instrucciones(instrucciones, ts_global,tc_global,ts_globalIndex)"
-    cadenaFuncionSQL += "\n\t\t\treturn salida"
+    cadenaFuncionSQL += "\n\t\t\tprint(salida)"
     cadenaFuncionSQL += "\n\t\telse:"
-    cadenaFuncionSQL += "\n\t\t\treturn 'Parser Error'\n\n"
+    cadenaFuncionSQL += "\n\t\t\tprint('Parser Error')\n\n"
     numFuncionSQL += 1
     return cadenaFuncionSQL
 
@@ -771,7 +771,6 @@ def generarFuncionesSQLREPORTES():
     cadenaFuncionSQL += "\n\t\tRTablaS = RTablaDeSimbolos()"
     cadenaFuncionSQL += "\n\t\tRTablaS.crearReporte(ts_global1,ts_globalIndex1)"
     cadenaFuncionSQL += "\n\t\tRTablaS.crearReporte1(ts_global1,ts_globalIndex1)"
-    cadenaFuncionSQL += "\n\t\treturn \'\'\n\n"
     return cadenaFuncionSQL
 
 '''f = open("./entrada.txt", "r")
