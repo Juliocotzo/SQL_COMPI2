@@ -8,47 +8,47 @@ def main():
 	pos = -1
 	arr = [0] * 10000
 
-	inter.procesar_funcion0()
-	inter.procesar_funcion1()	
+	inter.procesar_funcionCreateDatabase0()
+	inter.procesar_funcionUseDatabase1()	
 	ta0 = 'INICIO CALIFICACION FASE 2'	
 	pos = pos + 1	
 	arr[pos] = 1	
 	goto. myFuncion	
 	label. retorno1
-	inter.procesar_funcion2()
-	inter.procesar_funcion3()
-	inter.procesar_funcion4()
-	inter.procesar_funcion5()
-	inter.procesar_funcion6()
-	inter.procesar_funcion7()
-	inter.procesar_funcion8()
-	inter.procesar_funcion9()
-	inter.procesar_funcion10()
-	inter.procesar_funcion11()
-	inter.procesar_funcion12()
-	inter.procesar_funcion13()	
+	inter.procesar_funcionCreateTable2()
+	inter.procesar_funcionCreateIndex3()
+	inter.procesar_funcionCreateTable4()
+	inter.procesar_funcionCreateIndex5()
+	inter.procesar_funcionInsert6()
+	inter.procesar_funcionInsert7()
+	inter.procesar_funcionInsert8()
+	inter.procesar_funcionInsert9()
+	inter.procesar_funcionInsert10()
+	inter.procesar_funcionInsert11()
+	inter.procesar_funcionInsert12()
+	inter.procesar_funcionInsert13()	
 	ta1 = 'tbProducto'	
 	ta2 = 8	
 	pos = pos + 1	
 	arr[pos] = 2	
 	goto. ValidaRegistros	
 	label. retorno2
-	inter.procesar_funcion14()
-	inter.procesar_funcion15()	
+	inter.procesar_funcionInsert14()
+	inter.procesar_funcionUpdate15()	
 	ta1 = 'tbProductoUp'	
 	ta2 = 8	
 	pos = pos + 1	
 	arr[pos] = 3	
 	goto. ValidaRegistros	
 	label. retorno3
-	inter.procesar_funcion16()	
+	inter.procesar_funcionInsert16()	
 	pos = pos + 1	
 	arr[pos] = 4	
 	goto. CALCULOS	
 	label. retorno4
-	inter.procesar_funcion17()
-	inter.procesar_funcion18()
-	inter.procesar_funcion19()	
+	inter.procesar_funcionInsert17()
+	inter.procesar_funcionCreateTable18()
+	inter.procesar_funcionCreateIndex19()	
 	pos = pos + 1	
 	arr[pos] = 5	
 	goto. sp_validainsert	
@@ -59,20 +59,20 @@ def main():
 	arr[pos] = 6	
 	goto. ValidaRegistros	
 	label. retorno6
-	inter.procesar_funcion20()	
+	inter.procesar_funcionInsert20()	
 	pos = pos + 1	
 	arr[pos] = 7	
 	goto. sp_validaupdate	
 	label. retorno7
-	inter.procesar_funcion21()	
+	inter.procesar_funcionDelete21()	
 	ta1 = 'tbbodega'	
 	ta2 = 4	
 	pos = pos + 1	
 	arr[pos] = 8	
 	goto. ValidaRegistros	
 	label. retorno8
-	inter.procesar_funcion22()
-	inter.procesar_funcion23()
+	inter.procesar_funcionInsert22()
+	inter.procesar_funcionSelect23()
 	inter.Reportes()	
 	goto. end	
 	
@@ -159,17 +159,17 @@ def main():
 	goto. retorno	
 	
 	label. sp_validainsert
-	inter.procesar_funcion24()
-	inter.procesar_funcion25()
-	inter.procesar_funcion26()
-	inter.procesar_funcion27()
-	inter.procesar_funcion28()	
+	inter.procesar_funcionInsert24()
+	inter.procesar_funcionInsert25()
+	inter.procesar_funcionInsert26()
+	inter.procesar_funcionInsert27()
+	inter.procesar_funcionInsert28()	
 	print('INSERT  ')	
 	goto. retorno	
 	
 	label. sp_validaupdate	
 	print('UPDATE  ')
-	inter.procesar_funcion29()	
+	inter.procesar_funcionUpdate29()	
 	goto. retorno	
 	
 	label. retorno	

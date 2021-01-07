@@ -21,7 +21,7 @@ class Intermedio():
 		''' Funcion Intermedia '''
 
 
-	def procesar_funcion0(self):
+	def procesar_funcionCreateDatabase0(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('CREATE DATABASE DBFase2;')
 		erroressss = ErrorHTML()
@@ -39,7 +39,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion1(self):
+	def procesar_funcionUseDatabase1(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('USE DBFase2;')
 		erroressss = ErrorHTML()
@@ -57,7 +57,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion2(self):
+	def procesar_funcionCreateTable2(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('CREATE TABLE tbProducto (  idproducto  integer    not null    primary key   , producto  varchar ( 150 )    not null   , fechacreacion  date    not null   , estado  integer   );')
 		erroressss = ErrorHTML()
@@ -75,7 +75,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion3(self):
+	def procesar_funcionCreateIndex3(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse(' CREATE  UNIQUE  INDEX idx_producto ON tbProducto   (  idproducto       );')
 		erroressss = ErrorHTML()
@@ -93,7 +93,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion4(self):
+	def procesar_funcionCreateTable4(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('CREATE TABLE tbCalificacion (  idcalifica  integer    not null    primary key   , item  varchar ( 100 )    not null   , punteo  integer    not null    );')
 		erroressss = ErrorHTML()
@@ -111,7 +111,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion5(self):
+	def procesar_funcionCreateIndex5(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse(' CREATE  UNIQUE  INDEX idx_califica ON tbCalificacion   (  idcalifica       );')
 		erroressss = ErrorHTML()
@@ -129,7 +129,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion6(self):
+	def procesar_funcionInsert6(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('INSERT INTO tbProducto values (     1    ,   \'Laptop Lenovo\'   , now ( ) ,    1     );')
 		erroressss = ErrorHTML()
@@ -147,7 +147,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion7(self):
+	def procesar_funcionInsert7(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('INSERT INTO tbProducto values (     2    ,   \'Bateria para Laptop Lenovo T420\'   , now ( ) ,    1     );')
 		erroressss = ErrorHTML()
@@ -165,7 +165,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion8(self):
+	def procesar_funcionInsert8(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('INSERT INTO tbProducto values (     3    ,   \'Teclado Inalambrico\'   , now ( ) ,    1     );')
 		erroressss = ErrorHTML()
@@ -183,7 +183,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion9(self):
+	def procesar_funcionInsert9(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('INSERT INTO tbProducto values (     4    ,   \'Mouse Inalambrico\'   , now ( ) ,    1     );')
 		erroressss = ErrorHTML()
@@ -201,7 +201,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion10(self):
+	def procesar_funcionInsert10(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('INSERT INTO tbProducto values (     5    ,   \'WIFI USB\'   , now ( ) ,    1     );')
 		erroressss = ErrorHTML()
@@ -219,7 +219,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion11(self):
+	def procesar_funcionInsert11(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('INSERT INTO tbProducto values (     6    ,   \'Laptop HP\'   , now ( ) ,    1     );')
 		erroressss = ErrorHTML()
@@ -237,7 +237,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion12(self):
+	def procesar_funcionInsert12(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('INSERT INTO tbProducto values (     7    ,   \'Teclado Flexible USB\'   , now ( ) ,    1     );')
 		erroressss = ErrorHTML()
@@ -255,7 +255,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion13(self):
+	def procesar_funcionInsert13(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('INSERT INTO tbProducto values (     8    ,   \'Laptop Samsung\'   ,   \'2021-01-02\'   ,    1     );')
 		erroressss = ErrorHTML()
@@ -273,7 +273,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion14(self):
+	def procesar_funcionInsert14(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbCalificacion values (     1    ,   \'Create Table and Insert\'   ,    2     );')
 		erroressss = ErrorHTML()
@@ -291,7 +291,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion15(self):
+	def procesar_funcionUpdate15(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse(' update tbProducto set  estado =     2       where       estado    =     1        ;')
 		erroressss = ErrorHTML()
@@ -309,7 +309,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion16(self):
+	def procesar_funcionInsert16(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbCalificacion values (     2    ,   \'Update\'   ,    2     );')
 		erroressss = ErrorHTML()
@@ -327,7 +327,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion17(self):
+	def procesar_funcionInsert17(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbCalificacion values (     3    ,   \' Valida Funciones\'   ,    2     );')
 		erroressss = ErrorHTML()
@@ -345,7 +345,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion18(self):
+	def procesar_funcionCreateTable18(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('create table tbbodega (  idbodega  integer    not null    primary key   , bodega  varchar ( 100 )    not null   , estado  integer   );')
 		erroressss = ErrorHTML()
@@ -363,7 +363,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion19(self):
+	def procesar_funcionCreateIndex19(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse(' CREATE   INDEX tbbodegaIndex ON tbbodega   (  lower ( bodega )       );')
 		erroressss = ErrorHTML()
@@ -381,7 +381,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion20(self):
+	def procesar_funcionInsert20(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbCalificacion values (     4    ,   \'Valida Store Procedure\'   ,    5     );')
 		erroressss = ErrorHTML()
@@ -399,7 +399,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion21(self):
+	def procesar_funcionDelete21(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse(' delete from tbbodega  where       idbodega    =     4        ;')
 		erroressss = ErrorHTML()
@@ -417,7 +417,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion22(self):
+	def procesar_funcionInsert22(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbCalificacion values (     5    ,   \'Valida Delete\'   ,    2     );')
 		erroressss = ErrorHTML()
@@ -435,7 +435,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion23(self):
+	def procesar_funcionSelect23(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('  select    *   from  tbbodega   ;')
 		erroressss = ErrorHTML()
@@ -453,7 +453,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion24(self):
+	def procesar_funcionInsert24(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbbodega values (     1    ,   \'BODEGA CENTRAL\'   ,    1     );')
 		erroressss = ErrorHTML()
@@ -471,7 +471,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion25(self):
+	def procesar_funcionInsert25(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbbodega ( idbodega,bodega ) values (     2    ,   \'BODEGA ZONA 12\'    );')
 		erroressss = ErrorHTML()
@@ -489,7 +489,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion26(self):
+	def procesar_funcionInsert26(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbbodega ( idbodega,bodega,estado ) values (     3    ,   \'BODEGA ZONA 11\'   ,    1     );')
 		erroressss = ErrorHTML()
@@ -507,7 +507,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion27(self):
+	def procesar_funcionInsert27(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbbodega ( idbodega,bodega,estado ) values (     4    ,   \'BODEGA ZONA 1\'   ,    1     );')
 		erroressss = ErrorHTML()
@@ -525,7 +525,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion28(self):
+	def procesar_funcionInsert28(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse('insert into tbbodega ( idbodega,bodega,estado ) values (     5    ,   \'BODEGA ZONA 10\'   ,    1     );')
 		erroressss = ErrorHTML()
@@ -543,7 +543,7 @@ class Intermedio():
 			print('Parser Error')
 
 
-	def procesar_funcion29(self):
+	def procesar_funcionUpdate29(self):
 		global instrucciones_Global,tc_global1,ts_global1,listaErrores,erroressss,ts_globalIndex1
 		instrucciones = g.parse(' update tbbodega set  bodega =    \'bodega zona 9\'      where       idbodega    =     4        ;')
 		erroressss = ErrorHTML()
