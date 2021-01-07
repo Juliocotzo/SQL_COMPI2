@@ -3308,12 +3308,12 @@ def p_AlterIndex(t):
     t[0] = Create_AlterIndex(t[3],t[6])
 
 def p_Alter_Index_Column(t):
-    'alterindex_insrt : ALTER INDEX ID ALTER ID opcionIndex PTCOMA'
-    t[0] = Create_AlterIndexColumn(t[3],t[5],t[6])
+    'alterindex_insrt : ALTER INDEX ID ALTER COLUMN ID opcionIndex PTCOMA'
+    t[0] = Create_AlterIndexColumn(t[3],t[6],t[7])
 
 def p_Alter_Index_Column2(t):
-    'alterindex_insrt : ALTER INDEX IF EXISTS ID ALTER ID opcionIndex PTCOMA'
-    t[0] = Create_AlterIndexColumn(t[5],t[7],t[8])
+    'alterindex_insrt : ALTER INDEX IF EXISTS ID ALTER COLUMN ID opcionIndex PTCOMA'
+    t[0] = Create_AlterIndexColumn(t[5],t[8],t[9])
 
 def p_Alter_Index_Column_Opciones(t):
     '''opcionIndex : ENTERO'''

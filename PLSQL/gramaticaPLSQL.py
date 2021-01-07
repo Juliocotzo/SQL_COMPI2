@@ -3921,16 +3921,16 @@ def p_AlterIndex(t):
     t[0] = AlterIndex(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+';')
 
 def p_Alter_Index_Column(t):
-    'alterindex_insrt : ALTER INDEX ID ALTER ID opcionIndex PTCOMA'
+    'alterindex_insrt : ALTER INDEX ID ALTER COLUMN ID opcionIndex PTCOMA'
     reporte_bnf.append("<alterindex_insrt> ::= ALTER INDEX ID ALTER ID <opcionIndex> PTCOMA")
-    rep_sintaxis.append("<TR><TD> alterindex_insrt -> ALTER INDEX ID ALTER ID <opcionIndex> PTCOMA </TD><TD> t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+';')</TD></TR>")
-    t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+';')
+    rep_sintaxis.append("<TR><TD> alterindex_insrt -> ALTER INDEX ID ALTER ID <opcionIndex> PTCOMA </TD><TD> t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+' ' + t[7]+';')</TD></TR>")
+    t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+' ' + t[7]+';')
 
 def p_Alter_Index_Column2(t):
-    'alterindex_insrt : ALTER INDEX IF EXISTS ID ALTER ID opcionIndex PTCOMA'
+    'alterindex_insrt : ALTER INDEX IF EXISTS ID ALTER COLUMN ID opcionIndex PTCOMA'
     reporte_bnf.append("<alterindex_insrt> ::= ALTER INDEX IF EXISTS ID ALTER ID <opcionIndex> PTCOMA")
-    rep_sintaxis.append("<TR><TD> alterindex_insrt -> ALTER INDEX IF EXISTS ID ALTER ID <opcionIndex> PTCOMA </TD><TD> t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+' ' + t[7]+' ' + t[8]+';') </TD></TR>")
-    t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+' ' + t[7]+' ' + t[8]+';')
+    rep_sintaxis.append("<TR><TD> alterindex_insrt -> ALTER INDEX IF EXISTS ID ALTER ID <opcionIndex> PTCOMA </TD><TD> t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+' ' + t[7]+' ' + t[8]+' ' + t[9]+';') </TD></TR>")
+    t[0] = AlterIndexColumn(' ' + t[1]+' ' + t[2]+' ' + t[3]+' ' + t[4]+' ' + t[5]+' ' + t[6]+' ' + t[7]+' ' + t[8]+' ' + t[9]+';')
 
 def p_Alter_Index_Column_Opciones(t):
     '''opcionIndex : ENTERO'''

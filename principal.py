@@ -2882,63 +2882,68 @@ def procesar_index(instr, ts, tc,tsIndex):
     global salida
     
     buscar = tc.obtenerReturnTabla(useCurrentDatabase,instr.nombre_index)
+    arrayList = tsIndex.getIds()
     if buscar == False:
         salida = "\nERROR:  relation \"" + str(instr.nombre_index) +"\" does not exist\nSQL state: 42P01"
-    else:
-        #print('---------------- si entra al index ---------------------')
-        if instr.etiqueta == INDEX.INDEX:
-            columsAr = []
-            colums = ""
-            if type(instr.lista_index.identificador) == type([]):
-                for lista in instr.lista_index.identificador:
-                    columsAr.append(lista.val)
+    else:        
+        if instr.identificador in arrayList:
+            salida = "\nERROR:  relation \"" + str(instr.identificador) +"\" already exists\nSQL state: 42P07"
+        else:
+            if instr.etiqueta == INDEX.INDEX:
+                columsAr = []
+                colums = ""
+                if type(instr.lista_index.identificador) == type([]):
+                    for lista in instr.lista_index.identificador:
+                        columsAr.append(lista.val)
 
-            else:
-                columsAr.append(instr.lista_index.identificador)
+                else:
+                    columsAr.append(instr.lista_index.identificador)
+                
+                temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,columsAr,instr.etiqueta)
+                tsIndex.agregar(temp)
+                salida = '\nCREATE INDEX'
+
             
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,columsAr,instr.etiqueta)
-            tsIndex.agregar(temp)
-            salida = '\nCREATE INDEX'
+            elif instr.etiqueta == INDEX.INDEX_WHERE:
+                #print(instr.identificador)
+                #print(instr.nombre_index)
+                
+                
+                temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
+                tsIndex.agregar(temp)
+                salida = '\nCREATE INDEX'
 
+            elif instr.etiqueta == INDEX.INDEX_INCLUDE:
+                #print(instr.identificador)
+                #print(instr.nombre_index)
+
+                temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
+                tsIndex.agregar(temp)
+                salida = '\nCREATE INDEX'
+
+            elif instr.etiqueta == INDEX.INDEX_UNIQUE_WHERE:
+                #print(instr.identificador)
+                #print(instr.nombre_index)
+                
+                temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
+                tsIndex.agregar(temp)
+                salida = '\nCREATE INDEX'
+
+            elif instr.etiqueta == INDEX.INDEX_INCLUDE:
+                #print(instr.identificador)
+                #print(instr.nombre_index)
+                temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
+                tsIndex.agregar(temp)
+                salida = '\nCREATE INDEX'
+
+            elif instr.etiqueta == INDEX.INDEX_CLASS:
+                #print(instr.identificador)
+                #print(instr.nombre_index)
+                temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
+                tsIndex.agregar(temp)
+                salida = '\nCREATE INDEX'
         
-        elif instr.etiqueta == INDEX.INDEX_WHERE:
-            #print(instr.identificador)
-            #print(instr.nombre_index)
-            
-            
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
-            tsIndex.agregar(temp)
-            salida = '\nCREATE INDEX'
-
-        elif instr.etiqueta == INDEX.INDEX_INCLUDE:
-            #print(instr.identificador)
-            #print(instr.nombre_index)
-
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
-            tsIndex.agregar(temp)
-            salida = '\nCREATE INDEX'
-
-        elif instr.etiqueta == INDEX.INDEX_UNIQUE_WHERE:
-            #print(instr.identificador)
-            #print(instr.nombre_index)
-            
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
-            tsIndex.agregar(temp)
-            salida = '\nCREATE INDEX'
-
-        elif instr.etiqueta == INDEX.INDEX_INCLUDE:
-            #print(instr.identificador)
-            #print(instr.nombre_index)
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
-            tsIndex.agregar(temp)
-            salida = '\nCREATE INDEX'
-
-        elif instr.etiqueta == INDEX.INDEX_CLASS:
-            #print(instr.identificador)
-            #print(instr.nombre_index)
-            temp = TSINDEX.Simbolo(instr.identificador,'INDEX',instr.nombre_index,instr.lista_index.identificador,instr.etiqueta)
-            tsIndex.agregar(temp)
-            salida = '\nCREATE INDEX'
+        
     
 
     
