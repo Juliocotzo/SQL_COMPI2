@@ -161,7 +161,8 @@ EXECUTE sp_insertaproducto(10,'Audifonos con Microfono USB','2021-01-06');
 EXECUTE sp_insertaproducto(11,'Bocina Inalambrica','2021-01-06');
 EXECUTE sp_insertaproducto(12,'Monitor de 17"','2021-01-06');
 
-DROP FUNCTION myFuncion;
+DROP FUNCTION IF EXISTS myFuncion;
+DROP FUNCTION IF EXISTS myFundsdsadsadasdcion;
 DROP FUNCTION myFundsdsadsadasdcion;
 
 select myFuncion('Valida drop function');

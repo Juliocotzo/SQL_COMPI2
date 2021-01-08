@@ -345,12 +345,12 @@ def generarDropProcedure(instruccion, ts,tf):
             cadenaTraduccion += '\n\tprint(\'\\'+'nERROR:  could not find a procedure named  \"' +str(instruccion.id)+'\"\\'+'nSQL state: 42883\')'
     else:
         if funcion != None:
-        tf.eliminar(instruccion.id)
-        cadenaTraduccion += '\n\tprint(\'\\'+'nDROP PROCEDURE\')'
+            tf.eliminar(instruccion.id)
+            cadenaTraduccion += '\n\tprint(\'\\'+'nDROP PROCEDURE\')'
 
 
-    else:
-        cadenaTraduccion += '\n\tprint(\'\\'+'nNOTICE:  procedure  \"' +str(instruccion.id)+'\" does not exist, skipping\\'+'nDROP PROCEDURE\')'
+        else:
+            cadenaTraduccion += '\n\tprint(\'\\'+'nNOTICE:  procedure  \"' +str(instruccion.id)+'\" does not exist, skipping\\'+'nDROP PROCEDURE\')'
 
 
 
