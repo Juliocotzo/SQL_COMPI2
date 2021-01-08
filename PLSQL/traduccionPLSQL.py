@@ -71,7 +71,7 @@ def resetTemporalEtiqueta():
 def generarTemporalA():
     global temporalA
     temporalA = temporalA + 1
-    return 'ta' + str(temporalA - 1)
+    return 'tp' + str(temporalA - 1)
 
 def resetTemporalA():
     global temporalA
