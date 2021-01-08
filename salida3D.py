@@ -116,7 +116,8 @@ def main():
 	arr[pos] = 13	
 	goto. sp_insertaproducto	
 	label. retorno13
-	print('\nDROP FUNCTION')	
+	print('\nDROP FUNCTION')
+	print('\nERROR:  could not find a function named "myFundsdsadsadasdcion"\nSQL state: 42883')	
 	pos = pos + 1	
 	arr[pos] = 14	
 

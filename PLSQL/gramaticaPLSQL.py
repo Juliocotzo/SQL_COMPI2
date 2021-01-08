@@ -638,7 +638,23 @@ def p_instrucciones_funct_sent_error(t):
 #? ####################################################################
 def p_drop_function(t):
     '''drop_insrt_function : DROP FUNCTION ID PTCOMA'''
-    t[0] = DropFunction(t[3])
+    t[0] = DropFunction(t[3],False)
+
+def p_drop_function2(t):
+    '''drop_insrt_function : DROP FUNCTION IF EXISTS ID PTCOMA'''
+    t[0] = DropFunction(t[5],True)
+
+#? ####################################################################
+# TODO          DROP PROCEDURE
+#? ####################################################################
+def p_drop_procedure(t):
+    '''drop_insrt_function : DROP PROCEDURE  ID PTCOMA'''
+    t[0] = DropProcedure(t[3],False)
+
+def p_drop_procedure1(t):
+    '''drop_insrt_function : DROP PROCEDURE  IF EXISTS ID PTCOMA'''
+    t[0] = DropProcedure(t[5],True)
+
 
 
 #CREATE DATABASE

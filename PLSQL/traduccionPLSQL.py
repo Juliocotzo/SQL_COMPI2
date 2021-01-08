@@ -133,6 +133,8 @@ def generarC3D(instrucciones, ts_global):
             guardarFuncion(instruccion, ts)
         elif isinstance(instruccion, DropFunction):
             generarDropFunction(instruccion, ts,tf)
+        elif isinstance(instruccion, DropProcedure):
+            generarDropProcedure(instruccion, ts,tf)
         elif isinstance(instruccion, CreateDatabase):
             cadenaTraduccion += "\n\tinter.procesar_funcion"+"CreateDatabase"+str(numFuncionSQL)+"()"
             cadenaFuncionIntermedia += createDatabaseFuncion(instruccion, ts,'CreateDatabase')
@@ -313,17 +315,44 @@ def guardarFuncion(instruccion, ts):
 
 def generarDropFunction(instruccion, ts,tf):
     global cadenaTraduccion
-    funcion = tf.obtener(instruccion.id)
-    if funcion != None:
-        tf.eliminar(instruccion.id)
-        cadenaTraduccion += '\n\tprint(\'\\'+'nDROP FUNCTION\')'
-
-
-        #print('DROP FUNCTION')
+    if instruccion.existe:
+        funcion = tf.obtener(instruccion.id)
+        if funcion != None:
+            tf.eliminar(instruccion.id)
+            cadenaTraduccion += '\n\tprint(\'\\'+'nDROP FUNCTION\')'
+        else:
+            cadenaTraduccion += '\n\tprint(\'\\'+'nNOTICE:  function \"' +str(instruccion.id)+'\" does not exist, skipping\\'+'nDROP FUNCTION\')'
     else:
-        cadenaTraduccion += '\n\tprint(\'\\'+'nERROR:  could not find a function named \"' +str(instruccion.id)+'\"\\'+'nSQL state: 42883\')'
+        funcion = tf.obtener(instruccion.id)
+        if funcion != None:
+            tf.eliminar(instruccion.id)
+            cadenaTraduccion += '\n\tprint(\'\\'+'nDROP FUNCTION\')'
+        else:
+            cadenaTraduccion += '\n\tprint(\'\\'+'nERROR:  could not find a function named \"' +str(instruccion.id)+'\"\\'+'nSQL state: 42883\')'
+    
 
-        #print('ERROR:  could not find a function named \"'+str(instruccion.id)+'\" SQL state: 42883')
+
+def generarDropProcedure(instruccion, ts,tf):
+    global cadenaTraduccion
+    funcion = tf.obtener(instruccion.id)
+    if instruccion.existe:
+        if funcion != None:
+            tf.eliminar(instruccion.id)
+            cadenaTraduccion += '\n\tprint(\'\\'+'nDROP PROCEDURE\')'
+
+
+        else:
+            cadenaTraduccion += '\n\tprint(\'\\'+'nERROR:  could not find a procedure named  \"' +str(instruccion.id)+'\"\\'+'nSQL state: 42883\')'
+    else:
+        if funcion != None:
+        tf.eliminar(instruccion.id)
+        cadenaTraduccion += '\n\tprint(\'\\'+'nDROP PROCEDURE\')'
+
+
+    else:
+        cadenaTraduccion += '\n\tprint(\'\\'+'nNOTICE:  procedure  \"' +str(instruccion.id)+'\" does not exist, skipping\\'+'nDROP PROCEDURE\')'
+
+
 
 def generarLlamadaFuncion(instruccion, ts):
     isExistFuncion = None
