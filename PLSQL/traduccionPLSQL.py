@@ -91,7 +91,7 @@ def generarC3D(instrucciones, ts_global):
     resetTemporalEtiqueta()
     tf = TF.TablaDeFunciones()
 
-    cadenaFuncionIntermedia += "\nfrom gramatica import parse"
+    cadenaFuncionIntermedia += "from gramatica import parse"
     cadenaFuncionIntermedia += "\nfrom principal import * "
     cadenaFuncionIntermedia += "\nimport ts as TS"
     cadenaFuncionIntermedia += "\nimport ts_index as TSINDEX"
