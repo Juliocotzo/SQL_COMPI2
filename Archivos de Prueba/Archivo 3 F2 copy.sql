@@ -149,17 +149,17 @@ CREATE INDEX idx_bodega ON tbbodega (estado);
 /*Debe devolver error el indice ya existe*/
 
 
-/*CREATE PROCEDURE sp_insertaproducto(llave integer,producto varchar(100),fecha date)
+CREATE PROCEDURE sp_insertaproducto(llave integer,producto varchar(100),fecha date)
 language plpgsql
 as $$
 begin
 	insert into tbProducto values(llave,producto,fecha,1);
-end; $$	*/
+end; $$	
 
-/*EXECUTE sp_insertaproducto(9,'Bocina Inalambrica','2021-01-06');
+EXECUTE sp_insertaproducto(9,'Bocina Inalambrica','2021-01-06');
 EXECUTE sp_insertaproducto(10,'Audifonos con Microfono USB','2021-01-06');
 EXECUTE sp_insertaproducto(11,'Bocina Inalambrica','2021-01-06');
-EXECUTE sp_insertaproducto(12,'Monitor de 17"','2021-01-06');*/
+EXECUTE sp_insertaproducto(12,'Monitor de 17"','2021-01-06');
 
 /*DROP FUNCTION if exists myFuncion;*/
 
@@ -174,10 +174,10 @@ $$ LANGUAGE plpgsql;
 
 select myFuncion('Crea funcion Nueva de Mensaje');
 
-/*EXECUTE sp_insertaproducto(13,'Bocina Inalambrica Sony','2021-01-06');
+EXECUTE sp_insertaproducto(13,'Bocina Inalambrica Sony','2021-01-06');
 EXECUTE sp_insertaproducto(14,'Audifonos con Microfono USB Lenovo','2021-01-06');
 EXECUTE sp_insertaproducto(15,'Monitor de 21"','2021-01-06');
-EXECUTE sp_insertaproducto(16,'Monitor de 17" Lenovo','2021-01-06');*/
+EXECUTE sp_insertaproducto(16,'Monitor de 17" Lenovo','2021-01-06');
 
 
 create table tbinventario (
@@ -221,10 +221,10 @@ BEGIN
 END; 
 $$ LANGUAGE plpgsql;	
 
-/*select sp_insertainventario (1,'Laptop Lenovo','BODEGA CENTRAL',200,'Laptop Lenovo T420 i7 8GB');
+select sp_insertainventario (1,'Laptop Lenovo','BODEGA CENTRAL',200,'Laptop Lenovo T420 i7 8GB');
 select sp_insertainventario (2,'Teclado Inalambrico','BODEGA CENTRAL',100,'Teclado Inalambrico Lenovo');
 select sp_insertainventario (3,'Mouse Inalambrico','BODEGA ZONA 12',50,'');
-select sp_insertainventario (4,'Laptop HP','bodega zona 9',20,'Laptop HP i5 4GB RAM');*/
+select sp_insertainventario (4,'Laptop HP','bodega zona 9',20,'Laptop HP i5 4GB RAM');
 
 
 
