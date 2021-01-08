@@ -44,3 +44,7 @@ class TablaDeFunciones():
             print('Error: variable ', funcion.id, ' no definida.')
         else:
             self.funciones[funcion.id] = funcion
+
+    def eliminar(self, id):
+        if id in self.funciones:
+            del self.funciones[id]

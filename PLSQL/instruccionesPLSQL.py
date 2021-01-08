@@ -142,4 +142,8 @@ class CreateIndexNewNew(Instruccion):
     def __init__(self, cadena):
         self.cadena = cadena
 
+class DropFunction(Instruccion):
+    def __init__(self,id):
+        self.id = id
+
 

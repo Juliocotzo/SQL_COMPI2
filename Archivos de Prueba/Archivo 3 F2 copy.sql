@@ -162,6 +162,7 @@ EXECUTE sp_insertaproducto(11,'Bocina Inalambrica','2021-01-06');
 EXECUTE sp_insertaproducto(12,'Monitor de 17"','2021-01-06');
 
 /*DROP FUNCTION if exists myFuncion;*/
+DROP FUNCTION myFuncion;
 
 select myFuncion('Valida drop function');
 /*Debe dar error ya no existe la funcion*/

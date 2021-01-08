@@ -9,7 +9,8 @@ def main():
 	arr = [0] * 10000
 
 	inter.procesar_funcionCreateDatabase0()
-	inter.procesar_funcionUseDatabase1()	
+	inter.procesar_funcionUseDatabase1()
+	print('\nCREATE FUNCTION')	
 	tp0 = 'INICIO CALIFICACION FASE 2'	
 	pos = pos + 1	
 	arr[pos] = 1	
@@ -31,7 +32,8 @@ def main():
 	pos = pos + 1	
 	arr[pos] = 2	
 	goto. myFuncion	
-	label. retorno2	
+	label. retorno2
+	print('\nCREATE FUNCTION')	
 	tp1 = 'tbProducto'	
 	tp2 = 8	
 	pos = pos + 1	
@@ -46,14 +48,16 @@ def main():
 	arr[pos] = 4	
 	goto. ValidaRegistros	
 	label. retorno4
-	inter.procesar_funcionInsert16()	
+	inter.procesar_funcionInsert16()
+	print('\nCREATE FUNCTION')	
 	pos = pos + 1	
 	arr[pos] = 5	
 	goto. CALCULOS	
 	label. retorno5
 	inter.procesar_funcionInsert17()
 	inter.procesar_funcionCreateTable18()
-	inter.procesar_funcionCreateIndex19()	
+	inter.procesar_funcionCreateIndex19()
+	print('\nCREATE FUNCTION')	
 	pos = pos + 1	
 	arr[pos] = 6	
 	goto. sp_validainsert	
@@ -67,7 +71,8 @@ def main():
 	inter.procesar_funcionInsert20()
 	inter.procesar_funcionCreateIndex21()
 	inter.procesar_funcionDropIndex22()
-	inter.procesar_funcionCreateIndex23()	
+	inter.procesar_funcionCreateIndex23()
+	print('\nCREATE FUNCTION')	
 	pos = pos + 1	
 	arr[pos] = 8	
 	goto. sp_validaupdate	
@@ -81,7 +86,8 @@ def main():
 	label. retorno9
 	inter.procesar_funcionInsert25()
 	inter.procesar_funcionSelect26()
-	inter.procesar_funcionCreateIndex27()	
+	inter.procesar_funcionCreateIndex27()
+	print('\nCREATE FUNCTION')	
 	tp3 = 9	
 	tp4 = 'Bocina Inalambrica'	
 	tp5 = '2021-01-06'	
@@ -109,16 +115,18 @@ def main():
 	pos = pos + 1	
 	arr[pos] = 13	
 	goto. sp_insertaproducto	
-	label. retorno13	
-	tp0 = 'Valida drop function'	
+	label. retorno13
+	print('\nDROP FUNCTION')	
 	pos = pos + 1	
 	arr[pos] = 14	
-	goto. myFuncion	
-	label. retorno14	
-	tp0 = 'Crea funcion Nueva de Mensaje'	
+
+	print('\nERROR:  function myFuncion() does not exist\nSQL state: 42883')	
+	label. retorno14
+	print('\nCREATE FUNCTION')	
 	pos = pos + 1	
 	arr[pos] = 15	
-	goto. myFuncion	
+
+	print('\nERROR:  function myFuncion() does not exist\nSQL state: 42883')	
 	label. retorno15	
 	tp3 = 13	
 	tp4 = 'Bocina Inalambrica Sony'	
@@ -148,7 +156,10 @@ def main():
 	arr[pos] = 19	
 	goto. sp_insertaproducto	
 	label. retorno19
-	inter.procesar_funcionCreateTable28()	
+	inter.procesar_funcionCreateTable28()
+	print('\nCREATE FUNCTION')
+	print('\nCREATE FUNCTION')
+	print('\nCREATE FUNCTION')	
 	tp9 = 1	
 	tp10 = 'Laptop Lenovo'	
 	tp11 = 'BODEGA CENTRAL'	
